@@ -1,0 +1,152 @@
+import { useRouter } from "next/navigation";
+import Tooltip from "./tooltip";
+import { Button } from "./ui/button";
+import { ArrowRight, MessageCircle, Sparkles } from "lucide-react";
+import { Badge } from "./ui/badge";
+import { WorldCanvas } from "./three/world-canvas";
+import Image from "next/image";
+
+const controlGroups = [
+    {
+        title: "Movimiento",
+        controls: [
+            { src: "/w.png", alt: "Move Forward (W)", label: "W" },
+            { src: "/a.png", alt: "Move Left (A)", label: "A" },
+            { src: "/s.png", alt: "Move Backward (S)", label: "S" },
+            { src: "/d.png", alt: "Move Right (D)", label: "D" },
+        ],
+    },
+    {
+        title: "Salir",
+        controls: [
+            { src: "/esc.png", alt: "Unlock mouse (ESC)", label: "ESC" },
+        ],
+    },
+];
+
+
+const whatsappHref =
+    "https://wa.me/59800000000?text=Hola%20Felipe!%20Vengo%20desde%20ffontana.dev%20y%20quiero%20aprovechar%20los%20descuentos%20👋";
+
+
+export const HeroSection = () => {
+    const router = useRouter();
+
+    const handleClick = (destination: string) => {
+        router.push(destination);
+    };
+
+
+    return (
+        <section
+            id="hero"
+            className="relative min-h-[98vh] w-full overflow-hidden border-b border-white/10"
+        >
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-full md:w-1/2">
+                {/* Gradient blur overlay for smooth transition */}
+                <div className="absolute left-0 top-0 h-full w-16 bg-gradient-to-r from-black via-black/20 to-transparent z-10 pointer-events-none " />
+
+                {/* Allow interactions inside the canvas area only */}
+                <div className="pointer-events-auto h-full relative">
+                    {/* Overlay with grouped controls */}
+                    <div
+                        className="
+                        absolute bottom-6 left-1/2 transform -translate-x-1/2 
+                        flex flex-col sm:flex-row backdrop-blur-sm px-4 py-2 rounded-full opacity-20
+                        shadow-lg z-20 w-[90%]  text-white max-w-[500px] hidden md:flex"
+                        aria-label="Game controls"
+                    >
+                        {controlGroups.map((group, groupIdx) => (
+                            <div key={groupIdx} className="flex flex-col items-center gap-2 min-w-[250px]">
+                                <span className="text-sm font-semibold text-gray-200">{group.title}</span>
+                                <div className="flex gap-2 ">
+                                    {group.controls.map((icon, iconIdx) => (
+                                        <div
+                                            key={iconIdx}
+                                            className="flex flex-col items-center text-xs"
+                                            aria-label={icon.alt}
+                                        >
+                                            <Image
+                                                src={icon.src}
+                                                alt={icon.alt}
+                                                width={36}
+                                                height={36}
+                                                className="rounded-2xl"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <WorldCanvas className="absolute inset-0 rounded-l-full hidden md:block" />
+                </div>
+            </div>
+
+            {/* Text + CTAs */}
+            <div className="relative z-10 px-4 pt-28 pb-20">
+                <div className="max-w-7xl mx-auto">
+                    {/* Professional badge */}
+                    <div className="flex items-center gap-2 mb-6">
+                        <Badge className="rounded-full bg-white text-black font-semibold hover:bg-white">
+                            Desarrollador Full Stack
+                        </Badge>
+                        <span className="text-sm text-white/70">
+                            & Diseñador UI/UX
+                        </span>
+                    </div>
+
+                    {/* Professional headline */}
+                    <div className="max-w-3xl">
+                        <h1 className="leading-[0.85] font-bold tracking-tight">
+                            <span className="block text-[clamp(40px,7vw,88px)]">
+                                Felipe
+                            </span>
+                            <span className="block text-[clamp(64px,14vw,160px)]">
+                                Fontana
+                            </span>
+                            <span className="block text-[clamp(32px,5vw,64px)] text-white/80">
+                                Software Developer
+                            </span>
+                        </h1>
+
+                        <p className="mt-6 text-lg md:text-xl text-white/85 max-w-2xl">
+                            Flexibilidad excepcional y aprendizaje rápido. Soluciones web modernas,
+                            chatbots con IA y automatizaciones que impulsan tu negocio.
+                        </p>
+
+                        <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                            <Tooltip content="Explora proyectos reales" position="top">
+                                <Button
+                                    size="lg"
+                                    variant="outline"
+                                    onClick={() => handleClick("/showcase")}
+                                    className="border-white/30 text-[#B13BFF] hover:bg-white hover:text-black px-8 py-6 rounded-full transition-all duration-300"
+                                >
+                                    Ver proyectos
+                                    <Sparkles className="ml-2 h-5 w-5" />
+                                </Button>
+                            </Tooltip>
+                            <a href={whatsappHref} target="_blank" rel="noreferrer">
+                                <Button
+                                    size="lg"
+                                    className="bg-[#B13BFF] hover:bg-white text-black font-semibold px-8 py-6 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#B13BFF]/25 hover:scale-105"
+                                    aria-label="Contactar por WhatsApp"
+                                >
+                                    Hablemos
+                                    <ArrowRight className="ml-2 h-5 w-5" />
+                                </Button>
+                            </a>
+
+                        </div>
+
+                        <div className="mt-5 text-xs text-white/60">
+                            *Montevideo, Uruguay • 3+ años de experiencia • 100% satisfacción del cliente
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    )
+}
