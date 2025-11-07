@@ -70,11 +70,7 @@ export const WorldCanvas: React.FC<WorldCanvasProps> = ({ className, viewRadius 
           new THREE.Vector3(-half, -half, -half),
           new THREE.Vector3(half, half, half)
         );
-        const helper = new THREE.Box3Helper(box, 0x00ffff);
-        // Subtle styling for better readability
-        (helper.material as THREE.LineBasicMaterial).transparent = true;
-        (helper.material as THREE.LineBasicMaterial).opacity = 0.4;
-        group.add(helper);
+
         group.position.set(cx * chunkSize, 0, cz * chunkSize);
         worldGroup.add(group);
         loaded.set(key, group);
