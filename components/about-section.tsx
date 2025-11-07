@@ -13,17 +13,17 @@ export function AboutSection() {
     "/ffontana-guitar.png",
     "/ffontana-programming.png"
   ]
-  
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  
+
   // Auto-advance carousel
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => 
+      setCurrentImageIndex((prevIndex) =>
         prevIndex === images.length - 1 ? 0 : prevIndex + 1
       )
     }, 3000) // Change image every 3 seconds
-    
+
     return () => clearInterval(interval)
   }, [images.length])
 
@@ -57,11 +57,10 @@ export function AboutSection() {
                 {images.map((image, index) => (
                   <div
                     key={image}
-                    className={`absolute inset-0 transition-all duration-500 ease-in-out ${
-                      index === currentImageIndex 
-                        ? 'opacity-100 scale-100' 
-                        : 'opacity-0 scale-110'
-                    }`}
+                    className={`absolute inset-0 transition-all duration-500 ease-in-out ${index === currentImageIndex
+                      ? 'opacity-100 scale-100'
+                      : 'opacity-0 scale-110'
+                      }`}
                   >
                     <Image
                       src={image}
@@ -72,7 +71,7 @@ export function AboutSection() {
                     />
                   </div>
                 ))}
-              </div>        
+              </div>
             </div>
 
             {/* Professional Info Cards */}
@@ -83,7 +82,7 @@ export function AboutSection() {
                   <span className="font-semibold text-white/80">Montevideo, Uruguay</span>
                 </div>
               </div>
-              
+
               <div className="group flex items-center justify-center lg:justify-start gap-3 p-3 rounded-lg bg-black backdrop-blur-sm transition-all duration-300 hover:shadow-md hover:shadow-primary/10">
                 <div className="flex flex-col">
                   <span className="text-sm font-medium text-[#B13BFF]">Experiencia</span>
@@ -112,29 +111,37 @@ export function AboutSection() {
           <div className="space-y-6">
             <div className="prose prose-lg prose-invert max-w-none">
               <p className="text-gray-300 leading-relaxed mb-6">
-                Soy <strong className="text-[#B13BFF]">Felipe Fontana</strong>, un Desarrollador Full Stack y Diseñador UI/UX 
-                dinámico con base en Uruguay, quien poco a poco ha construido su reputación sobre dos cualidades fundamentales 
-                que me distinguen en el panorama tecnológico: <strong className="text-[#B13BFF]">flexibilidad</strong> y 
+                Soy <strong className="text-[#B13BFF]">Felipe Fontana</strong>, un <strong className="text-[#B13BFF]">Desarrollador</strong>
+                con base en Uruguay, quien poco a poco ha construido su reputación sobre dos cualidades fundamentales
+                que me distinguen en el panorama tecnológico: <strong className="text-[#B13BFF]">flexibilidad</strong> y
                 <strong className="text-[#B13BFF]"> capacidad de aprendizaje rápido</strong>.
-              </p>
-              
-              <p className="text-gray-300 leading-relaxed mb-6">
-                Lo que me hace verdaderamente único es mi notable adaptabilidad a través de todo el espectro tecnológico. 
-                A diferencia de los desarrolladores que se especializan en un solo lenguaje o framework, prospero en la diversidad. 
-                Ya sea que un proyecto requiera <strong className="text-[#B13BFF]">TypeScript para un frontend React, Python para integración de IA, 
-                Java para backend empresarial, o C# para Unity3D</strong>, 
-                transiciono sin problemas entre tecnologías con la soltura de un programador pragmático.
               </p>
 
               <p className="text-gray-300 leading-relaxed mb-6">
-                Con más de 3 años de experiencia y más de 15 proyectos completados, he demostrado que la flexibilidad y 
-                el aprendizaje rápido se traducen en resultados empresariales tangibles, y la confianza de que puedo manejar cualquier desafío técnico que surja.
+                Lo que me hace verdaderamente único es mi notable capacidad de <strong className="text-[#B13BFF]">adaptabilidad</strong> a través de las diversas tecnologías.
+                A diferencia de los desarrolladores que se especializan en un solo lenguaje o framework, tengo una insaciable curiosidad por comprender <strong className="text-[#B13BFF]">sistemas complejos</strong> y disfruto los <strong className="text-[#B13BFF]">desafíos difíciles</strong>.
+                No importa que un proyecto requiera <strong className="text-[#B13BFF]">TypeScript para un frontend React, Java para un backend, o C# para .Net o Unity</strong>,
+                transiciono sin problemas entre tecnologías.
+              </p>
+
+              <p className="text-gray-300 leading-relaxed mb-6">
+                Comencé a programar sin saberlo desde muy pequeño... En la escuela me encantaba hacer juegos usando <strong className="text-[#B13BFF]">Scratch</strong>, construir robots utilizando <strong className="text-[#B13BFF]">LEGO Mindstorms</strong> y configurar mis propios <strong className="text-[#B13BFF]">servidores</strong> de Minecraft utilizando Spigot los cuales logré comercializar.
+                Durante mis estudios secundarios tuve la oportunidad de cursar{" "}
+                <a
+                  href="https://planeamientoeducativo.utu.edu.uy/emt-informatica"
+                  className="text-[#B13BFF] underline "
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  EMT Informática
+                </a>
+                {" "}en dónde aprendí sobre el <strong className="text-[#B13BFF]">diseño de bases de datos</strong>, las bases fundamentales de la <strong className="text-[#B13BFF]">programación</strong> (paradigmas, funciones, conjuntos, compuertas lógicas, circuitos lógicos, recursividad, etc...) y también IoT, programando sistemas con Arduino y Raspberry.
               </p>
 
               <p className="text-gray-300 leading-relaxed">
-                Cuando trabajas conmigo, no solo estás contratando un desarrollador—te estás asociando con un 
-                <strong className="text-[#B13BFF]"> camaleón tecnológico</strong> que puede adaptarse a tus necesidades, 
-                crecer con tu negocio, y conectar diferentes sistemas con la versatilidad de un verdadero profesional full-stack.
+                Cuando decides trabajar conmigo, no solo estás contratando un desarrollador, te estás asociando con un
+                <strong className="text-[#B13BFF]"> camaleón tecnológico</strong> que puede adaptarse a tus necesidades,
+                entender tu negocio, y conectar diferentes sistemas con la <strong className="text-[#B13BFF]">versatilidad</strong> de un verdadero <strong className="text-[#B13BFF]">profesional</strong>.
               </p>
             </div>
 
@@ -145,16 +152,16 @@ export function AboutSection() {
                 { number: "+15", label: "Proyectos completados" },
               ].map((stat, index) => (
                 <div className="flex flex-col items-center lg:items-start">
-              <div
-                className="group w-full bg-primary hover:bg-primary/90 text-white font-semibold px-10 py-6 rounded-xl transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                <div>
-                <span className="text-3xl font-bold">{stat.number}</span> <br />
-                <span className="text-sm mt-5">{stat.label}</span>
+                  <div
+                    className="group w-full bg-primary hover:bg-primary/90 text-white font-semibold px-10 py-6 rounded-xl transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                    <div>
+                      <span className="text-3xl font-bold">{stat.number}</span> <br />
+                      <span className="text-sm mt-5">{stat.label}</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
               ))}
             </div>
           </div>

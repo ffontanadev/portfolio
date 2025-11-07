@@ -134,7 +134,7 @@ export const HeroSection = () => {
                             Desarrollador Full Stack
                         </Badge>
                         <span className="text-sm text-white/70">
-                            & Diseñador UI/UX
+                            & Problem Solver!
                         </span>
                     </div>
 
@@ -153,8 +153,8 @@ export const HeroSection = () => {
                         </h1>
 
                         <p className="mt-6 text-lg md:text-xl text-white/85 max-w-2xl">
-                            Flexibilidad excepcional y aprendizaje rápido. Soluciones web modernas,
-                            chatbots con IA y automatizaciones que impulsan tu negocio.
+                            Flexibilidad, aprendizaje rápido y pragmatismo. Soluciones modernas y eficientes.
+                            Mi principal objetivo es el tuyo.
                         </p>
 
                         <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
@@ -183,7 +183,14 @@ export const HeroSection = () => {
                         </div>
 
                         <div className="mt-5 text-xs text-white/60">
-                            *Montevideo, Uruguay • 3+ años de experiencia • 100% satisfacción del cliente
+                            * Uruguay • 3+ años de experiencia • <a
+                                href="www.linkedin.com/in/felipefontana"
+                                className="underline hover:text-[#B13BFF]"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Linked.in
+                            </a>
                         </div>
                     </div>
                 </div>
