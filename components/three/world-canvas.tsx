@@ -19,16 +19,14 @@ import {
 
 import { PaintLayer, TerrainRelief } from '@/lib/three/surface_details';
 
-type WorldCanvasProps = { className?: string };
+type WorldCanvasProps = { className?: string, viewRadius?: number, chunkSize: number };
 
-const CHUNK = WorldConfiguraton.CHUNK;
 const TARGET = new THREE.Vector3(0, 0, 0);
 const CAMERA_INITIAL_POSITION = WorldConfiguraton.CAMERA_INITIAL_POSITION;
 const BASE_BLOCK = WorldConfiguraton.WORLD_BASE_BLOCK;
 const WORLD_SEED = '1';
-const VIEW_RADIUS = 6; // number of chunks around camera in X/Z
 
-export const WorldCanvas: React.FC<WorldCanvasProps> = ({ className }) => {
+export const WorldCanvas: React.FC<WorldCanvasProps> = ({ className, viewRadius = WorldConfiguraton.VIEW_DISTANCE, chunkSize = WorldConfiguraton.CHUNK }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -59,15 +57,15 @@ export const WorldCanvas: React.FC<WorldCanvasProps> = ({ className }) => {
       if (loaded.has(key) || inflight.has(key) || disposed) return;
       inflight.add(key);
       try {
-        const url = `/api/chunk?size=${CHUNK}&seed=${encodeURIComponent(WORLD_SEED)}&base=${BASE_BLOCK}&cx=${cx}&cy=0&cz=${cz}&surfaceScale=0.04&cavesScale=0.16&cavesThreshold=0.72&grassDepth=2&dirtDepth=3`;
+        const url = `/api/chunk?size=${chunkSize}&seed=${encodeURIComponent(WORLD_SEED)}&base=${BASE_BLOCK}&cx=${cx}&cy=0&cz=${cz}&surfaceScale=0.04&cavesScale=0.16&cavesThreshold=0.72&grassDepth=2&dirtDepth=3`;
         const res = await fetch(url, { cache: 'force-cache' });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const buf = await res.arrayBuffer();
         const grid = new Uint8Array(buf);
         if (disposed) return;
-        const { group } = buildInstancedChunk(grid, CHUNK, blockGeometry, registry);
+        const { group } = buildInstancedChunk(grid, chunkSize, blockGeometry, registry);
         // Add a bounding box helper around the chunk in local space
-        const half = CHUNK / 2;
+        const half = chunkSize / 2;
         const box = new THREE.Box3(
           new THREE.Vector3(-half, -half, -half),
           new THREE.Vector3(half, half, half)
@@ -77,17 +75,17 @@ export const WorldCanvas: React.FC<WorldCanvasProps> = ({ className }) => {
         (helper.material as THREE.LineBasicMaterial).transparent = true;
         (helper.material as THREE.LineBasicMaterial).opacity = 0.4;
         group.add(helper);
-        group.position.set(cx * CHUNK, 0, cz * CHUNK);
+        group.position.set(cx * chunkSize, 0, cz * chunkSize);
         worldGroup.add(group);
         loaded.set(key, group);
       } catch (err) {
         // Fallback: local generation with proper world-space coordinates
-        const local = generateChunk(CHUNK, BASE_BLOCK);
-        const ox = cx * CHUNK;
-        const oz = cz * CHUNK;
+        const local = generateChunk(chunkSize, BASE_BLOCK);
+        const ox = cx * chunkSize;
+        const oz = cz * chunkSize;
 
         // Apply terrain generation matching server-side behavior
-        TerrainRelief(local, CHUNK, {
+        TerrainRelief(local, chunkSize, {
           scale: 0.04,
           mode: 'surface',
           fill: Block.Air,
@@ -95,7 +93,7 @@ export const WorldCanvas: React.FC<WorldCanvasProps> = ({ className }) => {
           offsetX: ox,
           offsetZ: oz
         });
-        TerrainRelief(local, CHUNK, {
+        TerrainRelief(local, chunkSize, {
           scale: 0.16,
           threshold: 0.72,
           mode: '3d',
@@ -107,12 +105,12 @@ export const WorldCanvas: React.FC<WorldCanvasProps> = ({ className }) => {
         });
 
         // Paint grass and dirt layers
-        PaintLayer(local as any, CHUNK, BASE_BLOCK, Block.Grass, 2, 'xyz', 'contiguous');
-        PaintLayer(local as any, CHUNK, BASE_BLOCK, Block.Dirt, 3, 'xyz', 'any');
+        PaintLayer(local as any, chunkSize, BASE_BLOCK, Block.Grass, 2, 'xyz', 'contiguous');
+        PaintLayer(local as any, chunkSize, BASE_BLOCK, Block.Dirt, 3, 'xyz', 'any');
 
         if (!disposed) {
-          const { group } = buildInstancedChunk(local, CHUNK, blockGeometry, registry);
-          group.position.set(cx * CHUNK, 0, cz * CHUNK);
+          const { group } = buildInstancedChunk(local, chunkSize, blockGeometry, registry);
+          group.position.set(cx * chunkSize, 0, cz * chunkSize);
           worldGroup.add(group);
           loaded.set(key, group);
         }
@@ -122,15 +120,15 @@ export const WorldCanvas: React.FC<WorldCanvasProps> = ({ className }) => {
     };
 
     const ensureChunksAround = (cx: number, cz: number) => {
-      for (let dz = -VIEW_RADIUS; dz <= VIEW_RADIUS; dz++) {
-        for (let dx = -VIEW_RADIUS; dx <= VIEW_RADIUS; dx++) {
+      for (let dz = -viewRadius; dz <= viewRadius; dz++) {
+        for (let dx = -viewRadius; dx <= viewRadius; dx++) {
           loadChunkAt(cx + dx, cz + dz);
         }
       }
       // prune far chunks
       for (const [key, group] of loaded) {
         const [gx, gz] = key.split(',').map((n) => parseInt(n, 10));
-        if (Math.abs(gx - cx) > VIEW_RADIUS + 1 || Math.abs(gz - cz) > VIEW_RADIUS + 1) {
+        if (Math.abs(gx - cx) > viewRadius + 1 || Math.abs(gz - cz) > viewRadius + 1) {
           worldGroup.remove(group);
           disposeObject(group);
           loaded.delete(key);
@@ -139,7 +137,7 @@ export const WorldCanvas: React.FC<WorldCanvasProps> = ({ className }) => {
     };
 
     // Initial chunks
-    ensureChunksAround(Math.round(CAMERA_INITIAL_POSITION.x / CHUNK), Math.round(CAMERA_INITIAL_POSITION.z / CHUNK));
+    ensureChunksAround(Math.round(CAMERA_INITIAL_POSITION.x / chunkSize), Math.round(CAMERA_INITIAL_POSITION.z / chunkSize));
 
     // Pointer Lock Controls
     const { controls, enable } = createPointerLockController(camera, renderer);
@@ -149,7 +147,7 @@ export const WorldCanvas: React.FC<WorldCanvasProps> = ({ className }) => {
     const { keys, dispose: disposeKeys } = createKeyTracker(document);
 
     // Fit + Resize
-    const fit = () => fitRendererAndCamera(container, renderer, camera, TARGET, CHUNK, CAMERA_INITIAL_POSITION);
+    const fit = () => fitRendererAndCamera(container, renderer, camera, TARGET, chunkSize, CAMERA_INITIAL_POSITION);
     fit();
     const onResize = () => fit();
     window.addEventListener('resize', onResize);
@@ -184,9 +182,9 @@ export const WorldCanvas: React.FC<WorldCanvasProps> = ({ className }) => {
 
       if (lastCamPos.manhattanDistanceTo(camera.position) > 1e-4) {
         lastCamPos.copy(camera.position);
-        updateSunFromCamera(sun, camera, TARGET, CHUNK * 2);
-        const ccx = Math.round(camera.position.x / CHUNK);
-        const ccz = Math.round(camera.position.z / CHUNK);
+        updateSunFromCamera(sun, camera, TARGET, chunkSize * 2);
+        const ccx = Math.round(camera.position.x / chunkSize);
+        const ccz = Math.round(camera.position.z / chunkSize);
         if (ccx !== lastChunkX || ccz !== lastChunkZ) {
           lastChunkX = ccx; lastChunkZ = ccz;
           ensureChunksAround(ccx, ccz);
@@ -213,7 +211,7 @@ export const WorldCanvas: React.FC<WorldCanvasProps> = ({ className }) => {
       scene.remove(worldGroup, sun);
       renderer.dispose();
     };
-  }, []);
+  }, [chunkSize, viewRadius]);
 
   return (
     <div

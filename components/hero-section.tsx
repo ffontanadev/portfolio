@@ -1,4 +1,5 @@
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import Tooltip from "./tooltip";
 import { Button } from "./ui/button";
 import { ArrowRight, MessageCircle, Sparkles } from "lucide-react";
@@ -24,13 +25,14 @@ const controlGroups = [
     },
 ];
 
-
 const whatsappHref =
     "https://wa.me/59800000000?text=Hola%20Felipe!%20Vengo%20desde%20ffontana.dev%20y%20quiero%20aprovechar%20los%20descuentos%20👋";
 
 
 export const HeroSection = () => {
     const router = useRouter();
+    const [chunkSize, setChunkSize] = useState(16);
+    const [viewRadius, setViewRadius] = useState(8);
 
     const handleClick = (destination: string) => {
         router.push(destination);
@@ -48,10 +50,49 @@ export const HeroSection = () => {
 
                 {/* Allow interactions inside the canvas area only */}
                 <div className="pointer-events-auto h-full relative">
+                    {/* Runtime Controls for chunk parameters */}
+                    <div
+                        className="absolute top-6 right-6 backdrop-blur-md bg-black/40 px-4 py-3 rounded-lg shadow-lg z-20 text-white min-w-[200px] border border-white/10"
+                        aria-label="World parameters"
+                    >
+                        <div className="space-y-3">
+                            <div>
+                                <label htmlFor="chunkSize" className="text-xs font-semibold text-gray-200 block mb-1">
+                                    Chunk Size: {chunkSize}
+                                </label>
+                                <input
+                                    id="chunkSize"
+                                    type="range"
+                                    min="8"
+                                    max="32"
+                                    step="4"
+                                    value={chunkSize}
+                                    onChange={(e) => setChunkSize(Number(e.target.value))}
+                                    className="w-full h-1 bg-white/20 rounded-lg appearance-none cursor-pointer accent-[#B13BFF]"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="viewRadius" className="text-xs font-semibold text-gray-200 block mb-1">
+                                    View Radius: {viewRadius}
+                                </label>
+                                <input
+                                    id="viewRadius"
+                                    type="range"
+                                    min="2"
+                                    max="16"
+                                    step="1"
+                                    value={viewRadius}
+                                    onChange={(e) => setViewRadius(Number(e.target.value))}
+                                    className="w-full h-1 bg-white/20 rounded-lg appearance-none cursor-pointer accent-[#B13BFF]"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
                     {/* Overlay with grouped controls */}
                     <div
                         className="
-                        absolute bottom-6 left-1/2 transform -translate-x-1/2 
+                        absolute bottom-6 left-1/2 transform -translate-x-1/2
                         flex flex-col sm:flex-row backdrop-blur-sm px-4 py-2 rounded-full opacity-20
                         shadow-lg z-20 w-[90%]  text-white max-w-[500px] hidden md:flex"
                         aria-label="Game controls"
@@ -80,7 +121,7 @@ export const HeroSection = () => {
                         ))}
                     </div>
 
-                    <WorldCanvas className="absolute inset-0 rounded-l-full hidden md:block" />
+                    <WorldCanvas className="absolute inset-0 rounded-l-full hidden md:block" chunkSize={chunkSize} viewRadius={viewRadius} />
                 </div>
             </div>
 

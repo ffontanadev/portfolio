@@ -14,6 +14,7 @@ export enum Block {
 
 export type WorldConfiguration = { 
   CHUNK: number
+  VIEW_DISTANCE: number,
   CAMERA_INITIAL_POSITION: THREE.Vector3
   WORLD_BASE_BLOCK: Block
   RENDERER_CONFIG: THREE.WebGLRendererParameters
