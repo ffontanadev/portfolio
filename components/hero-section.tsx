@@ -184,7 +184,7 @@ export const HeroSection = () => {
 
                         <div className="mt-5 text-xs text-white/60">
                             * Uruguay • 3+ años de experiencia • <a
-                                href="www.linkedin.com/in/felipefontana"
+                                href="https://www.linkedin.com/in/felipefontana"
                                 className="underline hover:text-[#B13BFF]"
                                 target="_blank"
                                 rel="noopener noreferrer"

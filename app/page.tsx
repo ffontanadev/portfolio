@@ -77,10 +77,10 @@ export default function FfontanaLanding() {
         </section>
 
         {/* Testimonials Section */}
-        <TestimonialsSection />
+        {/* <TestimonialsSection /> */}
 
         {/* Contact Section */}
-        <ContactSection />
+        {/* <ContactSection /> */}
 
         {/* Footer */}
         <footer className="py-8 px-4 border-t border-gray-800">
