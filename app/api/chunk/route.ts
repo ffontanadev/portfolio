@@ -52,24 +52,6 @@ function hash32(str: string): number {
   return h >>> 0;
 }
 
-// Mix multiple integers into a single 32-bit hash deterministically
-function mix(...nums: number[]) {
-  let h = 0x811c9dc5 >>> 0;
-  for (const n of nums) {
-    let x = n >>> 0;
-    x ^= x >>> 16; x = Math.imul(x, 0x7feb352d);
-    x ^= x >>> 15; x = Math.imul(x, 0x846ca68b);
-    x ^= x >>> 16;
-    h ^= x;
-  }
-  return h >>> 0;
-}
-
-// Convert 32-bit int to [0,1) float for seeding our perlin
-function toUnitFloat(u32: number) {
-  return (u32 & 0x7ffffff) / 0x8000000; // 27 bits of mantissa
-}
-
 // Core generator: mirrors client logic but with deterministic seeding and world offsets
 function generateChunkServer(params: Params): Uint8Array {
   const { size: S, seed, base, cx, cy, cz, surfaceScale, cavesScale, cavesThreshold, grassDepth, dirtDepth } = params;
@@ -79,13 +61,10 @@ function generateChunkServer(params: Params): Uint8Array {
   const oy = cy * S;
   const oz = cz * S;
 
-  // Seed noise deterministically with seed + coords
-  const baseHash = hash32(seed);
-  const noiseSeed1 = toUnitFloat(mix(baseHash, ox, oy, oz, 0xA1));
-  const noiseSeed2 = toUnitFloat(mix(baseHash ^ 0x9e3779b9, ox, oy, oz, 0xB2));
-  
-  const surfaceNoise = makeNoise(noiseSeed1);
-  const cavesNoise = makeNoise(noiseSeed2);
+  // Create noise functions ONCE per world seed, not per chunk
+  // This ensures all chunks share the same permutation table
+  const surfaceNoise = makeNoise(seed + '-surface');
+  const cavesNoise = makeNoise(seed + '-caves');
 
   // Allocate grid and fill base block
   const total = S * S * S;
@@ -180,9 +159,10 @@ export async function GET(req: NextRequest) {
     // Use a stable cache key; cache wrapper ignores params, so include in key
     const cacheKey = keyOf(params);
     const data = await getChunkCached(params);
+    const bufferedData = Buffer.from(data);
 
     // Compute a weak ETag from key (deterministic)
-    const etag = `W/\"${hash32(cacheKey).toString(16)}-${params.size}\"`;
+    const etag = `W/"${hash32(cacheKey).toString(16)}-${params.size}"`;
 
     // Conditional request support
     const ifNoneMatch = req.headers.get('if-none-match');
@@ -191,7 +171,7 @@ export async function GET(req: NextRequest) {
     }
 
     // Return compact binary body (Uint8Array)
-    return new Response(data, {
+    return new Response(bufferedData, {
       status: 200,
       headers: {
         'Content-Type': 'application/octet-stream',

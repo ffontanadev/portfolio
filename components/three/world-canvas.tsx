@@ -28,7 +28,7 @@ const BASE_BLOCK = WorldConfiguraton.WORLD_BASE_BLOCK;
 const WORLD_SEED = '1';
 const VIEW_RADIUS = 6; // number of chunks around camera in X/Z
 
-export const WorldCanvas: React.FC<WorldCanvasProps> = ({ className}) => {
+export const WorldCanvas: React.FC<WorldCanvasProps> = ({ className }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -81,12 +81,35 @@ export const WorldCanvas: React.FC<WorldCanvasProps> = ({ className}) => {
         worldGroup.add(group);
         loaded.set(key, group);
       } catch (err) {
-        // Fallback: local generation
+        // Fallback: local generation with proper world-space coordinates
         const local = generateChunk(CHUNK, BASE_BLOCK);
-        TerrainRelief(local, CHUNK, { scale: 0.16, threshold: 0.72, mode: '3d', fill: Block.Air });
-        TerrainRelief(local, CHUNK, { scale: 0.04, mode: 'surface' });
+        const ox = cx * CHUNK;
+        const oz = cz * CHUNK;
+
+        // Apply terrain generation matching server-side behavior
+        TerrainRelief(local, CHUNK, {
+          scale: 0.04,
+          mode: 'surface',
+          fill: Block.Air,
+          seed: WORLD_SEED + '-surface',
+          offsetX: ox,
+          offsetZ: oz
+        });
+        TerrainRelief(local, CHUNK, {
+          scale: 0.16,
+          threshold: 0.72,
+          mode: '3d',
+          fill: Block.Air,
+          seed: WORLD_SEED + '-caves',
+          offsetX: ox,
+          offsetY: 0,
+          offsetZ: oz
+        });
+
+        // Paint grass and dirt layers
         PaintLayer(local as any, CHUNK, BASE_BLOCK, Block.Grass, 2, 'xyz', 'contiguous');
-        PaintLayer(local as any, CHUNK, BASE_BLOCK, Block.Dirt, Math.random() * 4 + 1, 'xyz', 'any');
+        PaintLayer(local as any, CHUNK, BASE_BLOCK, Block.Dirt, 3, 'xyz', 'any');
+
         if (!disposed) {
           const { group } = buildInstancedChunk(local, CHUNK, blockGeometry, registry);
           group.position.set(cx * CHUNK, 0, cz * CHUNK);
@@ -148,7 +171,7 @@ export const WorldCanvas: React.FC<WorldCanvasProps> = ({ className}) => {
       const vz = (keys['KeyS'] ? 1 : 0) - (keys['KeyW'] ? 1 : 0);
       const vy = (keys['Space'] ? 1 : 0) - (keys['ShiftLeft'] ? 1 : 0);
 
-      const lenSq = vx*vx + vy*vy + vz*vz;
+      const lenSq = vx * vx + vy * vy + vz * vz;
       if (lenSq > 0 && controls.isLocked) {
         const scale = (speed * delta) / Math.sqrt(lenSq);
         const dx = vx * scale;

@@ -1,11 +1,37 @@
 // perlin.ts
 type NoiseFunction = (x: number, y: number, z?: number) => number;
 
-export function makeNoise(seed = Math.random()): NoiseFunction {
+// Simple Linear Congruential Generator (LCG) for deterministic random numbers
+function seededRandom(seed: number) {
+  let state = seed;
+  return function() {
+    state = (state * 1664525 + 1013904223) >>> 0;
+    return state / 0x100000000;
+  };
+}
+
+export function makeNoise(seed: number | string = Math.random()): NoiseFunction {
+    // Convert string seeds to numbers
+    let numericSeed: number;
+    if (typeof seed === 'string') {
+      let h = 0;
+      for (let i = 0; i < seed.length; i++) {
+        h = ((h << 5) - h + seed.charCodeAt(i)) | 0;
+      }
+      numericSeed = Math.abs(h);
+    } else {
+      numericSeed = seed * 0x100000000;
+    }
+
+    // Create seeded random number generator
+    const random = seededRandom(numericSeed >>> 0);
+
     const p = new Uint8Array(512);
     for (let i = 0; i < 256; i++) p[i] = i;
+
+    // Fisher-Yates shuffle with seeded random
     for (let i = 255; i > 0; i--) {
-      const j = Math.floor(seed * (i + 1));
+      const j = Math.floor(random() * (i + 1));
       [p[i], p[j]] = [p[j], p[i]];
     }
     for (let i = 0; i < 256; i++) p[i + 256] = p[i];
@@ -56,4 +82,3 @@ export function makeNoise(seed = Math.random()): NoiseFunction {
       ) * 0.5 + 0.5;
     };
   }
-  

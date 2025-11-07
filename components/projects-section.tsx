@@ -4,34 +4,23 @@ import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ExternalLink, Github, Play, Filter } from "lucide-react"
+import { ExternalLink, Github, Play, Filter, Ban } from "lucide-react"
 import Image from "next/image"
 
 const projects = [
   {
     id: 1,
-    title: "E-commerce Platform",
-    description: "Plataforma de comercio electrónico completa con carrito de compras, pagos integrados y panel de administración.",
-    image: "/placeholder-logo.png",
-    technologies: ["Next.js", "TypeScript", "Stripe", "MongoDB", "Tailwind CSS"],
+    title: "Three Voxel Engine",
+    description: "Motor capaz de crear mundos procedurales usando chunks, ruido perlin y server-side chunk generation",
+    image: "/three-voxel-engine.png",
+    technologies: ["Next.js", "TypeScript", "Three.js", "Buffers"],
     category: "fullstack",
-    demoUrl: "#",
-    githubUrl: "#",
+    demoUrl: "https://three-voxel-engine.vercel.app/",
+    githubUrl: "https://github.com/ffontanadev/three-voxel-engine",
     featured: true
   },
   {
-    id: 7,
-    title: "Hackflix - Astro Remake",
-    description: "Remake moderno de la aplicación Hackflix usando Astro.build, consumiendo The Movie Database API para mostrar detalles actualizados de películas con rendimiento optimizado.",
-    image: "/hackflix-astro.png",
-    technologies: ["Astro", "TypeScript", "TMDB API", "Tailwind CSS", "Vanilla JS"],
-    category: "frontend",
-    demoUrl: "#",
-    githubUrl: "#",
-    featured: true
-  },
-  {
-    id: 8,
+    id: 2,
     title: "Hackflix - Pure CSS",
     description: "Aplicación de catálogo de películas desarrollada con React y CSS puro, implementando una interfaz estilo Netflix con componentes reutilizables y diseño responsivo.",
     image: "/hackflix-legacy.png",
@@ -39,6 +28,15 @@ const projects = [
     category: "frontend",
     demoUrl: "https://hackflix-app.vercel.app",
     githubUrl: "https://github.com/elFonTii/hackflix-app",
+    featured: false
+  },
+  {
+    id: 7,
+    title: "eBanking - Winterbotham",
+    description: "Aplicación de banca multiplataforma para clientes de Winterbotham.",
+    image: "/wb-ebanking.png",
+    technologies: ["React Native", "TypeScript", "Expo", "WebAuthn"],
+    category: "mobile",
     featured: false
   },
   {
@@ -88,8 +86,8 @@ export function ProjectsSection() {
   const [activeCategory, setActiveCategory] = useState("all")
   const [showAll, setShowAll] = useState(false)
 
-  const filteredProjects = activeCategory === "all" 
-    ? projects 
+  const filteredProjects = activeCategory === "all"
+    ? projects
     : projects.filter(project => project.category === activeCategory)
 
   const displayedProjects = showAll ? filteredProjects : filteredProjects.slice(0, 6)
@@ -112,11 +110,10 @@ export function ProjectsSection() {
             <button
               key={category.id}
               onClick={() => setActiveCategory(category.id)}
-              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 flex items-center gap-2 ${
-                activeCategory === category.id
-                  ? "bg-[#B13BFF] text-black shadow-lg shadow-[#B13BFF]/25"
-                  : "bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 hover:text-[#B13BFF]"
-              }`}
+              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 flex items-center gap-2 ${activeCategory === category.id
+                ? "bg-[#B13BFF] text-black shadow-lg shadow-[#B13BFF]/25"
+                : "bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 hover:text-[#B13BFF]"
+                }`}
             >
               <span>{category.icon}</span>
               {category.name}
@@ -129,9 +126,8 @@ export function ProjectsSection() {
           {displayedProjects.map((project, index) => (
             <Card
               key={project.id}
-              className={`bg-gray-900/50 border-gray-800 hover:border-[#B13BFF]/50 transition-all duration-300 group overflow-hidden ${
-                project.featured ? "ring-1 ring-[#B13BFF]/20" : ""
-              }`}
+              className={`bg-gray-900/50 border-gray-800 hover:border-[#B13BFF]/50 transition-all duration-300 group overflow-hidden ${project.featured ? "ring-1 ring-[#B13BFF]/20" : ""
+                }`}
             >
               {/* Project Image */}
               <div className="relative h-48 overflow-hidden">
@@ -147,27 +143,40 @@ export function ProjectsSection() {
                     Destacado
                   </Badge>
                 )}
-                
+
                 {/* Overlay with action buttons */}
-                <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
-                  <Button
-                    size="sm"
-                    className="bg-[#B13BFF] hover:bg-[#A4DD00] text-black"
-                    onClick={() => window.open(project.demoUrl, '_blank')}
-                  >
-                    <Play className="w-4 h-4 mr-2" />
-                    Demo
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="border-white text-[#B13BFF] hover:bg-white hover:text-black"
-                    onClick={() => window.open(project.githubUrl, '_blank')}
-                  >
-                    <Github className="w-4 h-4 mr-2" />
-                    Código
-                  </Button>
-                </div>
+                {project.demoUrl && project.githubUrl ? (
+                  <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+                    <Button
+                      size="sm"
+                      className="bg-[#B13BFF] hover:bg-[#A4DD00] text-black"
+                      onClick={() => window.open(project.demoUrl, '_blank')}
+                    >
+                      <Play className="w-4 h-4 mr-2" />
+                      Demo
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="border-white text-[#B13BFF] hover:bg-white hover:text-black"
+                      onClick={() => window.open(project.githubUrl, '_blank')}
+                    >
+                      <Github className="w-4 h-4 mr-2" />
+                      Código
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+                    <Button
+                      size="sm"
+                      className="bg-[#B13BFF] hover:bg-[#A4DD00] text-black"
+                      disabled
+                    >
+                      <Ban className="w-4 h-4 mr-2" />
+                      Demostración no disponible
+                    </Button>
+                  </div>
+                )}
               </div>
 
               <CardHeader>
@@ -204,15 +213,29 @@ export function ProjectsSection() {
 
                 {/* Action Buttons */}
                 <div className="flex gap-2">
-                  <Button
-                    size="sm"
-                    className="flex-1 bg-[#B13BFF] hover:bg-[#A4DD00] text-black"
-                    onClick={() => window.open(project.demoUrl, '_blank')}
-                  >
-                    <ExternalLink className="w-4 h-4 mr-2" />
-                    Ver Proyecto
-                  </Button>
+                  {project.demoUrl && project.githubUrl ? (
+                    <Button
+                      size="sm"
+                      className="flex-1 bg-[#B13BFF] hover:bg-[#A4DD00] text-black"
+                      onClick={() => window.open(project.demoUrl, '_blank')}
+                    >
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      Ver Proyecto
+                    </Button>
+                  ) : (
+                    <Button
+                      size="sm"
+                      className="flex-1 bg-[#B13BFF] hover:bg-[#A4DD00] text-black"
+                      disabled
+                    >
+                      <Ban className="w-4 h-4 mr-2" />
+                      Demostración no disponible
+                    </Button>
+                  )}
+
+
                 </div>
+
               </CardContent>
             </Card>
           ))}

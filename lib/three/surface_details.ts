@@ -7,6 +7,10 @@ type ReliefOptions = {
   threshold?: number;  // what noise value cuts blocks
   mode?: 'surface' | '3d' | 'reverse-surface'; // surface = heightmap, 3d = volumetric caves, reverse-surface = inverted heightmap
   fill?: Block; // what block to fill the void with
+  seed?: number | string; // seed for noise generation
+  offsetX?: number; // world-space X offset for continuous terrain
+  offsetY?: number; // world-space Y offset for continuous terrain
+  offsetZ?: number; // world-space Z offset for continuous terrain
 };
 
 export function TerrainRelief(grid: Uint8Array, CHUNK: number, options: ReliefOptions = {}) {
@@ -15,14 +19,18 @@ export function TerrainRelief(grid: Uint8Array, CHUNK: number, options: ReliefOp
     threshold = 0.5,
     mode = 'surface',
     fill = Block.Air,
+    seed = Math.random(),
+    offsetX = 0,
+    offsetY = 0,
+    offsetZ = 0,
   } = options;
 
-  const noise = makeNoise(Math.random());
+  const noise = makeNoise(seed);
 
   if (mode === 'surface') {
     for (let x = 0; x < CHUNK; x++) {
       for (let z = 0; z < CHUNK; z++) {
-        const heightNoise = noise(x * scale, z * scale);
+        const heightNoise = noise((x + offsetX) * scale, (z + offsetZ) * scale);
         const maxY = Math.floor(heightNoise * CHUNK);
         for (let y = CHUNK - 1; y > maxY; y--) {
           grid[idx(x, y, z, CHUNK)] = fill;
@@ -34,7 +42,7 @@ export function TerrainRelief(grid: Uint8Array, CHUNK: number, options: ReliefOp
   if (mode === 'reverse-surface') {
     for (let x = 0; x < CHUNK; x++) {
       for (let z = 0; z < CHUNK; z++) {
-        const heightNoise = noise(x * scale, z * scale);
+        const heightNoise = noise((x + offsetX) * scale, (z + offsetZ) * scale);
         const minY = Math.floor(heightNoise * CHUNK);
         for (let y = 0; y < minY; y++) {
           grid[idx(x, y, z, CHUNK)] = fill;
@@ -48,7 +56,7 @@ export function TerrainRelief(grid: Uint8Array, CHUNK: number, options: ReliefOp
     for (let x = 0; x < CHUNK; x++) {
       for (let y = 0; y < CHUNK; y++) {
         for (let z = 0; z < CHUNK; z++) {
-          const n = noise(x * scale, y * scale, z * scale);
+          const n = noise((x + offsetX) * scale, (y + offsetY) * scale, (z + offsetZ) * scale);
           if (n > threshold) {
             grid[idx(x, y, z, CHUNK)] = fill;
           }

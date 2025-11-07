@@ -9,7 +9,7 @@ import { createTexture } from './textures';
 
 /**
  * Crea un MeshStandardMaterial con un map usando la imagen provista.
- * Mantiene defaults razonables para look “minecraft” pero
+ * Mantiene defaults razonables para look "minecraft" pero
  */
 export function createStandardMaterial(
   textureUrl: string,
@@ -53,4 +53,3 @@ export function createEmissiveMaterial(
     ...params,
   });
 }
-

@@ -1,8 +1,5 @@
-
 import * as THREE from 'three';
 import { Block } from './block_types';
-
-
 
 export type BlockKey = keyof typeof Block;
 

@@ -14,4 +14,3 @@ export function createKeyTracker(target: Document = document) {
   };
   return { keys, dispose };
 }
-

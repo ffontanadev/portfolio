@@ -18,4 +18,3 @@ export type WorldConfiguration = {
   WORLD_BASE_BLOCK: Block
   RENDERER_CONFIG: THREE.WebGLRendererParameters
 };
-

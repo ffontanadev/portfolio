@@ -16,7 +16,7 @@ export * from './block_types';
 import { Block, WorldConfiguration } from './block_types';
 
 export const WorldConfiguraton: WorldConfiguration = { 
-  CHUNK: 32,
+  CHUNK: 16,
   CAMERA_INITIAL_POSITION: new THREE.Vector3(0,20, 80),
   WORLD_BASE_BLOCK: Block.Stone,
   RENDERER_CONFIG: {

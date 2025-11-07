@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 /**
- * Crea una textura de forma estandarizada para PBR “game-like”.
+ * Crea una textura de forma estandarizada para PBR "game-like".
  * - sRGB para mapas de color (coincide con renderer.outputColorSpace).
  * - ClampToEdge por defecto (ladrillo/cubo).
  * - minFilter linear para evitar ringing al ser voxel art.

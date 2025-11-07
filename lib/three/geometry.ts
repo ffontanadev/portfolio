@@ -7,4 +7,3 @@ import * as THREE from 'three';
 export function createBlockGeometry() {
   return new THREE.BoxGeometry(1, 1, 1);
 }
-

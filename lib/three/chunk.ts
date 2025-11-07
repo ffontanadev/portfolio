@@ -1,6 +1,5 @@
 import { Block } from './block_types';
 
-
 /** Indexador 3D -> 1D para un grid cúbico CHUNK^3 */
 export const idx = (x: number, y: number, z: number, CHUNK: number) =>
   x + y * CHUNK + z * CHUNK * CHUNK;

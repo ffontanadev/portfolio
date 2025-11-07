@@ -13,4 +13,3 @@ export function setupRenderer(renderer: THREE.WebGLRenderer) {
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.setClearColor(0x000000, 0);
 }
-

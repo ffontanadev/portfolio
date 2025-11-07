@@ -50,4 +50,3 @@ export function createDefaultBlockRegistry(
   }
   return registry;
 }
-
