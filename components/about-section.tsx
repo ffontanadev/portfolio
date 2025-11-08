@@ -112,7 +112,7 @@ export function AboutSection() {
           <div className="space-y-6">
             <div className="prose prose-lg prose-invert max-w-none">
               <p className="text-gray-300 leading-relaxed mb-6">
-                Soy <strong className="text-[#B13BFF]">Felipe Fontana</strong>, un <strong className="text-[#B13BFF]">Desarrollador</strong>
+                Soy <strong className="text-[#B13BFF]">Felipe Fontana</strong>, tengo 22 años y soy un <strong className="text-[#B13BFF]"> Desarrollador</strong>{" "}
                 con base en Uruguay, quien poco a poco ha construido su reputación sobre dos cualidades fundamentales
                 que me distinguen en el panorama tecnológico: <strong className="text-[#B13BFF]">flexibilidad</strong> y
                 <strong className="text-[#B13BFF]"> capacidad de aprendizaje rápido</strong>.
