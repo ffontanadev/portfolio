@@ -1,5 +1,4 @@
 import { NextRequest } from 'next/server';
-import { unstable_cache as cache } from 'next/cache';
 import { Block } from '@/lib/three/block_types';
 import { makeNoise } from '@/lib/three/perlin';
 
@@ -138,15 +137,10 @@ function generateChunkServer(params: Params): Uint8Array {
   return grid;
 }
 
-// Cache generator results by parameter signature
-const getChunkCached = cache(
-  async (params: Params) => {
-    const grid = generateChunkServer(params);
-    return grid; // Uint8Array result
-  },
-  ['chunk-gen'],
-  { revalidate: ONE_YEAR, tags: ['chunk-gen'] }
-);
+// Generate chunk without caching (cache is handled at HTTP level with ETag)
+function generateChunkData(params: Params): Uint8Array {
+  return generateChunkServer(params);
+}
 
 function keyOf(p: Params) {
   return `${p.size}|${p.seed}|${p.base}|${p.cx}|${p.cy}|${p.cz}|${p.surfaceScale}|${p.cavesScale}|${p.cavesThreshold}|${p.grassDepth}|${p.dirtDepth}`;
@@ -156,18 +150,21 @@ export async function GET(req: NextRequest) {
   try {
     const params = parseParams(req);
 
-    // Use a stable cache key; cache wrapper ignores params, so include in key
-    const cacheKey = keyOf(params);
-    const data = await getChunkCached(params);
+    // Generate chunk data directly
+    const data = generateChunkData(params);
+    // Convert Uint8Array to Buffer
     const bufferedData = Buffer.from(data);
 
     // Compute a weak ETag from key (deterministic)
+    const cacheKey = keyOf(params);
     const etag = `W/"${hash32(cacheKey).toString(16)}-${params.size}"`;
 
     // Conditional request support
     const ifNoneMatch = req.headers.get('if-none-match');
     if (ifNoneMatch && ifNoneMatch === etag) {
-      return new Response(null, { status: 304, headers: { 'Cache-Control': CACHE_CONTROL, ETag: etag } });
+      return new Response(null, { status: 304, 
+        //headers: { 'Cache-Control': CACHE_CONTROL, ETag: etag } 
+      });
     }
 
     // Return compact binary body (Uint8Array)
@@ -181,6 +178,7 @@ export async function GET(req: NextRequest) {
       },
     });
   } catch (err: any) {
+    console.log("ERROR", err)
     return new Response(JSON.stringify({ error: err?.message ?? 'error' }), { status: 500, headers: { 'Content-Type': 'application/json' } });
   }
 }

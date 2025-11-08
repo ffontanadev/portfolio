@@ -94,12 +94,13 @@ export function AboutSection() {
             {/* Enhanced CTA Button */}
             <div className="flex flex-col items-center lg:items-start gap-3">
               <Button
+                disabled
                 onClick={handleDownloadCV}
                 className="group bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-4 rounded-xl transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
                 <Download className="mr-3 h-5 w-5 group-hover:animate-bounce" />
-                Descargar CV
+                Descargar CV (to rework)
               </Button>
               <p className="text-xs text-muted-foreground text-center lg:text-left opacity-70">
                 Disponible en PDF • Actualizado 07/09/2025
@@ -143,26 +144,6 @@ export function AboutSection() {
                 <strong className="text-[#B13BFF]"> camaleón tecnológico</strong> que puede adaptarse a tus necesidades,
                 entender tu negocio, y conectar diferentes sistemas con la <strong className="text-[#B13BFF]">versatilidad</strong> de un verdadero <strong className="text-[#B13BFF]">profesional</strong>.
               </p>
-            </div>
-
-            {/* Key Achievements */}
-            <div className="grid md:grid-cols-2 gap-4 mt-8">
-              {[
-                { number: "+3", label: "Años de experiencia" },
-                { number: "+15", label: "Proyectos completados" },
-              ].map((stat, index) => (
-                <div className="flex flex-col items-center lg:items-start">
-                  <div
-                    className="group w-full bg-primary hover:bg-primary/90 text-white font-semibold px-10 py-6 rounded-xl transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                    <div>
-                      <span className="text-3xl font-bold">{stat.number}</span> <br />
-                      <span className="text-sm mt-5">{stat.label}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         </div>

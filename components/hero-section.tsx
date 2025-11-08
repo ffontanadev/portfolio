@@ -42,7 +42,7 @@ export const HeroSection = () => {
     return (
         <section
             id="hero"
-            className="relative min-h-[98vh] w-full overflow-hidden border-b border-white/10"
+            className="relative min-h-[98vh] w-full overflow-hidden border-white/10"
         >
             <div className="pointer-events-none absolute inset-y-0 right-0 w-full md:w-1/2">
                 {/* Gradient blur overlay for smooth transition */}
@@ -52,7 +52,7 @@ export const HeroSection = () => {
                 <div className="pointer-events-auto h-full relative">
                     {/* Runtime Controls for chunk parameters */}
                     <div
-                        className="absolute top-6 right-6 backdrop-blur-md bg-black/40 px-4 py-3 rounded-lg shadow-lg z-20 text-white min-w-[200px] border border-white/10"
+                        className="absolute bottom-6 right-6 backdrop-blur-md bg-black/40 px-4 py-3 rounded-lg shadow-lg z-20 text-white min-w-[200px] border border-white/10"
                         aria-label="World parameters"
                     >
                         <div className="space-y-3">
@@ -93,8 +93,8 @@ export const HeroSection = () => {
                     <div
                         className="
                         absolute bottom-6 left-1/2 transform -translate-x-1/2
-                        flex flex-col sm:flex-row backdrop-blur-sm px-4 py-2 rounded-full opacity-20
-                        shadow-lg z-20 w-[90%]  text-white max-w-[500px] hidden md:flex"
+                        flex-col sm:flex-row
+                        w-[90%] max-w-[500px] hidden md:flex backdrop-blur-md bg-black/40 px-4 py-3 rounded-lg shadow-lg z-20 text-white min-w-[200px] border border-white/10"
                         aria-label="Game controls"
                     >
                         {controlGroups.map((group, groupIdx) => (
@@ -158,14 +158,15 @@ export const HeroSection = () => {
                         </p>
 
                         <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                            <Tooltip content="Explora proyectos reales" position="top">
+                            <Tooltip content="Explora proyectos interactivos" position="top">
                                 <Button
                                     size="lg"
                                     variant="outline"
+                                    disabled
                                     onClick={() => handleClick("/showcase")}
                                     className="border-white/30 text-[#B13BFF] hover:bg-white hover:text-black px-8 py-6 rounded-full transition-all duration-300"
                                 >
-                                    Ver proyectos
+                                    Ver proyectos (to rework)
                                     <Sparkles className="ml-2 h-5 w-5" />
                                 </Button>
                             </Tooltip>

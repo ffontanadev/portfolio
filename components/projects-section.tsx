@@ -39,39 +39,6 @@ const projects = [
     category: "mobile",
     featured: false
   },
-  {
-    id: 4,
-    title: "Dashboard Analytics",
-    description: "Panel de control con visualización de datos en tiempo real y reportes personalizados.",
-    image: "/placeholder-logo.png",
-    technologies: ["React", "D3.js", "Node.js", "PostgreSQL", "Chart.js"],
-    category: "fullstack",
-    demoUrl: "#",
-    githubUrl: "#",
-    featured: true
-  },
-  {
-    id: 5,
-    title: "App Móvil React Native",
-    description: "Aplicación móvil multiplataforma para gestión de tareas con sincronización en la nube.",
-    image: "/placeholder-logo.png",
-    technologies: ["React Native", "Firebase", "Redux", "TypeScript"],
-    category: "mobile",
-    demoUrl: "#",
-    githubUrl: "#",
-    featured: false
-  },
-  {
-    id: 6,
-    title: "Sistema de Reservas",
-    description: "Plataforma de reservas online con calendario interactivo y notificaciones automáticas.",
-    image: "/placeholder-logo.png",
-    technologies: ["Vue.js", "Node.js", "MongoDB", "Socket.io", "Stripe"],
-    category: "fullstack",
-    demoUrl: "#",
-    githubUrl: "#",
-    featured: false
-  }
 ]
 
 const categories = [

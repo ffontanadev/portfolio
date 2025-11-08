@@ -31,3 +31,12 @@ export interface ProcessStepsProps {
   theme?: Theme;
   className?: string;
 }
+
+export interface Experience {
+  title: string;
+  company: string;
+  startDate: string;
+  endDate: string;
+  description: string[];
+  technologies: string[];
+}

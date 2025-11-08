@@ -10,6 +10,7 @@ import {
 import { Navigation } from "@/components/navigation";
 import { AboutSection } from "@/components/about-section";
 import { SkillsSection } from "@/components/skills-section";
+import { ExperienceSection } from "@/components/experience-section";
 import { ProjectsSection } from "@/components/projects-section";
 import { TestimonialsSection } from "@/components/testimonials-section";
 import { ContactSection } from "@/components/contact-section";
@@ -47,6 +48,9 @@ export default function FfontanaLanding() {
         <HeroSection />
         {/* ========== END HERO ========== */}
 
+        {/* Experience Section */}
+        <ExperienceSection />
+
         {/* About Me Section */}
         <AboutSection />
 
@@ -56,36 +60,14 @@ export default function FfontanaLanding() {
         {/* Projects Section */}
         <ProjectsSection />
 
-        {/* Partners Carousel */}
-        <section className="py-16 px-4 bg-gray-900/20">
-          <div className="max-w-7xl mx-auto">
-            <h3 className="text-2xl font-bold text-center mb-12 text-[#B13BFF]">
-              Integraciones con las mejores plataformas
-            </h3>
-            <div className="overflow-hidden">
-              <div className="flex animate-scroll">
-                {[...partners, ...partners].map((partner, index) => (
-                  <div key={index} className="flex-shrink-0 mx-8">
-                    <div className="w-32 h-16 bg-gray-800/50 rounded-lg flex items-center justify-center border border-gray-700 hover:border-[#B13BFF]/50 transition-all duration-300">
-                      <span className="text-gray-400 font-semibold text-sm">{partner}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Testimonials Section */}
         {/* <TestimonialsSection /> */}
 
-        {/* Contact Section */}
         {/* <ContactSection /> */}
 
         {/* Footer */}
         <footer className="py-8 px-4 border-t border-gray-800">
           <div className="max-w-7xl mx-auto text-center">
-            <p className="text-gray-400">© 2024 ffontana.dev - Soluciones digitales personalizadas</p>
+            <p className="text-gray-400">© 2024 ffontana.dev - Hecho con ❤️ desde Uruguay</p>
           </div>
         </footer>
       </div>
