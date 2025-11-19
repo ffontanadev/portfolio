@@ -14,7 +14,7 @@ export function ExperienceTimeline({ experiences, className }: ExperienceTimelin
   return (
     <div className={cn("relative w-full", className)}>
       {/* Timeline vertical line */}
-      <div className="absolute left-4 md:left-12 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#B13BFF] via-[#B13BFF]/60 to-transparent" />
+      <div className="absolute left-4 md:left-12 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#f97316] via-[#f97316]/60 to-transparent" />
 
       <div className="space-y-12">
         {experiences.map((experience, index) => (
@@ -79,25 +79,25 @@ function ExperienceItem({ experience, index }: ExperienceItemProps) {
           {/* Pulsing ring */}
           <div
             className={cn(
-              "absolute inset-0 rounded-full bg-[#B13BFF] opacity-0 transition-opacity duration-700",
+              "absolute inset-0 rounded-full bg-[#f97316] opacity-0 transition-opacity duration-700",
               isVisible && "animate-ping opacity-75"
             )}
           />
           {/* Solid dot */}
-          <div className="absolute inset-0 rounded-full bg-[#B13BFF] ring-4 ring-black" />
+          <div className="absolute inset-0 rounded-full bg-[#f97316] ring-4 ring-black" />
         </div>
       </div>
 
       {/* Content card */}
       <div className="group">
         {/* Date range */}
-        <div className="mb-2 text-sm font-medium text-[#B13BFF]">
+        <div className="mb-2 text-sm font-medium text-[#f97316]">
           {experience.startDate} – {experience.endDate}
         </div>
 
         {/* Title and company */}
         <div className="mb-3">
-          <h3 className="text-2xl font-bold text-white mb-1 group-hover:text-[#B13BFF] transition-colors duration-300">
+          <h3 className="text-2xl font-bold text-white mb-1 group-hover:text-[#f97316] transition-colors duration-300">
             {experience.title}
           </h3>
           <p className="text-lg font-medium text-gray-300">
@@ -123,7 +123,7 @@ function ExperienceItem({ experience, index }: ExperienceItemProps) {
                 variant="outline"
                 className={cn(
                   "border-gray-600 text-gray-300",
-                  "hover:border-[#B13BFF] hover:text-[#B13BFF]",
+                  "hover:border-[#f97316] hover:text-[#f97316]",
                   "transition-all duration-200",
                   "cursor-default"
                 )}

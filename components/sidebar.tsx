@@ -72,7 +72,7 @@ export function FFBack({ onClick }: { onClick?: () => void }) {
       onClick={onClick}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="text-[#B13BFF] font-bold"
+      className="text-[#f97316] font-bold"
     >
       <div className="transition-transform duration-200 ease-in-out ">
         {hovered ? (

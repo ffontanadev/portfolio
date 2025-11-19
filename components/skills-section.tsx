@@ -58,7 +58,7 @@ export function SkillsSection() {
     <section id="skills" className="py-20 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-[#B13BFF] to-[#471396] bg-clip-text text-transparent">
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-[#f97316] to-[#ea580c] bg-clip-text text-transparent">
             Habilidades Técnicas
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -74,7 +74,7 @@ export function SkillsSection() {
               onClick={() => setActiveCategory(index)}
               className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
                 activeCategory === index
-                  ? "bg-[#B13BFF] text-black shadow-lg shadow-[#B13BFF]/25 scale-105"
+                  ? "bg-[#f97316] text-white shadow-lg shadow-[#f97316]/25 scale-105"
                   : "bg-white text-black hover:scale-105"
               }`}
             >
@@ -89,17 +89,17 @@ export function SkillsSection() {
           {skillCategories[activeCategory].skills.map((skill, index) => (
             <Card
               key={index}
-              className="bg-transparent/50 border-gray-800 hover:border-[#B13BFF]/50 transition-all duration-1000 group relative overflow-hidden"
+              className="bg-transparent/50 border-gray-800 hover:border-[#f97316]/50 transition-all duration-1000 group relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
               <CardContent className="p-6 relative z-10">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-semibold text-white group-hover:text-[#B13BFF] transition-colors duration-200">
+                  <h3 className="font-semibold text-white group-hover:text-[#f97316] transition-colors duration-200">
                     {skill.name}
                   </h3>
-                  <Badge 
-                    variant="outline" 
-                    className="border-[#B13BFF]/30 text-[#B13BFF]"
+                  <Badge
+                    variant="outline"
+                    className="border-[#f97316]/30 text-[#f97316]"
                   >
                     {skill.level}%
                   </Badge>
@@ -120,7 +120,7 @@ export function SkillsSection() {
 
         {/* Technology Badges */}
         <div className="mt-16">
-          <h3 className="text-2xl font-bold text-center mb-8 text-[#B13BFF]">
+          <h3 className="text-2xl font-bold text-center mb-8 text-[#f97316]">
             Tecnologías Adicionales
           </h3>
           <div className="flex flex-wrap justify-center gap-3">
@@ -132,7 +132,7 @@ export function SkillsSection() {
               <Badge
                 key={index}
                 variant="outline"
-                className="px-4 py-2 text-sm border-gray-600 text-gray-300 hover:border-[#B13BFF] hover:text-[#B13BFF] transition-all duration-200 cursor-default"
+                className="px-4 py-2 text-sm border-gray-600 text-gray-300 hover:border-[#f97316] hover:text-[#f97316] transition-all duration-200 cursor-default"
               >
                 {tech}
               </Badge>

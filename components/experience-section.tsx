@@ -72,7 +72,7 @@ export function ExperienceSection() {
       <div className="max-w-5xl mx-auto">
         {/* Section header */}
         <div className="mb-16 text-center">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-[#B13BFF] to-[#471396] bg-clip-text text-transparent">
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-[#f97316] to-[#ea580c] bg-clip-text text-transparent">
             Experiencia Profesional
           </h2>
           <p className="text-xl text-gray-400">

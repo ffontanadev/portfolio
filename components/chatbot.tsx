@@ -161,7 +161,7 @@ ffontana.dev — Soluciones digitales personalizadas para tu negocio. Landing pa
       <div className=" flex items-center gap-2 mb-5  sm:p-4 sm:mb-6 px-3 py-2 bg-gray-800/20 rounded-full shadow-lg">
         <input
           type="text"
-          className="flex-1 rounded-full px-2 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#B13BFF]/40 bg-transparent text-[16px]"
+          className="flex-1 rounded-full px-2 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#f97316]/40 bg-transparent text-[16px]"
           placeholder="Escribe tu mensaje..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -169,7 +169,7 @@ ffontana.dev — Soluciones digitales personalizadas para tu negocio. Landing pa
         />
         <button
           onClick={handleSend}
-          className=" hover:bg-[#B13BFF]/40 text-white p-3 rounded-full transition-transform cursor-none active:scale-95"
+          className=" hover:bg-[#f97316]/40 text-white p-3 rounded-full transition-transform cursor-none active:scale-95"
         >
           <SendIcon className="h-7 w-7 flex items-center justify-center -rotate-45" />
         </button>
@@ -207,7 +207,7 @@ export function ChatMessageBubble({
         className={`flex flex-col w-full max-w-[320px] leading-1.5 p-4 ${
           isIncoming
             ? "bg-transparent text-white/80"
-            : "bg-[#471396] text-white"
+            : "bg-[#ea580c] text-white"
         } rounded-e-xl rounded-es-xl`}
       >
         <div className="flex items-center space-x-2">

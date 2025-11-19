@@ -55,7 +55,7 @@ export function ContactSection() {
     <section id="contact" className="py-20 px-4 bg-black/40 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-[#B13BFF] to-[#471396] bg-clip-text text-transparent">
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-[#f97316] to-[#ea580c] bg-clip-text text-transparent">
             Hablemos de tu proyecto
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -67,7 +67,7 @@ export function ContactSection() {
           {/* Contact Information */}
           <div className="space-y-8">
             <div>
-              <h3 className="text-2xl font-bold text-[#B13BFF] mb-6">
+              <h3 className="text-2xl font-bold text-[#f97316] mb-6">
                 Información de contacto
               </h3>
               <p className="text-gray-300 mb-8">
@@ -77,11 +77,11 @@ export function ContactSection() {
 
             {/* Contact Methods */}
             <div className="space-y-6">
-              <Card className="bg-gray-900/50 border-gray-800 hover:border-[#B13BFF]/50 transition-all duration-300">
+              <Card className="bg-gray-900/50 border-gray-800 hover:border-[#f97316]/50 transition-all duration-300">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-[#B13BFF]/20 flex items-center justify-center">
-                      <MessageCircle className="w-6 h-6 text-[#B13BFF]" />
+                    <div className="w-12 h-12 rounded-full bg-[#f97316]/20 flex items-center justify-center">
+                      <MessageCircle className="w-6 h-6 text-[#f97316]" />
                     </div>
                     <div className="flex-1">
                       <h4 className="font-semibold text-white mb-1">WhatsApp</h4>
@@ -97,11 +97,11 @@ export function ContactSection() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-gray-900/50 border-gray-800 hover:border-[#B13BFF]/50 transition-all duration-300">
+              <Card className="bg-gray-900/50 border-gray-800 hover:border-[#f97316]/50 transition-all duration-300">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-[#B13BFF]/20 flex items-center justify-center">
-                      <Mail className="w-6 h-6 text-[#B13BFF]" />
+                    <div className="w-12 h-12 rounded-full bg-[#f97316]/20 flex items-center justify-center">
+                      <Mail className="w-6 h-6 text-[#f97316]" />
                     </div>
                     <div className="flex-1">
                       <h4 className="font-semibold text-white mb-1">Email</h4>
@@ -109,7 +109,7 @@ export function ContactSection() {
                       <Button
                         onClick={handleEmailContact}
                         variant="outline"
-                        className="border-[#B13BFF] text-[#B13BFF] hover:bg-[#B13BFF] hover:text-black"
+                        className="border-[#f97316] text-[#f97316] hover:bg-[#f97316] hover:text-black"
                       >
                         Enviar email
                       </Button>
@@ -118,18 +118,18 @@ export function ContactSection() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-gray-900/50 border-gray-800 hover:border-[#B13BFF]/50 transition-all duration-300">
+              <Card className="bg-gray-900/50 border-gray-800 hover:border-[#f97316]/50 transition-all duration-300">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-[#B13BFF]/20 flex items-center justify-center">
-                      <Calendar className="w-6 h-6 text-[#B13BFF]" />
+                    <div className="w-12 h-12 rounded-full bg-[#f97316]/20 flex items-center justify-center">
+                      <Calendar className="w-6 h-6 text-[#f97316]" />
                     </div>
                     <div className="flex-1">
                       <h4 className="font-semibold text-white mb-1">Reunión Virtual</h4>
                       <p className="text-gray-400 text-sm mb-2">Agenda una videollamada</p>
                       <Button
                         variant="outline"
-                        className="border-[#B13BFF] text-[#B13BFF] hover:bg-[#B13BFF] hover:text-black"
+                        className="border-[#f97316] text-[#f97316] hover:bg-[#f97316] hover:text-black"
                       >
                         Agendar reunión
                       </Button>
@@ -142,11 +142,11 @@ export function ContactSection() {
             {/* Additional Info */}
             <div className="space-y-4">
               <div className="flex items-center gap-3 text-gray-300">
-                <MapPin className="w-5 h-5 text-[#B13BFF]" />
+                <MapPin className="w-5 h-5 text-[#f97316]" />
                 <span>Montevideo, Uruguay (GMT-3)</span>
               </div>
               <div className="flex items-center gap-3 text-gray-300">
-                <Phone className="w-5 h-5 text-[#B13BFF]" />
+                <Phone className="w-5 h-5 text-[#f97316]" />
                 <span>Disponible Lun-Vie 9:00-18:00</span>
               </div>
             </div>
@@ -155,7 +155,7 @@ export function ContactSection() {
           {/* Contact Form */}
           <Card className="bg-gray-900/50 border-gray-800">
             <CardHeader>
-              <CardTitle className="text-[#B13BFF]">Envía un mensaje</CardTitle>
+              <CardTitle className="text-[#f97316]">Envía un mensaje</CardTitle>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -171,7 +171,7 @@ export function ContactSection() {
                       required
                       value={formData.name}
                       onChange={handleInputChange}
-                      className="bg-gray-800/50 border-gray-700 text-white placeholder-gray-400 focus:border-[#B13BFF] focus:ring-[#B13BFF]"
+                      className="bg-gray-800/50 border-gray-700 text-white placeholder-gray-400 focus:border-[#f97316] focus:ring-[#f97316]"
                       placeholder="Tu nombre completo"
                     />
                   </div>
@@ -186,7 +186,7 @@ export function ContactSection() {
                       required
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="bg-gray-800/50 border-gray-700 text-white placeholder-gray-400 focus:border-[#B13BFF] focus:ring-[#B13BFF]"
+                      className="bg-gray-800/50 border-gray-700 text-white placeholder-gray-400 focus:border-[#f97316] focus:ring-[#f97316]"
                       placeholder="tu@email.com"
                     />
                   </div>
@@ -203,7 +203,7 @@ export function ContactSection() {
                     required
                     value={formData.subject}
                     onChange={handleInputChange}
-                    className="bg-gray-800/50 border-gray-700 text-white placeholder-gray-400 focus:border-[#B13BFF] focus:ring-[#B13BFF]"
+                    className="bg-gray-800/50 border-gray-700 text-white placeholder-gray-400 focus:border-[#f97316] focus:ring-[#f97316]"
                     placeholder="¿En qué te puedo ayudar?"
                   />
                 </div>
@@ -219,7 +219,7 @@ export function ContactSection() {
                     rows={5}
                     value={formData.message}
                     onChange={handleInputChange}
-                    className="bg-gray-800/50 border-gray-700 text-white placeholder-gray-400 focus:border-[#B13BFF] focus:ring-[#B13BFF] resize-none"
+                    className="bg-gray-800/50 border-gray-700 text-white placeholder-gray-400 focus:border-[#f97316] focus:ring-[#f97316] resize-none"
                     placeholder="Cuéntame sobre tu proyecto, objetivos, timeline y presupuesto aproximado..."
                   />
                 </div>
@@ -227,7 +227,7 @@ export function ContactSection() {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-[#B13BFF] hover:bg-[#A4DD00] text-black font-semibold py-3 transition-all duration-300 hover:shadow-lg hover:shadow-[#B13BFF]/25"
+                  className="w-full bg-[#f97316] hover:bg-[#A4DD00] text-black font-semibold py-3 transition-all duration-300 hover:shadow-lg hover:shadow-[#f97316]/25"
                 >
                   {isSubmitting ? (
                     "Enviando..."

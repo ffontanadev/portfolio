@@ -94,7 +94,7 @@ export function TestimonialsSection() {
     <section id="testimonials" className="py-20 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-[#B13BFF] to-[#471396] bg-clip-text text-transparent">
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-[#f97316] to-[#ea580c] bg-clip-text text-transparent">
             Lo que dicen mis clientes
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -104,12 +104,12 @@ export function TestimonialsSection() {
 
         {/* Main Testimonial Carousel */}
         <div className="relative max-w-4xl mx-auto mb-12">
-          <Card className="bg-gray-900/50 border-gray-800 hover:border-[#B13BFF]/50 transition-all duration-300">
+          <Card className="bg-gray-900/50 border-gray-800 hover:border-[#f97316]/50 transition-all duration-300">
             <CardContent className="p-8 md:p-12">
               <div className="flex flex-col md:flex-row items-center gap-8">
                 {/* Client Image */}
                 <div className="flex-shrink-0">
-                  <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-[#B13BFF]/30">
+                  <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-[#f97316]/30">
                     <Image
                       src={testimonials[currentIndex].image}
                       alt={`${testimonials[currentIndex].name} - Cliente satisfecho`}
@@ -121,7 +121,7 @@ export function TestimonialsSection() {
 
                 {/* Testimonial Content */}
                 <div className="flex-1 text-center md:text-left">
-                  <Quote className="w-8 h-8 text-[#B13BFF] mb-4 mx-auto md:mx-0" />
+                  <Quote className="w-8 h-8 text-[#f97316] mb-4 mx-auto md:mx-0" />
                   
                   <blockquote className="text-lg md:text-xl text-gray-300 mb-6 italic leading-relaxed">
                     "{testimonials[currentIndex].text}"
@@ -130,19 +130,19 @@ export function TestimonialsSection() {
                   {/* Rating */}
                   <div className="flex justify-center md:justify-start gap-1 mb-4">
                     {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 text-[#B13BFF] fill-current" />
+                      <Star key={i} className="w-5 h-5 text-[#f97316] fill-current" />
                     ))}
                   </div>
 
                   {/* Client Info */}
                   <div>
-                    <h4 className="font-semibold text-[#B13BFF] text-lg">
+                    <h4 className="font-semibold text-[#f97316] text-lg">
                       {testimonials[currentIndex].name}
                     </h4>
                     <p className="text-gray-400">
                       {testimonials[currentIndex].role} en {testimonials[currentIndex].company}
                     </p>
-                    <p className="text-sm text-[#B13BFF]/70 mt-1">
+                    <p className="text-sm text-[#f97316]/70 mt-1">
                       Proyecto: {testimonials[currentIndex].project}
                     </p>
                   </div>
@@ -154,7 +154,7 @@ export function TestimonialsSection() {
           {/* Navigation Arrows */}
           <Button
             onClick={goToPrevious}
-            className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-[#B13BFF]/20 hover:bg-[#B13BFF] text-[#B13BFF] hover:text-black backdrop-blur-sm"
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-[#f97316]/20 hover:bg-[#f97316] text-[#f97316] hover:text-black backdrop-blur-sm"
             aria-label="Testimonio anterior"
           >
             <ChevronLeft className="w-6 h-6" />
@@ -162,7 +162,7 @@ export function TestimonialsSection() {
 
           <Button
             onClick={goToNext}
-            className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-[#B13BFF]/20 hover:bg-[#B13BFF] text-[#B13BFF] hover:text-black backdrop-blur-sm"
+            className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-[#f97316]/20 hover:bg-[#f97316] text-[#f97316] hover:text-black backdrop-blur-sm"
             aria-label="Siguiente testimonio"
           >
             <ChevronRight className="w-6 h-6" />
@@ -177,7 +177,7 @@ export function TestimonialsSection() {
               onClick={() => goToSlide(index)}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
                 index === currentIndex
-                  ? "bg-[#B13BFF] scale-125"
+                  ? "bg-[#f97316] scale-125"
                   : "bg-gray-600 hover:bg-gray-500"
               }`}
               aria-label={`Ir al testimonio ${index + 1}`}
@@ -190,15 +190,15 @@ export function TestimonialsSection() {
           {testimonials.map((testimonial, index) => (
             <Card
               key={testimonial.id}
-              className={`bg-gray-900/30 border-gray-800 hover:border-[#B13BFF]/50 transition-all duration-300 cursor-pointer ${
-                index === currentIndex ? "ring-2 ring-[#B13BFF]/30" : ""
+              className={`bg-gray-900/30 border-gray-800 hover:border-[#f97316]/50 transition-all duration-300 cursor-pointer ${
+                index === currentIndex ? "ring-2 ring-[#f97316]/30" : ""
               }`}
               onClick={() => goToSlide(index)}
             >
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-3">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 text-[#B13BFF] fill-current" />
+                    <Star key={i} className="w-4 h-4 text-[#f97316] fill-current" />
                   ))}
                 </div>
 
@@ -207,7 +207,7 @@ export function TestimonialsSection() {
                 </p>
 
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-[#B13BFF]/30">
+                  <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-[#f97316]/30">
                     <Image
                       src={testimonial.image}
                       alt={testimonial.name}
@@ -217,7 +217,7 @@ export function TestimonialsSection() {
                     />
                   </div>
                   <div>
-                    <p className="font-semibold text-[#B13BFF] text-sm">
+                    <p className="font-semibold text-[#f97316] text-sm">
                       {testimonial.name}
                     </p>
                     <p className="text-xs text-gray-400">

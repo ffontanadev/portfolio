@@ -36,10 +36,10 @@ const improvedParticlesOptions = {
   },
   particles: {
     color: {
-      value: "#B13BFF",
+      value: "#f97316",
     },
     links: {
-      color: "#B13BFF",
+      color: "#f97316",
       distance: 150,
       enable: true,
       opacity: 0.2, // Reduced for better readability

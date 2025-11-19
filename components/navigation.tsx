@@ -58,7 +58,7 @@ export function Navigation() {
             <div className="flex-shrink-0 bg-black/60 px-3 py-0.5 rounded-md">
               <button
                 onClick={() => scrollToSection("#hero")}
-                className="text-xl font-bold bg-[#B13BFF] bg-clip-text text-transparent hover:scale-105 transition-transform duration-200"
+                className="text-xl font-bold bg-[#f97316] bg-clip-text text-transparent hover:scale-105 transition-transform duration-200"
               >
                 ffontana.dev
               </button>
@@ -71,7 +71,7 @@ export function Navigation() {
                   <button
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
-                    className="text-gray-300 hover:text-[#B13BFF] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-white/5"
+                    className="text-gray-300 hover:text-[#f97316] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-white/5"
                   >
                     {item.name}
                   </button>
@@ -83,7 +83,7 @@ export function Navigation() {
             <div className="md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-gray-300 hover:text-[#B13BFF] p-2 rounded-md transition-colors duration-200"
+                className="text-gray-300 hover:text-[#f97316] p-2 rounded-md transition-colors duration-200"
                 aria-label="Toggle menu"
               >
                 {isMenuOpen ? (
@@ -104,7 +104,7 @@ export function Navigation() {
                 <button
                   key={item.name}
                   onClick={() => scrollToSection(item.href)}
-                  className="text-gray-300 hover:text-[#B13BFF] block px-3 py-2 rounded-md text-base font-medium w-full text-left transition-colors duration-200 hover:bg-white/5"
+                  className="text-gray-300 hover:text-[#f97316] block px-3 py-2 rounded-md text-base font-medium w-full text-left transition-colors duration-200 hover:bg-white/5"
                 >
                   {item.name}
                 </button>
@@ -118,7 +118,7 @@ export function Navigation() {
       {showScrollTop && (
         <Button
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full bg-[#B13BFF] hover:bg-[#A4DD00] text-black shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
+          className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full bg-[#f97316] hover:bg-[#A4DD00] text-black shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
           aria-label="Scroll to top"
         >
           <ChevronUp className="h-5 w-5" />

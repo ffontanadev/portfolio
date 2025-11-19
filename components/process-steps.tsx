@@ -77,7 +77,7 @@ export default function ProcessSteps({
       <div className="relative max-w-7xl mx-auto">
         {/* Title */}
         <header className="text-center mb-16">
-          <h2 className="text-4xl md:text-6xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-[#B13BFF] to-[#471396] bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-6xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-[#f97316] to-[#ea580c] bg-clip-text text-transparent">
             {title}
           </h2>
           <div
@@ -172,7 +172,7 @@ export default function ProcessSteps({
                 <div
                   className={`
                   ${layout === "vertical" ? "flex-1" : "w-full"}
-                  bg-gray-900/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-800 hover:border-[#B13BFF]/50 
+                  bg-gray-900/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-800 hover:border-[#f97316]/50 
                   group-hover:bg-gray/10 group-hover:border-purple-400/30 
                   transition-all duration-300 group-hover:shadow-2xl
                   group-hover:shadow-purple-500/20
@@ -236,7 +236,7 @@ export default function ProcessSteps({
 
         {/* Bottom CTA or additional content area */}
         <footer className="text-center mt-16">
-          <Badge className="inline-block px-6 py-2 rounded-2xl text-sm font-medium bg-[#B13BFF]/20 text-[#B13BFF] border-[#B13BFF]/30 mb-4">
+          <Badge className="inline-block px-6 py-2 rounded-2xl text-sm font-medium bg-[#f97316]/20 text-[#f97316] border-[#f97316]/30 mb-4">
             Hemos optimizado este proceso para que sea más eficiente y efectivo,
             asegurando que cada paso esté alineado con tus objetivos de negocio
             🚀😉
@@ -263,8 +263,8 @@ export const iconMap = {
 
 const defaultTheme: Theme = {
   background: "#090040",
-  highlight: "#B13BFF",
-  secondary: "#471396",
+  highlight: "#f97316",
+  secondary: "#ea580c",
   text: "#ffffff",
   cardBackground: "rgba(71, 19, 150, 0.1)",
 };

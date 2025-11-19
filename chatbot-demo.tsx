@@ -79,9 +79,9 @@ export function ChatbotDemo({ example }: ChatbotDemoProps) {
   return (
     <div className="flex flex-col h-full bg-gradient-to-br from-white/5 to-white/10 rounded-2xl border border-white/10 overflow-hidden">
       {/* Chat Header */}
-      <div className="p-4 border-b border-white/10 bg-gradient-to-r from-[#B13BFF]/10 to-[#471396]/10">
+      <div className="p-4 border-b border-white/10 bg-gradient-to-r from-[#f97316]/10 to-[#ea580c]/10">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#B13BFF] to-[#471396] flex items-center justify-center">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#f97316] to-[#ea580c] flex items-center justify-center">
             <Bot className="w-5 h-5 text-white" />
           </div>
           <div>
@@ -100,7 +100,7 @@ export function ChatbotDemo({ example }: ChatbotDemoProps) {
             >
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                  message.sender === "user" ? "bg-[#B13BFF]" : "bg-gradient-to-br from-[#471396] to-[#B13BFF]"
+                  message.sender === "user" ? "bg-[#f97316]" : "bg-gradient-to-br from-[#ea580c] to-[#f97316]"
                 }`}
               >
                 {message.sender === "user" ? (
@@ -112,7 +112,7 @@ export function ChatbotDemo({ example }: ChatbotDemoProps) {
               <div
                 className={`p-3 rounded-2xl ${
                   message.sender === "user"
-                    ? "bg-[#B13BFF] text-white rounded-br-md"
+                    ? "bg-[#f97316] text-white rounded-br-md"
                     : "bg-white/10 text-white rounded-bl-md"
                 }`}
               >
@@ -125,7 +125,7 @@ export function ChatbotDemo({ example }: ChatbotDemoProps) {
         {isTyping && (
           <div className="flex justify-start">
             <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#471396] to-[#B13BFF] flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#ea580c] to-[#f97316] flex items-center justify-center">
                 <Bot className="w-4 h-4 text-white" />
               </div>
               <div className="p-3 rounded-2xl bg-white/10 text-white rounded-bl-md">
@@ -150,12 +150,12 @@ export function ChatbotDemo({ example }: ChatbotDemoProps) {
             onChange={(e) => setInputValue(e.target.value)}
             onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
             placeholder="Type your message..."
-            className="flex-1 p-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#B13BFF] focus:border-transparent"
+            className="flex-1 p-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#f97316] focus:border-transparent"
           />
           <button
             onClick={handleSendMessage}
             disabled={!inputValue.trim()}
-            className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#B13BFF] to-[#471396] flex items-center justify-center hover:scale-105 transition-transform duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#f97316] to-[#ea580c] flex items-center justify-center hover:scale-105 transition-transform duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Send className="w-5 h-5 text-white" />
           </button>

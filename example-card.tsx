@@ -22,10 +22,10 @@ export function ExampleCard({ example, onClick }: ExampleCardProps) {
       onClick={onClick}
       className="group cursor-pointer transform transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1"
     >
-      <div className="bg-gradient-to-br from-white/10 to-white/5 rounded-3xl p-1 shadow-xl hover:shadow-2xl hover:shadow-[#B13BFF]/20 transition-all duration-300">
-        <div className="bg-gradient-to-br from-[#471396]/30 to-[#090040] rounded-[22px] overflow-hidden">
+      <div className="bg-gradient-to-br from-white/10 to-white/5 rounded-3xl p-1 shadow-xl hover:shadow-2xl hover:shadow-[#f97316]/20 transition-all duration-300">
+        <div className="bg-gradient-to-br from-[#ea580c]/30 to-[#090040] rounded-[22px] overflow-hidden">
           {/* Thumbnail */}
-          <div className="relative h-48 bg-gradient-to-br from-[#B13BFF]/20 to-[#471396]/20 overflow-hidden">
+          <div className="relative h-48 bg-gradient-to-br from-[#f97316]/20 to-[#ea580c]/20 overflow-hidden">
             <img
               src={example.thumbnail || "/placeholder.svg"}
               alt={example.title}
@@ -35,7 +35,7 @@ export function ExampleCard({ example, onClick }: ExampleCardProps) {
 
             {/* Play button overlay */}
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <div className="w-16 h-16 rounded-full bg-[#B13BFF]/90 backdrop-blur-sm flex items-center justify-center transform scale-75 group-hover:scale-100 transition-transform duration-300">
+              <div className="w-16 h-16 rounded-full bg-[#f97316]/90 backdrop-blur-sm flex items-center justify-center transform scale-75 group-hover:scale-100 transition-transform duration-300">
                 {example.isInteractive ? (
                   <Zap className="w-7 h-7 text-white" />
                 ) : (
@@ -46,7 +46,7 @@ export function ExampleCard({ example, onClick }: ExampleCardProps) {
 
             {/* Category badge */}
             <div className="absolute top-4 left-4">
-              <span className="px-3 py-1 rounded-full bg-[#B13BFF]/80 backdrop-blur-sm text-xs font-medium text-white">
+              <span className="px-3 py-1 rounded-full bg-[#f97316]/80 backdrop-blur-sm text-xs font-medium text-white">
                 {example.category}
               </span>
             </div>
@@ -64,7 +64,7 @@ export function ExampleCard({ example, onClick }: ExampleCardProps) {
 
           {/* Content */}
           <div className="p-6">
-            <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-[#B13BFF] transition-colors duration-300">
+            <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-[#f97316] transition-colors duration-300">
               {example.title}
             </h3>
             <p className="text-white/70 text-sm leading-relaxed">{example.description}</p>

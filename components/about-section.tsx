@@ -41,7 +41,7 @@ export function AboutSection() {
     <section id="about" className="py-20 px-4 bg-black/40 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-[#B13BFF] to-[#471396] bg-clip-text text-transparent">
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-[#f97316] to-[#ea580c] bg-clip-text text-transparent">
             Sobre mí
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -53,7 +53,7 @@ export function AboutSection() {
           {/* Profile Image and Quick Info */}
           <div className="text-center lg:text-left">
             <div className="relative inline-block mb-8">
-              <div className="w-64 h-64 mx-auto lg:mx-0 rounded-full bg-gradient-to-br from-[#B13BFF]/20 to-[#471396]/20 border-4 border-[#B13BFF]/30 overflow-hidden relative">
+              <div className="w-64 h-64 mx-auto lg:mx-0 rounded-full bg-gradient-to-br from-[#f97316]/20 to-[#ea580c]/20 border-4 border-[#f97316]/30 overflow-hidden relative">
                 {images.map((image, index) => (
                   <div
                     key={image}
@@ -78,14 +78,14 @@ export function AboutSection() {
             <div className="space-y-3 mb-8">
               <div className="group flex items-center justify-center lg:justify-start gap-3 p-3 rounded-lg bg-black backdrop-blur-sm transition-all duration-300 hover:shadow-md hover:shadow-primary/10">
                 <div className="flex flex-col">
-                  <span className="text-sm font-medium text-[#B13BFF]">Ubicación</span>
+                  <span className="text-sm font-medium text-[#f97316]">Ubicación</span>
                   <span className="font-semibold text-white/80">Montevideo, Uruguay</span>
                 </div>
               </div>
 
               <div className="group flex items-center justify-center lg:justify-start gap-3 p-3 rounded-lg bg-black backdrop-blur-sm transition-all duration-300 hover:shadow-md hover:shadow-primary/10">
                 <div className="flex flex-col">
-                  <span className="text-sm font-medium text-[#B13BFF]">Experiencia</span>
+                  <span className="text-sm font-medium text-[#f97316]">Experiencia</span>
                   <span className="font-semibold text-white/80">+3 años de experiencia</span>
                 </div>
               </div>
@@ -112,37 +112,37 @@ export function AboutSection() {
           <div className="space-y-6">
             <div className="prose prose-lg prose-invert max-w-none">
               <p className="text-gray-300 leading-relaxed mb-6">
-                Soy <strong className="text-[#B13BFF]">Felipe Fontana</strong>, tengo 22 años y soy un <strong className="text-[#B13BFF]"> Desarrollador</strong>{" "}
+                Soy <strong className="text-[#f97316]">Felipe Fontana</strong>, tengo 22 años y soy un <strong className="text-[#f97316]"> Desarrollador</strong>{" "}
                 con base en Uruguay, quien poco a poco ha construido su reputación sobre dos cualidades fundamentales
-                que me distinguen en el panorama tecnológico: <strong className="text-[#B13BFF]">flexibilidad</strong> y
-                <strong className="text-[#B13BFF]"> capacidad de aprendizaje rápido</strong>.
+                que me distinguen en el panorama tecnológico: <strong className="text-[#f97316]">flexibilidad</strong> y
+                <strong className="text-[#f97316]"> capacidad de aprendizaje rápido</strong>.
               </p>
 
               <p className="text-gray-300 leading-relaxed mb-6">
-                Lo que me hace verdaderamente único es mi notable capacidad de <strong className="text-[#B13BFF]">adaptabilidad</strong> a través de las diversas tecnologías.
-                A diferencia de los desarrolladores que se especializan en un solo lenguaje o framework, tengo una insaciable curiosidad por comprender <strong className="text-[#B13BFF]">sistemas complejos</strong> y disfruto los <strong className="text-[#B13BFF]">desafíos difíciles</strong>.
-                No importa que un proyecto requiera <strong className="text-[#B13BFF]">TypeScript para un frontend React, Java para un backend, o C# para .Net o Unity</strong>,
+                Lo que me hace verdaderamente único es mi notable capacidad de <strong className="text-[#f97316]">adaptabilidad</strong> a través de las diversas tecnologías.
+                A diferencia de los desarrolladores que se especializan en un solo lenguaje o framework, tengo una insaciable curiosidad por comprender <strong className="text-[#f97316]">sistemas complejos</strong> y disfruto los <strong className="text-[#f97316]">desafíos difíciles</strong>.
+                No importa que un proyecto requiera <strong className="text-[#f97316]">TypeScript para un frontend React, Java para un backend, o C# para .Net o Unity</strong>,
                 transiciono sin problemas entre tecnologías.
               </p>
 
               <p className="text-gray-300 leading-relaxed mb-6">
-                Comencé a programar sin saberlo desde muy pequeño... En la escuela me encantaba hacer juegos usando <strong className="text-[#B13BFF]">Scratch</strong>, construir robots utilizando <strong className="text-[#B13BFF]">LEGO Mindstorms</strong> y configurar mis propios <strong className="text-[#B13BFF]">servidores</strong> de Minecraft utilizando Spigot los cuales logré comercializar.
+                Comencé a programar sin saberlo desde muy pequeño... En la escuela me encantaba hacer juegos usando <strong className="text-[#f97316]">Scratch</strong>, construir robots utilizando <strong className="text-[#f97316]">LEGO Mindstorms</strong> y configurar mis propios <strong className="text-[#f97316]">servidores</strong> de Minecraft utilizando Spigot los cuales logré comercializar.
                 Durante mis estudios secundarios tuve la oportunidad de cursar{" "}
                 <a
                   href="https://planeamientoeducativo.utu.edu.uy/emt-informatica"
-                  className="text-[#B13BFF] underline "
+                  className="text-[#f97316] underline "
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   EMT Informática
                 </a>
-                {" "}en dónde aprendí sobre el <strong className="text-[#B13BFF]">diseño de bases de datos</strong>, las bases fundamentales de la <strong className="text-[#B13BFF]">programación</strong> (paradigmas, funciones, conjuntos, compuertas lógicas, circuitos lógicos, recursividad, etc...) y también IoT, programando sistemas con Arduino y Raspberry.
+                {" "}en dónde aprendí sobre el <strong className="text-[#f97316]">diseño de bases de datos</strong>, las bases fundamentales de la <strong className="text-[#f97316]">programación</strong> (paradigmas, funciones, conjuntos, compuertas lógicas, circuitos lógicos, recursividad, etc...) y también IoT, programando sistemas con Arduino y Raspberry.
               </p>
 
               <p className="text-gray-300 leading-relaxed">
                 Cuando decides trabajar conmigo, no solo estás contratando un desarrollador, te estás asociando con un
-                <strong className="text-[#B13BFF]"> camaleón tecnológico</strong> que puede adaptarse a tus necesidades,
-                entender tu negocio, y conectar diferentes sistemas con la <strong className="text-[#B13BFF]">versatilidad</strong> de un verdadero <strong className="text-[#B13BFF]">profesional</strong>.
+                <strong className="text-[#f97316]"> camaleón tecnológico</strong> que puede adaptarse a tus necesidades,
+                entender tu negocio, y conectar diferentes sistemas con la <strong className="text-[#f97316]">versatilidad</strong> de un verdadero <strong className="text-[#f97316]">profesional</strong>.
               </p>
             </div>
           </div>

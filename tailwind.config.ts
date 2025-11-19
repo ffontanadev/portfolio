@@ -16,6 +16,12 @@ const config: Config = {
         poppins: ['Poppins', 'sans-serif'],
       },
       colors: {
+        // New warm color palette with orange accents
+        accent: {
+          DEFAULT: '#f97316', // orange-500
+          light: '#fb923c',   // orange-400
+          dark: '#ea580c',    // orange-600
+        },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

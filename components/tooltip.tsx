@@ -35,7 +35,7 @@ const Tooltip: React.FC<TooltipProps> = ({
       <div
         role="tooltip"
         className={classNames(
-          "absolute z-50 px-3 py-2 text-sm font-medium text-white bg-[#471396] rounded-lg shadow transition-opacity duration-300 whitespace-nowrap pointer-events-none",
+          "absolute z-50 px-3 py-2 text-sm font-medium text-white bg-[#ea580c] rounded-lg shadow transition-opacity duration-300 whitespace-nowrap pointer-events-none",
           positionClasses[position],
           {
             "opacity-100 visible": visible,

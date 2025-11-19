@@ -2,38 +2,27 @@
 
 import type React from "react";
 
-import { useState, useCallback, Fragment } from "react";
+import { useState, Fragment } from "react";
 import { ChevronRight, Hammer } from "lucide-react";
 import CustomCursor from "@/components/custom-cursor";
-import { Engine } from "tsparticles-engine";
-import { loadSlim } from "tsparticles-slim";
-import { particlesOptions } from "@/lib/data";
-import Particles from "react-tsparticles";
 import Sidebar from "@/components/sidebar";
 import ChatBot from "@/components/chatbot";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import ExpandableModal from "@/components/expandable-modal";
 import { Demo } from "@/lib/types";
+import { DottedGridBackground } from "@/components/dotted-grid-background";
 
 export default function DemoShowcase() {
   const [selectedDemo, setSelectedDemo] = useState<Demo | null>(null);
-  const particlesInit = useCallback(async (engine: Engine) => {
-    await loadSlim(engine);
-  }, []);
 
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden relative cursor-none">
       {/* Custom Cursor */}
       <CustomCursor />
 
-      {/* tsParticles | Background */}
-      <Particles
-        id="tsparticles"
-        init={particlesInit}
-        options={particlesOptions}
-        className="absolute inset-0 z-0"
-      />
+      {/* Dotted grid background */}
+      <DottedGridBackground />
 
       {/* Sidebar */}
       <Sidebar />
@@ -44,10 +33,10 @@ export default function DemoShowcase() {
         <div className="max-w-7xl mx-auto z-10 relative">
           {/* Header */}
           <div className="mb-12 text-center ">
-            <Badge className="bg-[#B13BFF]/20 text-[#B13BFF] border-[#B13BFF]/30 mb-4">
+            <Badge className="bg-[#f97316]/20 text-[#f97316] border-[#f97316]/30 mb-4">
               ffontana.dev
             </Badge>
-            <h1 className="text-3xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-[#B13BFF] to-[#471396] bg-clip-text text-transparent">
+            <h1 className="text-3xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-[#f97316] to-[#ea580c] bg-clip-text text-transparent">
               Showroom Digital
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">

@@ -63,7 +63,7 @@ export function ProjectsSection() {
     <section id="projects" className="py-20 px-4 bg-black/40 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-[#B13BFF] to-[#471396] bg-clip-text text-transparent">
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-[#f97316] to-[#ea580c] bg-clip-text text-transparent">
             Proyectos Destacados
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -78,8 +78,8 @@ export function ProjectsSection() {
               key={category.id}
               onClick={() => setActiveCategory(category.id)}
               className={`px-6 py-3 rounded-full font-medium transition-all duration-300 flex items-center gap-2 ${activeCategory === category.id
-                ? "bg-[#B13BFF] text-black shadow-lg shadow-[#B13BFF]/25"
-                : "bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 hover:text-[#B13BFF]"
+                ? "bg-[#f97316] text-black shadow-lg shadow-[#f97316]/25"
+                : "bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 hover:text-[#f97316]"
                 }`}
             >
               <span>{category.icon}</span>
@@ -93,7 +93,7 @@ export function ProjectsSection() {
           {displayedProjects.map((project, index) => (
             <Card
               key={project.id}
-              className={`bg-gray-900/50 border-gray-800 hover:border-[#B13BFF]/50 transition-all duration-300 group overflow-hidden ${project.featured ? "ring-1 ring-[#B13BFF]/20" : ""
+              className={`bg-gray-900/50 border-gray-800 hover:border-[#f97316]/50 transition-all duration-300 group overflow-hidden ${project.featured ? "ring-1 ring-[#f97316]/20" : ""
                 }`}
             >
               {/* Project Image */}
@@ -106,7 +106,7 @@ export function ProjectsSection() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 {project.featured && (
-                  <Badge className="absolute top-4 right-4 bg-[#B13BFF] text-black">
+                  <Badge className="absolute top-4 right-4 bg-[#f97316] text-black">
                     Destacado
                   </Badge>
                 )}
@@ -116,7 +116,7 @@ export function ProjectsSection() {
                   <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
                     <Button
                       size="sm"
-                      className="bg-[#B13BFF] hover:bg-[#A4DD00] text-black"
+                      className="bg-[#f97316] hover:bg-[#A4DD00] text-black"
                       onClick={() => window.open(project.demoUrl, '_blank')}
                     >
                       <Play className="w-4 h-4 mr-2" />
@@ -125,7 +125,7 @@ export function ProjectsSection() {
                     <Button
                       size="sm"
                       variant="outline"
-                      className="border-white text-[#B13BFF] hover:bg-white hover:text-black"
+                      className="border-white text-[#f97316] hover:bg-white hover:text-black"
                       onClick={() => window.open(project.githubUrl, '_blank')}
                     >
                       <Github className="w-4 h-4 mr-2" />
@@ -136,7 +136,7 @@ export function ProjectsSection() {
                   <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
                     <Button
                       size="sm"
-                      className="bg-[#B13BFF] hover:bg-[#A4DD00] text-black"
+                      className="bg-[#f97316] hover:bg-[#A4DD00] text-black"
                       disabled
                     >
                       <Ban className="w-4 h-4 mr-2" />
@@ -147,7 +147,7 @@ export function ProjectsSection() {
               </div>
 
               <CardHeader>
-                <CardTitle className="text-[#B13BFF] group-hover:text-white transition-colors duration-200">
+                <CardTitle className="text-[#f97316] group-hover:text-white transition-colors duration-200">
                   {project.title}
                 </CardTitle>
               </CardHeader>
@@ -163,7 +163,7 @@ export function ProjectsSection() {
                     <Badge
                       key={i}
                       variant="outline"
-                      className="text-xs border-[#B13BFF]/30 text-[#B13BFF]"
+                      className="text-xs border-[#f97316]/30 text-[#f97316]"
                     >
                       {tech}
                     </Badge>
@@ -183,7 +183,7 @@ export function ProjectsSection() {
                   {project.demoUrl && project.githubUrl ? (
                     <Button
                       size="sm"
-                      className="flex-1 bg-[#B13BFF] hover:bg-[#A4DD00] text-black"
+                      className="flex-1 bg-[#f97316] hover:bg-[#A4DD00] text-black"
                       onClick={() => window.open(project.demoUrl, '_blank')}
                     >
                       <ExternalLink className="w-4 h-4 mr-2" />
@@ -192,7 +192,7 @@ export function ProjectsSection() {
                   ) : (
                     <Button
                       size="sm"
-                      className="flex-1 bg-[#B13BFF] hover:bg-[#A4DD00] text-black"
+                      className="flex-1 bg-[#f97316] hover:bg-[#A4DD00] text-black"
                       disabled
                     >
                       <Ban className="w-4 h-4 mr-2" />
@@ -214,7 +214,7 @@ export function ProjectsSection() {
             <Button
               onClick={() => setShowAll(!showAll)}
               variant="outline"
-              className="border-[#B13BFF] text-[#B13BFF] hover:bg-[#B13BFF] hover:text-black px-8 py-3"
+              className="border-[#f97316] text-[#f97316] hover:bg-[#f97316] hover:text-black px-8 py-3"
             >
               {showAll ? "Ver Menos" : `Ver Todos (${filteredProjects.length})`}
             </Button>
