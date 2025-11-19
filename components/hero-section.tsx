@@ -52,7 +52,7 @@ export const HeroSection = () => {
                 <div className="pointer-events-auto h-full relative">
                     {/* Runtime Controls for chunk parameters */}
                     <div
-                        className="absolute bottom-6 right-6 backdrop-blur-md bg-black/40 px-4 py-3 rounded-lg shadow-lg z-20 text-white min-w-[200px] border border-white/10"
+                        className="absolute top-12 hidden md:flex  right-6 backdrop-blur-md bg-black/40 px-4 py-3 rounded-lg shadow-lg z-20 text-white min-w-[200px] border border-white/10"
                         aria-label="World parameters"
                     >
                         <div className="space-y-3">
