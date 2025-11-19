@@ -1,3 +1,5 @@
+"use client"
+
 import { useRouter } from "next/navigation";
 import Tooltip from "./tooltip";
 import { Button } from "./ui/button";

@@ -1,6 +1,6 @@
-"use client";
 import { Navigation } from "@/components/navigation";
 import { AboutSection } from "@/components/about-section";
+import { BlogSection } from "@/components/blog-section";
 import { SkillsSectionNew } from "@/components/skills-section-new";
 import { ExperienceSection } from "@/components/experience-section";
 import { ProjectsSection } from "@/components/projects-section";
@@ -26,6 +26,9 @@ export default function FfontanaLanding() {
 
         {/* About Me Section */}
         <AboutSection />
+
+        {/* Blog Section */}
+        <BlogSection />
 
         {/* Skills Section */}
         <SkillsSectionNew />

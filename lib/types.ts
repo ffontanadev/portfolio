@@ -40,3 +40,13 @@ export interface Experience {
   description: string[];
   technologies: string[];
 }
+
+export interface BlogPost {
+  slug: string;
+  title: string;
+  date: string;
+  description: string;
+  tags: string[];
+  published: boolean;
+  content: string;
+}
