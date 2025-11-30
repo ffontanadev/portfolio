@@ -1,7 +1,5 @@
 import type { Config } from "tailwindcss";
 
-// all in fixtures is set to tailwind v3 as interims solutions
-
 const config: Config = {
   darkMode: ["class"],
   content: [
@@ -15,7 +13,47 @@ const config: Config = {
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
       },
+      screens: {
+        'xs': '375px',
+        'sm': '640px',
+        'md': '768px',
+        'lg': '992px',
+        'xl': '1200px',
+        '2xl': '1300px',
+        '3xl': '1600px',
+        '4xl': '1800px',
+        '5xl': '1920px',
+      },
       colors: {
+        // Lime green color system (inspired by every-day.nl)
+        lime: {
+          50: 'rgb(245, 252, 207)',
+          100: 'rgb(240, 251, 189)',
+          200: 'rgb(235, 250, 171)',
+          300: 'rgb(230, 249, 153)',
+          400: 'rgb(225, 248, 135)',
+          500: 'rgb(215, 247, 91)',  // Primary lime (#D7F75B)
+          600: 'rgb(202, 232, 85)',  // Dark lime
+          700: 'rgb(180, 207, 76)',
+          800: 'rgb(158, 182, 67)',
+          900: 'rgb(136, 157, 58)',
+          950: 'rgb(114, 132, 49)',
+        },
+        // Monochrome blacks and whites
+        mono: {
+          black: 'rgb(0, 0, 0)',
+          'gray-900': 'rgb(17, 17, 17)',
+          'gray-800': 'rgb(34, 34, 34)',
+          'gray-700': 'rgb(51, 51, 51)',
+          'gray-600': 'rgb(68, 68, 68)',
+          'gray-500': 'rgb(128, 128, 128)',
+          'gray-400': 'rgb(170, 170, 170)',
+          'gray-300': 'rgb(204, 204, 204)',
+          'gray-200': 'rgb(229, 229, 229)',
+          'gray-100': 'rgb(242, 242, 242)',
+          white: 'rgb(255, 255, 255)',
+        },
+        // Keep existing Radix UI color system for compatibility
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

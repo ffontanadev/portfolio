@@ -57,6 +57,40 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
+
+  /* Fluid Typography System */
+  html {
+    font-size: clamp(14px, 0.875rem + 0.25vw, 16px);
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 2rem + 2vw, 4.5rem);
+    line-height: 1.1;
+    font-weight: 700;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 1.8088rem + 0.7843vw, 2.75rem);
+    line-height: 1.2;
+    font-weight: 700;
+  }
+
+  h3 {
+    font-size: clamp(1.5rem, 1.4rem + 0.5vw, 2rem);
+    line-height: 1.3;
+    font-weight: 600;
+  }
+
+  h4 {
+    font-size: clamp(1.25rem, 1.15rem + 0.4vw, 1.5rem);
+    line-height: 1.4;
+    font-weight: 600;
+  }
+
+  p {
+    font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+    line-height: 1.6;
+  }
 }
 
 @layer base {
@@ -65,6 +99,26 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/**
+ * Reduced Motion Support
+ * Critical for accessibility - respects user's motion preferences
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Disable Framer Motion animations */
+  [data-framer-motion] {
+    transform: none !important;
   }
 }
 
@@ -132,7 +186,7 @@
   }
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar - Lime theme */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -142,24 +196,64 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #471396;
+  background: rgb(180, 207, 76); /* lime-700 */
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #b13bff;
+  background: rgb(215, 247, 91); /* lime-500 */
 }
 
-/* Smooth scrolling */
+/* Smooth scrolling - respects reduced motion */
 html {
   scroll-behavior: smooth;
 }
 
-/* Glow effects */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Glow effects - Lime */
 .glow-button {
-  box-shadow: 0 0 20px rgba(182, 245, 0, 0.3);
+  box-shadow: 0 0 20px rgba(215, 247, 91, 0.3);
 }
 
 .glow-button:hover {
-  box-shadow: 0 0 30px rgba(182, 245, 0, 0.5);
+  box-shadow: 0 0 30px rgba(215, 247, 91, 0.5);
+}
+
+/* New animation keyframes */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(215, 247, 91, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(215, 247, 91, 0.6);
+  }
+}
+
+@keyframes blob-morph {
+  0%, 100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  25% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+  50% {
+    border-radius: 50% 60% 30% 60% / 30% 50% 60% 40%;
+  }
+  75% {
+    border-radius: 60% 30% 50% 40% / 40% 60% 50% 30%;
+  }
 }
