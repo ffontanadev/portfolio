@@ -18,6 +18,10 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        // New lime variants with layered interactions
+        lime: "relative overflow-hidden bg-transparent border-2 border-lime-500 text-lime-500 transition-colors duration-300 hover:text-black group",
+        limeFilled: "relative overflow-hidden bg-lime-500 text-black transition-all duration-300 hover:bg-lime-400 hover:shadow-lg hover:shadow-lime-500/50",
+        limeGhost: "text-lime-500 hover:bg-lime-500/10 hover:text-lime-400",
       },
       size: {
         default: "h-10 px-4 py-2",
@@ -40,14 +44,37 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, children, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
+
+    // Add layered animation for 'lime' variant
+    if (variant === "lime") {
+      return (
+        <Comp
+          className={cn(buttonVariants({ variant, size, className }))}
+          ref={ref}
+          {...props}
+        >
+          {/* Background layer - slides in from left */}
+          <span className="absolute inset-0 bg-lime-500 -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out" />
+
+          {/* Text layer - positioned above with coordinated timing */}
+          <span className="relative z-10 transition-colors duration-300 delay-75">
+            {children}
+          </span>
+        </Comp>
+      )
+    }
+
+    // Standard variants without layered animation
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
-      />
+      >
+        {children}
+      </Comp>
     )
   }
 )
