@@ -25,21 +25,21 @@ const Contact = () => {
                     <ul className="space-y-4 text-left inline-block mx-auto">
                         <li className="flex items-center gap-3">
                             <span className="w-2 h-2 bg-green-500 rounded-full" />
-                            <span>full time work as a product designer</span>
+                            <span>full time work as a developer</span>
                         </li>
                         <li className="flex items-center gap-3">
                             <span className="w-2 h-2 bg-green-500 rounded-full" />
-                            <span>freelance design work</span>
+                            <span>freelance work</span>
                         </li>
                         <li className="flex items-center gap-3">
                             <span className="w-2 h-2 bg-green-500 rounded-full" />
-                            <span>digital art/illustration commissions</span>
+                            <span>digital solutions requests</span>
                         </li>
                     </ul>
                 </div>
 
                 <p className="text-gray-600 italic mb-10 max-w-lg mx-auto">
-                    ...and I'm always up for discussing the latest music or trying new Asian places together!
+                    ...and I'm always up for discussing about music or trying a new game together!
                 </p>
 
                 <div className="flex flex-col items-center gap-6 group">
