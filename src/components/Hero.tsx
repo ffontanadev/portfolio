@@ -1,7 +1,9 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { StatusBadge, ActivityCard, CircularImageContainer } from './Hero/index';
 
 const Hero = () => {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section
       id="hero"
@@ -26,7 +28,25 @@ const Hero = () => {
               transition={{ delay: 0.4 }}
               className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight"
             >
-              Hi, I'm <span className="text-coral-500">Felipe!</span>
+              Hi, I'm{' '}
+              <motion.span
+                className="text-coral-500 inline-block duration-300"
+                animate={
+                  shouldReduceMotion
+                    ? {}
+                    : {
+                      y: [-2, 2, -2],
+                      scale: [1, 1.02, 1],
+                    }
+                }
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+              >
+                Felipe!
+              </motion.span>
             </motion.h1>
 
             {/* Subheading */}
