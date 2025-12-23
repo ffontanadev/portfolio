@@ -1,11 +1,13 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { StatusBadge, ActivityCard, CircularImageContainer } from './Hero/index';
 
 const Hero = () => {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-cream-50 to-cream-100"
+      className="relative select-none min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-cream-50 to-cream-100"
     >
       {/* Container */}
       <div className="w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-20">
@@ -26,7 +28,25 @@ const Hero = () => {
               transition={{ delay: 0.4 }}
               className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight"
             >
-              Hi, I'm <span className="text-coral-500">Felipe!</span>
+              Hi, I'm{' '}
+              <motion.span
+                className="text-coral-500 inline-block duration-300"
+                animate={
+                  shouldReduceMotion
+                    ? {}
+                    : {
+                      y: [-2, 2, -2],
+                      scale: [1, 1.02, 1],
+                    }
+                }
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+              >
+                Felipe!
+              </motion.span>
             </motion.h1>
 
             {/* Subheading */}
@@ -37,7 +57,7 @@ const Hero = () => {
               className="text-xl md:text-2xl text-gray-700 leading-relaxed"
             >
               <p>
-                I'm a <span className="font-semibold">Developer</span> at{' '}
+                I'm a <span className="font-semibold underline">Developer</span> at{' '}
                 <span className="font-semibold text-dark-900">Magenta Innova</span>
               </p>
               <p>working for BBVA.</p>

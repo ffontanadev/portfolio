@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import ActivityItem from './ActivityItem';
-
+import { TypeAnimation } from 'react-type-animation';
 interface Activity {
   text: string;
   link?: string;
@@ -28,7 +28,13 @@ const ActivityCard = ({
       transition={{ delay: 0.8 }}
       className="bg-cream-100 rounded-2xl p-6 shadow-sm"
     >
-      <h3 className="text-lg font-medium text-gray-600 mb-4 lowercase">{title}</h3>
+      <TypeAnimation
+        sequence={[title]}
+        wrapper="h3"
+        className="text-lg font-medium text-gray-600 mb-4 lowercase"
+        cursor={true}
+        speed={15}
+      />
       <ul className="space-y-3">
         {activities.map((activity, index) => (
           <ActivityItem key={index} text={activity.text} link={activity.link} />
