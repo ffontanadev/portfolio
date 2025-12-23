@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MenuIcon } from '@/components/ui/menu';
 import { XIcon } from '@/components/ui/x';
@@ -19,10 +20,11 @@ const Navigation = () => {
 
 
     const navLinks = [
-        { name: 'Home', href: '#hero' },
+        { name: 'Home', href: '#hero', route: '/' },
         { name: 'Work', href: '#work' },
         { name: 'About', href: '#about' },
         { name: 'Connect', href: '#connect' },
+        { name: 'Blog', route: '/blog' },
     ];
 
     return (
@@ -33,21 +35,32 @@ const Navigation = () => {
             >
                 <div className="max-w-[1440px] mx-auto px-6 md:px-20 flex justify-between items-center">
                     {/* Logo */}
-                    <a href="#" className="text-2xl font-display font-bold tracking-tighter hover:text-coral-500 transition-colors">
+                    <a href="/" className="text-2xl font-display font-bold tracking-tighter hover:text-coral-500 transition-colors">
                         FF.
                     </a>
 
                     {/* Desktop Navigation */}
                     <div className="hidden md:flex items-center gap-8">
                         {navLinks.map((link) => (
-                            <a
-                                key={link.name}
-                                href={link.href}
-                                className="text-dark-900 font-medium hover:text-coral-500 transition-colors relative group"
-                            >
-                                {link.name}
-                                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-coral-500 transition-all group-hover:w-full" />
-                            </a>
+                            link.route ? (
+                                <Link
+                                    key={link.name}
+                                    to={link.route}
+                                    className="text-dark-900 font-medium hover:text-coral-500 transition-colors relative group"
+                                >
+                                    {link.name}
+                                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-coral-500 transition-all group-hover:w-full" />
+                                </Link>
+                            ) : (
+                                <a
+                                    key={link.name}
+                                    href={link.href}
+                                    className="text-dark-900 font-medium hover:text-coral-500 transition-colors relative group"
+                                >
+                                    {link.name}
+                                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-coral-500 transition-all group-hover:w-full" />
+                                </a>
+                            )
                         ))}
                         <button
                             onClick={openResume}
@@ -78,14 +91,25 @@ const Navigation = () => {
                     >
                         <div className="flex flex-col gap-6 items-center">
                             {navLinks.map((link) => (
-                                <a
-                                    key={link.name}
-                                    href={link.href}
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                    className="text-2xl font-display font-bold text-dark-900 hover:text-coral-500"
-                                >
-                                    {link.name}
-                                </a>
+                                link.route ? (
+                                    <Link
+                                        key={link.name}
+                                        to={link.route}
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="text-2xl font-display font-bold text-dark-900 hover:text-coral-500"
+                                    >
+                                        {link.name}
+                                    </Link>
+                                ) : (
+                                    <a
+                                        key={link.name}
+                                        href={link.href}
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="text-2xl font-display font-bold text-dark-900 hover:text-coral-500"
+                                    >
+                                        {link.name}
+                                    </a>
+                                )
                             ))}
                             <button
                                 onClick={() => {
