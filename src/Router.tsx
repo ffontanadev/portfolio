@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { HelmetProvider } from 'react-helmet-async';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import ChatWidget from './components/ChatWidget';
@@ -26,50 +25,48 @@ const queryClient = new QueryClient({
 
 export default function Router() {
   return (
-    <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <AppContextProvider>
-            <BrowserRouter>
-              <div className="bg-cream-50 min-h-screen text-dark-900 font-sans selection:bg-coral-500 selection:text-white">
-                <Navigation />
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <AppContextProvider>
+          <BrowserRouter>
+            <div className="bg-cream-50 min-h-screen text-dark-900 font-sans selection:bg-coral-500 selection:text-white">
+              <Navigation />
 
-                <Routes>
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/blog" element={<BlogListPage />} />
-                  <Route path="/blog/:slug" element={<BlogPostPage />} />
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/blog" element={<BlogListPage />} />
+                <Route path="/blog/:slug" element={<BlogPostPage />} />
 
-                  <Route path="/admin/login" element={<LoginPage />} />
-                  <Route
-                    path="/admin/dashboard"
-                    element={
-                      <ProtectedRoute>
-                        <DashboardPage />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/admin/posts/:id"
-                    element={
-                      <ProtectedRoute>
-                        <PostEditorPage />
-                      </ProtectedRoute>
-                    }
-                  />
+                <Route path="/admin/login" element={<LoginPage />} />
+                <Route
+                  path="/admin/dashboard"
+                  element={
+                    <ProtectedRoute>
+                      <DashboardPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/posts/:id"
+                  element={
+                    <ProtectedRoute>
+                      <PostEditorPage />
+                    </ProtectedRoute>
+                  }
+                />
 
-                  {/* 404 catch-all route */}
-                  <Route path="*" element={<NotFoundPage />} />
-                </Routes>
+                {/* 404 catch-all route */}
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
 
-                <Footer />
+              <Footer />
 
-                {/* AI Portfolio Assistant */}
-                <ChatWidget />
-              </div>
-            </BrowserRouter>
-          </AppContextProvider>
-        </AuthProvider>
-      </QueryClientProvider>
-    </HelmetProvider>
+              {/* AI Portfolio Assistant */}
+              <ChatWidget />
+            </div>
+          </BrowserRouter>
+        </AppContextProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
