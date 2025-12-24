@@ -20,7 +20,6 @@ import { Send, Loader2, History, ChevronDown, X } from 'lucide-react';
 import type { ChatMessage } from '../types/chat';
 import {
   sendChatMessage,
-  loadChatHistory,
   saveChatHistory,
   clearChatHistory,
 } from '../lib/chatApi'; import { ClaudeAI } from './ui/claude';
