@@ -45,11 +45,10 @@ export default function BlogListPage() {
           <div className="mb-8 flex flex-wrap gap-2">
             <button
               onClick={() => setSelectedTag(undefined)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                !selectedTag
-                  ? 'bg-coral-500 text-white'
-                  : 'bg-cream-100 text-dark-700 hover:bg-cream-200'
-              }`}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${!selectedTag
+                ? 'bg-coral-500 text-white'
+                : 'bg-cream-100 text-dark-700 hover:bg-cream-200'
+                }`}
             >
               All Posts
             </button>
@@ -57,11 +56,10 @@ export default function BlogListPage() {
               <button
                 key={tag}
                 onClick={() => setSelectedTag(tag)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  selectedTag === tag
-                    ? 'bg-coral-500 text-white'
-                    : 'bg-cream-100 text-dark-700 hover:bg-cream-200'
-                }`}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${selectedTag === tag
+                  ? 'bg-coral-500 text-white'
+                  : 'bg-cream-100 text-dark-700 hover:bg-cream-200'
+                  }`}
               >
                 {tag}
               </button>
@@ -165,7 +163,7 @@ export default function BlogListPage() {
             )}
           </>
         ) : (
-          <div className="text-center py-12">
+          <div className="text-center py-12 h-[650px]">
             <p className="text-xl text-dark-600">No blog posts found.</p>
             {selectedTag && (
               <button
