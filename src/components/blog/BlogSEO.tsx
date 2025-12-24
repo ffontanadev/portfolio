@@ -1,4 +1,3 @@
-import { Helmet } from 'react-helmet-async';
 import type { BlogPost } from '../../types/blog';
 
 interface BlogSEOProps {
@@ -14,7 +13,7 @@ export default function BlogSEO({ post, isList = false }: BlogSEOProps) {
   const keywords = post.meta_keywords?.join(', ') || post.tags?.join(', ') || '';
 
   return (
-    <Helmet>
+    <>
       <title>{title} | Portfolio</title>
       <meta name="description" content={description} />
       {keywords && <meta name="keywords" content={keywords} />}
@@ -66,7 +65,7 @@ export default function BlogSEO({ post, isList = false }: BlogSEOProps) {
           keywords: keywords,
         })}
       </script>
-    </Helmet>
+    </>
   );
 }
 
@@ -83,7 +82,7 @@ export function BlogListSEO({
   const blogUrl = `${siteUrl}/blog`;
 
   return (
-    <Helmet>
+    <>
       <title>{pageTitle} | Portfolio</title>
       <meta name="description" content={pageDescription} />
 
@@ -97,6 +96,6 @@ export function BlogListSEO({
       <meta name="twitter:description" content={pageDescription} />
 
       <link rel="canonical" href={blogUrl} />
-    </Helmet>
+    </>
   );
 }

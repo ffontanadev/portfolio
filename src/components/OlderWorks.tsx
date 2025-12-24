@@ -8,7 +8,7 @@ const projects: Project[] = [
     {
         title: "Biome Terrain Engine",
         desc: "Procedural generation",
-        color: "bg-gradient-to-br from-red-300 to-coral-500",
+        color: "bg-gradient-to-br from-amber-50 to-stone-100",
         image: "/images/biome-terrain-engine.png",
         techStack: ["Unity", "C Sharp", "Perlin Noise"],
         date: "2021",
@@ -169,7 +169,7 @@ Ideal for projects requiring procedurally generated worlds with realistic ecosys
     {
         title: "Hackflix",
         desc: "Browse for the latest movies easily.",
-        color: "bg-gradient-to-br from-red-300 to-coral-500",
+        color: "bg-gradient-to-br from-stone-50 to-neutral-100",
         image: "/images/hackflix.png",
         techStack: ["React", "TMDb", "CSS3", "Responsive Design", "Vercel"],
         date: "2022",
@@ -222,7 +222,7 @@ async function processUPIPayment(paymentDetails) {
     {
         title: "Truqui",
         desc: "Your one stop book shop",
-        color: "bg-gradient-to-br from-red-300 to-coral-500",
+        color: "bg-gradient-to-br from-warmGray-50 to-stone-100",
         image: "/images/truqui.png",
         techStack: ["React", "Redux", "PWA", "Tailwind", "Vercel"],
         date: "2022",
@@ -401,21 +401,31 @@ const OlderWorks = () => {
                                 onClick={() => handleProjectClick(project)}
                                 className="group cursor-pointer"
                             >
-                                <div
-                                    className={`w-full aspect-4/3 ${project.color} rounded-xl mb-4 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg overflow-hidden relative`}
-                                >
-                                    {project.image && (
-                                        <img
-                                            src={project.image}
-                                            alt={project.title}
-                                            className="w-full h-full object-cover opacity-40 group-hover:opacity-100 transition-opacity duration-300"
-                                            loading="lazy"
-                                        />
-                                    )}
-                                    <div className="absolute inset-0 flex items-center justify-center group-hover:opacity-100 transition-opacity duration-300 font-display ">
-                                        <span className="text-xl font-medium text-white px-4 py-2 rounded-full">
+                                <div className="bg-white rounded-2xl overflow-hidden border-2 border-stone-200 transition-all duration-300 group-hover:border-stone-400 group-hover:shadow-xl">
+                                    <div
+                                        className={`w-full aspect-4/3 ${project.color} overflow-hidden relative`}
+                                    >
+                                        {project.image && (
+                                            <img
+                                                src={project.image}
+                                                alt={project.title}
+                                                className="w-full h-full object-cover grayscale-60 sepia-20 contrast-[0.9] opacity-90 group-hover:opacity-75 transition-all duration-300"
+                                                loading="lazy"
+                                            />
+                                        )}
+                                        {/* Year badge in corner */}
+                                        <div className="absolute top-3 right-3 bg-stone-800/80 backdrop-blur-sm text-stone-100 px-3 py-1 rounded text-sm font-medium">
+                                            {project.date}
+                                        </div>
+                                    </div>
+                                    {/* Always visible title at bottom */}
+                                    <div className="p-4 bg-linear-to-b from-stone-50 to-amber-50/30 border-t border-stone-200">
+                                        <h3 className="text-lg font-display font-semibold text-stone-800 mb-1">
                                             {project.title}
-                                        </span>
+                                        </h3>
+                                        <p className="text-sm text-stone-600">
+                                            {project.desc}
+                                        </p>
                                     </div>
                                 </div>
                             </motion.div>

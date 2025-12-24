@@ -1,5 +1,4 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { SearchX, Home, BookOpen, ArrowUp } from 'lucide-react';
 
 export default function NotFoundPage() {
@@ -11,10 +10,10 @@ export default function NotFoundPage() {
 
   return (
     <>
-      <Helmet>
+      <>
         <title>404 - Page Not Found</title>
         <meta name="robots" content="noindex, nofollow" />
-      </Helmet>
+      </>
 
       <main className="min-h-screen flex items-center justify-center px-6 py-16">
         <div className="max-w-2xl w-full text-center">
