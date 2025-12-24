@@ -23,8 +23,8 @@ import {
   loadChatHistory,
   saveChatHistory,
   clearChatHistory,
-} from '../lib/chatApi';
-import { SparklesIcon } from './ui/sparkles';
+} from '../lib/chatApi'; import { ClaudeAI } from './ui/claude';
+;
 
 interface VisibleMessage extends ChatMessage {
   isVisible: boolean;
@@ -42,10 +42,12 @@ const ChatWidget = () => {
   const dismissTimersRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
 
   // Load chat history on mount
-  useEffect(() => {
+  /**
+   *   useEffect(() => {
     const history = loadChatHistory();
     setMessages(history);
   }, []);
+   */
 
   // Save chat history whenever messages change
   useEffect(() => {
@@ -181,7 +183,7 @@ const ChatWidget = () => {
               {/* History Header */}
               <div className="bg-linear-to-r from-coral-500 to-coral-500/60 text-white px-4 py-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <SparklesIcon size={20} />
+                  <ClaudeAI />
                   <h3 className="font-semibold text-sm">Chat History</h3>
                 </div>
                 <div className="flex items-center gap-2">
@@ -220,19 +222,17 @@ const ChatWidget = () => {
                       className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
                       <div
-                        className={`max-w-[80%] px-3 py-2 rounded-lg ${
-                          message.role === 'user'
-                            ? 'bg-coral-500 text-white'
-                            : 'bg-white text-dark-900 shadow-sm'
-                        }`}
+                        className={`max-w-[80%] px-3 py-2 rounded-lg ${message.role === 'user'
+                          ? 'bg-coral-500 text-white'
+                          : 'bg-white text-dark-900 shadow-sm'
+                          }`}
                       >
                         <p className="text-xs leading-relaxed whitespace-pre-wrap">
                           {message.content}
                         </p>
                         <p
-                          className={`text-[10px] mt-1 ${
-                            message.role === 'user' ? 'text-coral-100' : 'text-gray-400'
-                          }`}
+                          className={`text-[10px] mt-1 ${message.role === 'user' ? 'text-coral-100' : 'text-gray-400'
+                            }`}
                         >
                           {new Date(message.timestamp).toLocaleTimeString([], {
                             hour: '2-digit',
@@ -266,11 +266,10 @@ const ChatWidget = () => {
                   className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[85%] px-4 py-3 rounded-2xl shadow-lg backdrop-blur-sm ${
-                      message.role === 'user'
-                        ? 'bg-coral-500 text-white'
-                        : 'bg-white/95 text-dark-900 border border-gray-200'
-                    }`}
+                    className={`max-w-[85%] px-4 py-3 rounded-2xl shadow-lg backdrop-blur-sm ${message.role === 'user'
+                      ? 'bg-coral-500 text-white'
+                      : 'bg-white/95 text-dark-900 border border-gray-200'
+                      }`}
                     role="status"
                     aria-live="polite"
                   >
@@ -321,7 +320,7 @@ const ChatWidget = () => {
               <button
                 type="button"
                 onClick={toggleHistory}
-                className="p-3 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-coral-500 text-coral-500"
+                className="p-4 bg-white/80 rounded-xl hover:shadow-xl transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-coral-500 text-coral-500"
                 aria-label={isHistoryExpanded ? 'Hide chat history' : 'Show chat history'}
                 title={isHistoryExpanded ? 'Hide history' : 'Show history'}
               >
@@ -330,8 +329,8 @@ const ChatWidget = () => {
             )}
 
             {/* Input Field */}
-            <div className="flex-1 bg-white rounded-xl shadow-lg flex items-center gap-2 px-4 py-2 border border-gray-200 focus-within:ring-2 focus-within:ring-coral-500 focus-within:border-transparent">
-              <SparklesIcon size={20} className="text-coral-500 shrink-0" />
+            <div className="flex-1 rounded-xl bg-white/80 flex items-center gap-2 px-4 py-2  focus-within:ring-2 focus-within:ring-coral-500 focus-within:border-transparent">
+              <ClaudeAI className="text-coral-500 shrink-0" />
               <input
                 ref={inputRef}
                 type="text"
