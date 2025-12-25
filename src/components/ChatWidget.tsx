@@ -36,6 +36,7 @@ const ChatWidget = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isHistoryExpanded, setIsHistoryExpanded] = useState(false);
+  const [placeholder, setPlaceholder] = useState('');
 
   const inputRef = useRef<HTMLInputElement>(null);
   const dismissTimersRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
@@ -54,6 +55,25 @@ const ChatWidget = () => {
       saveChatHistory(messages);
     }
   }, [messages]);
+
+  // Typing animation for placeholder text
+  useEffect(() => {
+    const fullText = 'Ask me something...';
+    let currentIndex = 0;
+
+
+
+    const interval = setInterval(() => {
+      if (currentIndex <= fullText.length) {
+        setPlaceholder(fullText.slice(0, currentIndex));
+        currentIndex++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 120);
+
+    return () => clearInterval(interval);
+  }, []); // Run once on mount
 
   // Auto-dismiss logic: Add new messages to visible list and set timers
   useEffect(() => {
@@ -180,7 +200,7 @@ const ChatWidget = () => {
           >
             <div className="bg-white rounded-t-2xl shadow-2xl max-h-96 overflow-hidden flex flex-col mx-4">
               {/* History Header */}
-              <div className="bg-linear-to-r from-coral-500 to-coral-500/60 text-white px-4 py-3 flex items-center justify-between">
+              <div className="bg-white text-black/40 font-fraunces px-4 py-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <ClaudeAI />
                   <h3 className="font-semibold text-sm">Chat History</h3>
@@ -226,7 +246,7 @@ const ChatWidget = () => {
                           : 'bg-white text-dark-900 shadow-sm'
                           }`}
                       >
-                        <p className="text-xs leading-relaxed whitespace-pre-wrap">
+                        <p className="text-xs font-fraunces  leading-relaxed whitespace-pre-wrap">
                           {message.content}
                         </p>
                         <p
@@ -272,7 +292,7 @@ const ChatWidget = () => {
                     role="status"
                     aria-live="polite"
                   >
-                    <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                    <p className="text-sm leading-relaxed font-fraunces whitespace-pre-wrap">
                       {message.content}
                     </p>
                   </div>
@@ -290,7 +310,7 @@ const ChatWidget = () => {
               >
                 <div className="bg-white/95 backdrop-blur-sm text-dark-900 px-4 py-3 rounded-2xl shadow-lg border border-gray-200 flex items-center gap-2">
                   <Loader2 size={16} className="animate-spin text-coral-500" />
-                  <span className="text-sm text-gray-600">Thinking...</span>
+                  <span className="text-sm text-gray-600 font-fraunces">Thinking...</span>
                 </div>
               </motion.div>
             )}
@@ -336,9 +356,9 @@ const ChatWidget = () => {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Ask me anything..."
+                placeholder={placeholder}
                 disabled={isLoading}
-                className="flex-1 py-2 focus:outline-none disabled:bg-transparent disabled:cursor-not-allowed text-dark-900 placeholder:text-gray-400 text-sm"
+                className="flex-1 font-fraunces py-2 focus:outline-none disabled:bg-transparent disabled:cursor-not-allowed text-dark-900 placeholder:text-gray-400 text-sm"
                 aria-label="Chat message input"
               />
               <button
