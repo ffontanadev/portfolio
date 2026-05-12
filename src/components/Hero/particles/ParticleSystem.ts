@@ -148,6 +148,9 @@ export class ParticleSystem {
           performance.now(),
           this.introOpts.timings,
         );
+        // Sequencer's constructor already populated aTarget with the rocket;
+        // skip the loop's first-frame target refresh so it isn't clobbered.
+        return;
       }
     } else {
       this.resampleHomes();
