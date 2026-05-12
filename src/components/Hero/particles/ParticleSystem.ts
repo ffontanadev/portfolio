@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { vertexShader, fragmentShader } from './shaders';
 import { sampleShape, type ShapeSpec, type SampleBounds } from './shapeSampler';
 import { IntroSequencer, type IntroShapes, type IntroTimings } from './IntroSequencer';
+import { FrameSequencer, type FrameAdapter } from './FrameSequencer';
 
 export interface ParticleSystemOptions {
   canvas: HTMLCanvasElement;
@@ -24,7 +25,7 @@ interface StateTimings {
   morphOut: number;  // seconds for shape → drift
 }
 
-type State = 'drift' | 'morphIn' | 'hold' | 'morphOut';
+type State = 'drift' | 'morphIn' | 'hold' | 'play' | 'morphOut';
 
 const DEFAULT_TIMINGS: StateTimings = {
   drift: .5,
@@ -61,6 +62,9 @@ export class ParticleSystem {
 
   private intro: IntroSequencer | null = null;
   private introOpts: { shapes: IntroShapes; timings?: Partial<IntroTimings> } | null = null;
+
+  private frame: FrameSequencer | null = null;
+  private frameAdapter: FrameAdapter | null = null;
 
   private cursorTarget = { x: -9999, y: -9999 };
   private cursorForceTarget = 0;
@@ -134,6 +138,15 @@ export class ParticleSystem {
       this.initAttributes();
       this.initialized = true;
 
+      this.frameAdapter = {
+        applyBufferTo: (slot, buf) => this.applyBufferTo(slot, buf),
+        copyNextIntoPrimary: () => this.copyNextIntoPrimary(),
+        bounds: this.bounds,
+        uniforms: {
+          uTargetBlend: this.material.uniforms.uTargetBlend as { value: number },
+        },
+      };
+
       // First resize → construct the intro sequencer if one was requested.
       if (this.introOpts) {
         this.intro = new IntroSequencer(
@@ -163,6 +176,11 @@ export class ParticleSystem {
       // Resampling targets must reflect intro state, not the loop shape.
       if (this.intro && !this.intro.done) {
         this.intro.applyResize();
+        return;
+      }
+      // If a frame sequencer is active, it owns target resampling.
+      if (this.frame) {
+        this.frame.applyResize();
         return;
       }
     }
@@ -234,6 +252,12 @@ export class ParticleSystem {
     attr.needsUpdate = true;
   }
 
+  private applyBufferTo(slot: 'aTarget' | 'aTargetNext', buf: Float32Array) {
+    const attr = this.geometry.getAttribute(slot) as THREE.BufferAttribute;
+    (attr.array as Float32Array).set(buf);
+    attr.needsUpdate = true;
+  }
+
   private copyNextIntoPrimary() {
     const primary = this.geometry.getAttribute('aTarget') as THREE.BufferAttribute;
     const next = this.geometry.getAttribute('aTargetNext') as THREE.BufferAttribute;
@@ -256,7 +280,16 @@ export class ParticleSystem {
         m = 0;
         if (elapsed >= this.timings.drift) {
           this.shapeIdx = (this.shapeIdx + 1) % this.shapes.length;
-          this.applyTargetTo('aTarget', this.shapes[this.shapeIdx]);
+          const nextShape = this.shapes[this.shapeIdx];
+          if (nextShape.kind === 'frames') {
+            this.frame = new FrameSequencer({
+              adapter: this.frameAdapter!,
+              shape: nextShape,
+              particleCount: this.particleCount,
+            });
+          } else {
+            this.applyTargetTo('aTarget', nextShape);
+          }
           this.state = 'morphIn';
           this.stateStart = now;
         }
@@ -265,7 +298,21 @@ export class ParticleSystem {
         const t = Math.min(elapsed / this.timings.morphIn, 1);
         m = easeInOutCubic(t);
         if (t >= 1) {
-          this.state = 'hold';
+          if (this.frame) {
+            this.frame.start(now);
+            this.state = 'play';
+          } else {
+            this.state = 'hold';
+          }
+          this.stateStart = now;
+        }
+        break;
+      }
+      case 'play': {
+        this.frame!.tick(now);
+        m = 1;
+        if (this.frame!.done) {
+          this.state = 'morphOut';
           this.stateStart = now;
         }
         break;
@@ -283,6 +330,7 @@ export class ParticleSystem {
         if (t >= 1) {
           this.state = 'drift';
           this.stateStart = now;
+          this.frame = null;  // release pre-sampled frame buffers
         }
         break;
       }
@@ -347,6 +395,9 @@ export class ParticleSystem {
       this.stateStart += delta;
       if (this.intro && !this.intro.done) {
         this.intro.shiftClock(delta);
+      }
+      if (this.frame && this.state === 'play') {
+        this.frame.shiftClock(delta);
       }
       this.tick();
     }
