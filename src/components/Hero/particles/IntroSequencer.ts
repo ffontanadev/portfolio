@@ -38,6 +38,8 @@ const DEFAULT_TIMINGS: IntroTimings = {
 };
 
 const SMEAR_AMOUNT = 0.35;
+// Seconds for uMorph to ramp 0→1 inside the rocket-fly phase. Must be < timings.rocketFly.
+const ROCKET_FLY_MORPH_RAMP = 0.6;
 
 function easeOutCubic(t: number): number {
   return 1 - Math.pow(1 - t, 3);
@@ -57,6 +59,7 @@ export class IntroSequencer {
   // Captured target offset at the start of cross-morph, used to ease toward (0,0).
   private offsetAtCrossMorphStart = new THREE.Vector2(0, 0);
 
+  /** Construct AFTER ParticleSystem.resize() has run at least once so adapter.bounds is non-zero. */
   constructor(
     adapter: IntroAdapter,
     shapes: IntroShapes,
@@ -102,7 +105,7 @@ export class IntroSequencer {
     if (this.phase === 'done') return;
 
     const u = this.adapter.uniforms;
-    const elapsed = (nowMs - this.phaseStart) / 1000;
+    const elapsed = Math.max(0, (nowMs - this.phaseStart) / 1000);
 
     if (this.phase === 'rocket-fly') {
       const dur = this.timings.rocketFly;
@@ -116,7 +119,7 @@ export class IntroSequencer {
       u.uTargetOffset.value.y = Math.sin(elapsed * 4.5) * 8;
 
       // uMorph ramps from 0 to 1 in the first 600 ms, then holds.
-      const morphT = Math.min(elapsed / 0.6, 1);
+      const morphT = Math.min(elapsed / ROCKET_FLY_MORPH_RAMP, 1);
       u.uMorph.value = easeInOutCubic(morphT);
 
       u.uMorphSmear.value = SMEAR_AMOUNT;
