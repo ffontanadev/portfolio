@@ -56,7 +56,7 @@ function parseShapesFromEnv(raw: string | undefined): ShapeSpec[] {
       return { kind: 'heart', sizeRatio: 0.38 };
     }
     if (lower === 'guy') {
-      return { kind: 'silhouette', src: '/guy.svg', sizeRatio: 0.55 };
+      return { kind: 'silhouette', src: '/guy.svg', sizeRatio: 1.5 };
     }
     return { kind: 'text', text: part, heightRatio: textHeightRatio(part) };
   });

@@ -4,10 +4,10 @@ import type { ShapeSpec, SampleBounds } from './shapeSampler';
 const cache = new Map<string, HTMLImageElement>();
 const inflight = new Map<string, Promise<HTMLImageElement>>();
 
-const SILHOUETTE_MAX_WIDTH_RATIO = 0.55;
+const SILHOUETTE_MAX_WIDTH_RATIO = 0.75;
 // Pixels with luminance above this threshold are treated as background/highlights
 // and dropped — the sampler then picks up only the dark silhouette.
-const LIGHT_LUMINANCE_THRESHOLD = 0.5;
+const LIGHT_LUMINANCE_THRESHOLD = 0.98;
 
 export function loadSilhouette(src: string): Promise<HTMLImageElement> {
   const existing = cache.get(src);
