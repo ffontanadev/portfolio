@@ -30,6 +30,21 @@ const DEFAULT_SHAPES: ShapeSpec[] = [
   { kind: 'heart', sizeRatio: 0.38 },
 ];
 
+// Named frame-animation registry. Tokens in VITE_PARTICLE_SHAPES that match
+// a key here resolve to that frame animation (handled in parseShapesFromEnv).
+// Add a new animation by dropping frames in /public/anim/<name>/ and adding
+// one entry below.
+const ANIMATIONS: Record<string, ShapeSpec> = {
+  walking: {
+    kind: 'frames',
+    srcs: Array.from({ length: 30 }, (_, i) =>
+      `/anim/walking/guy-walking_${String(i + 1).padStart(3, '0')}.jpg`,
+    ),
+    fps: 2,
+    sizeRatio: 0.55,
+  },
+};
+
 // Auto-pick a heightRatio so longer text still fits on screen.
 function textHeightRatio(text: string): number {
   const len = text.length;
@@ -57,6 +72,9 @@ function parseShapesFromEnv(raw: string | undefined): ShapeSpec[] {
     }
     if (lower === 'guy') {
       return { kind: 'silhouette', src: '/guy.svg', sizeRatio: 1.5 };
+    }
+    if (ANIMATIONS[lower]) {
+      return ANIMATIONS[lower];
     }
     return { kind: 'text', text: part, heightRatio: textHeightRatio(part) };
   });
@@ -105,15 +123,17 @@ const ParticleField = ({ className = '', shapes }: ParticleFieldProps) => {
         ? (document as Document).fonts.ready
         : Promise.resolve();
 
-    // Pre-load any silhouette SVGs referenced by active shapes (or the intro)
-    // in parallel with font loading. Failures don't block construction —
-    // sampleShape will fall back to scatter for that shape until/unless it loads.
-    const silhouetteSrcs = new Set<string>();
+    // Pre-load any silhouette SVGs and frame-animation images referenced by
+    // active shapes (or the intro) in parallel with font loading. Failures
+    // don't block construction — sampleShape will fall back to scatter for
+    // that shape until/unless it loads.
+    const imageSrcs = new Set<string>();
     for (const s of activeShapes) {
-      if (s.kind === 'silhouette') silhouetteSrcs.add(s.src);
+      if (s.kind === 'silhouette') imageSrcs.add(s.src);
+      else if (s.kind === 'frames') for (const src of s.srcs) imageSrcs.add(src);
     }
     const silhouettesReady = Promise.all(
-      [...silhouetteSrcs].map((src) =>
+      [...imageSrcs].map((src) =>
         loadSilhouette(src).catch((err) => {
           console.warn('[ParticleField]', err);
         }),
