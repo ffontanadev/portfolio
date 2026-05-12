@@ -5,7 +5,8 @@ export type ShapeSpec =
   | { kind: 'text'; text: string; fontFamily?: string; weight?: number; heightRatio?: number }
   | { kind: 'heart'; sizeRatio?: number }
   | { kind: 'rocket'; sizeRatio?: number }
-  | { kind: 'silhouette'; src: string; sizeRatio?: number; widthRatio?: number };
+  | { kind: 'silhouette'; src: string; sizeRatio?: number; widthRatio?: number }
+  | { kind: 'frames'; srcs: string[]; fps?: number; sizeRatio?: number; widthRatio?: number };
 
 export interface SampleBounds {
   width: number;
@@ -38,8 +39,12 @@ export function sampleShape(
     drawHeart(ctx, spec, bounds);
   } else if (spec.kind === 'rocket') {
     drawRocket(ctx, spec, bounds);
-  } else {
+  } else if (spec.kind === 'silhouette') {
     drawSilhouette(ctx, spec, bounds);
+  } else {
+    // 'frames' is sampled per-frame by FrameSequencer; if it reaches here,
+    // something wired it into the static shape rotation path by mistake.
+    return scatterFallback(count, bounds);
   }
 
   let pts = collectDarkPixels(ctx, canvas.width, canvas.height, dpr, 4);
