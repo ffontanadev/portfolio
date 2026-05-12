@@ -148,6 +148,7 @@ export class ParticleSystem {
           performance.now(),
           this.introOpts.timings,
         );
+        this.introOpts = null;  // consumed; guard against re-entry / double-construction.
         // Sequencer's constructor already populated aTarget with the rocket;
         // skip the loop's first-frame target refresh so it isn't clobbered.
         return;
@@ -290,18 +291,20 @@ export class ParticleSystem {
     this.lastTickAt = now;
 
     let morph: number;
-    if (this.intro && !this.intro.done) {
-      this.intro.tick(now);
-      morph = this.material.uniforms.uMorph.value as number;
-    } else {
-      if (this.intro && this.intro.done) {
+    if (this.intro) {
+      if (!this.intro.done) {
+        this.intro.tick(now);
+        morph = this.material.uniforms.uMorph.value as number;
+      } else {
         // First frame after intro: prime the loop into morphOut so the held
         // text dissolves into drift, then advance through shapes[0] first.
         this.intro = null;
         this.state = 'morphOut';
         this.stateStart = now;
         this.shapeIdx = this.shapes.length - 1;
+        morph = this.stepStateMachine(now);
       }
+    } else {
       morph = this.stepStateMachine(now);
     }
 
