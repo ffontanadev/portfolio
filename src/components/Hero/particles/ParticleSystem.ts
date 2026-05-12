@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { vertexShader, fragmentShader } from './shaders';
 import { sampleShape, type ShapeSpec, type SampleBounds } from './shapeSampler';
+import { IntroSequencer, type IntroShapes, type IntroTimings } from './IntroSequencer';
 
 export interface ParticleSystemOptions {
   canvas: HTMLCanvasElement;
@@ -12,6 +13,8 @@ export interface ParticleSystemOptions {
   driftAlpha?: number;
   shapeAlpha?: number;
   timings?: Partial<StateTimings>;
+  intro?: IntroShapes;
+  introTimings?: Partial<IntroTimings>;
 }
 
 interface StateTimings {
@@ -56,6 +59,9 @@ export class ParticleSystem {
   private state: State = 'drift';
   private stateStart = 0;
 
+  private intro: IntroSequencer | null = null;
+  private introOpts: { shapes: IntroShapes; timings?: Partial<IntroTimings> } | null = null;
+
   private cursorTarget = { x: -9999, y: -9999 };
   private cursorForceTarget = 0;
 
@@ -66,6 +72,10 @@ export class ParticleSystem {
     this.shapes = opts.shapes;
     this.accentColors = opts.accentColors;
     this.timings = { ...DEFAULT_TIMINGS, ...opts.timings };
+
+    if (opts.intro) {
+      this.introOpts = { shapes: opts.intro, timings: opts.introTimings };
+    }
 
     this.renderer = new THREE.WebGLRenderer({
       canvas: opts.canvas,
@@ -119,10 +129,35 @@ export class ParticleSystem {
     if (!this.initialized) {
       this.initAttributes();
       this.initialized = true;
+
+      // First resize → construct the intro sequencer if one was requested.
+      if (this.introOpts) {
+        this.intro = new IntroSequencer(
+          {
+            applyTargetTo: (slot, shape) => this.applyTargetTo(slot, shape),
+            copyNextIntoPrimary: () => this.copyNextIntoPrimary(),
+            uniforms: {
+              uMorph: this.material.uniforms.uMorph as { value: number },
+              uTargetBlend: this.material.uniforms.uTargetBlend as { value: number },
+              uTargetOffset: this.material.uniforms.uTargetOffset as { value: THREE.Vector2 },
+              uMorphSmear: this.material.uniforms.uMorphSmear as { value: number },
+            },
+            bounds: this.bounds,
+          },
+          this.introOpts.shapes,
+          performance.now(),
+          this.introOpts.timings,
+        );
+      }
     } else {
       this.resampleHomes();
+      // Resampling targets must reflect intro state, not the loop shape.
+      if (this.intro && !this.intro.done) {
+        this.intro.applyResize();
+        return;
+      }
     }
-    // Always refresh the active shape's target for the new bounds.
+    // Loop path: refresh the active shape's target for the new bounds.
     this.applyTargetTo('aTarget', this.shapes[this.shapeIdx]);
   }
 
@@ -190,6 +225,13 @@ export class ParticleSystem {
     attr.needsUpdate = true;
   }
 
+  private copyNextIntoPrimary() {
+    const primary = this.geometry.getAttribute('aTarget') as THREE.BufferAttribute;
+    const next = this.geometry.getAttribute('aTargetNext') as THREE.BufferAttribute;
+    (primary.array as Float32Array).set(next.array as Float32Array);
+    primary.needsUpdate = true;
+  }
+
   setCursor(x: number, y: number, inside: boolean) {
     this.cursorTarget.x = x;
     this.cursorTarget.y = y;
@@ -244,7 +286,21 @@ export class ParticleSystem {
     const time = (now - this.startTime) / 1000;
     this.lastTickAt = now;
 
-    const morph = this.stepStateMachine(now);
+    let morph: number;
+    if (this.intro && !this.intro.done) {
+      this.intro.tick(now);
+      morph = this.material.uniforms.uMorph.value as number;
+    } else {
+      if (this.intro && this.intro.done) {
+        // First frame after intro: prime the loop into morphOut so the held
+        // text dissolves into drift, then advance through shapes[0] first.
+        this.intro = null;
+        this.state = 'morphOut';
+        this.stateStart = now;
+        this.shapeIdx = this.shapes.length - 1;
+      }
+      morph = this.stepStateMachine(now);
+    }
 
     // Smooth cursor force (low-pass) so it doesn't snap on enter/leave.
     const u = this.material.uniforms;
@@ -275,10 +331,12 @@ export class ParticleSystem {
 
   resume() {
     if (this.rafId === null && this.initialized) {
-      // Shift the state-clock so we don't time-warp through frames missed while
-      // paused (e.g., after tab switch).
       const now = performance.now();
-      this.stateStart += now - this.lastTickAt;
+      const delta = now - this.lastTickAt;
+      this.stateStart += delta;
+      if (this.intro && !this.intro.done) {
+        this.intro.shiftClock(delta);
+      }
       this.tick();
     }
   }
