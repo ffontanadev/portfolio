@@ -17,6 +17,7 @@ export const vertexShader = /* glsl */ `
   uniform float uMorph;        // 0 = drift, 1 = shape
   uniform float uTargetBlend;   // 0 = aTarget, 1 = aTargetNext
   uniform vec2  uTargetOffset;  // CSS px offset applied after target blend
+  uniform float uTargetScale;   // uniform scale applied around canvas center; 1 = identity
   uniform float uMorphSmear;    // 0..1 per-particle morph stagger
   uniform vec2  uCursor;       // canvas px, top-left origin
   uniform float uCursorForce;  // 0..1, smoothed
@@ -80,8 +81,11 @@ export const vertexShader = /* glsl */ `
     float driftAmp = 38.0 + aSeed * 22.0;
     vec2 driftPos = aHome + flow * driftAmp;
 
-    // Blend between primary and next target, then translate.
-    vec2 target = mix(aTarget, aTargetNext, uTargetBlend) + uTargetOffset;
+    // Blend between primary and next target, scale around canvas center, then translate.
+    // Scaling around center lets the rocket "approach" (small → full) without offsetting position.
+    vec2 target = mix(aTarget, aTargetNext, uTargetBlend);
+    vec2 targetCenter = uResolution * 0.5;
+    target = targetCenter + (target - targetCenter) * uTargetScale + uTargetOffset;
     // Per-particle morph stagger — particles with low aSeed lead (front of
     // formation), high aSeed lag (exhaust trail). No-op when uMorphSmear=0.
     float pMorph = clamp(uMorph - aSeed * uMorphSmear, 0.0, 1.0);
