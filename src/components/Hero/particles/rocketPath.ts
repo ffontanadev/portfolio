@@ -1,5 +1,5 @@
 // src/components/Hero/particles/rocketPath.ts
-import type { SampleBounds } from './shapeSampler';
+import type { ShapeSpec, SampleBounds } from './shapeSampler';
 
 // Rocket silhouette pointing right, drawn in a 100x100 unit grid.
 // Layout: body spans x=25..70, nose tip at x=95, fins protrude to x=5.
@@ -13,14 +13,9 @@ const ROCKET_BODY = 'M70 40 L95 50 L70 60 L28 60 L5 78 L18 55 L18 50 L18 45 L5 2
 // Small porthole — separately added so the dark pixel sampler picks it up.
 const ROCKET_PORTHOLE = 'M58 50 a 4 4 0 1 1 -8 0 a 4 4 0 1 1 8 0 Z';
 
-export interface RocketSpec {
-  kind: 'rocket';
-  sizeRatio?: number;
-}
-
 export function drawRocket(
   ctx: CanvasRenderingContext2D,
-  spec: RocketSpec,
+  spec: Extract<ShapeSpec, { kind: 'rocket' }>,
   bounds: SampleBounds,
 ) {
   const sizeRatio = spec.sizeRatio ?? 0.28;
