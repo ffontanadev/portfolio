@@ -1,0 +1,371 @@
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - generic [ref=e5]:
+      - link "FF ." [ref=e6] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e7]: FF
+        - generic [ref=e8]: .
+      - button "Toggle menu" [ref=e9]:
+        - img [ref=e11]
+  - main [ref=e12]:
+    - generic [ref=e14]:
+      - generic [ref=e16]: 01 — Introduction
+      - generic [ref=e20]: A developer crafting digital solutions at Magenta Innova .
+    - generic [ref=e21]:
+      - generic [ref=e24]: Stack · in rotation
+      - generic [ref=e27]:
+        - generic [ref=e28]:
+          - img "Supabase logo"
+          - generic [ref=e29]: Supabase
+        - generic [ref=e30]:
+          - img "Next.js logo"
+          - generic [ref=e31]: Next.js
+        - generic [ref=e32]:
+          - img "AWS logo"
+          - generic [ref=e33]: AWS
+        - generic [ref=e34]:
+          - img "Three.js logo"
+          - generic [ref=e35]: Three.js
+        - generic [ref=e36]:
+          - img "Drizzle logo"
+          - generic [ref=e37]: Drizzle
+        - generic [ref=e38]:
+          - img "SQLite logo"
+          - generic [ref=e39]: SQLite
+        - generic [ref=e40]:
+          - img "MongoDB logo"
+          - generic [ref=e41]: MongoDB
+        - generic [ref=e42]:
+          - img "PostgreSQL logo"
+          - generic [ref=e43]: PostgreSQL
+        - generic [ref=e44]:
+          - img "Spring Boot logo"
+          - generic [ref=e45]: Spring Boot
+        - generic [ref=e46]:
+          - img "Sequelize logo"
+          - generic [ref=e47]: Sequelize
+        - generic [ref=e48]:
+          - img "Express.js logo"
+          - generic [ref=e49]: Express.js
+        - generic [ref=e50]:
+          - img "Tailwind CSS logo"
+          - generic [ref=e51]: Tailwind CSS
+        - generic [ref=e52]:
+          - img "Astro logo"
+          - generic [ref=e53]: Astro
+        - generic [ref=e54]:
+          - img "Bootstrap logo"
+          - generic [ref=e55]: Bootstrap
+        - generic [ref=e56]:
+          - img "Vercel logo"
+          - generic [ref=e57]: Vercel
+        - generic [ref=e58]:
+          - img "GoDaddy logo"
+          - generic [ref=e59]: GoDaddy
+        - generic [ref=e60]:
+          - img "Google Cloud logo"
+          - generic [ref=e61]: Google Cloud
+        - generic [ref=e62]:
+          - img "C# logo"
+          - generic [ref=e63]: C#
+        - generic [ref=e64]:
+          - img "Lit logo"
+          - generic [ref=e65]: Lit
+        - generic [ref=e66]:
+          - img "Redux logo"
+          - generic [ref=e67]: Redux
+        - generic [ref=e68]:
+          - img "Auth0 logo"
+          - generic [ref=e69]: Auth0
+        - generic [ref=e70]:
+          - img "JWT logo"
+          - generic [ref=e71]: JWT
+        - generic [ref=e72]:
+          - img "Vite logo"
+          - generic [ref=e73]: Vite
+        - generic [ref=e74]:
+          - img "Supabase logo"
+          - generic [ref=e75]: Supabase
+        - generic [ref=e76]:
+          - img "Next.js logo"
+          - generic [ref=e77]: Next.js
+        - generic [ref=e78]:
+          - img "AWS logo"
+          - generic [ref=e79]: AWS
+        - generic [ref=e80]:
+          - img "Three.js logo"
+          - generic [ref=e81]: Three.js
+        - generic [ref=e82]:
+          - img "Drizzle logo"
+          - generic [ref=e83]: Drizzle
+        - generic [ref=e84]:
+          - img "SQLite logo"
+          - generic [ref=e85]: SQLite
+        - generic [ref=e86]:
+          - img "MongoDB logo"
+          - generic [ref=e87]: MongoDB
+        - generic [ref=e88]:
+          - img "PostgreSQL logo"
+          - generic [ref=e89]: PostgreSQL
+        - generic [ref=e90]:
+          - img "Spring Boot logo"
+          - generic [ref=e91]: Spring Boot
+        - generic [ref=e92]:
+          - img "Sequelize logo"
+          - generic [ref=e93]: Sequelize
+        - generic [ref=e94]:
+          - img "Express.js logo"
+          - generic [ref=e95]: Express.js
+        - generic [ref=e96]:
+          - img "Tailwind CSS logo"
+          - generic [ref=e97]: Tailwind CSS
+        - generic [ref=e98]:
+          - img "Astro logo"
+          - generic [ref=e99]: Astro
+        - generic [ref=e100]:
+          - img "Bootstrap logo"
+          - generic [ref=e101]: Bootstrap
+        - generic [ref=e102]:
+          - img "Vercel logo"
+          - generic [ref=e103]: Vercel
+        - generic [ref=e104]:
+          - img "GoDaddy logo"
+          - generic [ref=e105]: GoDaddy
+        - generic [ref=e106]:
+          - img "Google Cloud logo"
+          - generic [ref=e107]: Google Cloud
+        - generic [ref=e108]:
+          - img "C# logo"
+          - generic [ref=e109]: C#
+        - generic [ref=e110]:
+          - img "Lit logo"
+          - generic [ref=e111]: Lit
+        - generic [ref=e112]:
+          - img "Redux logo"
+          - generic [ref=e113]: Redux
+        - generic [ref=e114]:
+          - img "Auth0 logo"
+          - generic [ref=e115]: Auth0
+        - generic [ref=e116]:
+          - img "JWT logo"
+          - generic [ref=e117]: JWT
+        - generic [ref=e118]:
+          - img "Vite logo"
+          - generic [ref=e119]: Vite
+    - generic [ref=e120]:
+      - generic [ref=e121]:
+        - generic [ref=e123]: § 02 — Featured Work
+        - heading "What I've been pouring my soul into." [level=2] [ref=e125]
+        - paragraph [ref=e126]: A small collection of recent experiments, products, and side-quests.
+      - generic [ref=e127]:
+        - article [ref=e128] [cursor=pointer]:
+          - generic [ref=e129]:
+            - generic [ref=e130]:
+              - text: "01"
+              - generic [ref=e131]: / 03
+            - generic [ref=e133]: JAN 25'
+          - generic [ref=e134]:
+            - img "Minecraft-like Terrain Generation" [ref=e135]
+            - img [ref=e138]
+            - generic [ref=e142]:
+              - paragraph [ref=e143]: Open project
+              - paragraph [ref=e144]: Next.js · Three.js · Perlin Noise · Prototyping
+          - generic [ref=e145]:
+            - heading "Minecraft-like Terrain Generation" [level=3] [ref=e146]
+            - paragraph [ref=e147]: Three Voxel World Generation using Perlin noise algorithm in Three.js with 3D First Person Controller
+            - generic [ref=e148]:
+              - generic [ref=e149]: Next.js
+              - generic [ref=e150]: Three.js
+              - generic [ref=e151]: Perlin Noise
+              - generic [ref=e152]: "+2"
+        - article [ref=e153] [cursor=pointer]:
+          - generic [ref=e154]:
+            - generic [ref=e155]:
+              - text: "02"
+              - generic [ref=e156]: / 03
+            - generic [ref=e158]: JUN 23'
+          - generic [ref=e159]:
+            - img "Twitter Clone" [ref=e160]
+            - img [ref=e163]
+            - generic [ref=e167]:
+              - paragraph [ref=e168]: Open project
+              - paragraph [ref=e169]: Node.js · Express · Express Session · Mongo
+          - generic [ref=e170]:
+            - heading "Twitter Clone" [level=3] [ref=e171]
+            - paragraph [ref=e172]: A functional clone of the old app Twitter with authentication, feed, following and likes!
+            - generic [ref=e173]:
+              - generic [ref=e174]: Node.js
+              - generic [ref=e175]: Express
+              - generic [ref=e176]: Express Session
+              - generic [ref=e177]: "+2"
+        - article [ref=e178] [cursor=pointer]:
+          - generic [ref=e179]:
+            - generic [ref=e180]:
+              - text: "03"
+              - generic [ref=e181]: / 03
+            - generic [ref=e183]: AUG 25'
+          - generic [ref=e184]:
+            - img "Magenta Hours Collector (MHC-CLI)" [ref=e185]
+            - img [ref=e188]
+            - generic [ref=e192]:
+              - paragraph [ref=e193]: Open project
+              - paragraph [ref=e194]: Commander.js · Google Cloud Platform · SQLite
+          - generic [ref=e195]:
+            - heading "Magenta Hours Collector (MHC-CLI)" [level=3] [ref=e196]
+            - paragraph [ref=e197]: A command line application that connects to an email inbox and extract hour reports using AI and search for emails matching the configured criteria and then give the email to Claude Sonnet 4.5 to collect all the relevant information and alert from use
+            - generic [ref=e198]:
+              - generic [ref=e199]: Commander.js
+              - generic [ref=e200]: Google Cloud Platform
+              - generic [ref=e201]: SQLite
+    - generic [ref=e203]:
+      - generic [ref=e204]:
+        - generic [ref=e206]: § 03 — Archive
+        - heading "Older works" [level=2] [ref=e208]
+        - paragraph [ref=e209]: Relics of my developing journey — still dear to me, but no longer the main event.
+      - generic [ref=e210]:
+        - generic [ref=e212] [cursor=pointer]:
+          - generic [ref=e213]:
+            - img "Biome Terrain Engine" [ref=e214]
+            - generic [ref=e215]: "2021"
+          - generic [ref=e216]:
+            - heading "Biome Terrain Engine" [level=3] [ref=e217]
+            - paragraph [ref=e218]: Procedural generation
+            - generic [ref=e220]: View
+        - generic [ref=e223] [cursor=pointer]:
+          - generic [ref=e224]:
+            - img "Hackflix" [ref=e225]
+            - generic [ref=e226]: "2022"
+          - generic [ref=e227]:
+            - heading "Hackflix" [level=3] [ref=e228]
+            - paragraph [ref=e229]: Browse for the latest movies easily.
+            - generic [ref=e231]: View
+        - generic [ref=e234] [cursor=pointer]:
+          - generic [ref=e235]:
+            - img "Truqui" [ref=e236]
+            - generic [ref=e237]: "2022"
+          - generic [ref=e238]:
+            - heading "Truqui" [level=3] [ref=e239]
+            - paragraph [ref=e240]: Your one stop book shop
+            - generic [ref=e242]: View
+    - generic [ref=e245]:
+      - generic [ref=e247]: § 04 — Field Notes
+      - generic [ref=e256]:
+        - heading "More insights on the blog." [level=2] [ref=e257]:
+          - text: More insights
+          - text: on the blog.
+        - paragraph [ref=e258]: Articles about web development, design patterns, and the creative process behind building modern digital experiences.
+        - link "Visit the journal" [ref=e260] [cursor=pointer]:
+          - /url: /blog
+          - generic [ref=e261]: Visit the journal
+          - img [ref=e262]
+    - generic [ref=e266]:
+      - generic [ref=e269]: § 05 — Get in touch
+      - paragraph [ref=e271]: you made it this far—
+      - heading "C o m e s a y h i ." [level=2] [ref=e272]:
+        - generic [ref=e273]: C
+        - generic [ref=e274]: o
+        - generic [ref=e275]: m
+        - generic [ref=e276]: e
+        - generic [ref=e278]: s
+        - generic [ref=e279]: a
+        - generic [ref=e280]: "y"
+        - generic [ref=e282]: h
+        - generic [ref=e283]: i
+        - generic [ref=e284]: .
+      - generic [ref=e285]:
+        - generic [ref=e286]:
+          - generic [ref=e290]: Set list · Available for
+          - generic [ref=e292]: B · SIDE
+        - list [ref=e295]:
+          - listitem [ref=e296]:
+            - generic [ref=e297]: "01"
+            - generic [ref=e298]:
+              - generic [ref=e299]:
+                - generic [ref=e300]: FULL · TIME
+                - generic [ref=e301]: Developer role
+              - generic [ref=e302]: Open to remote or relocation. Available immediately.
+          - listitem [ref=e306]:
+            - generic [ref=e307]: "02"
+            - generic [ref=e308]:
+              - generic [ref=e309]:
+                - generic [ref=e310]: FREELANCE
+                - generic [ref=e311]: Project-based work
+              - generic [ref=e312]: From product MVPs to focused systems engineering.
+          - listitem [ref=e316]:
+            - generic [ref=e317]: "03"
+            - generic [ref=e318]:
+              - generic [ref=e319]:
+                - generic [ref=e320]: CONSULT
+                - generic [ref=e321]: Digital solutions
+              - generic [ref=e322]: Architecture, scoping, technical audits & strategy.
+        - generic [ref=e360]: Live · ~24h reply
+      - paragraph [ref=e361]: …and I'm always up for talking about music, or trying a new game together.
+      - generic [ref=e362]:
+        - button "View Resume" [ref=e363] [cursor=pointer]:
+          - img [ref=e365]
+          - generic [ref=e369]: View Resume
+        - link "c o n t a c t o @ f f o n t a n a . d e v" [ref=e371] [cursor=pointer]:
+          - /url: mailto:contacto@ffontana.dev
+          - generic [ref=e372]: c
+          - generic [ref=e373]: o
+          - generic [ref=e374]: "n"
+          - generic [ref=e375]: t
+          - generic [ref=e376]: a
+          - generic [ref=e377]: c
+          - generic [ref=e378]: t
+          - generic [ref=e379]: o
+          - generic [ref=e380]: "@"
+          - generic [ref=e381]: f
+          - generic [ref=e382]: f
+          - generic [ref=e383]: o
+          - generic [ref=e384]: "n"
+          - generic [ref=e385]: t
+          - generic [ref=e386]: a
+          - generic [ref=e387]: "n"
+          - generic [ref=e388]: a
+          - generic [ref=e389]: .
+          - generic [ref=e390]: d
+          - generic [ref=e391]: e
+          - generic [ref=e392]: v
+        - generic [ref=e393]:
+          - link "LinkedIn" [ref=e394] [cursor=pointer]:
+            - /url: "#"
+            - img [ref=e396]
+          - link "Twitter" [ref=e400] [cursor=pointer]:
+            - /url: "#"
+            - img [ref=e402]
+  - contentinfo [ref=e404]:
+    - generic [ref=e405]:
+      - generic [ref=e406]:
+        - generic [ref=e407]:
+          - generic [ref=e408]:
+            - generic [ref=e409]: FF
+            - generic [ref=e410]: .
+          - paragraph [ref=e411]: Building quiet, deliberate software.
+        - navigation [ref=e412]:
+          - link "01 Home" [ref=e413] [cursor=pointer]:
+            - /url: "#hero"
+            - generic [ref=e414]: "01"
+            - text: Home
+          - link "02 Work" [ref=e415] [cursor=pointer]:
+            - /url: "#work"
+            - generic [ref=e416]: "02"
+            - text: Work
+          - link "03 About" [ref=e417] [cursor=pointer]:
+            - /url: "#about"
+            - generic [ref=e418]: "03"
+            - text: About
+          - link "04 Connect" [ref=e419] [cursor=pointer]:
+            - /url: "#connect"
+            - generic [ref=e420]: "04"
+            - text: Connect
+          - link "05 Resume" [ref=e421] [cursor=pointer]:
+            - /url: /resume.pdf
+            - generic [ref=e422]: "05"
+            - text: Resume
+      - generic [ref=e424]:
+        - generic [ref=e425]: © 2026 · Felipe Fontana · All rights reserved
+        - generic [ref=e426]:
+          - text: Crafted with
+          - img [ref=e428]
+          - text: and React

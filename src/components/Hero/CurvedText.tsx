@@ -1,25 +1,27 @@
+import { motion, useReducedMotion } from 'framer-motion';
+
 interface CurvedTextProps {
   text?: string;
   radius?: number;
 }
 
 const CurvedText = ({
-  text = "I WANNA BE A HUMAN BEFORE I DO SOME ART",
-  radius = 150
+  text = '✱  CRAFTING  ·  CODING  ·  CONNECTING  ·  ',
+  radius = 150,
 }: CurvedTextProps) => {
+  const shouldReduceMotion = useReducedMotion();
   const viewBoxSize = radius * 2 + 50;
   const center = viewBoxSize / 2;
 
   return (
     <>
-      {/* Screen reader accessible text */}
       <span className="sr-only">{text}</span>
-
-      {/* Visual curved text */}
-      <svg
+      <motion.svg
         viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
         className="absolute inset-0 w-full h-full pointer-events-none"
         aria-hidden="true"
+        animate={shouldReduceMotion ? {} : { rotate: 360 }}
+        transition={{ duration: 60, ease: 'linear', repeat: Infinity }}
       >
         <defs>
           <path
@@ -29,17 +31,18 @@ const CurvedText = ({
           />
         </defs>
         <text
-          fontSize="14"
-          letterSpacing="3"
+          fontSize="11"
+          letterSpacing="6"
           fontWeight="500"
           fill="currentColor"
-          className="text-gray-700"
+          className="text-dark-900/55"
+          style={{ fontFamily: 'JetBrains Mono, ui-monospace, monospace' }}
         >
-          <textPath href="#circlePath" startOffset="50%" textAnchor="middle">
-            {text}
+          <textPath href="#circlePath" startOffset="0%">
+            {(text + text).toUpperCase()}
           </textPath>
         </text>
-      </svg>
+      </motion.svg>
     </>
   );
 };

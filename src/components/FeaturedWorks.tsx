@@ -1,7 +1,9 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import ProjectPreviewModal, { type Project } from './ProjectPreviewModal';
+
+const ease = [0.22, 1, 0.36, 1] as const;
 
 const projects: Project[] = [
   {
@@ -458,6 +460,13 @@ export const fetchCommand = new Command("fetch")
 const FeaturedWorks = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+  const headingY = useTransform(scrollYProgress, [0, 1], [60, -60]);
 
   const handleProjectClick = (project: Project) => {
     setSelectedProject(project);
@@ -471,55 +480,119 @@ const FeaturedWorks = () => {
 
   return (
     <>
-      <section id="work" className="py-32 px-6 md:px-20 max-w-[1440px] mx-auto">
-        <div className="mb-20">
-          <h2 className="text-sm font-bold tracking-widest uppercase text-coral-500 mb-4">Featured works</h2>
-          <p className="text-2xl md:text-3xl font-display italic text-gray-600">
-            a.k.a., what I've been pouring my soul into these last few years
+      <section
+        ref={sectionRef}
+        id="work"
+        className="relative py-32 md:py-40 px-6 md:px-20 max-w-[1440px] mx-auto"
+      >
+        {/* Section header */}
+        <motion.div style={{ y: headingY }} className="mb-24">
+          <div className="flex items-center gap-4 mb-8">
+            <span className="text-eyebrow text-coral-500">§ 02 — Featured Work</span>
+            <span className="h-px flex-1 max-w-[140px] bg-dark-900/15" />
+          </div>
+          <h2 className="font-display font-display-md font-bold tracking-[-0.02em] text-4xl md:text-6xl leading-[1.05] max-w-3xl text-dark-900">
+            What I've been{' '}
+            <span className="font-display-italic text-coral-500" style={{ fontStyle: 'italic' }}>
+              pouring my soul
+            </span>{' '}
+            into.
+          </h2>
+          <p className="mt-6 max-w-xl text-lg text-dark-900/55 font-light leading-relaxed">
+            A small collection of recent experiments, products, and side-quests.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-20">
-          {projects.map((project, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              onClick={() => handleProjectClick(project)}
-              className="group cursor-pointer"
-            >
-              {/* Card Image Placeholder */}
-              <div className={`w-full aspect-[4/3] ${project.color} rounded-2xl mb-8 overflow-hidden relative`}>
-                {project.image && (
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover  group-hover:opacity-100 transition-opacity duration-300"
-                    loading="lazy"
-                  />
-                )}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300" />
-                <div className="absolute top-6 right-6 bg-white p-3 rounded-full opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                  <ArrowUpRight size={24} />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24">
+          {projects.map((project, index) => {
+            const num = String(index + 1).padStart(2, '0');
+            const total = String(projects.length).padStart(2, '0');
+            const offsetClass = index % 2 === 1 ? 'md:mt-20' : '';
+            return (
+              <motion.article
+                key={index}
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ delay: index * 0.08, duration: 0.9, ease }}
+                onClick={() => handleProjectClick(project)}
+                className={`group cursor-pointer ${offsetClass}`}
+              >
+                {/* Project number */}
+                <div className="flex items-baseline gap-3 mb-5">
+                  <span className="font-mono text-xs text-dark-900/40 tracking-widest">
+                    {num} <span className="text-dark-900/25">/ {total}</span>
+                  </span>
+                  <span className="h-px flex-1 bg-dark-900/10" />
+                  <span className="font-mono text-[10px] text-dark-900/40 tracking-widest uppercase">
+                    {project.date}
+                  </span>
                 </div>
-              </div>
 
-              {/* Metadata */}
-              <div className="flex items-center gap-4 mb-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                <span className="bg-gray-100 px-3 py-1 rounded-full">{project.date}</span>
-                <span className="text-coral-500">{project.techStack.slice(0, 2).join(', ')}</span>
-              </div>
+                {/* Image */}
+                <div
+                  className={`relative w-full aspect-[4/3] ${project.color} rounded-2xl overflow-hidden soft-lift`}
+                >
+                  {project.image && (
+                    <motion.img
+                      src={project.image}
+                      alt={project.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                      loading="lazy"
+                      whileHover={{ scale: 1.04 }}
+                      transition={{ duration: 1.2, ease }}
+                    />
+                  )}
+                  {/* Warm coral wash on hover */}
+                  <div className="absolute inset-0 bg-coral-500/0 group-hover:bg-coral-500/8 transition-colors duration-700 mix-blend-multiply" />
 
-              <h3 className="text-3xl font-display font-bold mb-2 group-hover:text-coral-500 transition-colors">
-                {project.title}
-              </h3>
-              <p className="text-lg text-gray-600">
-                {project.desc}
-              </p>
-            </motion.div>
-          ))}
+                  {/* Arrow */}
+                  <div className="absolute top-5 right-5 bg-cream-50/90 backdrop-blur-sm p-3 rounded-full opacity-0 translate-y-3 -translate-x-3 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
+                    <ArrowUpRight size={18} className="text-dark-900" />
+                  </div>
+
+                  {/* Bottom title overlay (slides up on hover) */}
+                  <div className="absolute inset-x-0 bottom-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]">
+                    <div className="bg-cream-50/85 backdrop-blur-sm rounded-xl px-4 py-3">
+                      <p className="font-mono text-[10px] tracking-widest uppercase text-coral-500 mb-1">
+                        Open project
+                      </p>
+                      <p className="text-sm text-dark-900/80 line-clamp-1">
+                        {project.techStack.slice(0, 4).join(' · ')}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Title & description */}
+                <div className="mt-7">
+                  <h3 className="font-display font-bold text-2xl md:text-3xl tracking-[-0.01em] leading-tight text-dark-900 group-hover:text-coral-500 transition-colors duration-500">
+                    {project.title}
+                  </h3>
+                  <p className="mt-3 text-base md:text-lg text-dark-900/60 font-light leading-relaxed max-w-md">
+                    {project.desc}
+                  </p>
+
+                  {/* Stack chips */}
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {project.techStack.slice(0, 3).map((tech) => (
+                      <span
+                        key={tech}
+                        className="font-mono text-[10px] tracking-widest uppercase text-dark-900/55 border border-dark-900/15 rounded-full px-3 py-1"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                    {project.techStack.length > 3 && (
+                      <span className="font-mono text-[10px] tracking-widest text-dark-900/40 px-1 py-1">
+                        +{project.techStack.length - 3}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </motion.article>
+            );
+          })}
         </div>
       </section>
 

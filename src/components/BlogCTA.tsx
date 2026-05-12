@@ -4,111 +4,130 @@ import { format } from 'date-fns';
 import { usePublishedPosts } from '../hooks/useBlog';
 import { Clock, Calendar, ArrowRight } from 'lucide-react';
 
+const ease = [0.22, 1, 0.36, 1] as const;
+
 const BlogCTA = () => {
   const { data, isLoading } = usePublishedPosts(1, 1);
   const latestPost = data?.posts[0];
 
   return (
-    <section className="py-20 bg-cream-100 px-6 md:px-20">
-      <div className="max-w-[1440px] mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-          {/* Left Column - Latest Blog Post Card */}
+    <section className="relative py-28 md:py-36 bg-cream-100 px-6 md:px-20 overflow-hidden">
+      {/* Ambient blobs */}
+      <div
+        aria-hidden="true"
+        className="absolute -top-20 -right-20 w-[28rem] h-[28rem] bg-coral-500/8 rounded-full blur-3xl pointer-events-none"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute -bottom-32 -left-16 w-[24rem] h-[24rem] bg-purple-500/6 rounded-full blur-3xl pointer-events-none"
+      />
+
+      <div className="max-w-[1440px] mx-auto relative">
+        <div className="flex items-center gap-4 mb-16">
+          <span className="text-eyebrow text-coral-500">§ 04 — Field Notes</span>
+          <span className="h-px flex-1 max-w-[160px] bg-dark-900/15" />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
+          {/* Left Column - Latest Post */}
           {!isLoading && latestPost ? (
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 36 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.9, ease }}
             >
               <Link
                 to={`/blog/${latestPost.slug}`}
-                className="block bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300 group h-full"
+                className="group block glass-card rounded-3xl p-7 soft-lift transition-colors duration-500"
               >
                 {latestPost.featured_image_url && (
-                  <div className="w-full h-48 mb-4 overflow-hidden rounded-lg">
-                    <img
+                  <div className="w-full h-56 mb-6 overflow-hidden rounded-2xl">
+                    <motion.img
                       src={latestPost.featured_image_url}
                       alt={latestPost.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover"
+                      whileHover={{ scale: 1.04 }}
+                      transition={{ duration: 1.2, ease }}
                     />
                   </div>
                 )}
 
-                <div className="mb-3">
-                  <span className="text-xs text-gray-500 uppercase tracking-wide">Latest Post</span>
-                </div>
+                <span className="text-eyebrow text-coral-500">Latest post</span>
 
-                <h3 className="text-2xl font-bold text-dark-900 mb-3 group-hover:text-coral-500 transition-colors">
+                <h3 className="mt-3 text-2xl md:text-[1.75rem] font-display font-bold tracking-[-0.01em] leading-tight text-dark-900 group-hover:text-coral-500 transition-colors duration-500">
                   {latestPost.title}
                 </h3>
 
                 {latestPost.excerpt && (
-                  <p className="text-dark-700 leading-relaxed mb-4 line-clamp-3">
+                  <p className="mt-4 text-dark-900/65 font-light leading-relaxed line-clamp-3">
                     {latestPost.excerpt}
                   </p>
                 )}
 
-                <div className="flex flex-wrap items-center gap-4 text-sm text-dark-600 mb-4">
+                <div className="mt-5 flex flex-wrap items-center gap-4 font-mono text-[10px] uppercase tracking-widest text-dark-900/50">
                   {latestPost.published_at && (
-                    <span className="flex items-center gap-1">
-                      <Calendar className="w-4 h-4" />
+                    <span className="flex items-center gap-1.5">
+                      <Calendar className="w-3.5 h-3.5" />
                       {format(new Date(latestPost.published_at), 'MMM d, yyyy')}
                     </span>
                   )}
                   {latestPost.reading_time_minutes && (
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-4 h-4" />
-                      {latestPost.reading_time_minutes} min read
+                    <span className="flex items-center gap-1.5">
+                      <Clock className="w-3.5 h-3.5" />
+                      {latestPost.reading_time_minutes} min
                     </span>
                   )}
                 </div>
 
-                <span className="inline-flex items-center text-coral-500 group-hover:text-coral-600 font-medium transition-colors">
-                  Read more <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                <span className="mt-6 inline-flex items-center gap-2 text-coral-500 font-medium">
+                  <span className="reveal-underline">Read the post</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-500" />
                 </span>
               </Link>
             </motion.div>
           ) : isLoading ? (
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="bg-white rounded-2xl p-6 shadow-sm h-full animate-pulse"
+              initial={{ opacity: 0, y: 36 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="glass-card rounded-3xl p-7 h-full"
             >
-              <div className="w-full h-48 mb-4 bg-gray-200 rounded-lg" />
-              <div className="h-4 bg-gray-200 rounded w-24 mb-3" />
-              <div className="h-8 bg-gray-200 rounded w-3/4 mb-3" />
-              <div className="h-4 bg-gray-200 rounded w-full mb-2" />
-              <div className="h-4 bg-gray-200 rounded w-5/6 mb-4" />
-              <div className="flex gap-4">
-                <div className="h-4 bg-gray-200 rounded w-24" />
-                <div className="h-4 bg-gray-200 rounded w-20" />
-              </div>
+              <div className="w-full h-56 mb-6 bg-dark-900/5 rounded-2xl animate-pulse" />
+              <div className="h-3 w-24 bg-dark-900/10 rounded mb-4 animate-pulse" />
+              <div className="h-7 w-3/4 bg-dark-900/10 rounded mb-3 animate-pulse" />
+              <div className="h-4 w-full bg-dark-900/8 rounded mb-2 animate-pulse" />
+              <div className="h-4 w-5/6 bg-dark-900/8 rounded animate-pulse" />
             </motion.div>
           ) : null}
 
-          {/* Right Column - Blog Invitation */}
+          {/* Right Column - Invitation */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 36 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex flex-col justify-center"
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.9, ease, delay: 0.15 }}
+            className="flex flex-col justify-center md:pt-12"
           >
-            <h2 className="text-4xl md:text-5xl font-display font-bold text-dark-900 mb-6">
-              More insights on the blog
+            <h2 className="font-display font-display-md font-bold text-4xl md:text-5xl tracking-[-0.02em] leading-[1.05] text-dark-900">
+              More{' '}
+              <span className="font-display-italic text-coral-500" style={{ fontStyle: 'italic' }}>
+                insights
+              </span>
+              <br />
+              on the blog.
             </h2>
-            <p className="text-lg text-dark-600 mb-8 leading-relaxed">
-              Dive into articles about web development, design patterns, and the creative process behind building modern digital experiences.
+            <p className="mt-6 max-w-md text-lg text-dark-900/60 font-light leading-relaxed">
+              Articles about web development, design patterns, and the creative process behind building modern digital experiences.
             </p>
-            <div>
+            <div className="mt-10">
               <Link
                 to="/blog"
-                className="inline-flex items-center gap-2 bg-dark-900 text-white px-8 py-4 rounded-full font-bold hover:bg-coral-500 transition-colors group"
+                className="group relative inline-flex items-center gap-3 overflow-hidden bg-dark-900 text-cream-50 px-8 py-4 rounded-full font-medium"
               >
-                Visit Blog
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <span className="relative z-10">Visit the journal</span>
+                <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-1 transition-transform duration-500" />
+                <span className="absolute inset-0 bg-coral-500 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]" />
               </Link>
             </div>
           </motion.div>

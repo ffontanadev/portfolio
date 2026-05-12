@@ -379,53 +379,76 @@ const OlderWorks = () => {
         setTimeout(() => setSelectedProject(null), 200);
     };
 
+    const ease = [0.22, 1, 0.36, 1] as const;
+
     return (
         <>
-            <section className="py-20 bg-gray-50 px-6 md:px-20">
-                <div className="max-w-[1440px] mx-auto">
-                    <div className="mb-12">
-                        <h2 className="text-2xl font-display font-bold mb-2">Older works</h2>
-                        <p className="text-gray-500 max-w-xl">
-                            These pieces are relics of my developing journey – still dear to my heart, but not the main event anymore.
+            <section className="py-24 md:py-32 bg-cream-50 px-6 md:px-20 relative overflow-hidden">
+                {/* Subtle ambient blob */}
+                <div
+                    aria-hidden="true"
+                    className="absolute top-1/2 left-1/4 w-[40rem] h-[40rem] -translate-y-1/2 rounded-full bg-purple-500/4 blur-3xl pointer-events-none"
+                />
+
+                <div className="max-w-[1440px] mx-auto relative">
+                    <div className="mb-16 max-w-2xl">
+                        <div className="flex items-center gap-4 mb-6">
+                            <span className="text-eyebrow text-dark-900/55">§ 03 — Archive</span>
+                            <span className="h-px flex-1 max-w-[120px] bg-dark-900/15" />
+                        </div>
+                        <h2 className="font-display font-bold text-3xl md:text-4xl tracking-[-0.02em] text-dark-900 leading-tight">
+                            Older{' '}
+                            <span className="font-display-italic text-dark-900/55" style={{ fontStyle: 'italic' }}>
+                                works
+                            </span>
+                        </h2>
+                        <p className="mt-4 text-dark-900/55 font-light leading-relaxed">
+                            Relics of my developing journey — still dear to me, but no longer the main event.
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                         {projects.map((project, index) => (
                             <motion.div
                                 key={index}
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: index * 0.1 }}
+                                viewport={{ once: true, margin: '-60px' }}
+                                transition={{ delay: index * 0.08, duration: 0.8, ease }}
                                 onClick={() => handleProjectClick(project)}
                                 className="group cursor-pointer"
                             >
-                                <div className="bg-white rounded-2xl overflow-hidden border-2 border-stone-200 transition-all duration-300 group-hover:border-stone-400 group-hover:shadow-xl">
-                                    <div
-                                        className={`w-full aspect-4/3 ${project.color} overflow-hidden relative`}
-                                    >
+                                <div className="bg-cream-50 rounded-2xl overflow-hidden border border-dark-900/10 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:border-coral-500/40 group-hover:-translate-y-1.5 group-hover:shadow-[0_30px_60px_-30px_rgba(26,26,26,0.25)]">
+                                    <div className={`w-full aspect-[4/3] ${project.color} overflow-hidden relative`}>
                                         {project.image && (
                                             <img
                                                 src={project.image}
                                                 alt={project.title}
-                                                className="w-full h-full object-cover grayscale-60 sepia-20 contrast-[0.9] opacity-90 group-hover:opacity-75 transition-all duration-300"
+                                                className="w-full h-full object-cover grayscale-[55%] sepia-[15%] contrast-[0.92] opacity-90 group-hover:grayscale-0 group-hover:sepia-0 group-hover:contrast-100 group-hover:opacity-100 transition-all duration-700"
                                                 loading="lazy"
                                             />
                                         )}
-                                        {/* Year badge in corner */}
-                                        <div className="absolute top-3 right-3 bg-stone-800/80 backdrop-blur-sm text-stone-100 px-3 py-1 rounded text-sm font-medium">
-                                            {project.date}
+                                        {/* Date as mono pill */}
+                                        <div className="absolute top-3 right-3 backdrop-blur-md bg-cream-50/85 text-dark-900/75 px-3 py-1 rounded-full">
+                                            <span className="font-mono text-[10px] tracking-widest">
+                                                {project.date}
+                                            </span>
                                         </div>
                                     </div>
-                                    {/* Always visible title at bottom */}
-                                    <div className="p-4 bg-linear-to-b from-stone-50 to-amber-50/30 border-t border-stone-200">
-                                        <h3 className="text-lg font-display font-semibold text-stone-800 mb-1">
+
+                                    <div className="p-5 border-t border-dark-900/8">
+                                        <h3 className="text-lg font-display font-semibold text-dark-900 mb-1 group-hover:text-coral-500 transition-colors duration-500">
                                             {project.title}
                                         </h3>
-                                        <p className="text-sm text-stone-600">
+                                        <p className="text-sm text-dark-900/55 font-light leading-relaxed">
                                             {project.desc}
                                         </p>
+                                        <div className="mt-3 flex items-center gap-2 text-dark-900/35 group-hover:text-coral-500 transition-colors duration-500">
+                                            <span className="font-mono text-[10px] tracking-widest uppercase">
+                                                View
+                                            </span>
+                                            <span className="h-px w-6 bg-current transition-all duration-500 group-hover:w-10" />
+                                        </div>
                                     </div>
                                 </div>
                             </motion.div>

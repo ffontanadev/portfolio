@@ -1,6 +1,5 @@
 import { useRef } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
-import { StatusBadge, ActivityCard } from './Hero/index';
 import ParticleField from './Hero/ParticleField';
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -9,7 +8,7 @@ const ease = [0.22, 1, 0.36, 1] as const;
 // rocketFly (4.0) + crossMorph (1.0) + textHold (1.5). Surrounding HTML text
 // is delayed by this so it doesn't compete with the particle animation.
 // Kept in sync with DEFAULT_TIMINGS in particles/IntroSequencer.ts.
-const INTRO_TOTAL_S = 6.5;
+const INTRO_TOTAL_S = 4.8;
 
 const Hero = () => {
   const shouldReduceMotion = useReducedMotion();
@@ -37,8 +36,6 @@ const Hero = () => {
     mouseY.set(((e.clientY - rect.top) / rect.height) * 2 - 1);
   };
 
-  const headlineWords = ['Hi,', "I'm"];
-
   // Reduced-motion users see no particle intro, so the surrounding text appears
   // immediately rather than stalling for an animation that never runs.
   const introOffset = shouldReduceMotion ? 0 : INTRO_TOTAL_S;
@@ -63,7 +60,7 @@ const Hero = () => {
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: introOffset + 0.1, duration: 0.8, ease }}
+          transition={{ delay: introOffset, duration: 0.8, ease }}
           className="flex items-center gap-4 mb-12"
         >
           <span className="text-eyebrow text-dark-900/60">01 — Introduction</span>
@@ -130,7 +127,7 @@ const Hero = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: introOffset + 0.7, duration: 0.9, ease }}
+          transition={{ delay: introOffset + 0.1, duration: 0.9, ease }}
           className="max-w-xl text-lg md:text-xl text-dark-900/70 leading-relaxed font-light mt-16"
         >
           A{' '}

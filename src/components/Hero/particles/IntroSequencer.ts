@@ -38,11 +38,11 @@ const DEFAULT_TIMINGS: IntroTimings = {
   textHold: 1.5,
 };
 
-const SMEAR_AMOUNT = .050;
+const SMEAR_AMOUNT = .020;
 // Seconds for uMorph to ramp 0→1 inside the rocket-fly phase. Must be < timings.rocketFly.
 const ROCKET_FLY_MORPH_RAMP = 0.6;
 // Rocket scales from this fraction of full size up to 1.0 over rocket-fly — sells distance.
-const ROCKET_START_SCALE = 0.3;
+const ROCKET_START_SCALE = 0.05;
 // Y-bob during rocket-fly. Slow frequency reads as a graceful arc, not a wiggle.
 const BOB_AMPLITUDE_PX = 24;
 const BOB_FREQUENCY = 2.0;

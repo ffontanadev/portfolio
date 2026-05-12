@@ -5,7 +5,9 @@
       "Bash(npm run build:*)",
       "Bash(cat:*)",
       "Bash(npm run type-check:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(npm run *)",
+      "Bash(git stash *)"
     ]
   }
 }
