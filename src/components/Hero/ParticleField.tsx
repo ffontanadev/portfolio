@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import { ParticleSystem } from './particles/ParticleSystem';
 import type { ShapeSpec } from './particles/shapeSampler';
 import type { IntroShapes } from './particles/IntroSequencer';
+import { loadSilhouette } from './particles/silhouetteSampler';
 
 const PALETTE = {
   drift: new THREE.Color('#1A1A1A'),
@@ -39,7 +40,8 @@ function textHeightRatio(text: string): number {
 }
 
 // Parse VITE_PARTICLE_SHAPES into the ShapeSpec[] the engine consumes.
-// Format: pipe-separated. `heart` (case-insensitive) becomes the heart icon;
+// Format: pipe-separated. `heart` (case-insensitive) → heart icon;
+// `guy` (case-insensitive) → /guy.svg silhouette;
 // anything else is rendered as Fraunces text. Empty / missing → defaults.
 function parseShapesFromEnv(raw: string | undefined): ShapeSpec[] {
   if (!raw) return DEFAULT_SHAPES;
@@ -49,8 +51,12 @@ function parseShapesFromEnv(raw: string | undefined): ShapeSpec[] {
     .filter(Boolean);
   if (parts.length === 0) return DEFAULT_SHAPES;
   return parts.map((part): ShapeSpec => {
-    if (part.toLowerCase() === 'heart') {
+    const lower = part.toLowerCase();
+    if (lower === 'heart') {
       return { kind: 'heart', sizeRatio: 0.38 };
+    }
+    if (lower === 'guy') {
+      return { kind: 'silhouette', src: '/guy.svg', sizeRatio: 0.55 };
     }
     return { kind: 'text', text: part, heightRatio: textHeightRatio(part) };
   });
@@ -94,10 +100,27 @@ const ParticleField = ({ className = '', shapes }: ParticleFieldProps) => {
     const canvas = canvasRef.current;
     let cancelled = false;
 
-    const ready =
+    const fontsReady =
       typeof document !== 'undefined' && (document as Document).fonts
         ? (document as Document).fonts.ready
         : Promise.resolve();
+
+    // Pre-load any silhouette SVGs referenced by active shapes (or the intro)
+    // in parallel with font loading. Failures don't block construction —
+    // sampleShape will fall back to scatter for that shape until/unless it loads.
+    const silhouetteSrcs = new Set<string>();
+    for (const s of activeShapes) {
+      if (s.kind === 'silhouette') silhouetteSrcs.add(s.src);
+    }
+    const silhouettesReady = Promise.all(
+      [...silhouetteSrcs].map((src) =>
+        loadSilhouette(src).catch((err) => {
+          console.warn('[ParticleField]', err);
+        }),
+      ),
+    );
+
+    const ready = Promise.all([fontsReady, silhouettesReady]);
 
     let system: ParticleSystem | null = null;
     let resizeObs: ResizeObserver | null = null;

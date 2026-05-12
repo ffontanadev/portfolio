@@ -1,9 +1,11 @@
 import { drawRocket } from './rocketPath';
+import { drawSilhouette } from './silhouetteSampler';
 
 export type ShapeSpec =
   | { kind: 'text'; text: string; fontFamily?: string; weight?: number; heightRatio?: number }
   | { kind: 'heart'; sizeRatio?: number }
-  | { kind: 'rocket'; sizeRatio?: number };
+  | { kind: 'rocket'; sizeRatio?: number }
+  | { kind: 'silhouette'; src: string; sizeRatio?: number; widthRatio?: number };
 
 export interface SampleBounds {
   width: number;
@@ -34,8 +36,10 @@ export function sampleShape(
     drawText(ctx, spec, bounds);
   } else if (spec.kind === 'heart') {
     drawHeart(ctx, spec, bounds);
-  } else {
+  } else if (spec.kind === 'rocket') {
     drawRocket(ctx, spec, bounds);
+  } else {
+    drawSilhouette(ctx, spec, bounds);
   }
 
   let pts = collectDarkPixels(ctx, canvas.width, canvas.height, dpr, 4);
