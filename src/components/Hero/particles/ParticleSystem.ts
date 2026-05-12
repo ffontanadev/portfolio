@@ -123,7 +123,7 @@ export class ParticleSystem {
       this.resampleHomes();
     }
     // Always refresh the active shape's target for the new bounds.
-    this.applyShapeTarget(this.shapes[this.shapeIdx]);
+    this.applyTargetTo('aTarget', this.shapes[this.shapeIdx]);
   }
 
   private initAttributes() {
@@ -183,8 +183,8 @@ export class ParticleSystem {
     attr.needsUpdate = true;
   }
 
-  private applyShapeTarget(shape: ShapeSpec) {
-    const attr = this.geometry.getAttribute('aTarget') as THREE.BufferAttribute;
+  private applyTargetTo(slot: 'aTarget' | 'aTargetNext', shape: ShapeSpec) {
+    const attr = this.geometry.getAttribute(slot) as THREE.BufferAttribute;
     const next = sampleShape(shape, this.particleCount, this.bounds);
     (attr.array as Float32Array).set(next);
     attr.needsUpdate = true;
@@ -205,7 +205,7 @@ export class ParticleSystem {
         m = 0;
         if (elapsed >= this.timings.drift) {
           this.shapeIdx = (this.shapeIdx + 1) % this.shapes.length;
-          this.applyShapeTarget(this.shapes[this.shapeIdx]);
+          this.applyTargetTo('aTarget', this.shapes[this.shapeIdx]);
           this.state = 'morphIn';
           this.stateStart = now;
         }
