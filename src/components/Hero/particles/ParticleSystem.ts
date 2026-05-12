@@ -120,7 +120,10 @@ export class ParticleSystem {
   }
 
   resize(width: number, height: number, dpr: number) {
-    this.bounds = { width, height };
+    // In-place mutation so any captured `bounds` references (e.g. IntroSequencer's adapter)
+    // observe the update — replacing the object would leave them with stale dimensions.
+    this.bounds.width = width;
+    this.bounds.height = height;
     this.renderer.setPixelRatio(dpr);
     this.renderer.setSize(width, height, false);
     this.material.uniforms.uResolution.value.set(width, height);
