@@ -86,10 +86,19 @@ export const vertexShader = /* glsl */ `
     vec2 target = mix(aTarget, aTargetNext, uTargetBlend);
     vec2 targetCenter = uResolution * 0.5;
     target = targetCenter + (target - targetCenter) * uTargetScale + uTargetOffset;
+    // Per-particle shimmer — keeps the shape alive instead of freezing at uMorph=1.
+    // Slightly different x/y frequencies give a wobble rather than circular motion;
+    // aSeed phase-shifts each particle so the field reads as breathing, not pulsing.
+    // Outer mix() below gates this naturally — shimmer is ignored at pMorph=0.
+    const float SHAPE_SHIMMER_AMP = 1.8;
+    vec2 shimmer = vec2(
+      sin(uTime * 2.6 + aSeed * 12.566),
+      cos(uTime * 2.2 + aSeed *  9.424)
+    ) * SHAPE_SHIMMER_AMP;
     // Per-particle morph stagger — particles with low aSeed lead (front of
     // formation), high aSeed lag (exhaust trail). No-op when uMorphSmear=0.
     float pMorph = clamp(uMorph - aSeed * uMorphSmear, 0.0, 1.0);
-    vec2 pos = mix(driftPos, target, pMorph);
+    vec2 pos = mix(driftPos, target + shimmer, pMorph);
 
     // Cursor repulsion — soft falloff, kicks in only when force > 0.
     vec2 toCursor = pos - uCursor;
