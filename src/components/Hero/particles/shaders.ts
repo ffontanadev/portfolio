@@ -16,7 +16,7 @@ export const vertexShader = /* glsl */ `
   uniform float uTime;
   uniform float uMorph;        // 0 = drift, 1 = shape
   uniform float uTargetBlend;   // 0 = aTarget, 1 = aTargetNext
-  uniform vec2  uTargetOffset;  // CSS px shift applied to the active target
+  uniform vec2  uTargetOffset;  // CSS px offset applied after target blend
   uniform float uMorphSmear;    // 0..1 per-particle morph stagger
   uniform vec2  uCursor;       // canvas px, top-left origin
   uniform float uCursorForce;  // 0..1, smoothed
@@ -82,9 +82,9 @@ export const vertexShader = /* glsl */ `
 
     // Blend between primary and next target, then translate.
     vec2 target = mix(aTarget, aTargetNext, uTargetBlend) + uTargetOffset;
-    // Per-particle morph stagger — particles with high aSeed lag, producing
-    // a natural trail/exhaust effect during the intro.
-    float pMorph = clamp(uMorph - (1.0 - aSeed) * uMorphSmear, 0.0, 1.0);
+    // Per-particle morph stagger — particles with low aSeed lead (front of
+    // formation), high aSeed lag (exhaust trail). No-op when uMorphSmear=0.
+    float pMorph = clamp(uMorph - aSeed * uMorphSmear, 0.0, 1.0);
     vec2 pos = mix(driftPos, target, pMorph);
 
     // Cursor repulsion — soft falloff, kicks in only when force > 0.
