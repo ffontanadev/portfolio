@@ -442,19 +442,8 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
 
                             {/* Scrollable Content */}
                             <div className="overflow-y-auto max-h-[90vh] custom-scrollbar">
-                                {/* Hero Section — image for personal, typographic for enterprise */}
-                                {project.image ? (
-                                    <div className="w-full aspect-[21/9] bg-gradient-to-br from-gray-100 to-gray-200 relative overflow-hidden">
-                                        <img
-                                            src={project.image}
-                                            alt={project.title}
-                                            className="w-full h-full object-cover"
-                                            loading="lazy"
-                                        />
-                                    </div>
-                                ) : (
-                                    <EnterpriseHero project={project} size="modal" />
-                                )}
+                                {/* Hero Section — typographic for every project */}
+                                <TypographicHero project={project} size="modal" />
 
                                 {/* Content Section */}
                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8 md:p-12">
@@ -507,9 +496,11 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
                                         </div>
                                     </div>
 
-                                    {/* Right Column - Migration Brief (professional) or Code Blocks (personal) */}
+                                    {/* Right Column — Migration Brief, Development Roadmap, or Code Blocks */}
                                     {project.category === 'professional' && project.metrics?.length ? (
                                         <MetricBrief project={project} />
+                                    ) : project.phases?.length ? (
+                                        <DevelopmentRoadmap project={project} />
                                     ) : (
                                         <div className="space-y-2">
                                             <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-4">
