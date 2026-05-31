@@ -210,7 +210,7 @@ export const TypographicHero = ({ project, size = 'modal' }: { project: Project;
                     )
                 )}
                 {project.leadMetric && <LeadMetricDisplay metric={project.leadMetric} size={size} />}
-                <div className={`${isModal ? 'mt-8' : 'mt-5'} h-px w-12 ${accent.hairline}/40`} aria-hidden="true" />
+                <div className={`${isModal ? 'mt-8' : 'mt-5'} h-px w-12 ${accent.hairlineSoft}`} aria-hidden="true" />
                 <p className={`mt-3 font-mono tracking-[0.22em] uppercase text-dark-900/50 text-center ${isModal ? 'text-[11px]' : 'text-[9px]'}`}>
                     {project.techStack.slice(0, isModal ? 5 : 3).join(' · ')}
                 </p>
