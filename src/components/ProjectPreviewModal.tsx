@@ -210,8 +210,9 @@ export const LeadMetricDisplay = ({
     );
 };
 
-export const EnterpriseHero = ({ project, size = 'modal' }: { project: Project; size?: 'card' | 'modal' }) => {
+export const TypographicHero = ({ project, size = 'modal' }: { project: Project; size?: 'card' | 'modal' }) => {
     const isModal = size === 'modal';
+    const accent = accentForCategory(project.category);
     return (
         <div
             className={`relative w-full overflow-hidden ${
@@ -230,8 +231,8 @@ export const EnterpriseHero = ({ project, size = 'modal' }: { project: Project; 
                 className="absolute inset-x-6 top-5 flex items-center justify-between text-dark-900/45"
                 aria-hidden="true"
             >
-                <span className="font-mono text-[10px] tracking-[0.3em] uppercase">
-                    Enterprise
+                <span className={`font-mono text-[10px] tracking-[0.3em] uppercase ${accent.text}`}>
+                    {accent.tagLabel}
                 </span>
                 <span className="font-display italic text-sm" style={{ fontStyle: 'italic' }}>
                     §
@@ -242,7 +243,6 @@ export const EnterpriseHero = ({ project, size = 'modal' }: { project: Project; 
                 {project.logo ? (
                     (() => {
                         const Logo = LOGO_REGISTRY[project.logo];
-                        // Wide wordmarks (Provincia) need more horizontal room than the square BBVA mark.
                         const isWide = project.logo === 'banco-provincia';
                         const sizeClasses = isWide
                             ? isModal
@@ -266,7 +266,7 @@ export const EnterpriseHero = ({ project, size = 'modal' }: { project: Project; 
                     )
                 )}
                 {project.leadMetric && <LeadMetricDisplay metric={project.leadMetric} size={size} />}
-                <div className={`${isModal ? 'mt-8' : 'mt-5'} h-px w-12 bg-dark-900/20`} aria-hidden="true" />
+                <div className={`${isModal ? 'mt-8' : 'mt-5'} h-px w-12 ${accent.hairline}/40`} aria-hidden="true" />
                 <p className={`mt-3 font-mono tracking-[0.22em] uppercase text-dark-900/50 text-center ${isModal ? 'text-[11px]' : 'text-[9px]'}`}>
                     {project.techStack.slice(0, isModal ? 5 : 3).join(' · ')}
                 </p>
@@ -274,6 +274,9 @@ export const EnterpriseHero = ({ project, size = 'modal' }: { project: Project; 
         </div>
     );
 };
+
+// Backwards-compatible alias — existing imports keep working.
+export const EnterpriseHero = TypographicHero;
 
 const MetricBrief = ({ project }: { project: Project }) => {
     if (!project.metrics?.length) return null;
