@@ -149,6 +149,30 @@ export const LeadMetricDisplay = ({
         );
     }
 
+    if (metric.kind === 'wordmark') {
+        return (
+            <div className="flex flex-col items-center">
+                <span
+                    className={`font-display font-bold tracking-[-0.04em] leading-none text-dark-900 ${
+                        isModal ? 'text-[clamp(3rem,8vw,6rem)]' : 'text-[clamp(2.25rem,6vw,3.75rem)]'
+                    }`}
+                >
+                    {metric.value}
+                </span>
+                {metric.sub && (
+                    <span
+                        className={`font-display font-display-italic font-light tracking-tight text-dark-900/55 mt-2 ${
+                            isModal ? 'text-2xl' : 'text-lg'
+                        }`}
+                        style={{ fontStyle: 'italic' }}
+                    >
+                        {metric.sub}
+                    </span>
+                )}
+            </div>
+        );
+    }
+
     return (
         <div className="flex flex-col items-center">
             {metric.superscript && (
