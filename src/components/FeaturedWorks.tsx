@@ -1,7 +1,8 @@
 import { useMemo, useState, useRef } from 'react';
 import { AnimatePresence, LayoutGroup, motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
-import ProjectPreviewModal, { EnterpriseHero, type Project } from './ProjectPreviewModal';
+import ProjectPreviewModal, { EnterpriseHero } from './ProjectPreviewModal';
+import { accentForCategory, type Project } from './projectTypes';
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -547,6 +548,8 @@ const FeaturedWorks = () => {
   });
   const headingY = useTransform(scrollYProgress, [0, 1], [60, -60]);
 
+  const featuredProject = useMemo(() => projects.find((p) => p.featured) ?? null, []);
+
   const counts = useMemo(
     () => ({
       all: projects.length,
@@ -556,10 +559,15 @@ const FeaturedWorks = () => {
     [],
   );
 
-  const visibleProjects = useMemo(
-    () => (filter === 'all' ? projects : projects.filter((p) => (p.category ?? 'personal') === filter)),
-    [filter],
-  );
+  // The flagship renders in its own full-width band; keep it out of the grid to avoid duplication.
+  const visibleProjects = useMemo(() => {
+    const base = filter === 'all' ? projects : projects.filter((p) => (p.category ?? 'personal') === filter);
+    return base.filter((p) => !p.featured);
+  }, [filter]);
+
+  // Flagship shows only when the active filter includes it (it is a personal project).
+  const showFeatured =
+    featuredProject !== null && (filter === 'all' || filter === (featuredProject.category ?? 'personal'));
 
   const handleProjectClick = (project: Project) => {
     setSelectedProject(project);
@@ -645,6 +653,55 @@ const FeaturedWorks = () => {
           </div>
         </LayoutGroup>
 
+        {showFeatured && featuredProject && (
+          <motion.article
+            key="flagship"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.9, ease }}
+            onClick={() => handleProjectClick(featuredProject)}
+            className="group cursor-pointer mb-24"
+          >
+            <div className="flex items-baseline gap-3 mb-5">
+              <span className="font-mono text-[9px] text-teal-500 tracking-[0.25em] uppercase">
+                § Flagship · C++ Engine
+              </span>
+              <span className="h-px flex-1 bg-dark-900/10" />
+              <span className="font-mono text-[10px] text-dark-900/40 tracking-widest uppercase">
+                {featuredProject.date}
+              </span>
+            </div>
+
+            <div className="relative w-full aspect-[21/9] md:aspect-[3/1] bg-cream-100 border border-teal-500/20 rounded-2xl overflow-hidden soft-lift">
+              <EnterpriseHero project={featuredProject} size="modal" />
+              <div className="absolute inset-0 transition-colors duration-700 mix-blend-multiply bg-teal-500/0 group-hover:bg-teal-500/[0.05]" />
+              <div className="absolute top-5 right-5 bg-cream-50/90 backdrop-blur-sm p-3 rounded-full opacity-0 translate-y-3 -translate-x-3 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
+                <ArrowUpRight size={18} className="text-dark-900" />
+              </div>
+            </div>
+
+            <div className="mt-7 max-w-3xl">
+              <h3 className="font-display font-bold text-3xl md:text-4xl tracking-[-0.01em] leading-tight text-dark-900 group-hover:text-teal-500 transition-colors duration-500">
+                {featuredProject.title}
+              </h3>
+              <p className="mt-3 text-base md:text-lg text-dark-900/60 font-light leading-relaxed">
+                {featuredProject.desc}
+              </p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {featuredProject.techStack.map((tech) => (
+                  <span
+                    key={tech}
+                    className="font-mono text-[10px] tracking-widest uppercase text-dark-900/55 border border-dark-900/15 rounded-full px-3 py-1"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </motion.article>
+        )}
+
         <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={filter}
@@ -658,7 +715,7 @@ const FeaturedWorks = () => {
             const num = String(index + 1).padStart(2, '0');
             const total = String(visibleProjects.length).padStart(2, '0');
             const offsetClass = index % 2 === 1 ? 'md:mt-20' : '';
-            const isEnterprise = project.category === 'professional';
+            const accent = accentForCategory(project.category);
             return (
               <motion.article
                 key={`${filter}-${project.title}`}
@@ -674,48 +731,23 @@ const FeaturedWorks = () => {
                   <span className="font-mono text-xs text-dark-900/40 tracking-widest">
                     {num} <span className="text-dark-900/25">/ {total}</span>
                   </span>
-                  {isEnterprise && (
-                    <span className="font-mono text-[9px] text-coral-500/80 tracking-[0.25em] uppercase">
-                      Enterprise
-                    </span>
-                  )}
+                  <span className={`font-mono text-[9px] tracking-[0.25em] uppercase ${accent.text}/90`}>
+                    {accent.tagLabel}
+                  </span>
                   <span className="h-px flex-1 bg-dark-900/10" />
                   <span className="font-mono text-[10px] text-dark-900/40 tracking-widest uppercase">
                     {project.date}
                   </span>
                 </div>
 
-                {/* Card visual — image for personal, typographic composition for enterprise */}
-                <div
-                  className={`relative w-full aspect-[4/3] ${
-                    isEnterprise ? 'bg-cream-100 border border-dark-900/[0.08]' : project.color
-                  } rounded-2xl overflow-hidden soft-lift`}
-                >
-                  {isEnterprise ? (
-                    <EnterpriseHero project={project} size="card" />
-                  ) : (
-                    project.image && (
-                      <motion.img
-                        src={project.image}
-                        alt={project.title}
-                        className="absolute inset-0 w-full h-full object-cover"
-                        loading="lazy"
-                        whileHover={{ scale: 1.04 }}
-                        transition={{ duration: 1.2, ease }}
-                      />
-                    )
-                  )}
+                {/* Card visual — typographic composition for every project */}
+                <div className="relative w-full aspect-[4/3] bg-cream-100 border border-dark-900/[0.08] rounded-2xl overflow-hidden soft-lift">
+                  <EnterpriseHero project={project} size="card" />
 
-                  {/* Warm hover wash — softer for enterprise so the typography stays legible */}
-                  <div
-                    className={`absolute inset-0 transition-colors duration-700 mix-blend-multiply ${
-                      isEnterprise
-                        ? 'bg-coral-500/0 group-hover:bg-coral-500/[0.04]'
-                        : 'bg-coral-500/0 group-hover:bg-coral-500/[0.08]'
-                    }`}
-                  />
+                  {/* Warm hover wash, tinted by category accent */}
+                  <div className={`absolute inset-0 transition-colors duration-700 mix-blend-multiply ${accent.washIdle} ${accent.washHover}`} />
 
-                  {/* Arrow chip — same affordance across both variants */}
+                  {/* Arrow chip */}
                   <div className="absolute top-5 right-5 bg-cream-50/90 backdrop-blur-sm p-3 rounded-full opacity-0 translate-y-3 -translate-x-3 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
                     <ArrowUpRight size={18} className="text-dark-900" />
                   </div>
@@ -723,7 +755,7 @@ const FeaturedWorks = () => {
 
                 {/* Title & description */}
                 <div className="mt-7">
-                  <h3 className="font-display font-bold text-2xl md:text-3xl tracking-[-0.01em] leading-tight text-dark-900 group-hover:text-coral-500 transition-colors duration-500">
+                  <h3 className={`font-display font-bold text-2xl md:text-3xl tracking-[-0.01em] leading-tight text-dark-900 transition-colors duration-500 ${accent.hoverText}`}>
                     {project.title}
                   </h3>
                   <p className="mt-3 text-base md:text-lg text-dark-900/60 font-light leading-relaxed max-w-md">
