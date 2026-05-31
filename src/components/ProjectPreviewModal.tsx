@@ -42,6 +42,20 @@ export type ProjectLeadMetric =
 
 export type ProjectCategory = 'personal' | 'professional';
 
+// Accent color is derived from category — coral for professional work, teal for personal.
+export const accentForCategory = (category?: ProjectCategory) => {
+    const isPersonal = (category ?? 'personal') === 'personal';
+    return {
+        isPersonal,
+        tagLabel: isPersonal ? 'Personal' : 'Enterprise',
+        text: isPersonal ? 'text-teal-500' : 'text-coral-500',
+        hairline: isPersonal ? 'bg-teal-500' : 'bg-coral-500',
+        hoverText: isPersonal ? 'group-hover:text-teal-500' : 'group-hover:text-coral-500',
+        washIdle: isPersonal ? 'bg-teal-500/0' : 'bg-coral-500/0',
+        washHover: isPersonal ? 'group-hover:bg-teal-500/[0.06]' : 'group-hover:bg-coral-500/[0.06]',
+    };
+};
+
 export interface Project {
     title: string;
     desc: string;
