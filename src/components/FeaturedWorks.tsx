@@ -9,6 +9,37 @@ type Filter = 'all' | 'personal' | 'professional';
 
 const projects: Project[] = [
   {
+    title: "EFENGINE — C++ Game Framework",
+    desc: "A from-scratch 3D game framework in C++17 on OpenGL 3.3 Core — a library you compile your games against, built to master memory management and the game lifecycle.",
+    color: "bg-cream-100",
+    techStack: ["C++17", "OpenGL 3.3 Core", "GLFW", "GLAD", "GLM", "Doctest", "CMake"],
+    date: "'26 — NOW",
+    role: "Engine Author",
+    description: `EFENGINE is my most ambitious project: a personal 3D game framework written in C++17 on OpenGL 3.3 Core for Windows. No editor, no native scripting, no multi-platform builds — it is a library you compile your games against, where each game is a C++ project that links against efengine. The goal is mastery of low-level systems: manual memory management, the game lifecycle, and the render pipeline, built up one phase at a time. Documentation is generated with Doxygen and the build is driven by CMake.`,
+    codeBlocks: [],
+    category: 'personal',
+    featured: true,
+    leadMetric: { kind: 'wordmark', value: 'EFENGINE', sub: 'game framework' },
+    phases: [
+      {
+        label: 'Fase 0',
+        title: 'Setup',
+        desc: 'Toolchain, CMake build, project structure, and dependencies wired up (GLFW, GLAD, GLM, Doctest).',
+      },
+      {
+        label: 'Fase 1',
+        title: 'Contexto GLFW',
+        desc: 'Window and OpenGL 3.3 Core context creation, the basic game loop, and input handling.',
+      },
+      {
+        label: 'Fase 2',
+        title: 'Hello Triangle',
+        desc: 'Minimal render pipeline: VBO/VAO setup, shader compilation, and the first triangle on screen.',
+        current: true,
+      },
+    ],
+  },
+  {
     title: "Banco Provincia — Core Services Migration",
     desc: "Lifting Banco Provincia's legacy Axis2 / Java 8 web services into a modern Spring Boot 3 platform on Java 17, with database connectivity rewired from JNDI to a managed MSSQL DataSource.",
     color: "bg-cream-100",
