@@ -263,7 +263,7 @@ const DevelopmentRoadmap = ({ project }: { project: Project }) => {
                     <div key={i} className="flex items-start gap-4 px-5 py-4">
                         <span
                             className={`font-mono text-[10px] tracking-[0.2em] uppercase shrink-0 mt-1 ${
-                                phase.current ? 'text-teal-500 font-semibold' : 'text-dark-900/45'
+                                phase.current ? 'text-teal-700 font-semibold' : 'text-dark-900/45'
                             }`}
                         >
                             {phase.label}
@@ -271,7 +271,7 @@ const DevelopmentRoadmap = ({ project }: { project: Project }) => {
                         <div className="min-w-0">
                             <p
                                 className={`font-display text-lg md:text-xl tracking-tight ${
-                                    phase.current ? 'text-teal-500 font-semibold' : 'text-dark-900 font-medium'
+                                    phase.current ? 'text-teal-700 font-semibold' : 'text-dark-900 font-medium'
                                 }`}
                             >
                                 {phase.title}

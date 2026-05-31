@@ -664,7 +664,7 @@ const FeaturedWorks = () => {
             className="group cursor-pointer mb-24"
           >
             <div className="flex items-baseline gap-3 mb-5">
-              <span className="font-mono text-[9px] text-teal-500 tracking-[0.25em] uppercase">
+              <span className="font-mono text-[9px] text-teal-700 tracking-[0.25em] uppercase">
                 § Flagship · C++ Engine
               </span>
               <span className="h-px flex-1 bg-dark-900/10" />
@@ -673,16 +673,16 @@ const FeaturedWorks = () => {
               </span>
             </div>
 
-            <div className="relative w-full aspect-[21/9] md:aspect-[3/1] bg-cream-100 border border-teal-500/20 rounded-2xl overflow-hidden soft-lift">
+            <div className="relative w-full aspect-[21/9] md:aspect-[3/1] bg-cream-100 border border-teal-700/20 rounded-2xl overflow-hidden soft-lift">
               <EnterpriseHero project={featuredProject} size="modal" />
-              <div className="absolute inset-0 transition-colors duration-700 mix-blend-multiply bg-teal-500/0 group-hover:bg-teal-500/[0.05]" />
+              <div className="absolute inset-0 transition-colors duration-700 mix-blend-multiply bg-teal-700/0 group-hover:bg-teal-700/[0.05]" />
               <div className="absolute top-5 right-5 bg-cream-50/90 backdrop-blur-sm p-3 rounded-full opacity-0 translate-y-3 -translate-x-3 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
                 <ArrowUpRight size={18} className="text-dark-900" />
               </div>
             </div>
 
             <div className="mt-7 max-w-3xl">
-              <h3 className="font-display font-bold text-3xl md:text-4xl tracking-[-0.01em] leading-tight text-dark-900 group-hover:text-teal-500 transition-colors duration-500">
+              <h3 className="font-display font-bold text-3xl md:text-4xl tracking-[-0.01em] leading-tight text-dark-900 group-hover:text-teal-700 transition-colors duration-500">
                 {featuredProject.title}
               </h3>
               <p className="mt-3 text-base md:text-lg text-dark-900/60 font-light leading-relaxed">

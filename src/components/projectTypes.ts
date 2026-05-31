@@ -51,10 +51,10 @@ export const accentForCategory = (category?: ProjectCategory) => {
     return {
         isPersonal,
         tagLabel: isPersonal ? 'Personal' : 'Enterprise',
-        text: isPersonal ? 'text-teal-500' : 'text-coral-500',
-        hairlineSoft: isPersonal ? 'bg-teal-500/40' : 'bg-coral-500/40',
-        hoverText: isPersonal ? 'group-hover:text-teal-500' : 'group-hover:text-coral-500',
-        washIdle: isPersonal ? 'bg-teal-500/0' : 'bg-coral-500/0',
-        washHover: isPersonal ? 'group-hover:bg-teal-500/[0.06]' : 'group-hover:bg-coral-500/[0.06]',
+        text: isPersonal ? 'text-teal-700' : 'text-coral-500',
+        hairlineSoft: isPersonal ? 'bg-teal-700/40' : 'bg-coral-500/40',
+        hoverText: isPersonal ? 'group-hover:text-teal-700' : 'group-hover:text-coral-500',
+        washIdle: isPersonal ? 'bg-teal-700/0' : 'bg-coral-500/0',
+        washHover: isPersonal ? 'group-hover:bg-teal-700/[0.06]' : 'group-hover:bg-coral-500/[0.06]',
     };
 };
