@@ -1,16 +1,61 @@
-import { useState, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useMemo, useState, useRef } from 'react';
+import { AnimatePresence, LayoutGroup, motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
-import ProjectPreviewModal, { type Project } from './ProjectPreviewModal';
+import ProjectPreviewModal, { EnterpriseHero, type Project } from './ProjectPreviewModal';
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
+type Filter = 'all' | 'personal' | 'professional';
+
 const projects: Project[] = [
+  {
+    title: "Banco Provincia — Core Services Migration",
+    desc: "Lifting Banco Provincia's legacy Axis2 / Java 8 web services into a modern Spring Boot 3 platform on Java 17, with database connectivity rewired from JNDI to a managed MSSQL DataSource.",
+    color: "bg-cream-100",
+    techStack: ["Java 17", "Spring Boot 3", "Axis2 (legacy)", "MSSQL", "JNDI → DataSource"],
+    date: "'25 — NOW",
+    role: "Backend Engineer",
+    description: `Long-running modernization of legacy Axis2 SOAP services that power core banking integrations at Banco Provincia. The work covers migrating the runtime from Java 8 to Java 17 + Spring Boot 3, replacing JNDI-bound resources with a managed MSSQL DataSource, and untangling years of tightly-coupled web service contracts — all while preserving downstream consumers.`,
+    codeBlocks: [],
+    category: 'professional',
+    company: 'Banco Provincia',
+    logo: 'banco-provincia',
+    leadMetric: { kind: 'migration', from: 'Axis 2', to: 'Boot' },
+    metrics: [
+      { label: 'Runtime', value: 'Java 8 → 17' },
+      { label: 'Framework', value: 'Axis2 → Spring Boot 3', accent: true },
+      { label: 'Persistence', value: 'JNDI → MSSQL DataSource' },
+      { label: 'Domain', value: 'Core banking SOAP services' },
+      { label: 'Status', value: 'In progress · 2025 →' },
+    ],
+  },
+  {
+    title: "BBVA — API Migration & Test Coverage",
+    desc: "Migrating BBVA's internal API surface to Spring Boot and engineering high-coverage test suites across more than 50 services — turning fragile internals into a platform that can be refactored without fear.",
+    color: "bg-cream-100",
+    techStack: ["Java 17", "Spring Boot", "JUnit 5", "Mockito", "Testcontainers"],
+    date: "'25",
+    role: "Backend Engineer",
+    description: `Engaged on BBVA's internal platform to migrate dozens of API services to Spring Boot and stand up disciplined test coverage across the entire surface. Authored unit and integration tests for 50+ internal APIs, raising baseline coverage and protecting future refactors from regression noise.`,
+    codeBlocks: [],
+    category: 'professional',
+    company: 'BBVA',
+    logo: 'bbva',
+    leadMetric: { kind: 'scale', superscript: 'API²', value: '50+' },
+    metrics: [
+      { label: 'Scope', value: '50+ internal APIs', accent: true },
+      { label: 'Stack', value: 'Spring Boot · Java 17' },
+      { label: 'Testing', value: 'JUnit 5 · Mockito · Testcontainers' },
+      { label: 'Outcome', value: 'High coverage · Refactor-safe' },
+      { label: 'Year', value: '2025' },
+    ],
+  },
   {
     title: "Minecraft-like Terrain Generation",
     desc: "Three Voxel World Generation using Perlin noise algorithm in Three.js with 3D First Person Controller",
     color: "bg-blue-50",
-    image: "/images/voxel-world-engine.png",
+    category: 'personal',
+    leadMetric: { kind: 'scale', superscript: 'voxels', value: '∞' },
     techStack: ["Next.js", "Three.js", "Perlin Noise", "Prototyping", "On-demand Buffer Streaming"],
     date: "JAN 25'",
     role: "Developer",
@@ -146,7 +191,8 @@ export function makeNoise(seed = Math.random()): NoiseFunction {
     title: "Twitter Clone",
     desc: "A functional clone of the old app Twitter with authentication, feed, following and likes!",
     color: "bg-blue-50",
-    image: "/images/twitter-clone.png",
+    category: 'personal',
+    leadMetric: { kind: 'wordmark', value: 'Twitter', sub: 'clone' },
     techStack: ["Node.js", "Express", "Express Session", "Mongo", "EJS"],
     date: "JUN 23'",
     role: "Backend Developer",
@@ -266,7 +312,8 @@ module.exports = {
     title: "Magenta Hours Collector (MHC-CLI)",
     desc: "A command line application that connects to an email inbox and extract hour reports using AI and search for emails matching the configured criteria and then give the email to Claude Sonnet 4.5 to collect all the relevant information and alert from use",
     color: "bg-blue-50",
-    image: "/images/mhc-cli.png",
+    category: 'personal',
+    leadMetric: { kind: 'wordmark', value: 'MHC', sub: 'cli' },
     techStack: ["Commander.js", "Google Cloud Platform", "SQLite"],
     date: "AUG 25'",
     role: "Developer",
@@ -460,6 +507,7 @@ export const fetchCommand = new Command("fetch")
 const FeaturedWorks = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [filter, setFilter] = useState<Filter>('all');
   const sectionRef = useRef<HTMLElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -467,6 +515,20 @@ const FeaturedWorks = () => {
     offset: ['start end', 'end start'],
   });
   const headingY = useTransform(scrollYProgress, [0, 1], [60, -60]);
+
+  const counts = useMemo(
+    () => ({
+      all: projects.length,
+      personal: projects.filter((p) => (p.category ?? 'personal') === 'personal').length,
+      professional: projects.filter((p) => p.category === 'professional').length,
+    }),
+    [],
+  );
+
+  const visibleProjects = useMemo(
+    () => (filter === 'all' ? projects : projects.filter((p) => (p.category ?? 'personal') === filter)),
+    [filter],
+  );
 
   const handleProjectClick = (project: Project) => {
     setSelectedProject(project);
@@ -486,9 +548,9 @@ const FeaturedWorks = () => {
         className="relative py-32 md:py-40 px-6 md:px-20 max-w-[1440px] mx-auto"
       >
         {/* Section header */}
-        <motion.div style={{ y: headingY }} className="mb-24">
+        <motion.div style={{ y: headingY }} className="mb-14">
           <div className="flex items-center gap-4 mb-8">
-            <span className="text-eyebrow text-coral-500">§ 02 — Featured Work</span>
+            <span className="text-eyebrow text-coral-500">§ 02 — Selected Work</span>
             <span className="h-px flex-1 max-w-[140px] bg-dark-900/15" />
           </div>
           <h2 className="font-display font-display-md font-bold tracking-[-0.02em] text-4xl md:text-6xl leading-[1.05] max-w-3xl text-dark-900">
@@ -499,18 +561,76 @@ const FeaturedWorks = () => {
             into.
           </h2>
           <p className="mt-6 max-w-xl text-lg text-dark-900/55 font-light leading-relaxed">
-            A small collection of recent experiments, products, and side-quests.
+            A small collection of recent experiments, enterprise migrations, and side-quests.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24">
-          {projects.map((project, index) => {
+        {/* Filter tabs — editorial type, coral hairline marks the active category */}
+        <LayoutGroup id="featured-works-filter">
+          <div
+            role="tablist"
+            aria-label="Filter projects by category"
+            className="flex flex-wrap items-baseline gap-x-10 gap-y-3 pb-5 mb-20 border-b border-dark-900/10"
+          >
+            {(['all', 'personal', 'professional'] as Filter[]).map((tab) => {
+              const isActive = filter === tab;
+              return (
+                <button
+                  key={tab}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => setFilter(tab)}
+                  className="relative pb-1 group focus:outline-none"
+                >
+                  <span
+                    className={`font-display text-xl md:text-2xl tracking-[-0.01em] transition-colors duration-300 ${
+                      isActive
+                        ? 'text-dark-900 font-display-italic'
+                        : 'text-dark-900/40 group-hover:text-dark-900/70'
+                    }`}
+                    style={{ fontStyle: isActive ? 'italic' : 'normal' }}
+                  >
+                    {tab[0].toUpperCase() + tab.slice(1)}
+                  </span>
+                  <span
+                    className={`ml-2 align-top font-mono text-[10px] tracking-widest transition-colors duration-300 ${
+                      isActive ? 'text-coral-500' : 'text-dark-900/35 group-hover:text-dark-900/55'
+                    }`}
+                  >
+                    {String(counts[tab]).padStart(2, '0')}
+                  </span>
+                  {isActive && (
+                    <motion.span
+                      layoutId="featured-works-tab-underline"
+                      className="absolute left-0 right-7 -bottom-[21px] h-px bg-coral-500"
+                      transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                      aria-hidden="true"
+                    />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </LayoutGroup>
+
+        <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={filter}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.35, ease }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24"
+        >
+          {visibleProjects.map((project, index) => {
             const num = String(index + 1).padStart(2, '0');
-            const total = String(projects.length).padStart(2, '0');
+            const total = String(visibleProjects.length).padStart(2, '0');
             const offsetClass = index % 2 === 1 ? 'md:mt-20' : '';
+            const isEnterprise = project.category === 'professional';
             return (
               <motion.article
-                key={index}
+                key={`${filter}-${project.title}`}
                 initial={{ opacity: 0, y: 60 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-80px' }}
@@ -518,49 +638,55 @@ const FeaturedWorks = () => {
                 onClick={() => handleProjectClick(project)}
                 className={`group cursor-pointer ${offsetClass}`}
               >
-                {/* Project number */}
+                {/* Project number / date rail */}
                 <div className="flex items-baseline gap-3 mb-5">
                   <span className="font-mono text-xs text-dark-900/40 tracking-widest">
                     {num} <span className="text-dark-900/25">/ {total}</span>
                   </span>
+                  {isEnterprise && (
+                    <span className="font-mono text-[9px] text-coral-500/80 tracking-[0.25em] uppercase">
+                      Enterprise
+                    </span>
+                  )}
                   <span className="h-px flex-1 bg-dark-900/10" />
                   <span className="font-mono text-[10px] text-dark-900/40 tracking-widest uppercase">
                     {project.date}
                   </span>
                 </div>
 
-                {/* Image */}
+                {/* Card visual — image for personal, typographic composition for enterprise */}
                 <div
-                  className={`relative w-full aspect-[4/3] ${project.color} rounded-2xl overflow-hidden soft-lift`}
+                  className={`relative w-full aspect-[4/3] ${
+                    isEnterprise ? 'bg-cream-100 border border-dark-900/[0.08]' : project.color
+                  } rounded-2xl overflow-hidden soft-lift`}
                 >
-                  {project.image && (
-                    <motion.img
-                      src={project.image}
-                      alt={project.title}
-                      className="absolute inset-0 w-full h-full object-cover"
-                      loading="lazy"
-                      whileHover={{ scale: 1.04 }}
-                      transition={{ duration: 1.2, ease }}
-                    />
+                  {isEnterprise ? (
+                    <EnterpriseHero project={project} size="card" />
+                  ) : (
+                    project.image && (
+                      <motion.img
+                        src={project.image}
+                        alt={project.title}
+                        className="absolute inset-0 w-full h-full object-cover"
+                        loading="lazy"
+                        whileHover={{ scale: 1.04 }}
+                        transition={{ duration: 1.2, ease }}
+                      />
+                    )
                   )}
-                  {/* Warm coral wash on hover */}
-                  <div className="absolute inset-0 bg-coral-500/0 group-hover:bg-coral-500/8 transition-colors duration-700 mix-blend-multiply" />
 
-                  {/* Arrow */}
+                  {/* Warm hover wash — softer for enterprise so the typography stays legible */}
+                  <div
+                    className={`absolute inset-0 transition-colors duration-700 mix-blend-multiply ${
+                      isEnterprise
+                        ? 'bg-coral-500/0 group-hover:bg-coral-500/[0.04]'
+                        : 'bg-coral-500/0 group-hover:bg-coral-500/[0.08]'
+                    }`}
+                  />
+
+                  {/* Arrow chip — same affordance across both variants */}
                   <div className="absolute top-5 right-5 bg-cream-50/90 backdrop-blur-sm p-3 rounded-full opacity-0 translate-y-3 -translate-x-3 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
                     <ArrowUpRight size={18} className="text-dark-900" />
-                  </div>
-
-                  {/* Bottom title overlay (slides up on hover) */}
-                  <div className="absolute inset-x-0 bottom-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]">
-                    <div className="bg-cream-50/85 backdrop-blur-sm rounded-xl px-4 py-3">
-                      <p className="font-mono text-[10px] tracking-widest uppercase text-coral-500 mb-1">
-                        Open project
-                      </p>
-                      <p className="text-sm text-dark-900/80 line-clamp-1">
-                        {project.techStack.slice(0, 4).join(' · ')}
-                      </p>
-                    </div>
                   </div>
                 </div>
 
@@ -593,7 +719,8 @@ const FeaturedWorks = () => {
               </motion.article>
             );
           })}
-        </div>
+        </motion.div>
+        </AnimatePresence>
       </section>
 
       <ProjectPreviewModal
