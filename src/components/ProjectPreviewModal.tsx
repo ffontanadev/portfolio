@@ -307,6 +307,42 @@ const MetricBrief = ({ project }: { project: Project }) => {
     );
 };
 
+const DevelopmentRoadmap = ({ project }: { project: Project }) => {
+    if (!project.phases?.length) return null;
+    return (
+        <div>
+            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-4">
+                Development Roadmap
+            </h3>
+            <div className="rounded-2xl border border-dark-900/10 divide-y divide-dark-900/[0.07] overflow-hidden bg-cream-50/40">
+                {project.phases.map((phase, i) => (
+                    <div key={i} className="flex items-start gap-4 px-5 py-4">
+                        <span
+                            className={`font-mono text-[10px] tracking-[0.2em] uppercase shrink-0 mt-1 ${
+                                phase.current ? 'text-teal-500 font-semibold' : 'text-dark-900/45'
+                            }`}
+                        >
+                            {phase.label}
+                        </span>
+                        <div className="min-w-0">
+                            <p
+                                className={`font-display text-lg md:text-xl tracking-tight ${
+                                    phase.current ? 'text-teal-500 font-semibold' : 'text-dark-900 font-medium'
+                                }`}
+                            >
+                                {phase.title}
+                            </p>
+                            <p className="mt-1 text-sm text-dark-900/55 leading-relaxed">
+                                {phase.desc}
+                            </p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
+
 const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalProps) => {
     const modalRef = useRef<HTMLDivElement>(null);
     const closeButtonRef = useRef<HTMLButtonElement>(null);
