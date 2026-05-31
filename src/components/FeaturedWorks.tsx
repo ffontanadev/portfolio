@@ -87,7 +87,7 @@ const projects: Project[] = [
     desc: "Three Voxel World Generation using Perlin noise algorithm in Three.js with 3D First Person Controller",
     color: "bg-blue-50",
     category: 'personal',
-    leadMetric: { kind: 'scale', superscript: 'voxels', value: '∞' },
+    leadMetric: { kind: 'wordmark', value: 'Voxel', sub: 'world' },
     techStack: ["Next.js", "Three.js", "Perlin Noise", "Prototyping", "On-demand Buffer Streaming"],
     date: "JAN 25'",
     role: "Developer",
@@ -731,7 +731,7 @@ const FeaturedWorks = () => {
                   <span className="font-mono text-xs text-dark-900/40 tracking-widest">
                     {num} <span className="text-dark-900/25">/ {total}</span>
                   </span>
-                  <span className={`font-mono text-[9px] tracking-[0.25em] uppercase ${accent.text}/90`}>
+                  <span className={`font-mono text-[9px] tracking-[0.25em] uppercase ${accent.text}`}>
                     {accent.tagLabel}
                   </span>
                   <span className="h-px flex-1 bg-dark-900/10" />
