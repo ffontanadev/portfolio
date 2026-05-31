@@ -20,7 +20,7 @@ const projects: Project[] = [
     codeBlocks: [],
     category: 'personal',
     featured: true,
-    leadMetric: { kind: 'wordmark', value: 'EFENGINE', sub: 'game framework' },
+    leadMetric: { kind: 'wordmark', value: 'EFENGINE', sub: 'my most ambitious project' },
     phases: [
       {
         label: 'Fase 0',
@@ -35,7 +35,7 @@ const projects: Project[] = [
       {
         label: 'Fase 2',
         title: 'Hello Triangle',
-        desc: 'Minimal render pipeline: VBO/VAO setup, shader compilation, and the first triangle on screen.',
+        desc: 'Minimal render pipeline: VBO/VAO/ setup, shader compilation, and the first triangle on screen.',
         current: true,
       },
     ],

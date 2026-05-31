@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "dev:api": "node server.js",
     "dev:full": "concurrently \"npm run dev:api\" \"npm run dev\"",
     "build": "tsc -b && vite build",

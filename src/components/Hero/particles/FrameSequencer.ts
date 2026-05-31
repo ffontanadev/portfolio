@@ -19,6 +19,14 @@ export interface FrameSequencerOptions {
   adapter: FrameAdapter;
   shape: FramesShape;
   particleCount: number;
+  /**
+   * 'instant' (default): primes aTarget=frame[0], aTargetNext=frame[1], uTargetBlend=0.
+   *   Used when entering the play state from drift (initial entry path).
+   * 'directMorph': primes aTargetNext=frame[0] only — leaves aTarget (the previous
+   *   shape) and uTargetBlend alone so the caller can cross-fade aTarget → frame[0]
+   *   via uTargetBlend. Caller must invoke armForPlay() after the cross-fade completes.
+   */
+  entryMode?: 'instant' | 'directMorph';
 }
 
 const DEFAULT_FPS = 2;
@@ -51,6 +59,7 @@ export class FrameSequencer {
   private transitionStart = 0;
   private frameDurationMs: number;
   private phase: Phase = 'idle';
+  private entryMode: 'instant' | 'directMorph';
 
   constructor(opts: FrameSequencerOptions) {
     if (opts.shape.srcs.length === 0) {
@@ -60,6 +69,7 @@ export class FrameSequencer {
     this.adapter = opts.adapter;
     this.shape = opts.shape;
     this.particleCount = opts.particleCount;
+    this.entryMode = opts.entryMode ?? 'instant';
 
     const fps = (opts.shape.fps && opts.shape.fps > 0 && Number.isFinite(opts.shape.fps))
       ? opts.shape.fps
@@ -68,12 +78,18 @@ export class FrameSequencer {
 
     this.sampleAllFrames();
 
-    // Prime slots: frame 0 in aTarget, frame 1 (if exists) in aTargetNext.
-    this.adapter.applyBufferTo('aTarget', this.frames[0]);
-    if (this.frames.length > 1) {
-      this.adapter.applyBufferTo('aTargetNext', this.frames[1]);
+    if (this.entryMode === 'directMorph') {
+      // Caller is cross-fading the previous shape into frame[0]; leave aTarget
+      // and uTargetBlend untouched. armForPlay() will hand off once blend = 1.
+      this.adapter.applyBufferTo('aTargetNext', this.frames[0]);
+    } else {
+      // Prime slots: frame 0 in aTarget, frame 1 (if exists) in aTargetNext.
+      this.adapter.applyBufferTo('aTarget', this.frames[0]);
+      if (this.frames.length > 1) {
+        this.adapter.applyBufferTo('aTargetNext', this.frames[1]);
+      }
+      this.adapter.uniforms.uTargetBlend.value = 0;
     }
-    this.adapter.uniforms.uTargetBlend.value = 0;
   }
 
   get done(): boolean {
@@ -90,6 +106,21 @@ export class FrameSequencer {
     }
     this.transitionStart = nowMs;
     this.phase = 'playing';
+  }
+
+  /**
+   * Hand off from a directMorph entry into the play loop. Called by ParticleSystem
+   * after uTargetBlend has reached 1 (aTargetNext = frame[0] is fully resolved).
+   * Promotes aTargetNext into aTarget, primes frame[1] in aTargetNext, then start()s.
+   */
+  armForPlay(nowMs: number): void {
+    if (this.phase !== 'idle') return;
+    this.adapter.copyNextIntoPrimary();             // aTarget = frame[0]
+    this.adapter.uniforms.uTargetBlend.value = 0;
+    if (this.frames.length > 1) {
+      this.adapter.applyBufferTo('aTargetNext', this.frames[1]);
+    }
+    this.start(nowMs);
   }
 
   /** Called every frame by ParticleSystem while state === 'play'. */
@@ -120,6 +151,11 @@ export class FrameSequencer {
   /** Re-sample all frames at the current bounds; re-prime active slots. */
   applyResize(): void {
     this.sampleAllFrames();
+    if (this.phase === 'idle' && this.entryMode === 'directMorph') {
+      // aTarget belongs to the previous shape; only refresh aTargetNext = frame[0].
+      this.adapter.applyBufferTo('aTargetNext', this.frames[0]);
+      return;
+    }
     this.adapter.applyBufferTo('aTarget', this.frames[this.frameIdx]);
     if (this.phase === 'playing' && this.frameIdx < this.frames.length - 1) {
       this.adapter.applyBufferTo('aTargetNext', this.frames[this.frameIdx + 1]);

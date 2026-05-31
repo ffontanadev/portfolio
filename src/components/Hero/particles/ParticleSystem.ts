@@ -25,7 +25,9 @@ interface StateTimings {
   morphOut: number;  // seconds for shape → drift
 }
 
-type State = 'drift' | 'morphIn' | 'hold' | 'play' | 'morphOut';
+// 'drift', 'morphIn', 'morphOut' are used only on initial entry (and post-intro);
+// the steady-state loop alternates 'hold'/'play' with 'shapeMorph' — no dissolve.
+type State = 'drift' | 'morphIn' | 'hold' | 'play' | 'morphOut' | 'shapeMorph';
 
 const DEFAULT_TIMINGS: StateTimings = {
   drift: .5,
@@ -64,6 +66,9 @@ export class ParticleSystem {
   private introOpts: { shapes: IntroShapes; timings?: Partial<IntroTimings> } | null = null;
 
   private frame: FrameSequencer | null = null;
+  // Retained during 'shapeMorph' when the previous shape was a frame animation,
+  // so resize mid-morph can re-sample its final frame back into aTarget.
+  private prevFrame: FrameSequencer | null = null;
   private frameAdapter: FrameAdapter | null = null;
 
   private cursorTarget = { x: -9999, y: -9999 };
@@ -176,6 +181,22 @@ export class ParticleSystem {
       // Resampling targets must reflect intro state, not the loop shape.
       if (this.intro && !this.intro.done) {
         this.intro.applyResize();
+        return;
+      }
+      // Mid-morph: aTarget holds the previous shape, aTargetNext holds the next.
+      // Refresh both so the in-flight cross-fade stays consistent at the new bounds.
+      if (this.state === 'shapeMorph') {
+        if (this.prevFrame) {
+          this.prevFrame.applyResize();
+        } else {
+          const prevIdx = (this.shapeIdx - 1 + this.shapes.length) % this.shapes.length;
+          this.applyTargetTo('aTarget', this.shapes[prevIdx]);
+        }
+        if (this.frame) {
+          this.frame.applyResize();
+        } else {
+          this.applyTargetTo('aTargetNext', this.shapes[this.shapeIdx]);
+        }
         return;
       }
       // If a frame sequencer is active, it owns target resampling.
@@ -312,18 +333,37 @@ export class ParticleSystem {
         this.frame!.tick(now);
         m = 1;
         if (this.frame!.done) {
-          this.state = 'morphOut';
-          this.stateStart = now;
+          this.beginShapeMorph(now);
         }
         break;
       }
       case 'hold':
         m = 1;
         if (elapsed >= this.timings.hold) {
-          this.state = 'morphOut';
+          this.beginShapeMorph(now);
+        }
+        break;
+      case 'shapeMorph': {
+        const t = Math.min(elapsed / this.timings.morphIn, 1);
+        this.material.uniforms.uTargetBlend.value = easeInOutCubic(t);
+        m = 1;
+        if (t >= 1) {
+          if (this.frame) {
+            // Next shape is a frame animation: hand off cleanly into play.
+            this.frame.armForPlay(now);
+            this.state = 'play';
+          } else {
+            // Promote aTargetNext into aTarget and reset blend for steady hold.
+            this.copyNextIntoPrimary();
+            this.material.uniforms.uTargetBlend.value = 0;
+            this.state = 'hold';
+          }
+          // Previous frame sequencer (if any) is no longer needed; release its buffers.
+          this.prevFrame = null;
           this.stateStart = now;
         }
         break;
+      }
       case 'morphOut': {
         const t = Math.min(elapsed / this.timings.morphOut, 1);
         m = 1 - easeInOutCubic(t);
@@ -336,6 +376,36 @@ export class ParticleSystem {
       }
     }
     return m;
+  }
+
+  /**
+   * Enter the direct shape-to-shape morph: previous shape stays in aTarget,
+   * next shape is pre-loaded into aTargetNext, and uTargetBlend will animate 0→1.
+   * uMorph stays at 1 throughout — no dissolve back to drift.
+   */
+  private beginShapeMorph(now: number): void {
+    // Retain the prev frame sequencer (if any) so a resize mid-morph can
+    // re-sample its final frame back into aTarget.
+    this.prevFrame = this.frame;
+    this.frame = null;
+
+    this.shapeIdx = (this.shapeIdx + 1) % this.shapes.length;
+    const nextShape = this.shapes[this.shapeIdx];
+
+    if (nextShape.kind === 'frames') {
+      this.frame = new FrameSequencer({
+        adapter: this.frameAdapter!,
+        shape: nextShape,
+        particleCount: this.particleCount,
+        entryMode: 'directMorph',
+      });
+    } else {
+      this.applyTargetTo('aTargetNext', nextShape);
+    }
+
+    this.material.uniforms.uTargetBlend.value = 0;
+    this.state = 'shapeMorph';
+    this.stateStart = now;
   }
 
   private tick = () => {
