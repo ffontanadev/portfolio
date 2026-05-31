@@ -6,12 +6,41 @@ import { CheckIcon } from '@/components/ui/check';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useState } from 'react';
+import BancoProvinciaLogo from './logos/BancoProvinciaLogo';
+import BBVALogo from './logos/BBVALogo';
+
+const LOGO_REGISTRY = {
+    'banco-provincia': BancoProvinciaLogo,
+    bbva: BBVALogo,
+} as const;
+
+export type ProjectLogo = keyof typeof LOGO_REGISTRY;
 
 export interface CodeBlock {
     language: string;
     code: string;
     label?: string;
 }
+
+export interface ProjectMetric {
+    label: string;
+    value: string;
+    accent?: boolean;
+}
+
+export interface ProjectPhase {
+    label: string;
+    title: string;
+    desc: string;
+    current?: boolean;
+}
+
+export type ProjectLeadMetric =
+    | { kind: 'migration'; from: string; to: string }
+    | { kind: 'scale'; superscript?: string; value: string }
+    | { kind: 'wordmark'; value: string; sub?: string };
+
+export type ProjectCategory = 'personal' | 'professional';
 
 export interface Project {
     title: string;
@@ -23,6 +52,13 @@ export interface Project {
     role: string;
     description: string;
     codeBlocks: CodeBlock[];
+    category?: ProjectCategory;
+    company?: string;
+    logo?: ProjectLogo;
+    leadMetric?: ProjectLeadMetric;
+    metrics?: ProjectMetric[];
+    featured?: boolean;
+    phases?: ProjectPhase[];
 }
 
 interface ProjectPreviewModalProps {
@@ -79,6 +115,152 @@ const CodeBlockComponent = ({ block }: { block: CodeBlock }) => {
                 >
                     {block.code}
                 </SyntaxHighlighter>
+            </div>
+        </div>
+    );
+};
+
+export const LeadMetricDisplay = ({
+    metric,
+    size = 'card',
+}: {
+    metric: ProjectLeadMetric;
+    size?: 'card' | 'modal';
+}) => {
+    const isModal = size === 'modal';
+
+    if (metric.kind === 'migration') {
+        return (
+            <div
+                className={`flex items-baseline justify-center gap-3 font-display font-bold tracking-[-0.04em] leading-none text-dark-900 ${
+                    isModal ? 'text-[clamp(2.75rem,6vw,5rem)]' : 'text-[clamp(1.75rem,4.5vw,3rem)]'
+                }`}
+            >
+                <span>{metric.from}</span>
+                <span
+                    className="text-coral-500 font-display-italic font-light"
+                    style={{ fontStyle: 'italic' }}
+                    aria-hidden="true"
+                >
+                    →
+                </span>
+                <span>{metric.to}</span>
+            </div>
+        );
+    }
+
+    return (
+        <div className="flex flex-col items-center">
+            {metric.superscript && (
+                <span
+                    className={`font-display font-display-italic font-light tracking-tight text-dark-900/55 mb-1 ${
+                        isModal ? 'text-3xl' : 'text-xl'
+                    }`}
+                    style={{ fontStyle: 'italic' }}
+                >
+                    {metric.superscript}
+                </span>
+            )}
+            <span
+                className={`font-display font-bold tracking-[-0.04em] leading-none text-dark-900 ${
+                    isModal ? 'text-[clamp(4rem,10vw,7rem)]' : 'text-[clamp(3rem,7vw,4.5rem)]'
+                }`}
+            >
+                {metric.value}
+            </span>
+        </div>
+    );
+};
+
+export const EnterpriseHero = ({ project, size = 'modal' }: { project: Project; size?: 'card' | 'modal' }) => {
+    const isModal = size === 'modal';
+    return (
+        <div
+            className={`relative w-full overflow-hidden ${
+                isModal ? 'aspect-[21/9] bg-cream-100' : 'h-full bg-cream-100'
+            }`}
+        >
+            <div
+                className="absolute inset-0 opacity-60"
+                style={{
+                    background:
+                        'radial-gradient(ellipse 60% 80% at 50% 35%, #FFF8F3, transparent 70%)',
+                }}
+                aria-hidden="true"
+            />
+            <div
+                className="absolute inset-x-6 top-5 flex items-center justify-between text-dark-900/45"
+                aria-hidden="true"
+            >
+                <span className="font-mono text-[10px] tracking-[0.3em] uppercase">
+                    Enterprise
+                </span>
+                <span className="font-display italic text-sm" style={{ fontStyle: 'italic' }}>
+                    §
+                </span>
+            </div>
+
+            <div className={`relative h-full flex flex-col items-center justify-center ${isModal ? 'px-8 py-14' : 'px-6 py-10'}`}>
+                {project.logo ? (
+                    (() => {
+                        const Logo = LOGO_REGISTRY[project.logo];
+                        // Wide wordmarks (Provincia) need more horizontal room than the square BBVA mark.
+                        const isWide = project.logo === 'banco-provincia';
+                        const sizeClasses = isWide
+                            ? isModal
+                                ? 'h-7 mb-7 text-dark-900/85'
+                                : 'h-5 mb-5 text-dark-900/85'
+                            : isModal
+                              ? 'h-9 mb-7 text-dark-900/85'
+                              : 'h-6 mb-5 text-dark-900/85';
+                        return <Logo className={`${sizeClasses} w-auto`} />;
+                    })()
+                ) : (
+                    project.company && (
+                        <span
+                            className={`font-display font-display-italic text-dark-900/60 tracking-tight mb-3 ${
+                                isModal ? 'text-2xl' : 'text-lg'
+                            }`}
+                            style={{ fontStyle: 'italic' }}
+                        >
+                            {project.company}
+                        </span>
+                    )
+                )}
+                {project.leadMetric && <LeadMetricDisplay metric={project.leadMetric} size={size} />}
+                <div className={`${isModal ? 'mt-8' : 'mt-5'} h-px w-12 bg-dark-900/20`} aria-hidden="true" />
+                <p className={`mt-3 font-mono tracking-[0.22em] uppercase text-dark-900/50 text-center ${isModal ? 'text-[11px]' : 'text-[9px]'}`}>
+                    {project.techStack.slice(0, isModal ? 5 : 3).join(' · ')}
+                </p>
+            </div>
+        </div>
+    );
+};
+
+const MetricBrief = ({ project }: { project: Project }) => {
+    if (!project.metrics?.length) return null;
+    return (
+        <div>
+            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-4">
+                Migration Brief
+            </h3>
+            <div className="rounded-2xl border border-dark-900/10 divide-y divide-dark-900/[0.07] overflow-hidden bg-cream-50/40">
+                {project.metrics.map((m, i) => (
+                    <div key={i} className="flex items-baseline justify-between gap-4 px-5 py-4">
+                        <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-dark-900/55 shrink-0">
+                            {m.label}
+                        </span>
+                        <span
+                            className={`font-display text-lg md:text-xl tracking-tight text-right ${
+                                m.accent
+                                    ? 'text-coral-500 font-semibold'
+                                    : 'text-dark-900 font-medium'
+                            }`}
+                        >
+                            {m.value}
+                        </span>
+                    </div>
+                ))}
             </div>
         </div>
     );
@@ -183,8 +365,8 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
 
                             {/* Scrollable Content */}
                             <div className="overflow-y-auto max-h-[90vh] custom-scrollbar">
-                                {/* Hero Image Section */}
-                                {project.image && (
+                                {/* Hero Section — image for personal, typographic for enterprise */}
+                                {project.image ? (
                                     <div className="w-full aspect-[21/9] bg-gradient-to-br from-gray-100 to-gray-200 relative overflow-hidden">
                                         <img
                                             src={project.image}
@@ -193,6 +375,8 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
                                             loading="lazy"
                                         />
                                     </div>
+                                ) : (
+                                    <EnterpriseHero project={project} size="modal" />
                                 )}
 
                                 {/* Content Section */}
@@ -246,15 +430,19 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
                                         </div>
                                     </div>
 
-                                    {/* Right Column - Code Blocks */}
-                                    <div className="space-y-2">
-                                        <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-4">
-                                            Key Implementation
-                                        </h3>
-                                        {project.codeBlocks.map((block, index) => (
-                                            <CodeBlockComponent key={index} block={block} />
-                                        ))}
-                                    </div>
+                                    {/* Right Column - Migration Brief (professional) or Code Blocks (personal) */}
+                                    {project.category === 'professional' && project.metrics?.length ? (
+                                        <MetricBrief project={project} />
+                                    ) : (
+                                        <div className="space-y-2">
+                                            <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-4">
+                                                Key Implementation
+                                            </h3>
+                                            {project.codeBlocks.map((block, index) => (
+                                                <CodeBlockComponent key={index} block={block} />
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </motion.div>
