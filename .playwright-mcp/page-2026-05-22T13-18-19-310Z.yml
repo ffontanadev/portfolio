@@ -1,0 +1,441 @@
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - generic [ref=e5]:
+      - link "FF ." [ref=e6] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e7]: FF
+        - generic [ref=e8]: .
+      - generic [ref=e9]:
+        - generic [ref=e10]:
+          - generic [ref=e11]: "01"
+          - link "Home" [ref=e12] [cursor=pointer]:
+            - /url: /
+        - generic [ref=e13]:
+          - generic [ref=e14]: "02"
+          - link "Work" [ref=e15] [cursor=pointer]:
+            - /url: "#work"
+        - generic [ref=e16]:
+          - generic [ref=e17]: "03"
+          - link "About" [ref=e18] [cursor=pointer]:
+            - /url: "#about"
+        - generic [ref=e19]:
+          - generic [ref=e20]: "04"
+          - link "Connect" [ref=e21] [cursor=pointer]:
+            - /url: "#connect"
+        - generic [ref=e22]:
+          - generic [ref=e23]: "05"
+          - link "Blog" [ref=e24] [cursor=pointer]:
+            - /url: /blog
+        - button "Resume" [ref=e25] [cursor=pointer]: Resume
+  - main [ref=e27]:
+    - generic [ref=e29]:
+      - generic [ref=e31]: 01 — Introduction
+      - generic [ref=e36]: A developer crafting digital solutions at Magenta Innova .
+    - generic [ref=e37]:
+      - generic [ref=e40]: Stack · in rotation
+      - generic [ref=e43]:
+        - generic [ref=e44]:
+          - img "Supabase logo" [ref=e45]
+          - generic [ref=e46]: Supabase
+        - generic [ref=e47]:
+          - img "Next.js logo" [ref=e48]
+          - generic [ref=e49]: Next.js
+        - generic [ref=e50]:
+          - img "AWS logo" [ref=e51]
+          - generic [ref=e52]: AWS
+        - generic [ref=e53]:
+          - img "Three.js logo" [ref=e54]
+          - generic [ref=e55]: Three.js
+        - generic [ref=e56]:
+          - img "Drizzle logo" [ref=e57]
+          - generic [ref=e58]: Drizzle
+        - generic [ref=e59]:
+          - img "SQLite logo" [ref=e60]
+          - generic [ref=e61]: SQLite
+        - generic [ref=e62]:
+          - img "MongoDB logo" [ref=e63]
+          - generic [ref=e64]: MongoDB
+        - generic [ref=e65]:
+          - img "PostgreSQL logo" [ref=e66]
+          - generic [ref=e67]: PostgreSQL
+        - generic [ref=e68]:
+          - img "Spring Boot logo" [ref=e69]
+          - generic [ref=e70]: Spring Boot
+        - generic [ref=e71]:
+          - img "Sequelize logo" [ref=e72]
+          - generic [ref=e73]: Sequelize
+        - generic [ref=e74]:
+          - img "Express.js logo" [ref=e75]
+          - generic [ref=e76]: Express.js
+        - generic [ref=e77]:
+          - img "Tailwind CSS logo" [ref=e78]
+          - generic [ref=e79]: Tailwind CSS
+        - generic [ref=e80]:
+          - img "Astro logo" [ref=e81]
+          - generic [ref=e82]: Astro
+        - generic [ref=e83]:
+          - img "Bootstrap logo" [ref=e84]
+          - generic [ref=e85]: Bootstrap
+        - generic [ref=e86]:
+          - img "Vercel logo" [ref=e87]
+          - generic [ref=e88]: Vercel
+        - generic [ref=e89]:
+          - img "GoDaddy logo" [ref=e90]
+          - generic [ref=e91]: GoDaddy
+        - generic [ref=e92]:
+          - img "Google Cloud logo"
+          - generic [ref=e93]: Google Cloud
+        - generic [ref=e94]:
+          - img "C# logo"
+          - generic [ref=e95]: C#
+        - generic [ref=e96]:
+          - img "Lit logo"
+          - generic [ref=e97]: Lit
+        - generic [ref=e98]:
+          - img "Redux logo"
+          - generic [ref=e99]: Redux
+        - generic [ref=e100]:
+          - img "Auth0 logo"
+          - generic [ref=e101]: Auth0
+        - generic [ref=e102]:
+          - img "JWT logo"
+          - generic [ref=e103]: JWT
+        - generic [ref=e104]:
+          - img "Vite logo"
+          - generic [ref=e105]: Vite
+        - generic [ref=e106]:
+          - img "Supabase logo" [ref=e107]
+          - generic [ref=e108]: Supabase
+        - generic [ref=e109]:
+          - img "Next.js logo" [ref=e110]
+          - generic [ref=e111]: Next.js
+        - generic [ref=e112]:
+          - img "AWS logo" [ref=e113]
+          - generic [ref=e114]: AWS
+        - generic [ref=e115]:
+          - img "Three.js logo" [ref=e116]
+          - generic [ref=e117]: Three.js
+        - generic [ref=e118]:
+          - img "Drizzle logo" [ref=e119]
+          - generic [ref=e120]: Drizzle
+        - generic [ref=e121]:
+          - img "SQLite logo" [ref=e122]
+          - generic [ref=e123]: SQLite
+        - generic [ref=e124]:
+          - img "MongoDB logo" [ref=e125]
+          - generic [ref=e126]: MongoDB
+        - generic [ref=e127]:
+          - img "PostgreSQL logo" [ref=e128]
+          - generic [ref=e129]: PostgreSQL
+        - generic [ref=e130]:
+          - img "Spring Boot logo" [ref=e131]
+          - generic [ref=e132]: Spring Boot
+        - generic [ref=e133]:
+          - img "Sequelize logo" [ref=e134]
+          - generic [ref=e135]: Sequelize
+        - generic [ref=e136]:
+          - img "Express.js logo" [ref=e137]
+          - generic [ref=e138]: Express.js
+        - generic [ref=e139]:
+          - img "Tailwind CSS logo" [ref=e140]
+          - generic [ref=e141]: Tailwind CSS
+        - generic [ref=e142]:
+          - img "Astro logo" [ref=e143]
+          - generic [ref=e144]: Astro
+        - generic [ref=e145]:
+          - img "Bootstrap logo" [ref=e146]
+          - generic [ref=e147]: Bootstrap
+        - generic [ref=e148]:
+          - img "Vercel logo" [ref=e149]
+          - generic [ref=e150]: Vercel
+        - generic [ref=e151]:
+          - img "GoDaddy logo" [ref=e152]
+          - generic [ref=e153]: GoDaddy
+        - generic [ref=e154]:
+          - img "Google Cloud logo"
+          - generic [ref=e155]: Google Cloud
+        - generic [ref=e156]:
+          - img "C# logo"
+          - generic [ref=e157]: C#
+        - generic [ref=e158]:
+          - img "Lit logo"
+          - generic [ref=e159]: Lit
+        - generic [ref=e160]:
+          - img "Redux logo"
+          - generic [ref=e161]: Redux
+        - generic [ref=e162]:
+          - img "Auth0 logo"
+          - generic [ref=e163]: Auth0
+        - generic [ref=e164]:
+          - img "JWT logo"
+          - generic [ref=e165]: JWT
+        - generic [ref=e166]:
+          - img "Vite logo"
+          - generic [ref=e167]: Vite
+    - generic [ref=e168]:
+      - generic [ref=e169]:
+        - generic [ref=e171]: § 02 — Selected Work
+        - heading "What I've been pouring my soul into." [level=2] [ref=e173]
+        - paragraph [ref=e174]: A small collection of recent experiments, enterprise migrations, and side-quests.
+      - tablist "Filter projects by category" [ref=e175]:
+        - tab "All05" [selected] [ref=e176]: All05
+        - tab "Personal03" [ref=e178]
+        - tab "Professional02" [ref=e179]
+      - generic [ref=e180]:
+        - article [ref=e181] [cursor=pointer]:
+          - generic [ref=e182]:
+            - generic [ref=e183]:
+              - text: "01"
+              - generic [ref=e184]: / 05
+            - generic [ref=e185]: Enterprise
+            - generic [ref=e187]: "'25 — NOW"
+          - generic [ref=e188]:
+            - generic [ref=e189]:
+              - generic [ref=e191]:
+                - generic [ref=e192]: Enterprise
+                - generic [ref=e193]: §
+              - generic [ref=e194]:
+                - img "Banco Provincia" [ref=e195]
+                - generic [ref=e214]:
+                  - generic [ref=e215]: Axis 2
+                  - generic [ref=e216]: →
+                  - generic [ref=e217]: Boot
+                - paragraph [ref=e219]: Java 17 · Spring Boot 3 · Axis2 (legacy)
+            - img [ref=e222]
+          - generic [ref=e225]:
+            - heading "Banco Provincia — Core Services Migration" [level=3] [ref=e226]
+            - paragraph [ref=e227]: Lifting Banco Provincia's legacy Axis2 / Java 8 web services into a modern Spring Boot 3 platform on Java 17, with database connectivity rewired from JNDI to a managed MSSQL DataSource.
+            - generic [ref=e228]:
+              - generic [ref=e229]: Java 17
+              - generic [ref=e230]: Spring Boot 3
+              - generic [ref=e231]: Axis2 (legacy)
+              - generic [ref=e232]: "+2"
+        - article [ref=e233] [cursor=pointer]:
+          - generic [ref=e234]:
+            - generic [ref=e235]:
+              - text: "02"
+              - generic [ref=e236]: / 05
+            - generic [ref=e237]: Enterprise
+            - generic [ref=e239]: "'25"
+          - generic [ref=e240]:
+            - generic [ref=e241]:
+              - generic [ref=e243]:
+                - generic [ref=e244]: Enterprise
+                - generic [ref=e245]: §
+              - generic [ref=e246]:
+                - img "BBVA" [ref=e247]
+                - generic [ref=e249]:
+                  - generic [ref=e250]: API²
+                  - generic [ref=e251]: 50+
+                - paragraph [ref=e253]: Java 17 · Spring Boot · JUnit 5
+            - img [ref=e256]
+          - generic [ref=e259]:
+            - heading "BBVA — API Migration & Test Coverage" [level=3] [ref=e260]
+            - paragraph [ref=e261]: Migrating BBVA's internal API surface to Spring Boot and engineering high-coverage test suites across more than 50 services — turning fragile internals into a platform that can be refactored without fear.
+            - generic [ref=e262]:
+              - generic [ref=e263]: Java 17
+              - generic [ref=e264]: Spring Boot
+              - generic [ref=e265]: JUnit 5
+              - generic [ref=e266]: "+2"
+        - article [ref=e267] [cursor=pointer]:
+          - generic [ref=e268]:
+            - generic [ref=e269]:
+              - text: "03"
+              - generic [ref=e270]: / 05
+            - generic [ref=e272]: JAN 25'
+          - generic [ref=e273]:
+            - img "Minecraft-like Terrain Generation" [ref=e274]
+            - img [ref=e277]
+          - generic [ref=e280]:
+            - heading "Minecraft-like Terrain Generation" [level=3] [ref=e281]
+            - paragraph [ref=e282]: Three Voxel World Generation using Perlin noise algorithm in Three.js with 3D First Person Controller
+            - generic [ref=e283]:
+              - generic [ref=e284]: Next.js
+              - generic [ref=e285]: Three.js
+              - generic [ref=e286]: Perlin Noise
+              - generic [ref=e287]: "+2"
+        - article [ref=e288] [cursor=pointer]:
+          - generic [ref=e289]:
+            - generic [ref=e290]:
+              - text: "04"
+              - generic [ref=e291]: / 05
+            - generic [ref=e293]: JUN 23'
+          - generic [ref=e294]:
+            - img "Twitter Clone" [ref=e295]
+            - img [ref=e298]
+          - generic [ref=e301]:
+            - heading "Twitter Clone" [level=3] [ref=e302]
+            - paragraph [ref=e303]: A functional clone of the old app Twitter with authentication, feed, following and likes!
+            - generic [ref=e304]:
+              - generic [ref=e305]: Node.js
+              - generic [ref=e306]: Express
+              - generic [ref=e307]: Express Session
+              - generic [ref=e308]: "+2"
+        - article [ref=e309] [cursor=pointer]:
+          - generic [ref=e310]:
+            - generic [ref=e311]:
+              - text: "05"
+              - generic [ref=e312]: / 05
+            - generic [ref=e314]: AUG 25'
+          - generic [ref=e315]:
+            - img "Magenta Hours Collector (MHC-CLI)" [ref=e316]
+            - img [ref=e319]
+          - generic [ref=e322]:
+            - heading "Magenta Hours Collector (MHC-CLI)" [level=3] [ref=e323]
+            - paragraph [ref=e324]: A command line application that connects to an email inbox and extract hour reports using AI and search for emails matching the configured criteria and then give the email to Claude Sonnet 4.5 to collect all the relevant information and alert from use
+            - generic [ref=e325]:
+              - generic [ref=e326]: Commander.js
+              - generic [ref=e327]: Google Cloud Platform
+              - generic [ref=e328]: SQLite
+    - generic [ref=e330]:
+      - generic [ref=e331]:
+        - generic [ref=e333]: § 03 — Archive
+        - heading "Older works" [level=2] [ref=e335]
+        - paragraph [ref=e336]: Relics of my developing journey — still dear to me, but no longer the main event.
+      - generic [ref=e337]:
+        - generic [ref=e339] [cursor=pointer]:
+          - generic [ref=e340]:
+            - img "Biome Terrain Engine" [ref=e341]
+            - generic [ref=e342]: "2021"
+          - generic [ref=e343]:
+            - heading "Biome Terrain Engine" [level=3] [ref=e344]
+            - paragraph [ref=e345]: Procedural generation
+            - generic [ref=e347]: View
+        - generic [ref=e350] [cursor=pointer]:
+          - generic [ref=e351]:
+            - img "Hackflix" [ref=e352]
+            - generic [ref=e353]: "2022"
+          - generic [ref=e354]:
+            - heading "Hackflix" [level=3] [ref=e355]
+            - paragraph [ref=e356]: Browse for the latest movies easily.
+            - generic [ref=e358]: View
+        - generic [ref=e361] [cursor=pointer]:
+          - generic [ref=e362]:
+            - img "Truqui" [ref=e363]
+            - generic [ref=e364]: "2022"
+          - generic [ref=e365]:
+            - heading "Truqui" [level=3] [ref=e366]
+            - paragraph [ref=e367]: Your one stop book shop
+            - generic [ref=e369]: View
+    - generic [ref=e372]:
+      - generic [ref=e374]: § 04 — Field Notes
+      - generic [ref=e383]:
+        - heading "More insights on the blog." [level=2] [ref=e384]:
+          - text: More insights
+          - text: on the blog.
+        - paragraph [ref=e385]: Articles about web development, design patterns, and the creative process behind building modern digital experiences.
+        - link "Visit the journal" [ref=e387] [cursor=pointer]:
+          - /url: /blog
+          - generic [ref=e388]: Visit the journal
+          - img [ref=e389]
+    - generic [ref=e393]:
+      - generic [ref=e396]: § 05 — Get in touch
+      - paragraph [ref=e398]: you made it this far—
+      - heading "C o m e s a y h i ." [level=2] [ref=e399]:
+        - generic [ref=e400]: C
+        - generic [ref=e401]: o
+        - generic [ref=e402]: m
+        - generic [ref=e403]: e
+        - generic [ref=e405]: s
+        - generic [ref=e406]: a
+        - generic [ref=e407]: "y"
+        - generic [ref=e409]: h
+        - generic [ref=e410]: i
+        - generic [ref=e411]: .
+      - generic [ref=e412]:
+        - generic [ref=e413]:
+          - generic [ref=e417]: Set list · Available for
+          - generic [ref=e419]: B · SIDE
+        - list [ref=e422]:
+          - listitem [ref=e423]:
+            - generic [ref=e424]: "01"
+            - generic [ref=e425]:
+              - generic [ref=e426]:
+                - generic [ref=e427]: FULL · TIME
+                - generic [ref=e428]: Developer role
+              - generic [ref=e429]: Open to remote or relocation. Available immediately.
+          - listitem [ref=e433]:
+            - generic [ref=e434]: "02"
+            - generic [ref=e435]:
+              - generic [ref=e436]:
+                - generic [ref=e437]: FREELANCE
+                - generic [ref=e438]: Project-based work
+              - generic [ref=e439]: From product MVPs to focused systems engineering.
+          - listitem [ref=e443]:
+            - generic [ref=e444]: "03"
+            - generic [ref=e445]:
+              - generic [ref=e446]:
+                - generic [ref=e447]: CONSULT
+                - generic [ref=e448]: Digital solutions
+              - generic [ref=e449]: Architecture, scoping, technical audits & strategy.
+        - generic [ref=e487]: Live · ~24h reply
+      - paragraph [ref=e488]: …and I'm always up for talking about music, or trying a new game together.
+      - generic [ref=e489]:
+        - button "View Resume" [ref=e490] [cursor=pointer]:
+          - img [ref=e492]
+          - generic [ref=e496]: View Resume
+        - link "c o n t a c t o @ f f o n t a n a . d e v" [ref=e498] [cursor=pointer]:
+          - /url: mailto:contacto@ffontana.dev
+          - generic [ref=e499]: c
+          - generic [ref=e500]: o
+          - generic [ref=e501]: "n"
+          - generic [ref=e502]: t
+          - generic [ref=e503]: a
+          - generic [ref=e504]: c
+          - generic [ref=e505]: t
+          - generic [ref=e506]: o
+          - generic [ref=e507]: "@"
+          - generic [ref=e508]: f
+          - generic [ref=e509]: f
+          - generic [ref=e510]: o
+          - generic [ref=e511]: "n"
+          - generic [ref=e512]: t
+          - generic [ref=e513]: a
+          - generic [ref=e514]: "n"
+          - generic [ref=e515]: a
+          - generic [ref=e516]: .
+          - generic [ref=e517]: d
+          - generic [ref=e518]: e
+          - generic [ref=e519]: v
+        - generic [ref=e520]:
+          - link "LinkedIn" [ref=e521] [cursor=pointer]:
+            - /url: "#"
+            - img [ref=e523]
+          - link "Twitter" [ref=e527] [cursor=pointer]:
+            - /url: "#"
+            - img [ref=e529]
+  - contentinfo [ref=e531]:
+    - generic [ref=e532]:
+      - generic [ref=e533]:
+        - generic [ref=e534]:
+          - generic [ref=e535]:
+            - generic [ref=e536]: FF
+            - generic [ref=e537]: .
+          - paragraph [ref=e538]: Building quiet, deliberate software.
+        - navigation [ref=e539]:
+          - link "01 Home" [ref=e540] [cursor=pointer]:
+            - /url: "#hero"
+            - generic [ref=e541]: "01"
+            - text: Home
+          - link "02 Work" [ref=e542] [cursor=pointer]:
+            - /url: "#work"
+            - generic [ref=e543]: "02"
+            - text: Work
+          - link "03 About" [ref=e544] [cursor=pointer]:
+            - /url: "#about"
+            - generic [ref=e545]: "03"
+            - text: About
+          - link "04 Connect" [ref=e546] [cursor=pointer]:
+            - /url: "#connect"
+            - generic [ref=e547]: "04"
+            - text: Connect
+          - link "05 Resume" [ref=e548] [cursor=pointer]:
+            - /url: /resume.pdf
+            - generic [ref=e549]: "05"
+            - text: Resume
+      - generic [ref=e551]:
+        - generic [ref=e552]: © 2026 · Felipe Fontana · All rights reserved
+        - generic [ref=e553]:
+          - text: Crafted with
+          - img [ref=e555]
+          - text: and React

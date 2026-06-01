@@ -1,14 +1,93 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useMemo, useState, useRef } from 'react';
+import { AnimatePresence, LayoutGroup, motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
-import ProjectPreviewModal, { type Project } from './ProjectPreviewModal';
+import ProjectPreviewModal, { EnterpriseHero } from './ProjectPreviewModal';
+import { accentForCategory, type Project } from './projectTypes';
+
+const ease = [0.22, 1, 0.36, 1] as const;
+
+type Filter = 'all' | 'personal' | 'professional';
 
 const projects: Project[] = [
+  {
+    title: "EFENGINE — C++ Game Framework",
+    desc: "A from-scratch 3D game framework in C++17 on OpenGL 3.3 Core — a library you compile your games against, built to master memory management and the game lifecycle.",
+    color: "bg-cream-100",
+    techStack: ["C++17", "OpenGL 3.3 Core", "GLFW", "GLAD", "GLM", "Doctest", "CMake"],
+    date: "'26 — NOW",
+    role: "Engine Author",
+    description: `EFENGINE is my most ambitious project: a personal 3D game framework written in C++17 on OpenGL 3.3 Core for Windows. No editor, no native scripting, no multi-platform builds — it is a library you compile your games against, where each game is a C++ project that links against efengine. The goal is mastery of low-level systems: manual memory management, the game lifecycle, and the render pipeline, built up one phase at a time. Documentation is generated with Doxygen and the build is driven by CMake.`,
+    codeBlocks: [],
+    category: 'personal',
+    featured: true,
+    leadMetric: { kind: 'wordmark', value: 'EFENGINE', sub: 'my most ambitious project' },
+    phases: [
+      {
+        label: 'Fase 0',
+        title: 'Setup',
+        desc: 'Toolchain, CMake build, project structure, and dependencies wired up (GLFW, GLAD, GLM, Doctest).',
+      },
+      {
+        label: 'Fase 1',
+        title: 'Contexto GLFW',
+        desc: 'Window and OpenGL 3.3 Core context creation, the basic game loop, and input handling.',
+      },
+      {
+        label: 'Fase 2',
+        title: 'Hello Triangle',
+        desc: 'Minimal render pipeline: VBO/VAO/ setup, shader compilation, and the first triangle on screen.',
+        current: true,
+      },
+    ],
+  },
+  {
+    title: "Banco Provincia — Core Services Migration",
+    desc: "Lifting Banco Provincia's legacy Axis2 / Java 8 web services into a modern Spring Boot 3 platform on Java 17, with database connectivity rewired from JNDI to a managed MSSQL DataSource.",
+    color: "bg-cream-100",
+    techStack: ["Java 17", "Spring Boot 3", "Axis2 (legacy)", "MSSQL", "JNDI → DataSource"],
+    date: "'25 — NOW",
+    role: "Backend Engineer",
+    description: `Long-running modernization of legacy Axis2 SOAP services that power core banking integrations at Banco Provincia. The work covers migrating the runtime from Java 8 to Java 17 + Spring Boot 3, replacing JNDI-bound resources with a managed MSSQL DataSource, and untangling years of tightly-coupled web service contracts — all while preserving downstream consumers.`,
+    codeBlocks: [],
+    category: 'professional',
+    company: 'Banco Provincia',
+    logo: 'banco-provincia',
+    leadMetric: { kind: 'migration', from: 'Axis 2', to: 'Boot' },
+    metrics: [
+      { label: 'Runtime', value: 'Java 8 → 17' },
+      { label: 'Framework', value: 'Axis2 → Spring Boot 3', accent: true },
+      { label: 'Persistence', value: 'JNDI → MSSQL DataSource' },
+      { label: 'Domain', value: 'Core banking SOAP services' },
+      { label: 'Status', value: 'In progress · 2025 →' },
+    ],
+  },
+  {
+    title: "BBVA — API Migration & Test Coverage",
+    desc: "Migrating BBVA's internal API surface to Spring Boot and engineering high-coverage test suites across more than 50 services — turning fragile internals into a platform that can be refactored without fear.",
+    color: "bg-cream-100",
+    techStack: ["Java 17", "Spring Boot", "JUnit 5", "Mockito", "Testcontainers"],
+    date: "'25",
+    role: "Backend Engineer",
+    description: `Engaged on BBVA's internal platform to migrate dozens of API services to Spring Boot and stand up disciplined test coverage across the entire surface. Authored unit and integration tests for 50+ internal APIs, raising baseline coverage and protecting future refactors from regression noise.`,
+    codeBlocks: [],
+    category: 'professional',
+    company: 'BBVA',
+    logo: 'bbva',
+    leadMetric: { kind: 'scale', superscript: 'API²', value: '50+' },
+    metrics: [
+      { label: 'Scope', value: '50+ internal APIs', accent: true },
+      { label: 'Stack', value: 'Spring Boot · Java 17' },
+      { label: 'Testing', value: 'JUnit 5 · Mockito · Testcontainers' },
+      { label: 'Outcome', value: 'High coverage · Refactor-safe' },
+      { label: 'Year', value: '2025' },
+    ],
+  },
   {
     title: "Minecraft-like Terrain Generation",
     desc: "Three Voxel World Generation using Perlin noise algorithm in Three.js with 3D First Person Controller",
     color: "bg-blue-50",
-    image: "/images/voxel-world-engine.png",
+    category: 'personal',
+    leadMetric: { kind: 'wordmark', value: 'Voxel', sub: 'world' },
     techStack: ["Next.js", "Three.js", "Perlin Noise", "Prototyping", "On-demand Buffer Streaming"],
     date: "JAN 25'",
     role: "Developer",
@@ -144,7 +223,8 @@ export function makeNoise(seed = Math.random()): NoiseFunction {
     title: "Twitter Clone",
     desc: "A functional clone of the old app Twitter with authentication, feed, following and likes!",
     color: "bg-blue-50",
-    image: "/images/twitter-clone.png",
+    category: 'personal',
+    leadMetric: { kind: 'wordmark', value: 'Twitter', sub: 'clone' },
     techStack: ["Node.js", "Express", "Express Session", "Mongo", "EJS"],
     date: "JUN 23'",
     role: "Backend Developer",
@@ -264,7 +344,8 @@ module.exports = {
     title: "Magenta Hours Collector (MHC-CLI)",
     desc: "A command line application that connects to an email inbox and extract hour reports using AI and search for emails matching the configured criteria and then give the email to Claude Sonnet 4.5 to collect all the relevant information and alert from use",
     color: "bg-blue-50",
-    image: "/images/mhc-cli.png",
+    category: 'personal',
+    leadMetric: { kind: 'wordmark', value: 'MHC', sub: 'cli' },
     techStack: ["Commander.js", "Google Cloud Platform", "SQLite"],
     date: "AUG 25'",
     role: "Developer",
@@ -458,6 +539,35 @@ export const fetchCommand = new Command("fetch")
 const FeaturedWorks = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [filter, setFilter] = useState<Filter>('all');
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+  const headingY = useTransform(scrollYProgress, [0, 1], [60, -60]);
+
+  const featuredProject = useMemo(() => projects.find((p) => p.featured) ?? null, []);
+
+  const counts = useMemo(
+    () => ({
+      all: projects.length,
+      personal: projects.filter((p) => (p.category ?? 'personal') === 'personal').length,
+      professional: projects.filter((p) => p.category === 'professional').length,
+    }),
+    [],
+  );
+
+  // The flagship renders in its own full-width band; keep it out of the grid to avoid duplication.
+  const visibleProjects = useMemo(() => {
+    const base = filter === 'all' ? projects : projects.filter((p) => (p.category ?? 'personal') === filter);
+    return base.filter((p) => !p.featured);
+  }, [filter]);
+
+  // Flagship shows only when the active filter includes it (it is a personal project).
+  const showFeatured =
+    featuredProject !== null && (filter === 'all' || filter === (featuredProject.category ?? 'personal'));
 
   const handleProjectClick = (project: Project) => {
     setSelectedProject(project);
@@ -471,56 +581,209 @@ const FeaturedWorks = () => {
 
   return (
     <>
-      <section id="work" className="py-32 px-6 md:px-20 max-w-[1440px] mx-auto">
-        <div className="mb-20">
-          <h2 className="text-sm font-bold tracking-widest uppercase text-coral-500 mb-4">Featured works</h2>
-          <p className="text-2xl md:text-3xl font-display italic text-gray-600">
-            a.k.a., what I've been pouring my soul into these last few years
+      <section
+        ref={sectionRef}
+        id="work"
+        className="relative py-32 md:py-40 px-6 md:px-20 max-w-[1440px] mx-auto"
+      >
+        {/* Section header */}
+        <motion.div style={{ y: headingY }} className="mb-14">
+          <div className="flex items-center gap-4 mb-8">
+            <span className="text-eyebrow text-coral-500">§ 02 — Selected Work</span>
+            <span className="h-px flex-1 max-w-[140px] bg-dark-900/15" />
+          </div>
+          <h2 className="font-display font-display-md font-bold tracking-[-0.02em] text-4xl md:text-6xl leading-[1.05] max-w-3xl text-dark-900">
+            What I've been{' '}
+            <span className="font-display-italic text-coral-500" style={{ fontStyle: 'italic' }}>
+              pouring my soul
+            </span>{' '}
+            into.
+          </h2>
+          <p className="mt-6 max-w-xl text-lg text-dark-900/55 font-light leading-relaxed">
+            A small collection of recent experiments, enterprise migrations, and side-quests.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-20">
-          {projects.map((project, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              onClick={() => handleProjectClick(project)}
-              className="group cursor-pointer"
-            >
-              {/* Card Image Placeholder */}
-              <div className={`w-full aspect-[4/3] ${project.color} rounded-2xl mb-8 overflow-hidden relative`}>
-                {project.image && (
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover  group-hover:opacity-100 transition-opacity duration-300"
-                    loading="lazy"
-                  />
-                )}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300" />
-                <div className="absolute top-6 right-6 bg-white p-3 rounded-full opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                  <ArrowUpRight size={24} />
-                </div>
+        {/* Filter tabs — editorial type, coral hairline marks the active category */}
+        <LayoutGroup id="featured-works-filter">
+          <div
+            role="tablist"
+            aria-label="Filter projects by category"
+            className="flex flex-wrap items-baseline gap-x-10 gap-y-3 pb-5 mb-20 border-b border-dark-900/10"
+          >
+            {(['all', 'personal', 'professional'] as Filter[]).map((tab) => {
+              const isActive = filter === tab;
+              return (
+                <button
+                  key={tab}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => setFilter(tab)}
+                  className="relative pb-1 group focus:outline-none"
+                >
+                  <span
+                    className={`font-display text-xl md:text-2xl tracking-[-0.01em] transition-colors duration-300 ${
+                      isActive
+                        ? 'text-dark-900 font-display-italic'
+                        : 'text-dark-900/40 group-hover:text-dark-900/70'
+                    }`}
+                    style={{ fontStyle: isActive ? 'italic' : 'normal' }}
+                  >
+                    {tab[0].toUpperCase() + tab.slice(1)}
+                  </span>
+                  <span
+                    className={`ml-2 align-top font-mono text-[10px] tracking-widest transition-colors duration-300 ${
+                      isActive ? 'text-coral-500' : 'text-dark-900/35 group-hover:text-dark-900/55'
+                    }`}
+                  >
+                    {String(counts[tab]).padStart(2, '0')}
+                  </span>
+                  {isActive && (
+                    <motion.span
+                      layoutId="featured-works-tab-underline"
+                      className="absolute left-0 right-7 -bottom-[21px] h-px bg-coral-500"
+                      transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                      aria-hidden="true"
+                    />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </LayoutGroup>
+
+        {showFeatured && featuredProject && (
+          <motion.article
+            key="flagship"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.9, ease }}
+            onClick={() => handleProjectClick(featuredProject)}
+            className="group cursor-pointer mb-24"
+          >
+            <div className="flex items-baseline gap-3 mb-5">
+              <span className="font-mono text-[9px] text-teal-700 tracking-[0.25em] uppercase">
+                § Flagship · C++ Engine
+              </span>
+              <span className="h-px flex-1 bg-dark-900/10" />
+              <span className="font-mono text-[10px] text-dark-900/40 tracking-widest uppercase">
+                {featuredProject.date}
+              </span>
+            </div>
+
+            <div className="relative w-full aspect-[21/9] md:aspect-[3/1] bg-cream-100 border border-teal-700/20 rounded-2xl overflow-hidden soft-lift">
+              <EnterpriseHero project={featuredProject} size="modal" />
+              <div className="absolute inset-0 transition-colors duration-700 mix-blend-multiply bg-teal-700/0 group-hover:bg-teal-700/[0.05]" />
+              <div className="absolute top-5 right-5 bg-cream-50/90 backdrop-blur-sm p-3 rounded-full opacity-0 translate-y-3 -translate-x-3 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
+                <ArrowUpRight size={18} className="text-dark-900" />
               </div>
+            </div>
 
-              {/* Metadata */}
-              <div className="flex items-center gap-4 mb-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                <span className="bg-gray-100 px-3 py-1 rounded-full">{project.date}</span>
-                <span className="text-coral-500">{project.techStack.slice(0, 2).join(', ')}</span>
-              </div>
-
-              <h3 className="text-3xl font-display font-bold mb-2 group-hover:text-coral-500 transition-colors">
-                {project.title}
+            <div className="mt-7 max-w-3xl">
+              <h3 className="font-display font-bold text-3xl md:text-4xl tracking-[-0.01em] leading-tight text-dark-900 group-hover:text-teal-700 transition-colors duration-500">
+                {featuredProject.title}
               </h3>
-              <p className="text-lg text-gray-600">
-                {project.desc}
+              <p className="mt-3 text-base md:text-lg text-dark-900/60 font-light leading-relaxed">
+                {featuredProject.desc}
               </p>
-            </motion.div>
-          ))}
-        </div>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {featuredProject.techStack.map((tech) => (
+                  <span
+                    key={tech}
+                    className="font-mono text-[10px] tracking-widest uppercase text-dark-900/55 border border-dark-900/15 rounded-full px-3 py-1"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </motion.article>
+        )}
+
+        <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={filter}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.35, ease }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24"
+        >
+          {visibleProjects.map((project, index) => {
+            const num = String(index + 1).padStart(2, '0');
+            const total = String(visibleProjects.length).padStart(2, '0');
+            const offsetClass = index % 2 === 1 ? 'md:mt-20' : '';
+            const accent = accentForCategory(project.category);
+            return (
+              <motion.article
+                key={`${filter}-${project.title}`}
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ delay: index * 0.08, duration: 0.9, ease }}
+                onClick={() => handleProjectClick(project)}
+                className={`group cursor-pointer ${offsetClass}`}
+              >
+                {/* Project number / date rail */}
+                <div className="flex items-baseline gap-3 mb-5">
+                  <span className="font-mono text-xs text-dark-900/40 tracking-widest">
+                    {num} <span className="text-dark-900/25">/ {total}</span>
+                  </span>
+                  <span className={`font-mono text-[9px] tracking-[0.25em] uppercase ${accent.text}`}>
+                    {accent.tagLabel}
+                  </span>
+                  <span className="h-px flex-1 bg-dark-900/10" />
+                  <span className="font-mono text-[10px] text-dark-900/40 tracking-widest uppercase">
+                    {project.date}
+                  </span>
+                </div>
+
+                {/* Card visual — typographic composition for every project */}
+                <div className="relative w-full aspect-[4/3] bg-cream-100 border border-dark-900/[0.08] rounded-2xl overflow-hidden soft-lift">
+                  <EnterpriseHero project={project} size="card" />
+
+                  {/* Warm hover wash, tinted by category accent */}
+                  <div className={`absolute inset-0 transition-colors duration-700 mix-blend-multiply ${accent.washIdle} ${accent.washHover}`} />
+
+                  {/* Arrow chip */}
+                  <div className="absolute top-5 right-5 bg-cream-50/90 backdrop-blur-sm p-3 rounded-full opacity-0 translate-y-3 -translate-x-3 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
+                    <ArrowUpRight size={18} className="text-dark-900" />
+                  </div>
+                </div>
+
+                {/* Title & description */}
+                <div className="mt-7">
+                  <h3 className={`font-display font-bold text-2xl md:text-3xl tracking-[-0.01em] leading-tight text-dark-900 transition-colors duration-500 ${accent.hoverText}`}>
+                    {project.title}
+                  </h3>
+                  <p className="mt-3 text-base md:text-lg text-dark-900/60 font-light leading-relaxed max-w-md">
+                    {project.desc}
+                  </p>
+
+                  {/* Stack chips */}
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {project.techStack.slice(0, 3).map((tech) => (
+                      <span
+                        key={tech}
+                        className="font-mono text-[10px] tracking-widest uppercase text-dark-900/55 border border-dark-900/15 rounded-full px-3 py-1"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                    {project.techStack.length > 3 && (
+                      <span className="font-mono text-[10px] tracking-widest text-dark-900/40 px-1 py-1">
+                        +{project.techStack.length - 3}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </motion.article>
+            );
+          })}
+        </motion.div>
+        </AnimatePresence>
       </section>
 
       <ProjectPreviewModal

@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Syne:wght@400;700;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -7,6 +6,7 @@
   --color-cream-100: #FFE8D6;
   --color-coral-500: #FF6B6B;
   --color-teal-500: #00D9A3;
+  --color-teal-700: #0F766E;
   --color-purple-500: #9D4EDD;
   --color-dark-900: #1A1A1A;
   --color-dark-800: #242424;
@@ -14,25 +14,46 @@
   --font-display: "Fraunces", serif;
   --font-body: "Fraunces", serif;
   --font-fraunces: "Fraunces", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --animate-marquee: marquee 25s linear infinite;
+  --animate-breathe: breathe 6s ease-in-out infinite;
+  --animate-drift-slow: drift 18s ease-in-out infinite;
+  --animate-drift-slower: drift 24s ease-in-out infinite reverse;
+  --animate-shimmer: shimmer 3s linear infinite;
+  --animate-rise: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 
   @keyframes marquee {
-    0% {
-      transform: translateX(0);
-    }
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+  }
 
-    100% {
-      transform: translateX(-100%);
-    }
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.015); opacity: 0.96; }
+  }
+
+  @keyframes drift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(28px, -18px) scale(1.04); }
+    66% { transform: translate(-22px, 14px) scale(0.98); }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  @keyframes rise {
+    0% { opacity: 0; transform: translateY(14px); }
+    100% { opacity: 1; transform: translateY(0); }
   }
 }
 
-
-
 :root {
   font-family: var(--font-body);
-  line-height: 1.5;
+  font-variation-settings: "opsz" 14;
+  line-height: 1.55;
   font-weight: 400;
   color: var(--color-dark-900);
   background-color: var(--color-cream-50);
@@ -50,46 +71,129 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  position: relative;
 }
 
-/* Custom Utilities */
+/* Paper grain — fixed, body-wide, blend-multiplied to feel like printed warmth, never washing out colors. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.10  0 0 0 0 0.10  0 0 0 0 0.10  0 0 0 0.045 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* App content sits above grain. */
+#root {
+  position: relative;
+  z-index: 2;
+}
+
+/* Type micro-tuning ---------------------------------------------- */
+.font-mono { font-family: var(--font-mono); letter-spacing: -0.01em; }
+
+.font-display-xl { font-variation-settings: "opsz" 120, "SOFT" 60, "WONK" 1; }
+.font-display-md { font-variation-settings: "opsz" 60,  "SOFT" 50; }
+.font-display-italic { font-variation-settings: "opsz" 80, "SOFT" 100; font-style: italic; }
+
+.text-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.hairline {
+  height: 1px;
+  background: currentColor;
+  opacity: 0.18;
+}
+
+/* Surface utilities --------------------------------------------- */
 .glass-nav {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 248, 243, 0.72);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid rgba(26, 26, 26, 0.06);
 }
 
-/* Custom Scrollbar for Modal */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 8px;
+.glass-card {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(14px) saturate(130%);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 24px 60px -28px rgba(26, 26, 26, 0.18),
+    0 2px 6px -2px rgba(26, 26, 26, 0.06);
 }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
+.soft-lift {
+  transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.soft-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 30px 70px -30px rgba(26, 26, 26, 0.28);
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
-  border-radius: 10px;
-  transition: background 0.2s ease;
+/* Reveal underline (left-to-right, slow easing) */
+.reveal-underline {
+  position: relative;
+}
+.reveal-underline::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -2px;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-underline:hover::after { transform: scaleX(1); }
+
+/* Scrollbar (modal) --------------------------------------------- */
+.custom-scrollbar::-webkit-scrollbar { width: 8px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: rgba(26,26,26,0.04); border-radius: 10px; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(26,26,26,0.18); border-radius: 10px; transition: background 0.2s ease; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(26,26,26,0.32); }
+.custom-scrollbar { scrollbar-width: thin; scrollbar-color: rgba(26,26,26,0.18) rgba(26,26,26,0.04); }
+
+/* Section progress bar (top of viewport) */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: var(--color-coral-500);
+  transform-origin: left;
+  z-index: 60;
+  will-change: transform;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #a1a1a1;
+/* Letter wobble (used in Contact heading) */
+.wobble-letter {
+  display: inline-block;
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+              color 400ms ease;
+}
+.wobble-letter:hover {
+  transform: translateY(-6px) rotate(-3deg);
+  color: var(--color-coral-500);
 }
 
-/* Firefox */
-.custom-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: #c1c1c1 #f1f1f1;
-}
-
-/* Respect reduced motion preferences for loaders */
+/* Reduced motion -------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   .animate-spin,
-  .animate-pulse {
+  .animate-pulse,
+  [class*="animate-"] {
     animation: none !important;
   }
+  .soft-lift:hover { transform: none; }
+  body::before { opacity: 0.25; }
 }

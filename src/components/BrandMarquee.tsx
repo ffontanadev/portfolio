@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 const brands = [
@@ -27,38 +28,55 @@ const brands = [
 ];
 
 const BrandMarquee = () => {
+    const [paused, setPaused] = useState(false);
+
     return (
-        <section className="py-16 overflow-hidden bg-transparent">
-            <div className="flex w-full mask-image-gradient">
+        <section className="py-20 overflow-hidden bg-transparent relative">
+            <div className="max-w-[1440px] mx-auto px-6 md:px-20 mb-8">
+                <div className="flex items-center gap-4">
+                    <span className="text-eyebrow text-dark-900/45">Stack · in rotation</span>
+                    <span className="h-px flex-1 max-w-[120px] bg-dark-900/12" />
+                </div>
+            </div>
+
+            <div
+                className="flex w-full mask-image-gradient"
+                onMouseEnter={() => setPaused(true)}
+                onMouseLeave={() => setPaused(false)}
+            >
                 <motion.div
                     className="flex gap-16 items-center whitespace-nowrap pr-16"
-                    animate={{ x: "-50%" }}
+                    animate={{ x: paused ? undefined : '-50%' }}
                     transition={{
                         repeat: Infinity,
-                        duration: 40,
-                        ease: "linear"
+                        duration: 50,
+                        ease: 'linear',
                     }}
                 >
                     {[...brands, ...brands].map((brand, index) => (
                         <div
                             key={`${brand.name}-${index}`}
-                            className="group relative flex items-center justify-center min-w-[48px]"
+                            className="group relative flex flex-col items-center justify-center min-w-[56px]"
                         >
                             <img
                                 src={brand.url}
                                 alt={brand.name}
-                                className="h-12 w-auto object-contain grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 ease-in-out"
+                                className="h-12 w-auto object-contain grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                                 loading="lazy"
                                 aria-label={`${brand.name} logo`}
                             />
+                            <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] tracking-widest uppercase text-dark-900/0 group-hover:text-dark-900/65 transition-all duration-500 translate-y-1 group-hover:translate-y-0">
+                                {brand.name}
+                            </span>
                         </div>
                     ))}
                 </motion.div>
             </div>
+
             <style>{`
                 .mask-image-gradient {
-                    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-                    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+                    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+                    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
                 }
             `}</style>
         </section>

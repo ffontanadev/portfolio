@@ -5,7 +5,15 @@
       "Bash(npm run build:*)",
       "Bash(cat:*)",
       "Bash(npm run type-check:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(npm run *)",
+      "Bash(git stash *)",
+      "Bash(git -C \"D:\\\\@ffontana\\\\portfolio-main\" add src/components/Hero/particles/shapeSampler.ts)",
+      "Bash(git -C \"D:\\\\@ffontana\\\\portfolio-main\" commit -m \"feat\\(particles\\): add 'frames' kind to ShapeSpec union\")",
+      "mcp__plugin_playwright_playwright__browser_take_screenshot",
+      "Bash(more +1)",
+      "Bash(findstr /n \".\")",
+      "Bash(findstr /b \"1: 2: 3:\")"
     ]
   }
 }

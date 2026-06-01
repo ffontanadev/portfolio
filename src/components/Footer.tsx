@@ -1,25 +1,56 @@
 import { HeartIcon } from '@/components/ui/heart';
 
 const Footer = () => {
+    const year = new Date().getFullYear();
+
     return (
-        <footer className="bg-white py-16 px-6 md:px-20 border-t border-gray-100">
-            <div className="max-w-[1440px] mx-auto flex flex-col items-center gap-8">
-                <div className="text-4xl font-display font-bold tracking-tighter">
-                    FF.
+        <footer className="relative bg-cream-50 pt-20 pb-12 px-6 md:px-20 border-t border-dark-900/8">
+            <div className="max-w-[1440px] mx-auto">
+                {/* Top row */}
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 mb-16">
+                    <div>
+                        <div className="flex items-baseline gap-1 mb-4">
+                            <span className="text-5xl md:text-6xl font-display font-bold tracking-tighter">FF</span>
+                            <span className="text-5xl md:text-6xl font-display italic font-light text-coral-500">.</span>
+                        </div>
+                        <p className="font-display italic text-dark-900/55 max-w-xs leading-relaxed">
+                            Building quiet, deliberate software.
+                        </p>
+                    </div>
+
+                    <nav className="flex flex-wrap gap-x-8 gap-y-3 md:justify-end">
+                        {[
+                            { name: 'Home', href: '#hero' },
+                            { name: 'Work', href: '#work' },
+                            { name: 'About', href: '#about' },
+                            { name: 'Connect', href: '#connect' },
+                            { name: 'Resume', href: '/resume.pdf' },
+                        ].map((link, idx) => (
+                            <a
+                                key={link.name}
+                                href={link.href}
+                                className="reveal-underline text-sm font-medium text-dark-900/80 hover:text-coral-500 transition-colors duration-500 flex items-baseline gap-2"
+                            >
+                                <span className="font-mono text-[10px] text-dark-900/30">0{idx + 1}</span>
+                                {link.name}
+                            </a>
+                        ))}
+                    </nav>
                 </div>
 
-                <div className="flex gap-8 flex-wrap justify-center">
-                    <a href="#hero" className="text-dark-900 hover:text-coral-500 transition-colors">Home</a>
-                    <a href="#work" className="text-dark-900 hover:text-coral-500 transition-colors">Work</a>
-                    <a href="#about" className="text-dark-900 hover:text-coral-500 transition-colors">About</a>
-                    <a href="#connect" className="text-dark-900 hover:text-coral-500 transition-colors">Connect</a>
-                    <a href="/resume.pdf" className="text-dark-900 hover:text-coral-500 transition-colors">Resume</a>
-                </div>
+                {/* Hairline divider */}
+                <div className="hairline text-dark-900 mb-6" />
 
-                <div className="flex items-center gap-2 text-gray-500 text-sm mt-8">
-                    <span>Made with</span>
-                    <HeartIcon size={16} className="fill-coral-500 text-coral-500" />
-                    <span>and React</span>
+                {/* Bottom row */}
+                <div className="flex flex-col md:flex-row items-center justify-between gap-3">
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-dark-900/45">
+                        © {year} · Felipe Fontana · All rights reserved
+                    </span>
+                    <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-dark-900/45">
+                        Crafted with
+                        <HeartIcon size={12} className="fill-coral-500 text-coral-500" />
+                        and React
+                    </span>
                 </div>
             </div>
         </footer>
