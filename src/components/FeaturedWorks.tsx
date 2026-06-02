@@ -648,7 +648,7 @@ const FeaturedWorks = () => {
                   {isActive && (
                     <motion.span
                       layoutId="featured-works-tab-underline"
-                      className="absolute left-0 right-7 -bottom-[21px] h-px bg-coral-500"
+                      className="absolute left-0 right-7 -bottom-[5px] h-px bg-coral-500"
                       transition={{ type: 'spring', stiffness: 380, damping: 32 }}
                       aria-hidden="true"
                     />

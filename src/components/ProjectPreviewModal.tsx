@@ -160,6 +160,7 @@ export const TypographicHero = ({ project, size = 'modal' }: { project: Project;
     const { t } = useTranslation();
     const isModal = size === 'modal';
     const accent = accentForCategory(project.category);
+
     return (
         <div
             className={`relative w-full overflow-hidden ${
@@ -175,12 +176,9 @@ export const TypographicHero = ({ project, size = 'modal' }: { project: Project;
                 aria-hidden="true"
             />
             <div
-                className="absolute inset-x-6 top-5 flex items-center justify-between text-dark-900/45"
+                className="absolute inset-x-5 top-5 flex items-center justify-between text-dark-900/45"
                 aria-hidden="true"
             >
-                <span className={`font-mono text-[10px] tracking-[0.3em] uppercase ${accent.text}`}>
-                    {t(categoryLabelKey(project.category))}
-                </span>
                 <span className="font-display italic text-sm" style={{ fontStyle: 'italic' }}>
                     §
                 </span>
@@ -193,7 +191,7 @@ export const TypographicHero = ({ project, size = 'modal' }: { project: Project;
                         const isWide = project.logo === 'banco-provincia';
                         const sizeClasses = isWide
                             ? isModal
-                                ? 'h-7 mb-7 text-dark-900/85'
+                                ? 'h-4 mb-7 text-dark-900/85'
                                 : 'h-5 mb-5 text-dark-900/85'
                             : isModal
                               ? 'h-9 mb-7 text-dark-900/85'
