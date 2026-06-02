@@ -5,11 +5,13 @@ import { usePublishedPosts, useTags } from '../hooks/useBlog';
 import { BlogListSEO } from '../components/blog/BlogSEO';
 import BlogListLoader from '../components/blog/BlogListLoader';
 import { ChevronLeft, ChevronRight, Clock, Calendar, Tag } from 'lucide-react';
+import { useTranslation } from '@/i18n';
 
 export default function BlogListPage() {
   const [page, setPage] = useState(1);
   const [selectedTag, setSelectedTag] = useState<string | undefined>();
   const limit = 10;
+  const { t } = useTranslation();
 
   const { data, isLoading, error } = usePublishedPosts(page, limit, {
     tag: selectedTag,
@@ -21,9 +23,9 @@ export default function BlogListPage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-dark-900 mb-2">Error Loading Posts</h1>
+          <h1 className="text-2xl font-bold text-dark-900 mb-2">{t('blog.list.errorTitle')}</h1>
           <p className="text-dark-600">
-            {error instanceof Error ? error.message : 'An unexpected error occurred'}
+            {error instanceof Error ? error.message : t('common.errorOccurred')}
           </p>
         </div>
       </div>
@@ -35,9 +37,9 @@ export default function BlogListPage() {
       <BlogListSEO />
       <main className="max-w-5xl mx-auto px-6 py-16">
         <header className="mb-12">
-          <h1 className="text-5xl font-bold text-dark-900 mb-4">Blog</h1>
+          <h1 className="text-5xl font-bold text-dark-900 mb-4">{t('blog.list.title')}</h1>
           <p className="text-xl text-dark-600">
-            Thoughts on web development, design, and technology.
+            {t('blog.list.subtitle')}
           </p>
         </header>
 
@@ -50,7 +52,7 @@ export default function BlogListPage() {
                 : 'bg-cream-100 text-dark-700 hover:bg-cream-200'
                 }`}
             >
-              All Posts
+              {t('blog.list.allPosts')}
             </button>
             {tags.map((tag) => (
               <button
@@ -102,10 +104,10 @@ export default function BlogListPage() {
                     {post.reading_time_minutes && (
                       <span className="flex items-center gap-1">
                         <Clock className="w-4 h-4" />
-                        {post.reading_time_minutes} min read
+                        {t('blog.common.readingTime', { minutes: post.reading_time_minutes })}
                       </span>
                     )}
-                    <span className="text-dark-500">by {post.author}</span>
+                    <span className="text-dark-500">{t('blog.common.byAuthor', { author: post.author })}</span>
                   </div>
 
                   {post.excerpt && (
@@ -130,7 +132,7 @@ export default function BlogListPage() {
                     to={`/blog/${post.slug}`}
                     className="inline-flex items-center text-coral-500 hover:text-coral-600 font-medium transition-colors"
                   >
-                    Read more →
+                    {t('blog.list.readMore')}
                   </Link>
                 </article>
               ))}
@@ -144,11 +146,11 @@ export default function BlogListPage() {
                   className="flex items-center gap-1 px-4 py-2 rounded-lg bg-cream-100 text-dark-900 hover:bg-cream-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   <ChevronLeft className="w-4 h-4" />
-                  Previous
+                  {t('common.pagination.previous')}
                 </button>
 
                 <span className="text-dark-600">
-                  Page {page} of {data.totalPages}
+                  {t('common.pagination.pageOf', { page, total: data.totalPages })}
                 </span>
 
                 <button
@@ -156,7 +158,7 @@ export default function BlogListPage() {
                   disabled={page === data.totalPages}
                   className="flex items-center gap-1 px-4 py-2 rounded-lg bg-cream-100 text-dark-900 hover:bg-cream-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
-                  Next
+                  {t('common.pagination.next')}
                   <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
@@ -164,13 +166,13 @@ export default function BlogListPage() {
           </>
         ) : (
           <div className="text-center py-12 h-[650px]">
-            <p className="text-xl text-dark-600">No blog posts found.</p>
+            <p className="text-xl text-dark-600">{t('blog.list.empty')}</p>
             {selectedTag && (
               <button
                 onClick={() => setSelectedTag(undefined)}
                 className="mt-4 text-coral-500 hover:text-coral-600 underline"
               >
-                Clear filter
+                {t('blog.list.clearFilter')}
               </button>
             )}
           </div>

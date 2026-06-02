@@ -2,102 +2,59 @@ import { useMemo, useState, useRef } from 'react';
 import { AnimatePresence, LayoutGroup, motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import ProjectPreviewModal, { EnterpriseHero } from './ProjectPreviewModal';
-import { accentForCategory, type Project } from './projectTypes';
+import { accentForCategory, categoryLabelKey, type Project } from './projectTypes';
+import { useTranslation } from '@/i18n';
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 type Filter = 'all' | 'personal' | 'professional';
 
-const projects: Project[] = [
+// Structural data — non-translatable (styling, stacks, dates, code, lead-metric
+// glyphs). Display text (title/desc/role/description, phase + metric copy) is
+// merged in from the locale inside the component, keyed by `id`.
+type ProjectStructural = Omit<Project, 'title' | 'desc' | 'role' | 'description' | 'phases' | 'metrics'> & {
+  id: string;
+};
+
+const projectData: ProjectStructural[] = [
   {
-    title: "EFENGINE — C++ Game Framework",
-    desc: "A from-scratch 3D game framework in C++17 on OpenGL 3.3 Core — a library you compile your games against, built to master memory management and the game lifecycle.",
+    id: 'efengine',
     color: "bg-cream-100",
     techStack: ["C++17", "OpenGL 3.3 Core", "GLFW", "GLAD", "GLM", "Doctest", "CMake"],
     date: "'26 — NOW",
-    role: "Engine Author",
-    description: `EFENGINE is my most ambitious project: a personal 3D game framework written in C++17 on OpenGL 3.3 Core for Windows. No editor, no native scripting, no multi-platform builds — it is a library you compile your games against, where each game is a C++ project that links against efengine. The goal is mastery of low-level systems: manual memory management, the game lifecycle, and the render pipeline, built up one phase at a time. Documentation is generated with Doxygen and the build is driven by CMake.`,
     codeBlocks: [],
     category: 'personal',
     featured: true,
-    leadMetric: { kind: 'wordmark', value: 'EFENGINE', sub: 'my most ambitious project' },
-    phases: [
-      {
-        label: 'Fase 0',
-        title: 'Setup',
-        desc: 'Toolchain, CMake build, project structure, and dependencies wired up (GLFW, GLAD, GLM, Doctest).',
-      },
-      {
-        label: 'Fase 1',
-        title: 'Contexto GLFW',
-        desc: 'Window and OpenGL 3.3 Core context creation, the basic game loop, and input handling.',
-      },
-      {
-        label: 'Fase 2',
-        title: 'Hello Triangle',
-        desc: 'Minimal render pipeline: VBO/VAO/ setup, shader compilation, and the first triangle on screen.',
-        current: true,
-      },
-    ],
   },
   {
-    title: "Banco Provincia — Core Services Migration",
-    desc: "Lifting Banco Provincia's legacy Axis2 / Java 8 web services into a modern Spring Boot 3 platform on Java 17, with database connectivity rewired from JNDI to a managed MSSQL DataSource.",
+    id: 'bancoProvincia',
     color: "bg-cream-100",
     techStack: ["Java 17", "Spring Boot 3", "Axis2 (legacy)", "MSSQL", "JNDI → DataSource"],
     date: "'25 — NOW",
-    role: "Backend Engineer",
-    description: `Long-running modernization of legacy Axis2 SOAP services that power core banking integrations at Banco Provincia. The work covers migrating the runtime from Java 8 to Java 17 + Spring Boot 3, replacing JNDI-bound resources with a managed MSSQL DataSource, and untangling years of tightly-coupled web service contracts — all while preserving downstream consumers.`,
     codeBlocks: [],
     category: 'professional',
     company: 'Banco Provincia',
     logo: 'banco-provincia',
     leadMetric: { kind: 'migration', from: 'Axis 2', to: 'Boot' },
-    metrics: [
-      { label: 'Runtime', value: 'Java 8 → 17' },
-      { label: 'Framework', value: 'Axis2 → Spring Boot 3', accent: true },
-      { label: 'Persistence', value: 'JNDI → MSSQL DataSource' },
-      { label: 'Domain', value: 'Core banking SOAP services' },
-      { label: 'Status', value: 'In progress · 2025 →' },
-    ],
   },
   {
-    title: "BBVA — API Migration & Test Coverage",
-    desc: "Migrating BBVA's internal API surface to Spring Boot and engineering high-coverage test suites across more than 50 services — turning fragile internals into a platform that can be refactored without fear.",
+    id: 'bbva',
     color: "bg-cream-100",
     techStack: ["Java 17", "Spring Boot", "JUnit 5", "Mockito", "Testcontainers"],
     date: "'25",
-    role: "Backend Engineer",
-    description: `Engaged on BBVA's internal platform to migrate dozens of API services to Spring Boot and stand up disciplined test coverage across the entire surface. Authored unit and integration tests for 50+ internal APIs, raising baseline coverage and protecting future refactors from regression noise.`,
     codeBlocks: [],
     category: 'professional',
     company: 'BBVA',
     logo: 'bbva',
     leadMetric: { kind: 'scale', superscript: 'API²', value: '50+' },
-    metrics: [
-      { label: 'Scope', value: '50+ internal APIs', accent: true },
-      { label: 'Stack', value: 'Spring Boot · Java 17' },
-      { label: 'Testing', value: 'JUnit 5 · Mockito · Testcontainers' },
-      { label: 'Outcome', value: 'High coverage · Refactor-safe' },
-      { label: 'Year', value: '2025' },
-    ],
   },
   {
-    title: "Minecraft-like Terrain Generation",
-    desc: "Three Voxel World Generation using Perlin noise algorithm in Three.js with 3D First Person Controller",
+    id: 'voxel',
     color: "bg-blue-50",
     category: 'personal',
     leadMetric: { kind: 'wordmark', value: 'Voxel', sub: 'world' },
     techStack: ["Next.js", "Three.js", "Perlin Noise", "Prototyping", "On-demand Buffer Streaming"],
     date: "JAN 25'",
-    role: "Developer",
-    description: `A sophisticated 3D voxel world renderer with procedural terrain generation, chunk streaming, and first-person controls. Built with Three.js and Next.js.
-            Procedural Terrain Generation: Uses Perlin noise for realistic terrain and cave systems
-            Infinite World Streaming: Dynamic chunk loading/unloading based on camera position
-            First-Person Controls: WASD movement with mouse look and pointer lock
-            Optimized Rendering: Instanced rendering for high performance
-            Configurable World: Customizable chunk size, terrain parameters, and block types
-            Caching System: Server-side chunk caching with deterministic generation`,
     codeBlocks: [
       {
         language: "typescript",
@@ -220,15 +177,12 @@ export function makeNoise(seed = Math.random()): NoiseFunction {
     ]
   },
   {
-    title: "Twitter Clone",
-    desc: "A functional clone of the old app Twitter with authentication, feed, following and likes!",
+    id: 'twitterClone',
     color: "bg-blue-50",
     category: 'personal',
     leadMetric: { kind: 'wordmark', value: 'Twitter', sub: 'clone' },
     techStack: ["Node.js", "Express", "Express Session", "Mongo", "EJS"],
     date: "JUN 23'",
-    role: "Backend Developer",
-    description: `A Twitter Clone, one of my first collaborative projects!`,
     codeBlocks: [
       {
         language: "typescript",
@@ -341,15 +295,12 @@ module.exports = {
     ]
   },
   {
-    title: "Magenta Hours Collector (MHC-CLI)",
-    desc: "A command line application that connects to an email inbox and extract hour reports using AI and search for emails matching the configured criteria and then give the email to Claude Sonnet 4.5 to collect all the relevant information and alert from use",
+    id: 'mhc',
     color: "bg-blue-50",
     category: 'personal',
     leadMetric: { kind: 'wordmark', value: 'MHC', sub: 'cli' },
     techStack: ["Commander.js", "Google Cloud Platform", "SQLite"],
     date: "AUG 25'",
-    role: "Developer",
-    description: `A command line application that connects to an email inbox and search for emails matching the configured criteria and then give the email to Claude Sonnet 4.5 to collect all the relevant information and generate monthly reports.`,
     codeBlocks: [
       {
         language: "typescript",
@@ -537,6 +488,8 @@ export const fetchCommand = new Command("fetch")
 ];
 
 const FeaturedWorks = () => {
+  const { t, messages } = useTranslation();
+  const fp = messages.work.featured.projects;
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filter, setFilter] = useState<Filter>('all');
@@ -548,7 +501,60 @@ const FeaturedWorks = () => {
   });
   const headingY = useTransform(scrollYProgress, [0, 1], [60, -60]);
 
-  const featuredProject = useMemo(() => projects.find((p) => p.featured) ?? null, []);
+  // Merge structural project data with localized copy, keyed by id.
+  const projects = useMemo<Project[]>(() => {
+    const byId = Object.fromEntries(projectData.map((p) => [p.id, p])) as Record<string, ProjectStructural>;
+    return [
+      {
+        ...byId.efengine,
+        title: fp.efengine.title,
+        desc: fp.efengine.desc,
+        role: fp.efengine.role,
+        description: fp.efengine.description,
+        leadMetric: { kind: 'wordmark', value: 'EFENGINE', sub: fp.efengine.leadSub },
+        phases: fp.efengine.phases.map((ph, i) => ({ ...ph, current: i === 2 })),
+      },
+      {
+        ...byId.bancoProvincia,
+        title: fp.bancoProvincia.title,
+        desc: fp.bancoProvincia.desc,
+        role: fp.bancoProvincia.role,
+        description: fp.bancoProvincia.description,
+        metrics: fp.bancoProvincia.metrics.map((m, i) => ({ ...m, accent: i === 1 })),
+      },
+      {
+        ...byId.bbva,
+        title: fp.bbva.title,
+        desc: fp.bbva.desc,
+        role: fp.bbva.role,
+        description: fp.bbva.description,
+        metrics: fp.bbva.metrics.map((m, i) => ({ ...m, accent: i === 0 })),
+      },
+      {
+        ...byId.voxel,
+        title: fp.voxel.title,
+        desc: fp.voxel.desc,
+        role: fp.voxel.role,
+        description: fp.voxel.description,
+      },
+      {
+        ...byId.twitterClone,
+        title: fp.twitterClone.title,
+        desc: fp.twitterClone.desc,
+        role: fp.twitterClone.role,
+        description: fp.twitterClone.description,
+      },
+      {
+        ...byId.mhc,
+        title: fp.mhc.title,
+        desc: fp.mhc.desc,
+        role: fp.mhc.role,
+        description: fp.mhc.description,
+      },
+    ];
+  }, [fp]);
+
+  const featuredProject = useMemo(() => projects.find((p) => p.featured) ?? null, [projects]);
 
   const counts = useMemo(
     () => ({
@@ -556,14 +562,14 @@ const FeaturedWorks = () => {
       personal: projects.filter((p) => (p.category ?? 'personal') === 'personal').length,
       professional: projects.filter((p) => p.category === 'professional').length,
     }),
-    [],
+    [projects],
   );
 
   // The flagship renders in its own full-width band; keep it out of the grid to avoid duplication.
   const visibleProjects = useMemo(() => {
     const base = filter === 'all' ? projects : projects.filter((p) => (p.category ?? 'personal') === filter);
     return base.filter((p) => !p.featured);
-  }, [filter]);
+  }, [filter, projects]);
 
   // Flagship shows only when the active filter includes it (it is a personal project).
   const showFeatured =
@@ -589,18 +595,18 @@ const FeaturedWorks = () => {
         {/* Section header */}
         <motion.div style={{ y: headingY }} className="mb-14">
           <div className="flex items-center gap-4 mb-8">
-            <span className="text-eyebrow text-coral-500">§ 02 — Selected Work</span>
+            <span className="text-eyebrow text-coral-500">{t('work.featured.eyebrow')}</span>
             <span className="h-px flex-1 max-w-[140px] bg-dark-900/15" />
           </div>
           <h2 className="font-display font-display-md font-bold tracking-[-0.02em] text-4xl md:text-6xl leading-[1.05] max-w-3xl text-dark-900">
-            What I've been{' '}
+            {t('work.featured.headingBefore')}{' '}
             <span className="font-display-italic text-coral-500" style={{ fontStyle: 'italic' }}>
-              pouring my soul
+              {t('work.featured.headingEmphasis')}
             </span>{' '}
-            into.
+            {t('work.featured.headingAfter')}
           </h2>
           <p className="mt-6 max-w-xl text-lg text-dark-900/55 font-light leading-relaxed">
-            A small collection of recent experiments, enterprise migrations, and side-quests.
+            {t('work.featured.description')}
           </p>
         </motion.div>
 
@@ -608,7 +614,7 @@ const FeaturedWorks = () => {
         <LayoutGroup id="featured-works-filter">
           <div
             role="tablist"
-            aria-label="Filter projects by category"
+            aria-label={t('work.featured.filterAriaLabel')}
             className="flex flex-wrap items-baseline gap-x-10 gap-y-3 pb-5 mb-20 border-b border-dark-900/10"
           >
             {(['all', 'personal', 'professional'] as Filter[]).map((tab) => {
@@ -630,7 +636,7 @@ const FeaturedWorks = () => {
                     }`}
                     style={{ fontStyle: isActive ? 'italic' : 'normal' }}
                   >
-                    {tab[0].toUpperCase() + tab.slice(1)}
+                    {t(`work.featured.filters.${tab}`)}
                   </span>
                   <span
                     className={`ml-2 align-top font-mono text-[10px] tracking-widest transition-colors duration-300 ${
@@ -665,7 +671,7 @@ const FeaturedWorks = () => {
           >
             <div className="flex items-baseline gap-3 mb-5">
               <span className="font-mono text-[9px] text-teal-700 tracking-[0.25em] uppercase">
-                § Flagship · C++ Engine
+                {t('work.featured.flagshipTag')}
               </span>
               <span className="h-px flex-1 bg-dark-900/10" />
               <span className="font-mono text-[10px] text-dark-900/40 tracking-widest uppercase">
@@ -732,7 +738,7 @@ const FeaturedWorks = () => {
                     {num} <span className="text-dark-900/25">/ {total}</span>
                   </span>
                   <span className={`font-mono text-[9px] tracking-[0.25em] uppercase ${accent.text}`}>
-                    {accent.tagLabel}
+                    {t(categoryLabelKey(project.category))}
                   </span>
                   <span className="h-px flex-1 bg-dark-900/10" />
                   <span className="font-mono text-[10px] text-dark-900/40 tracking-widest uppercase">

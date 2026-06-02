@@ -1,30 +1,17 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import ProjectPreviewModal, { type Project } from './ProjectPreviewModal';
+import { useTranslation } from '@/i18n';
 
-
-
-const projects: Project[] = [
+// Structural data — non-translatable (visual styling, stacks, code). Display
+// text (title/desc/role/description) is merged in from the locale, keyed by `id`.
+const projectData = [
     {
-        title: "Biome Terrain Engine",
-        desc: "Procedural generation",
+        id: "biome",
         color: "bg-gradient-to-br from-amber-50 to-stone-100",
         image: "/images/biome-terrain-engine.png",
         techStack: ["Unity", "C Sharp", "Perlin Noise"],
         date: "2021",
-        role: "Developer",
-        description: `The generator produces biome maps at heightmap resolutions compatible with Unity Terrain (up to 513×513), using optimized two-dimensional data structures to represent both biome distribution and their gradual intensities. The system includes HSV color visualization for debugging and analysis, allowing for the rapid identification of transition zones between biomes.
-
-Key features:
-
-Weighted biome distribution using configurable seed points
-Organic propagation algorithm with customizable decay rates
-Support for multiple biomes with varying intensities
-Generation of intensity maps for smooth transitions
-Native integration with Unity Terrain System
-Automatic export of biome maps as PNG textures
-
-Ideal for projects requiring procedurally generated worlds with realistic ecosystems and natural transitions between different terrain types.`,
         codeBlocks: [
             {
                 language: "csharp",
@@ -167,14 +154,11 @@ Ideal for projects requiring procedurally generated worlds with realistic ecosys
         ],
     },
     {
-        title: "Hackflix",
-        desc: "Browse for the latest movies easily.",
+        id: "hackflix",
         color: "bg-gradient-to-br from-stone-50 to-neutral-100",
         image: "/images/hackflix.png",
         techStack: ["React", "TMDb", "CSS3", "Responsive Design", "Vercel"],
         date: "2022",
-        role: "Developer",
-        description: "A web-based movie catalog platform that replicates the user experience of modern streaming services, developed entirely with React and vanilla CSS without any dependencies on styling frameworks. The project demonstrates mastery of reusable component architecture and advanced CSS techniques to achieve a polished and responsive interface. The application implements a modular component system that includes horizontal carousels, movie cards with hover effects, dynamic navigation, and adaptive layouts that maintain visual consistency across multiple devices and screen resolutions. All styling is managed using pure CSS with modern methodologies such as Flexbox and CSS Grid.",
         codeBlocks: [
             {
                 language: "javascript",
@@ -220,14 +204,11 @@ async function processUPIPayment(paymentDetails) {
         ],
     },
     {
-        title: "Truqui",
-        desc: "Your one stop book shop",
+        id: "truqui",
         color: "bg-gradient-to-br from-warmGray-50 to-stone-100",
         image: "/images/truqui.png",
         techStack: ["React", "Redux", "PWA", "Tailwind", "Vercel"],
         date: "2022",
-        role: "Developer",
-        description: "A Progressive Web App (PWA) specializing in digital scorekeeping for Truco, the most popular traditional card game in Uruguay and Argentina. Designed to work completely offline, it allows players to keep accurate and efficient score tracking without relying on an internet connection. The app leverages modern PWA capabilities to deliver a native cross-platform experience, installable directly from the browser on mobile devices, tablets, and desktops. Its offline-first architecture guarantees full availability through Service Workers and local storage, ensuring that games are never interrupted by connectivity issues.",
         codeBlocks: [
             {
                 language: "javascript",
@@ -366,8 +347,14 @@ export default gameSlice.reducer;`,
 ];
 
 const OlderWorks = () => {
+    const { t, messages } = useTranslation();
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const projects: Project[] = projectData.map((p) => ({
+        ...p,
+        ...messages.work.older.projects[p.id as keyof typeof messages.work.older.projects],
+    }));
 
     const handleProjectClick = (project: Project) => {
         setSelectedProject(project);
@@ -393,17 +380,17 @@ const OlderWorks = () => {
                 <div className="max-w-[1440px] mx-auto relative">
                     <div className="mb-16 max-w-2xl">
                         <div className="flex items-center gap-4 mb-6">
-                            <span className="text-eyebrow text-dark-900/55">§ 03 — Archive</span>
+                            <span className="text-eyebrow text-dark-900/55">{t('work.older.eyebrow')}</span>
                             <span className="h-px flex-1 max-w-[120px] bg-dark-900/15" />
                         </div>
                         <h2 className="font-display font-bold text-3xl md:text-4xl tracking-[-0.02em] text-dark-900 leading-tight">
-                            Older{' '}
+                            {t('work.older.headingBefore')}{' '}
                             <span className="font-display-italic text-dark-900/55" style={{ fontStyle: 'italic' }}>
-                                works
+                                {t('work.older.headingEmphasis')}
                             </span>
                         </h2>
                         <p className="mt-4 text-dark-900/55 font-light leading-relaxed">
-                            Relics of my developing journey — still dear to me, but no longer the main event.
+                            {t('work.older.description')}
                         </p>
                     </div>
 
@@ -445,7 +432,7 @@ const OlderWorks = () => {
                                         </p>
                                         <div className="mt-3 flex items-center gap-2 text-dark-900/35 group-hover:text-coral-500 transition-colors duration-500">
                                             <span className="font-mono text-[10px] tracking-widest uppercase">
-                                                View
+                                                {t('work.older.view')}
                                             </span>
                                             <span className="h-px w-6 bg-current transition-all duration-500 group-hover:w-10" />
                                         </div>

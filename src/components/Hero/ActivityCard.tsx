@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
+import { useTranslation } from '@/i18n';
 
 interface Activity {
   text: string;
@@ -11,12 +12,6 @@ interface ActivityCardProps {
   activities?: Activity[];
   cycleMs?: number;
 }
-
-const defaultActivities: Activity[] = [
-  { text: 'El varón del tango', detail: 'Julio Sosa' },
-  { text: 'Psicología al Desnudo', detail: 'Marina Mammoliti' },
-  { text: 'Raro', detail: 'El Cuarteto De Nos' },
-];
 
 const Spool = ({ spinning }: { spinning: boolean }) => (
   <motion.span
@@ -30,21 +25,24 @@ const Spool = ({ spinning }: { spinning: boolean }) => (
 );
 
 const ActivityCard = ({
-  title = 'Probably playing',
-  activities = defaultActivities,
+  title,
+  activities,
   cycleMs = 4200,
 }: ActivityCardProps) => {
   const shouldReduceMotion = useReducedMotion();
+  const { t, messages } = useTranslation();
+  const resolvedTitle = title ?? t('hero.activityCard.title');
+  const resolvedActivities: Activity[] = activities ?? messages.hero.activityCard.activities;
   const [activeIdx, setActiveIdx] = useState(0);
   const [paused, setPaused] = useState(false);
 
   useEffect(() => {
     if (paused || shouldReduceMotion) return;
     const id = window.setInterval(() => {
-      setActiveIdx((i) => (i + 1) % activities.length);
+      setActiveIdx((i) => (i + 1) % resolvedActivities.length);
     }, cycleMs);
     return () => window.clearInterval(id);
-  }, [paused, shouldReduceMotion, activities.length, cycleMs]);
+  }, [paused, shouldReduceMotion, resolvedActivities.length, cycleMs]);
 
   const playing = !paused && !shouldReduceMotion;
 
@@ -60,11 +58,11 @@ const ActivityCard = ({
       <header className="flex items-center justify-between mb-5">
         <div className="flex items-center gap-2.5">
           <Spool spinning={playing} />
-          <span className="text-eyebrow text-dark-900/55">{title}</span>
+          <span className="text-eyebrow text-dark-900/55">{resolvedTitle}</span>
         </div>
         <div className="flex items-center gap-2.5">
           <span className="font-mono text-[9px] tracking-widest text-dark-900/40 uppercase">
-            A · SIDE
+            {t('hero.activityCard.side')}
           </span>
           <Spool spinning={playing} />
         </div>
@@ -72,7 +70,7 @@ const ActivityCard = ({
 
       {/* Tracklist */}
       <ul className="space-y-2.5">
-        {activities.map((activity, i) => {
+        {resolvedActivities.map((activity, i) => {
           const isActive = i === activeIdx;
           return (
             <li
@@ -131,7 +129,7 @@ const ActivityCard = ({
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 className="relative font-mono text-[9px] tracking-[0.22em] text-coral-500 uppercase"
               >
-                ◉ now
+                {t('hero.activityCard.now')}
               </motion.span>
             </li>
           );
@@ -153,14 +151,14 @@ const ActivityCard = ({
             />
           </div>
           <span className="font-mono text-[9px] tracking-widest text-dark-900/40 uppercase tabular-nums">
-            {String(activeIdx + 1).padStart(2, '0')} / {String(activities.length).padStart(2, '0')}
+            {String(activeIdx + 1).padStart(2, '0')} / {String(resolvedActivities.length).padStart(2, '0')}
           </span>
           <span
             className={`font-mono text-[9px] tracking-widest uppercase ${
               playing ? 'text-coral-500' : 'text-dark-900/40'
             }`}
           >
-            {playing ? '▶ play' : '❚❚ hold'}
+            {playing ? t('hero.activityCard.play') : t('hero.activityCard.hold')}
           </span>
         </div>
       </footer>

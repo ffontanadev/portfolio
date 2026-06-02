@@ -1,0 +1,373 @@
+{
+  "common": {
+    "pagination": {
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "pageOf": "Página {page} de {total}"
+    },
+    "errorOccurred": "Ocurrió un error inesperado"
+  },
+  "language": {
+    "select": "Seleccionar idioma"
+  },
+  "nav": {
+    "links": {
+      "home": "Inicio",
+      "work": "Trabajo",
+      "about": "Sobre mí",
+      "connect": "Contacto",
+      "blog": "Blog"
+    },
+    "resume": "CV",
+    "viewResume": "Ver CV",
+    "toggleMenu": "Abrir menú"
+  },
+  "hero": {
+    "eyebrow": "01 — Introducción",
+    "subheading": {
+      "lead": "Un",
+      "role": "desarrollador",
+      "middle": "creando soluciones digitales en",
+      "company": "Magenta Innova"
+    },
+    "statusBadge": {
+      "available": "Disponible para trabajar"
+    },
+    "activityCard": {
+      "title": "Probablemente escuchando",
+      "side": "LADO · A",
+      "now": "◉ ahora",
+      "play": "▶ play",
+      "hold": "❚❚ pausa",
+      "activities": [
+        { "text": "El varón del tango", "detail": "Julio Sosa" },
+        { "text": "Psicología al Desnudo", "detail": "Marina Mammoliti" },
+        { "text": "Raro", "detail": "El Cuarteto De Nos" }
+      ]
+    },
+    "curvedText": "✱  CREANDO  ·  PROGRAMANDO  ·  CONECTANDO  ·  "
+  },
+  "brandMarquee": {
+    "eyebrow": "Stack · en rotación",
+    "logoAlt": "logo de {name}"
+  },
+  "work": {
+    "featured": {
+      "eyebrow": "§ 02 — Trabajo seleccionado",
+      "headingBefore": "En lo que he estado",
+      "headingEmphasis": "dejando el alma",
+      "headingAfter": ".",
+      "description": "Una pequeña colección de experimentos recientes, migraciones empresariales y misiones secundarias.",
+      "filterAriaLabel": "Filtrar proyectos por categoría",
+      "filters": {
+        "all": "Todos",
+        "personal": "Personal",
+        "professional": "Profesional"
+      },
+      "flagshipTag": "§ Insignia · Motor C++",
+      "projects": {
+        "efengine": {
+          "title": "EFENGINE — Framework de Juegos en C++",
+          "desc": "Un framework de juegos 3D hecho desde cero en C++17 sobre OpenGL 3.3 Core — una biblioteca contra la que compilas tus juegos, creada para dominar la gestión de memoria y el ciclo de vida del juego.",
+          "role": "Autor del Motor",
+          "description": "EFENGINE es mi proyecto más ambicioso: un framework personal de juegos 3D escrito en C++17 sobre OpenGL 3.3 Core para Windows. Sin editor, sin scripting nativo, sin compilaciones multiplataforma — es una biblioteca contra la que compilas tus juegos, donde cada juego es un proyecto C++ que enlaza con efengine. El objetivo es dominar los sistemas de bajo nivel: gestión manual de memoria, el ciclo de vida del juego y el pipeline de renderizado, construido fase a fase. La documentación se genera con Doxygen y la compilación se gestiona con CMake.",
+          "leadSub": "mi proyecto más ambicioso",
+          "phases": [
+            { "label": "Fase 0", "title": "Configuración", "desc": "Toolchain, compilación con CMake, estructura del proyecto y dependencias listas (GLFW, GLAD, GLM, Doctest)." },
+            { "label": "Fase 1", "title": "Contexto GLFW", "desc": "Creación de la ventana y del contexto OpenGL 3.3 Core, el bucle de juego básico y el manejo de entradas." },
+            { "label": "Fase 2", "title": "Hello Triangle", "desc": "Pipeline de renderizado mínimo: configuración de VBO/VAO, compilación de shaders y el primer triángulo en pantalla." }
+          ]
+        },
+        "bancoProvincia": {
+          "title": "Banco Provincia — Migración de Servicios Core",
+          "desc": "Modernización de los servicios web legacy Axis2 / Java 8 del Banco Provincia hacia una plataforma moderna Spring Boot 3 sobre Java 17, con la conectividad de base de datos migrada de JNDI a un DataSource MSSQL gestionado.",
+          "role": "Ingeniero Backend",
+          "description": "Modernización de larga duración de servicios SOAP legacy en Axis2 que sostienen integraciones bancarias core en el Banco Provincia. El trabajo abarca migrar el runtime de Java 8 a Java 17 + Spring Boot 3, reemplazar los recursos ligados a JNDI por un DataSource MSSQL gestionado y desenredar años de contratos de servicios web fuertemente acoplados — todo preservando a los consumidores existentes.",
+          "metrics": [
+            { "label": "Runtime", "value": "Java 8 → 17" },
+            { "label": "Framework", "value": "Axis2 → Spring Boot 3" },
+            { "label": "Persistencia", "value": "JNDI → MSSQL DataSource" },
+            { "label": "Dominio", "value": "Servicios SOAP bancarios core" },
+            { "label": "Estado", "value": "En progreso · 2025 →" }
+          ]
+        },
+        "bbva": {
+          "title": "BBVA — Migración de APIs y Cobertura de Tests",
+          "desc": "Migración de la superficie de APIs internas de BBVA a Spring Boot y desarrollo de suites de tests con alta cobertura en más de 50 servicios — convirtiendo internos frágiles en una plataforma que se puede refactorizar sin miedo.",
+          "role": "Ingeniero Backend",
+          "description": "Participé en la plataforma interna de BBVA para migrar decenas de servicios API a Spring Boot y establecer una cobertura de tests disciplinada en toda la superficie. Escribí tests unitarios y de integración para más de 50 APIs internas, elevando la cobertura base y protegiendo futuras refactorizaciones del ruido de las regresiones.",
+          "metrics": [
+            { "label": "Alcance", "value": "Más de 50 APIs internas" },
+            { "label": "Stack", "value": "Spring Boot · Java 17" },
+            { "label": "Testing", "value": "JUnit 5 · Mockito · Testcontainers" },
+            { "label": "Resultado", "value": "Alta cobertura · Refactor seguro" },
+            { "label": "Año", "value": "2025" }
+          ]
+        },
+        "voxel": {
+          "title": "Generación de Terreno estilo Minecraft",
+          "desc": "Generación de un mundo de vóxeles en Three.js usando el algoritmo de ruido de Perlin con un controlador en primera persona 3D",
+          "role": "Desarrollador",
+          "description": "Un sofisticado renderizador de mundos de vóxeles 3D con generación procedural de terreno, streaming de chunks y controles en primera persona. Construido con Three.js y Next.js.\n            Generación procedural de terreno: usa ruido de Perlin para terrenos y sistemas de cuevas realistas\n            Streaming de mundo infinito: carga/descarga dinámica de chunks según la posición de la cámara\n            Controles en primera persona: movimiento WASD con vista libre del ratón y pointer lock\n            Renderizado optimizado: renderizado instanciado para alto rendimiento\n            Mundo configurable: tamaño de chunk, parámetros de terreno y tipos de bloque personalizables\n            Sistema de caché: caché de chunks del lado del servidor con generación determinista"
+        },
+        "twitterClone": {
+          "title": "Clon de Twitter",
+          "desc": "¡Un clon funcional de la vieja app Twitter con autenticación, feed, seguidores y likes!",
+          "role": "Desarrollador Backend",
+          "description": "Un clon de Twitter, ¡uno de mis primeros proyectos colaborativos!"
+        },
+        "mhc": {
+          "title": "Magenta Hours Collector (MHC-CLI)",
+          "desc": "Una aplicación de línea de comandos que se conecta a una bandeja de correo y extrae reportes de horas usando IA, busca correos que coincidan con los criterios configurados y luego entrega el correo a Claude Sonnet 4.5 para recopilar toda la información relevante y alertar al usuario",
+          "role": "Desarrollador",
+          "description": "Una aplicación de línea de comandos que se conecta a una bandeja de correo y busca correos que coincidan con los criterios configurados, luego entrega el correo a Claude Sonnet 4.5 para recopilar toda la información relevante y generar reportes mensuales."
+        }
+      }
+    },
+    "older": {
+      "eyebrow": "§ 03 — Archivo",
+      "headingBefore": "Trabajos",
+      "headingEmphasis": "antiguos",
+      "description": "Reliquias de mi camino como desarrollador — aún queridas, pero ya no el plato principal.",
+      "view": "Ver",
+      "projects": {
+        "biome": {
+          "title": "Motor de Terreno de Biomas",
+          "desc": "Generación procedural",
+          "role": "Desarrollador",
+          "description": "El generador produce mapas de biomas a resoluciones de heightmap compatibles con Unity Terrain (hasta 513×513), usando estructuras de datos bidimensionales optimizadas para representar tanto la distribución de biomas como sus intensidades graduales. El sistema incluye visualización de color HSV para depuración y análisis, permitiendo identificar rápidamente las zonas de transición entre biomas.\n\nCaracterísticas clave:\n\nDistribución ponderada de biomas usando puntos semilla configurables\nAlgoritmo de propagación orgánica con tasas de decaimiento personalizables\nSoporte para múltiples biomas con intensidades variables\nGeneración de mapas de intensidad para transiciones suaves\nIntegración nativa con el sistema Unity Terrain\nExportación automática de mapas de biomas como texturas PNG\n\nIdeal para proyectos que requieren mundos generados de forma procedural con ecosistemas realistas y transiciones naturales entre distintos tipos de terreno."
+        },
+        "hackflix": {
+          "title": "Hackflix",
+          "desc": "Explora las últimas películas con facilidad.",
+          "role": "Desarrollador",
+          "description": "Una plataforma de catálogo de películas en web que replica la experiencia de los servicios de streaming modernos, desarrollada íntegramente con React y CSS vanilla sin ninguna dependencia de frameworks de estilos. El proyecto demuestra dominio de la arquitectura de componentes reutilizables y técnicas avanzadas de CSS para lograr una interfaz pulida y responsiva. La aplicación implementa un sistema modular de componentes que incluye carruseles horizontales, tarjetas de películas con efectos hover, navegación dinámica y layouts adaptativos que mantienen la consistencia visual en múltiples dispositivos y resoluciones. Todo el estilado se gestiona con CSS puro y metodologías modernas como Flexbox y CSS Grid."
+        },
+        "truqui": {
+          "title": "Truqui",
+          "desc": "Tu librería de confianza",
+          "role": "Desarrollador",
+          "description": "Una Progressive Web App (PWA) especializada en el conteo digital de puntos para el Truco, el juego de cartas tradicional más popular de Uruguay y Argentina. Diseñada para funcionar completamente sin conexión, permite a los jugadores llevar un marcador preciso y eficiente sin depender de internet. La app aprovecha las capacidades modernas de las PWA para ofrecer una experiencia nativa multiplataforma, instalable directamente desde el navegador en móviles, tablets y escritorio. Su arquitectura offline-first garantiza disponibilidad total mediante Service Workers y almacenamiento local, asegurando que las partidas nunca se interrumpan por problemas de conectividad."
+        }
+      }
+    },
+    "additional": {
+      "heading": "Más cosas divertidas",
+      "projects": {
+        "birla": { "title": "Birla Capital", "desc": "Rediseñando herramientas financieras" },
+        "icamps": { "title": "ICAMPS", "desc": "Llevando la seguridad al móvil" },
+        "haqdarshak": { "title": "Haqdarshak", "desc": "Explorando programas gubernamentales" },
+        "spotify": { "title": "Spotify", "desc": "Fragmentos y experimentos" },
+        "landing": { "title": "Landing Page", "desc": "¡Sorpresa! Es esta misma" }
+      }
+    },
+    "categories": {
+      "personal": "Personal",
+      "professional": "Empresa"
+    },
+    "modal": {
+      "close": "Cerrar ventana",
+      "copy": "Copiar",
+      "copied": "¡Copiado!",
+      "copyCode": "Copiar código",
+      "techStack": "Stack Técnico",
+      "date": "Fecha",
+      "role": "Rol",
+      "migrationBrief": "Resumen de Migración",
+      "developmentRoadmap": "Hoja de Ruta",
+      "keyImplementation": "Implementación Clave"
+    }
+  },
+  "blogCta": {
+    "eyebrow": "§ 04 — Apuntes",
+    "latestPost": "Último artículo",
+    "readThePost": "Leer el artículo",
+    "headingBefore": "Más",
+    "headingEmphasis": "ideas",
+    "headingAfter": "en el blog.",
+    "description": "Artículos sobre desarrollo web, patrones de diseño y el proceso creativo detrás de la construcción de experiencias digitales modernas.",
+    "visitJournal": "Visitar el blog"
+  },
+  "contact": {
+    "eyebrow": "§ 05 — Hablemos",
+    "intro": "llegaste hasta aquí—",
+    "headline": "Saludá.",
+    "side": "LADO · B",
+    "availableFor": "Setlist · Disponible para",
+    "services": [
+      { "tag": "TIEMPO · COMPLETO", "title": "Rol de desarrollador", "note": "Abierto a trabajo remoto o reubicación. Disponible de inmediato." },
+      { "tag": "FREELANCE", "title": "Trabajo por proyecto", "note": "Desde MVPs de producto hasta ingeniería de sistemas enfocada." },
+      { "tag": "CONSULTORÍA", "title": "Soluciones digitales", "note": "Arquitectura, alcance, auditorías técnicas y estrategia." }
+    ],
+    "replyTime": "En vivo · respuesta ~24h",
+    "closing": "…y siempre estoy dispuesto a hablar de música o a probar un juego nuevo juntos.",
+    "viewResume": "Ver CV",
+    "linkedin": "LinkedIn",
+    "twitter": "Twitter"
+  },
+  "playlists": {
+    "heading": "Playlists que no pediste (pero necesitas igual)",
+    "placeholder": "Espacio para Spotify {index}"
+  },
+  "artGallery": {
+    "heading": "Mi 5-9 después de mi 9-5",
+    "subheading": "¡Pintura, journaling y más!",
+    "digitalArt": "Hago arte digital e ilustraciones",
+    "commissions": "He vendido cuadernos, stickers, pop sockets e incluso hago comisiones",
+    "reachOut": "Escríbeme en @rkivesofagust"
+  },
+  "chat": {
+    "placeholder": "Pregúntame algo...",
+    "historyTitle": "Historial de chat",
+    "clearHistory": "Borrar historial de chat",
+    "closeHistory": "Cerrar historial",
+    "showHistory": "Mostrar historial de chat",
+    "hideHistory": "Ocultar historial de chat",
+    "showHistoryShort": "Mostrar historial",
+    "hideHistoryShort": "Ocultar historial",
+    "noHistory": "Aún no hay historial de chat",
+    "thinking": "Pensando...",
+    "inputAriaLabel": "Campo de mensaje del chat",
+    "sendAriaLabel": "Enviar mensaje",
+    "errorLabel": "Error:",
+    "genericError": "Ocurrió un error",
+    "errorReply": "Lo siento, encontré un error: {error}",
+    "clearConfirm": "¿Seguro que quieres borrar el historial de chat?"
+  },
+  "footer": {
+    "tagline": "Construyendo software tranquilo y deliberado.",
+    "links": {
+      "home": "Inicio",
+      "work": "Trabajo",
+      "about": "Sobre mí",
+      "connect": "Contacto",
+      "resume": "CV"
+    },
+    "copyright": "© {year} · Felipe Fontana · Todos los derechos reservados",
+    "craftedWith": "Hecho con",
+    "andReact": "y React"
+  },
+  "resume": {
+    "title": "Mi CV"
+  },
+  "notFound": {
+    "metaTitle": "404 - Página no encontrada",
+    "code": "404",
+    "title": "Página no encontrada",
+    "message": "No pudimos encontrar la página que buscas.",
+    "help": "Puede que la página se haya movido o eliminado, o que la URL sea incorrecta. Intenta volver a una sección conocida del sitio.",
+    "goHome": "Ir al inicio",
+    "viewBlog": "Ver el blog",
+    "backToTop": "Volver arriba",
+    "scrollToTopAria": "Desplazarse hacia arriba",
+    "needHelpBefore": "¿Necesitas ayuda? Visita la",
+    "needHelpLink": "página de inicio",
+    "needHelpAfter": "para ver las opciones de navegación."
+  },
+  "blog": {
+    "common": {
+      "readingTime": "{minutes} min de lectura",
+      "byAuthor": "por {author}"
+    },
+    "list": {
+      "title": "Blog",
+      "subtitle": "Reflexiones sobre desarrollo web, diseño y tecnología.",
+      "allPosts": "Todos los artículos",
+      "errorTitle": "Error al cargar los artículos",
+      "empty": "No se encontraron artículos.",
+      "clearFilter": "Quitar filtro",
+      "readMore": "Leer más →"
+    },
+    "post": {
+      "errorTitle": "Error al cargar el artículo",
+      "backToBlog": "Volver al blog",
+      "backToAllPosts": "Volver a todos los artículos"
+    }
+  },
+  "admin": {
+    "login": {
+      "title": "Acceso al blog",
+      "subtitle": "Sección de gestión del blog.",
+      "email": "Correo",
+      "emailPlaceholder": "admin@example.com",
+      "password": "Contraseña",
+      "passwordPlaceholder": "••••••••",
+      "signIn": "Iniciar sesión",
+      "signingIn": "Iniciando sesión...",
+      "backToHomepage": "← Volver al inicio",
+      "protectedArea": "Área protegida. Solo acceso autorizado.",
+      "unexpectedError": "Ocurrió un error inesperado"
+    },
+    "dashboard": {
+      "title": "Admin del blog",
+      "welcome": "Bienvenido de nuevo, {email}",
+      "viewSite": "Ver el sitio",
+      "signOut": "Cerrar sesión",
+      "allPosts": "Todos",
+      "published": "Publicados",
+      "drafts": "Borradores",
+      "newPost": "Nuevo artículo",
+      "errorTitle": "Error al cargar los artículos",
+      "table": {
+        "title": "Título",
+        "status": "Estado",
+        "published": "Publicado",
+        "created": "Creado",
+        "actions": "Acciones"
+      },
+      "statusPublished": "Publicado",
+      "statusDraft": "Borrador",
+      "editTitle": "Editar",
+      "publishTitle": "Publicar",
+      "unpublishTitle": "Despublicar",
+      "deleteTitle": "Eliminar",
+      "deleteConfirm": "¿Seguro que quieres eliminar \"{title}\"?",
+      "emptyTitle": "Aún no hay artículos",
+      "emptyMessage": "Comienza creando tu primer artículo del blog",
+      "createFirst": "Crear tu primer artículo"
+    },
+    "editor": {
+      "backToDashboard": "Volver al panel",
+      "edit": "Editar",
+      "preview": "Vista previa",
+      "saveDraft": "Guardar borrador",
+      "savePublish": "Guardar y publicar",
+      "updatePublish": "Actualizar y publicar",
+      "validationError": "El título, el slug, el contenido y el autor son obligatorios",
+      "saveError": "No se pudo guardar el artículo",
+      "untitled": "Artículo sin título",
+      "noContent": "*Aún no hay contenido*",
+      "basicInfo": "Información básica",
+      "additionalInfo": "Información adicional",
+      "titleLabel": "Título *",
+      "titlePlaceholder": "Introduce el título del artículo",
+      "slugLabel": "Slug *",
+      "slugHint": "(identificador amigable para la URL)",
+      "slugPlaceholder": "slug-del-articulo",
+      "authorLabel": "Autor *",
+      "authorPlaceholder": "Nombre del autor",
+      "excerptLabel": "Extracto",
+      "excerptHint": "(Resumen breve)",
+      "excerptPlaceholder": "Descripción breve del artículo",
+      "contentLabel": "Contenido *",
+      "contentHint": "(Compatible con Markdown)",
+      "contentPlaceholder": "Escribe el contenido de tu artículo en Markdown...",
+      "tagsLabel": "Etiquetas",
+      "tagsHint": "(Separadas por comas)",
+      "tagsPlaceholder": "react, typescript, desarrollo web",
+      "featuredImageLabel": "URL de la imagen destacada",
+      "featuredImagePlaceholder": "https://example.com/image.jpg",
+      "metaDescriptionLabel": "Meta descripción",
+      "metaDescriptionHint": "(SEO)",
+      "metaDescriptionPlaceholder": "Descripción SEO para los motores de búsqueda",
+      "metaKeywordsLabel": "Meta palabras clave",
+      "metaKeywordsHint": "(SEO, separadas por comas)",
+      "metaKeywordsPlaceholder": "desarrollo web, programación, tutorial"
+    }
+  },
+  "seo": {
+    "siteSuffix": "Portfolio",
+    "blogTitle": "Blog",
+    "blogDescription": "Lee artículos sobre desarrollo web, diseño y tecnología."
+  }
+}

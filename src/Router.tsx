@@ -12,6 +12,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import { AppContextProvider } from './contexts/AppContext';
 import { AuthProvider } from './contexts/AuthContext';
+import { I18nProvider } from './i18n';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,7 +26,8 @@ const queryClient = new QueryClient({
 export default function Router() {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
+      <I18nProvider>
+        <AuthProvider>
         <AppContextProvider>
           <BrowserRouter>
             <div className="bg-cream-50 min-h-screen text-dark-900 font-sans selection:bg-coral-500 selection:text-white">
@@ -63,7 +65,8 @@ export default function Router() {
             </div>
           </BrowserRouter>
         </AppContextProvider>
-      </AuthProvider>
+        </AuthProvider>
+      </I18nProvider>
     </QueryClientProvider>
   );
 }

@@ -23,6 +23,7 @@ import {
   saveChatHistory,
   clearChatHistory,
 } from '../lib/chatApi'; import { ClaudeAI } from './ui/claude';
+import { useTranslation } from '@/i18n';
 ;
 
 interface VisibleMessage extends ChatMessage {
@@ -30,6 +31,7 @@ interface VisibleMessage extends ChatMessage {
 }
 
 const ChatWidget = () => {
+  const { t } = useTranslation();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [visibleMessages, setVisibleMessages] = useState<VisibleMessage[]>([]);
   const [inputValue, setInputValue] = useState('');
@@ -58,7 +60,7 @@ const ChatWidget = () => {
 
   // Typing animation for placeholder text
   useEffect(() => {
-    const fullText = 'Ask me something...';
+    const fullText = t('chat.placeholder');
     let currentIndex = 0;
 
 
@@ -73,7 +75,7 @@ const ChatWidget = () => {
     }, 120);
 
     return () => clearInterval(interval);
-  }, []); // Run once on mount
+  }, [t]); // Re-run when the locale (and thus translation) changes
 
   // Auto-dismiss logic: Add new messages to visible list and set timers
   useEffect(() => {
@@ -117,7 +119,7 @@ const ChatWidget = () => {
   }, [messages]);
 
   const handleClearHistory = () => {
-    if (confirm('Are you sure you want to clear the chat history?')) {
+    if (confirm(t('chat.clearConfirm'))) {
       setMessages([]);
       setVisibleMessages([]);
       clearChatHistory();
@@ -163,14 +165,14 @@ const ChatWidget = () => {
 
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'An error occurred';
+      const errorMessage = err instanceof Error ? err.message : t('chat.genericError');
       setError(errorMessage);
 
       // Add error message to chat
       const errorChatMessage: ChatMessage = {
         id: `error-${Date.now()}`,
         role: 'assistant',
-        content: `Sorry, I encountered an error: ${errorMessage}`,
+        content: t('chat.errorReply', { error: errorMessage }),
         timestamp: Date.now(),
       };
       setMessages((prev) => [...prev, errorChatMessage]);
@@ -203,15 +205,15 @@ const ChatWidget = () => {
               <div className="bg-white text-black/40 font-fraunces px-4 py-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <ClaudeAI />
-                  <h3 className="font-semibold text-sm">Chat History</h3>
+                  <h3 className="font-semibold text-sm">{t('chat.historyTitle')}</h3>
                 </div>
                 <div className="flex items-center gap-2">
                   {messages.length > 0 && (
                     <button
                       onClick={handleClearHistory}
                       className="p-1.5 hover:bg-coral-600 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
-                      aria-label="Clear chat history"
-                      title="Clear chat history"
+                      aria-label={t('chat.clearHistory')}
+                      title={t('chat.clearHistory')}
                     >
                       <X size={16} />
                     </button>
@@ -219,7 +221,7 @@ const ChatWidget = () => {
                   <button
                     onClick={toggleHistory}
                     className="p-1.5 hover:bg-coral-600 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
-                    aria-label="Close history"
+                    aria-label={t('chat.closeHistory')}
                   >
                     <ChevronDown size={20} />
                   </button>
@@ -230,7 +232,7 @@ const ChatWidget = () => {
               <div className="overflow-y-auto px-4 py-3 space-y-3 bg-cream-50 max-h-80">
                 {messages.length === 0 ? (
                   <div className="text-center text-gray-500 py-8">
-                    <p className="text-sm">No chat history yet</p>
+                    <p className="text-sm">{t('chat.noHistory')}</p>
                   </div>
                 ) : (
                   messages.map((message) => (
@@ -310,7 +312,7 @@ const ChatWidget = () => {
               >
                 <div className="bg-white/95 backdrop-blur-sm text-dark-900 px-4 py-3 rounded-2xl shadow-lg border border-gray-200 flex items-center gap-2">
                   <Loader2 size={16} className="animate-spin text-coral-500" />
-                  <span className="text-sm text-gray-600 font-fraunces">Thinking...</span>
+                  <span className="text-sm text-gray-600 font-fraunces">{t('chat.thinking')}</span>
                 </div>
               </motion.div>
             )}
@@ -325,7 +327,7 @@ const ChatWidget = () => {
                 className="bg-red-50/95 backdrop-blur-sm border border-red-200 text-red-700 px-4 py-3 rounded-2xl shadow-lg text-sm"
                 role="alert"
               >
-                <strong className="font-medium">Error:</strong> {error}
+                <strong className="font-medium">{t('chat.errorLabel')}</strong> {error}
               </motion.div>
             )}
           </AnimatePresence>
@@ -340,8 +342,8 @@ const ChatWidget = () => {
                 type="button"
                 onClick={toggleHistory}
                 className="p-4 bg-white/80 rounded-xl hover:shadow-xl transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-coral-500 text-coral-500"
-                aria-label={isHistoryExpanded ? 'Hide chat history' : 'Show chat history'}
-                title={isHistoryExpanded ? 'Hide history' : 'Show history'}
+                aria-label={isHistoryExpanded ? t('chat.hideHistory') : t('chat.showHistory')}
+                title={isHistoryExpanded ? t('chat.hideHistoryShort') : t('chat.showHistoryShort')}
               >
                 <History size={20} />
               </button>
@@ -359,13 +361,13 @@ const ChatWidget = () => {
                 placeholder={placeholder}
                 disabled={isLoading}
                 className="flex-1 font-fraunces py-2 focus:outline-none disabled:bg-transparent disabled:cursor-not-allowed text-dark-900 placeholder:text-gray-400 text-sm"
-                aria-label="Chat message input"
+                aria-label={t('chat.inputAriaLabel')}
               />
               <button
                 type="submit"
                 disabled={!inputValue.trim() || isLoading}
                 className="p-2 bg-coral-500 text-white rounded-lg hover:bg-coral-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-coral-500 focus:ring-offset-2 flex items-center justify-center shrink-0"
-                aria-label="Send message"
+                aria-label={t('chat.sendAriaLabel')}
               >
                 {isLoading ? (
                   <Loader2 size={18} className="animate-spin" />

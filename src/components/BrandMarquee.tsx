@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from '@/i18n';
 
 const brands = [
     { name: 'Supabase', url: 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library/supabase.svg' },
@@ -29,12 +30,13 @@ const brands = [
 
 const BrandMarquee = () => {
     const [paused, setPaused] = useState(false);
+    const { t } = useTranslation();
 
     return (
         <section className="py-20 overflow-hidden bg-transparent relative">
             <div className="max-w-[1440px] mx-auto px-6 md:px-20 mb-8">
                 <div className="flex items-center gap-4">
-                    <span className="text-eyebrow text-dark-900/45">Stack · in rotation</span>
+                    <span className="text-eyebrow text-dark-900/45">{t('brandMarquee.eyebrow')}</span>
                     <span className="h-px flex-1 max-w-[120px] bg-dark-900/12" />
                 </div>
             </div>
@@ -63,7 +65,7 @@ const BrandMarquee = () => {
                                 alt={brand.name}
                                 className="h-12 w-auto object-contain grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                                 loading="lazy"
-                                aria-label={`${brand.name} logo`}
+                                aria-label={t('brandMarquee.logoAlt', { name: brand.name })}
                             />
                             <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] tracking-widest uppercase text-dark-900/0 group-hover:text-dark-900/65 transition-all duration-500 translate-y-1 group-hover:translate-y-0">
                                 {brand.name}

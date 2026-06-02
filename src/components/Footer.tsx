@@ -1,7 +1,17 @@
 import { HeartIcon } from '@/components/ui/heart';
+import { useTranslation } from '@/i18n';
 
 const Footer = () => {
     const year = new Date().getFullYear();
+    const { t } = useTranslation();
+
+    const links = [
+        { name: t('footer.links.home'), href: '#hero' },
+        { name: t('footer.links.work'), href: '#work' },
+        { name: t('footer.links.about'), href: '#about' },
+        { name: t('footer.links.connect'), href: '#connect' },
+        { name: t('footer.links.resume'), href: '/resume.pdf' },
+    ];
 
     return (
         <footer className="relative bg-cream-50 pt-20 pb-12 px-6 md:px-20 border-t border-dark-900/8">
@@ -14,18 +24,12 @@ const Footer = () => {
                             <span className="text-5xl md:text-6xl font-display italic font-light text-coral-500">.</span>
                         </div>
                         <p className="font-display italic text-dark-900/55 max-w-xs leading-relaxed">
-                            Building quiet, deliberate software.
+                            {t('footer.tagline')}
                         </p>
                     </div>
 
                     <nav className="flex flex-wrap gap-x-8 gap-y-3 md:justify-end">
-                        {[
-                            { name: 'Home', href: '#hero' },
-                            { name: 'Work', href: '#work' },
-                            { name: 'About', href: '#about' },
-                            { name: 'Connect', href: '#connect' },
-                            { name: 'Resume', href: '/resume.pdf' },
-                        ].map((link, idx) => (
+                        {links.map((link, idx) => (
                             <a
                                 key={link.name}
                                 href={link.href}
@@ -44,12 +48,12 @@ const Footer = () => {
                 {/* Bottom row */}
                 <div className="flex flex-col md:flex-row items-center justify-between gap-3">
                     <span className="font-mono text-[10px] uppercase tracking-widest text-dark-900/45">
-                        © {year} · Felipe Fontana · All rights reserved
+                        {t('footer.copyright', { year })}
                     </span>
                     <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-dark-900/45">
-                        Crafted with
+                        {t('footer.craftedWith')}
                         <HeartIcon size={12} className="fill-coral-500 text-coral-500" />
-                        and React
+                        {t('footer.andReact')}
                     </span>
                 </div>
             </div>

@@ -46,11 +46,15 @@ export interface Project {
 }
 
 // Accent color is derived from category — coral for professional work, teal for personal.
+// The human-readable category label lives in the i18n locale files (`work.categories.*`),
+// keyed by category; use `categoryLabelKey` to resolve it via `t()`.
+export const categoryLabelKey = (category?: ProjectCategory): string =>
+    `work.categories.${(category ?? 'personal') === 'personal' ? 'personal' : 'professional'}`;
+
 export const accentForCategory = (category?: ProjectCategory) => {
     const isPersonal = (category ?? 'personal') === 'personal';
     return {
         isPersonal,
-        tagLabel: isPersonal ? 'Personal' : 'Enterprise',
         text: isPersonal ? 'text-teal-700' : 'text-coral-500',
         hairlineSoft: isPersonal ? 'bg-teal-700/40' : 'bg-coral-500/40',
         hoverText: isPersonal ? 'group-hover:text-teal-700' : 'group-hover:text-coral-500',

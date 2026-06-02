@@ -3,8 +3,10 @@ import type { FormEvent } from 'react';
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { Lock, Mail, AlertCircle } from 'lucide-react';
+import { useTranslation } from '@/i18n';
 
 export default function LoginPage() {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -33,8 +35,8 @@ export default function LoginPage() {
       } else {
         navigate(from, { replace: true });
       }
-    } catch (err) {
-      setError('An unexpected error occurred');
+    } catch {
+      setError(t('admin.login.unexpectedError'));
     } finally {
       setLoading(false);
     }
@@ -48,8 +50,8 @@ export default function LoginPage() {
             <div className="inline-flex items-center justify-center w-16 h-16 bg-coral-100 rounded-full mb-4">
               <Lock className="w-8 h-8 text-coral-500" />
             </div>
-            <h1 className="text-3xl font-bold text-dark-900 mb-2">Blog Auth</h1>
-            <p className="text-dark-600">Blog management section.</p>
+            <h1 className="text-3xl font-bold text-dark-900 mb-2">{t('admin.login.title')}</h1>
+            <p className="text-dark-600">{t('admin.login.subtitle')}</p>
           </div>
 
           {error && (
@@ -62,7 +64,7 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-dark-700 mb-2">
-                Email
+                {t('admin.login.email')}
               </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-dark-400" />
@@ -73,7 +75,7 @@ export default function LoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   className="w-full pl-10 pr-4 py-3 border border-cream-300 rounded-lg focus:ring-2 focus:ring-coral-500 focus:border-coral-500 outline-none transition-all"
-                  placeholder="admin@example.com"
+                  placeholder={t('admin.login.emailPlaceholder')}
                   disabled={loading}
                 />
               </div>
@@ -81,7 +83,7 @@ export default function LoginPage() {
 
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-dark-700 mb-2">
-                Password
+                {t('admin.login.password')}
               </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-dark-400" />
@@ -92,7 +94,7 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   className="w-full pl-10 pr-4 py-3 border border-cream-300 rounded-lg focus:ring-2 focus:ring-coral-500 focus:border-coral-500 outline-none transition-all"
-                  placeholder="••••••••"
+                  placeholder={t('admin.login.passwordPlaceholder')}
                   disabled={loading}
                 />
               </div>
@@ -103,7 +105,7 @@ export default function LoginPage() {
               disabled={loading}
               className="w-full py-3 bg-gradient-to-r from-coral-500 to-coral-500/80 text-white rounded-lg font-medium hover:bg-coral-600  focus:ring-4 hover:cursor-pointer focus:ring-coral-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
-              {loading ? 'Signing in...' : 'Sign In'}
+              {loading ? t('admin.login.signingIn') : t('admin.login.signIn')}
             </button>
           </form>
 
@@ -112,13 +114,13 @@ export default function LoginPage() {
               href="/"
               className="text-sm text-dark-600 hover:text-coral-500 transition-colors"
             >
-              ← Back to homepage
+              {t('admin.login.backToHomepage')}
             </a>
           </div>
         </div>
 
         <p className="text-center text-sm text-dark-600 mt-6">
-          Protected area. Authorized access only.
+          {t('admin.login.protectedArea')}
         </p>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion';
+import { useTranslation } from '@/i18n';
 
 interface CurvedTextProps {
   text?: string;
@@ -6,16 +7,18 @@ interface CurvedTextProps {
 }
 
 const CurvedText = ({
-  text = '✱  CRAFTING  ·  CODING  ·  CONNECTING  ·  ',
+  text,
   radius = 150,
 }: CurvedTextProps) => {
+  const { t } = useTranslation();
   const shouldReduceMotion = useReducedMotion();
+  const resolvedText = text ?? t('hero.curvedText');
   const viewBoxSize = radius * 2 + 50;
   const center = viewBoxSize / 2;
 
   return (
     <>
-      <span className="sr-only">{text}</span>
+      <span className="sr-only">{resolvedText}</span>
       <motion.svg
         viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
         className="absolute inset-0 w-full h-full pointer-events-none"
@@ -39,7 +42,7 @@ const CurvedText = ({
           style={{ fontFamily: 'JetBrains Mono, ui-monospace, monospace' }}
         >
           <textPath href="#circlePath" startOffset="0%">
-            {(text + text).toUpperCase()}
+            {(resolvedText + resolvedText).toUpperCase()}
           </textPath>
         </text>
       </motion.svg>
