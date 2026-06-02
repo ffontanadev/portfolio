@@ -5,6 +5,7 @@ import { MenuIcon } from '@/components/ui/menu';
 import { XIcon } from '@/components/ui/x';
 import { useAppContext } from '@/contexts/AppContext';
 import { useTranslation } from '@/i18n';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 const Navigation = () => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -76,6 +77,7 @@ const Navigation = () => {
                                 )}
                             </div>
                         ))}
+                        <LanguageSwitcher />
                         <button
                             onClick={openResume}
                             className="group relative overflow-hidden px-6 py-2.5 rounded-full font-medium text-sm bg-dark-900 text-cream-50 cursor-pointer"
@@ -87,14 +89,17 @@ const Navigation = () => {
                         </button>
                     </div>
 
-                    {/* Mobile Menu Toggle */}
-                    <button
-                        className="md:hidden p-2 text-dark-900"
-                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        aria-label={t('nav.toggleMenu')}
-                    >
-                        {isMobileMenuOpen ? <XIcon size={24} /> : <MenuIcon size={24} />}
-                    </button>
+                    {/* Mobile controls */}
+                    <div className="md:hidden flex items-center gap-2">
+                        <LanguageSwitcher />
+                        <button
+                            className="p-2 text-dark-900"
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                            aria-label={t('nav.toggleMenu')}
+                        >
+                            {isMobileMenuOpen ? <XIcon size={24} /> : <MenuIcon size={24} />}
+                        </button>
+                    </div>
                 </div>
             </nav>
 

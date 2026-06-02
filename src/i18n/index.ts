@@ -4,6 +4,7 @@ export { useTranslation } from './useTranslation';
 export {
   DEFAULT_LOCALE,
   SUPPORTED_LOCALES,
+  LOCALE_LABELS,
   messages,
   type Locale,
   type Messages,
