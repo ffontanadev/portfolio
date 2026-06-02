@@ -8,7 +8,7 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useState } from 'react';
 import BancoProvinciaLogo from './logos/BancoProvinciaLogo';
 import BBVALogo from './logos/BBVALogo';
-import { accentForCategory, categoryLabelKey } from './projectTypes';
+import { accentForCategory } from './projectTypes';
 import type { Project, CodeBlock, ProjectLeadMetric, ProjectLogo } from './projectTypes';
 import { useTranslation } from '@/i18n';
 
@@ -157,7 +157,6 @@ export const LeadMetricDisplay = ({
 };
 
 export const TypographicHero = ({ project, size = 'modal' }: { project: Project; size?: 'card' | 'modal' }) => {
-    const { t } = useTranslation();
     const isModal = size === 'modal';
     const accent = accentForCategory(project.category);
 
