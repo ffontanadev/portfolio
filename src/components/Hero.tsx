@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
 import ParticleField from './Hero/ParticleField';
+import { useTranslation } from '@/i18n';
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -13,6 +14,7 @@ const INTRO_TOTAL_S = 4.8;
 const Hero = () => {
   const shouldReduceMotion = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
+  const { t } = useTranslation();
 
   // Scroll parallax for background drift
   const { scrollYProgress } = useScroll({
@@ -63,7 +65,7 @@ const Hero = () => {
           transition={{ delay: introOffset, duration: 0.8, ease }}
           className="flex items-center gap-4 mb-12"
         >
-          <span className="text-eyebrow text-dark-900/60">01 — Introduction</span>
+          <span className="text-eyebrow text-dark-900/60">{t('hero.eyebrow')}</span>
           <span className="flex-1 max-w-[120px] hairline text-dark-900" />
         </motion.div>
 
@@ -130,10 +132,10 @@ const Hero = () => {
           transition={{ delay: introOffset + 0.1, duration: 0.9, ease }}
           className="max-w-xl text-lg md:text-xl text-dark-900/70 leading-relaxed font-light mt-16"
         >
-          A{' '}
-          <span className="font-medium text-dark-900 reveal-underline cursor-default">developer</span>{' '}
-          crafting digital solutions at{' '}
-          <span className="font-medium text-dark-900">Magenta Innova</span>{' '}
+          {t('hero.subheading.lead')}{' '}
+          <span className="font-medium text-dark-900 reveal-underline cursor-default">{t('hero.subheading.role')}</span>{' '}
+          {t('hero.subheading.middle')}{' '}
+          <span className="font-medium text-dark-900">{t('hero.subheading.company')}</span>{' '}
           <span className="text-coral-500">.</span>
         </motion.div>
       </motion.div>

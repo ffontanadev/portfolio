@@ -5,8 +5,10 @@ import { usePostById, useCreatePost, useUpdatePost } from '../../hooks/useBlog';
 import MarkdownRenderer from '../../components/blog/MarkdownRenderer';
 import { ArrowLeft, Save, Eye, EyeOff, Loader } from 'lucide-react';
 import type { CreateBlogPostInput } from '../../types/blog';
+import { useTranslation } from '@/i18n';
 
 export default function PostEditorPage() {
+  const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const isNewPost = id === 'new';
@@ -64,7 +66,7 @@ export default function PostEditorPage() {
     setError('');
 
     if (!title.trim() || !slug.trim() || !content.trim() || !author.trim()) {
-      setError('Title, slug, content, and author are required');
+      setError(t('admin.editor.validationError'));
       return;
     }
 
@@ -92,7 +94,7 @@ export default function PostEditorPage() {
       }
       navigate('/admin/dashboard');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to save post');
+      setError(err instanceof Error ? err.message : t('admin.editor.saveError'));
     }
   };
 
@@ -116,7 +118,7 @@ export default function PostEditorPage() {
               className="flex items-center gap-2 text-dark-600 hover:text-dark-900 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
-              Back to Dashboard
+              {t('admin.editor.backToDashboard')}
             </Link>
             <div className="flex items-center gap-3">
               <button
@@ -125,7 +127,7 @@ export default function PostEditorPage() {
                 className="flex items-center gap-2 px-4 py-2 bg-cream-100 text-dark-700 rounded-lg hover:bg-cream-200 transition-colors"
               >
                 {showPreview ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                {showPreview ? 'Edit' : 'Preview'}
+                {showPreview ? t('admin.editor.edit') : t('admin.editor.preview')}
               </button>
               <button
                 onClick={(e) => handleSubmit(e, false)}
@@ -133,7 +135,7 @@ export default function PostEditorPage() {
                 className="flex items-center gap-2 px-4 py-2 bg-white border border-cream-300 text-dark-700 rounded-lg hover:bg-cream-50 disabled:opacity-50 transition-colors"
               >
                 <Save className="w-4 h-4" />
-                Save Draft
+                {t('admin.editor.saveDraft')}
               </button>
               <button
                 onClick={(e) => handleSubmit(e, true)}
@@ -145,7 +147,7 @@ export default function PostEditorPage() {
                 ) : (
                   <Save className="w-4 h-4" />
                 )}
-                {status === 'published' ? 'Update & Publish' : 'Save & Publish'}
+                {status === 'published' ? t('admin.editor.updatePublish') : t('admin.editor.savePublish')}
               </button>
             </div>
           </div>
@@ -161,18 +163,18 @@ export default function PostEditorPage() {
 
         {showPreview ? (
           <div className="bg-white rounded-lg shadow-sm p-8">
-            <h1 className="text-4xl font-bold text-dark-900 mb-6">{title || 'Untitled Post'}</h1>
+            <h1 className="text-4xl font-bold text-dark-900 mb-6">{title || t('admin.editor.untitled')}</h1>
             {excerpt && <p className="text-xl text-dark-600 mb-8">{excerpt}</p>}
-            <MarkdownRenderer content={content || '*No content yet*'} />
+            <MarkdownRenderer content={content || t('admin.editor.noContent')} />
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="bg-white rounded-lg shadow-sm p-6 space-y-6">
-              <h2 className="text-xl font-bold text-dark-900">Basic Information</h2>
+              <h2 className="text-xl font-bold text-dark-900">{t('admin.editor.basicInfo')}</h2>
 
               <div>
                 <label htmlFor="title" className="block text-sm font-medium text-dark-700 mb-2">
-                  Title *
+                  {t('admin.editor.titleLabel')}
                 </label>
                 <input
                   id="title"
@@ -180,14 +182,14 @@ export default function PostEditorPage() {
                   value={title}
                   onChange={(e) => handleTitleChange(e.target.value)}
                   className="w-full px-4 py-3 border border-cream-300 rounded-lg focus:ring-2 focus:ring-coral-500 focus:border-coral-500 outline-none"
-                  placeholder="Enter post title"
+                  placeholder={t('admin.editor.titlePlaceholder')}
                   required
                 />
               </div>
 
               <div>
                 <label htmlFor="slug" className="block text-sm font-medium text-dark-700 mb-2">
-                  Slug * <span className="text-dark-500 font-normal">(URL-friendly identifier)</span>
+                  {t('admin.editor.slugLabel')} <span className="text-dark-500 font-normal">{t('admin.editor.slugHint')}</span>
                 </label>
                 <input
                   id="slug"
@@ -195,14 +197,14 @@ export default function PostEditorPage() {
                   value={slug}
                   onChange={(e) => setSlug(e.target.value)}
                   className="w-full px-4 py-3 border border-cream-300 rounded-lg focus:ring-2 focus:ring-coral-500 focus:border-coral-500 outline-none font-mono text-sm"
-                  placeholder="post-url-slug"
+                  placeholder={t('admin.editor.slugPlaceholder')}
                   required
                 />
               </div>
 
               <div>
                 <label htmlFor="author" className="block text-sm font-medium text-dark-700 mb-2">
-                  Author *
+                  {t('admin.editor.authorLabel')}
                 </label>
                 <input
                   id="author"
@@ -210,14 +212,14 @@ export default function PostEditorPage() {
                   value={author}
                   onChange={(e) => setAuthor(e.target.value)}
                   className="w-full px-4 py-3 border border-cream-300 rounded-lg focus:ring-2 focus:ring-coral-500 focus:border-coral-500 outline-none"
-                  placeholder="Author name"
+                  placeholder={t('admin.editor.authorPlaceholder')}
                   required
                 />
               </div>
 
               <div>
                 <label htmlFor="excerpt" className="block text-sm font-medium text-dark-700 mb-2">
-                  Excerpt <span className="text-dark-500 font-normal">(Short summary)</span>
+                  {t('admin.editor.excerptLabel')} <span className="text-dark-500 font-normal">{t('admin.editor.excerptHint')}</span>
                 </label>
                 <textarea
                   id="excerpt"
@@ -225,13 +227,13 @@ export default function PostEditorPage() {
                   onChange={(e) => setExcerpt(e.target.value)}
                   rows={3}
                   className="w-full px-4 py-3 border border-cream-300 rounded-lg focus:ring-2 focus:ring-coral-500 focus:border-coral-500 outline-none resize-none"
-                  placeholder="Brief description of the post"
+                  placeholder={t('admin.editor.excerptPlaceholder')}
                 />
               </div>
 
               <div>
                 <label htmlFor="content" className="block text-sm font-medium text-dark-700 mb-2">
-                  Content * <span className="text-dark-500 font-normal">(Markdown supported)</span>
+                  {t('admin.editor.contentLabel')} <span className="text-dark-500 font-normal">{t('admin.editor.contentHint')}</span>
                 </label>
                 <textarea
                   id="content"
@@ -239,18 +241,18 @@ export default function PostEditorPage() {
                   onChange={(e) => setContent(e.target.value)}
                   rows={20}
                   className="w-full px-4 py-3 border border-cream-300 rounded-lg focus:ring-2 focus:ring-coral-500 focus:border-coral-500 outline-none font-mono text-sm resize-none"
-                  placeholder="Write your post content in Markdown..."
+                  placeholder={t('admin.editor.contentPlaceholder')}
                   required
                 />
               </div>
             </div>
 
             <div className="bg-white rounded-lg shadow-sm p-6 space-y-6">
-              <h2 className="text-xl font-bold text-dark-900">Additional Information</h2>
+              <h2 className="text-xl font-bold text-dark-900">{t('admin.editor.additionalInfo')}</h2>
 
               <div>
                 <label htmlFor="tags" className="block text-sm font-medium text-dark-700 mb-2">
-                  Tags <span className="text-dark-500 font-normal">(Comma-separated)</span>
+                  {t('admin.editor.tagsLabel')} <span className="text-dark-500 font-normal">{t('admin.editor.tagsHint')}</span>
                 </label>
                 <input
                   id="tags"
@@ -258,13 +260,13 @@ export default function PostEditorPage() {
                   value={tags}
                   onChange={(e) => setTags(e.target.value)}
                   className="w-full px-4 py-3 border border-cream-300 rounded-lg focus:ring-2 focus:ring-coral-500 focus:border-coral-500 outline-none"
-                  placeholder="react, typescript, web development"
+                  placeholder={t('admin.editor.tagsPlaceholder')}
                 />
               </div>
 
               <div>
                 <label htmlFor="featuredImage" className="block text-sm font-medium text-dark-700 mb-2">
-                  Featured Image URL
+                  {t('admin.editor.featuredImageLabel')}
                 </label>
                 <input
                   id="featuredImage"
@@ -272,13 +274,13 @@ export default function PostEditorPage() {
                   value={featuredImageUrl}
                   onChange={(e) => setFeaturedImageUrl(e.target.value)}
                   className="w-full px-4 py-3 border border-cream-300 rounded-lg focus:ring-2 focus:ring-coral-500 focus:border-coral-500 outline-none"
-                  placeholder="https://example.com/image.jpg"
+                  placeholder={t('admin.editor.featuredImagePlaceholder')}
                 />
               </div>
 
               <div>
                 <label htmlFor="metaDescription" className="block text-sm font-medium text-dark-700 mb-2">
-                  Meta Description <span className="text-dark-500 font-normal">(SEO)</span>
+                  {t('admin.editor.metaDescriptionLabel')} <span className="text-dark-500 font-normal">{t('admin.editor.metaDescriptionHint')}</span>
                 </label>
                 <textarea
                   id="metaDescription"
@@ -286,13 +288,13 @@ export default function PostEditorPage() {
                   onChange={(e) => setMetaDescription(e.target.value)}
                   rows={2}
                   className="w-full px-4 py-3 border border-cream-300 rounded-lg focus:ring-2 focus:ring-coral-500 focus:border-coral-500 outline-none resize-none"
-                  placeholder="SEO description for search engines"
+                  placeholder={t('admin.editor.metaDescriptionPlaceholder')}
                 />
               </div>
 
               <div>
                 <label htmlFor="metaKeywords" className="block text-sm font-medium text-dark-700 mb-2">
-                  Meta Keywords <span className="text-dark-500 font-normal">(SEO, comma-separated)</span>
+                  {t('admin.editor.metaKeywordsLabel')} <span className="text-dark-500 font-normal">{t('admin.editor.metaKeywordsHint')}</span>
                 </label>
                 <input
                   id="metaKeywords"
@@ -300,7 +302,7 @@ export default function PostEditorPage() {
                   value={metaKeywords}
                   onChange={(e) => setMetaKeywords(e.target.value)}
                   className="w-full px-4 py-3 border border-cream-300 rounded-lg focus:ring-2 focus:ring-coral-500 focus:border-coral-500 outline-none"
-                  placeholder="web development, programming, tutorial"
+                  placeholder={t('admin.editor.metaKeywordsPlaceholder')}
                 />
               </div>
             </div>

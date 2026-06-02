@@ -3,13 +3,15 @@ import { LinkedinIcon } from '@/components/ui/linkedin';
 import { TwitterIcon } from '@/components/ui/twitter';
 import { DownloadIcon } from '@/components/ui/download';
 import { useAppContext } from '@/contexts/AppContext';
+import { useTranslation } from '@/i18n';
 
 const ease = [0.22, 1, 0.36, 1] as const;
-const headline = 'Come say hi.';
 
 const Contact = () => {
     const { openResume } = useAppContext();
+    const { t, messages } = useTranslation();
     const email = 'contacto@ffontana.dev';
+    const headline = t('contact.headline');
 
     return (
         <section
@@ -35,12 +37,12 @@ const Contact = () => {
                     className="flex items-center justify-center gap-4 mb-10"
                 >
                     <span className="h-px w-12 bg-dark-900/20" />
-                    <span className="text-eyebrow text-dark-900/55">§ 05 — Get in touch</span>
+                    <span className="text-eyebrow text-dark-900/55">{t('contact.eyebrow')}</span>
                     <span className="h-px w-12 bg-dark-900/20" />
                 </motion.div>
 
                 <p className="font-display italic text-dark-900/45 mb-6 font-light">
-                    you made it this far—
+                    {t('contact.intro')}
                 </p>
 
                 {/* Kinetic headline */}
@@ -81,11 +83,11 @@ const Contact = () => {
                             >
                                 <span className="block h-[3px] w-[3px] rounded-full bg-dark-900/55" />
                             </span>
-                            <span className="text-eyebrow text-coral-500">Set list · Available for</span>
+                            <span className="text-eyebrow text-coral-500">{t('contact.availableFor')}</span>
                         </div>
                         <div className="flex items-center gap-2.5">
                             <span className="font-mono text-[9px] tracking-widest text-dark-900/40 uppercase">
-                                B · SIDE
+                                {t('contact.side')}
                             </span>
                             <span
                                 aria-hidden="true"
@@ -97,23 +99,7 @@ const Contact = () => {
                     </header>
 
                     <ul className="divide-y divide-dark-900/8">
-                        {[
-                            {
-                                tag: 'FULL · TIME',
-                                title: 'Developer role',
-                                note: 'Open to remote or relocation. Available immediately.',
-                            },
-                            {
-                                tag: 'FREELANCE',
-                                title: 'Project-based work',
-                                note: 'From product MVPs to focused systems engineering.',
-                            },
-                            {
-                                tag: 'CONSULT',
-                                title: 'Digital solutions',
-                                note: 'Architecture, scoping, technical audits & strategy.',
-                            },
-                        ].map((service, i) => (
+                        {messages.contact.services.map((service, i) => (
                             <motion.li
                                 key={service.title}
                                 initial={{ opacity: 0, x: -10 }}
@@ -167,7 +153,7 @@ const Contact = () => {
                             })}
                         </div>
                         <span className="font-mono text-[9px] tracking-widest text-dark-900/55 uppercase whitespace-nowrap">
-                            Live · ~24h reply
+                            {t('contact.replyTime')}
                         </span>
                     </footer>
                 </motion.div>
@@ -179,7 +165,7 @@ const Contact = () => {
                     transition={{ duration: 0.9, delay: 0.7 }}
                     className="text-dark-900/55 font-display italic font-light max-w-lg mx-auto mb-12 leading-relaxed"
                 >
-                    …and I'm always up for talking about music, or trying a new game together.
+                    {t('contact.closing')}
                 </motion.p>
 
                 <motion.div
@@ -194,7 +180,7 @@ const Contact = () => {
                         className="group relative inline-flex items-center gap-3 overflow-hidden bg-dark-900 text-cream-50 px-8 py-4 rounded-full font-medium cursor-pointer"
                     >
                         <DownloadIcon size={18} />
-                        <span className="relative z-10">View Resume</span>
+                        <span className="relative z-10">{t('contact.viewResume')}</span>
                         <span className="absolute inset-0 bg-coral-500 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]" />
                     </button>
 
@@ -216,14 +202,14 @@ const Contact = () => {
                     <div className="flex gap-3 mt-2">
                         <a
                             href="#"
-                            aria-label="LinkedIn"
+                            aria-label={t('contact.linkedin')}
                             className="p-3.5 bg-cream-50/80 backdrop-blur-sm rounded-full border border-dark-900/8 text-dark-900/70 hover:text-coral-500 hover:border-coral-500/30 hover:-translate-y-1 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                         >
                             <LinkedinIcon size={20} />
                         </a>
                         <a
                             href="#"
-                            aria-label="Twitter"
+                            aria-label={t('contact.twitter')}
                             className="p-3.5 bg-cream-50/80 backdrop-blur-sm rounded-full border border-dark-900/8 text-dark-900/70 hover:text-coral-500 hover:border-coral-500/30 hover:-translate-y-1 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                         >
                             <TwitterIcon size={20} />

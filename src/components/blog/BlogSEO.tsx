@@ -1,4 +1,5 @@
 import type { BlogPost } from '../../types/blog';
+import { useTranslation } from '@/i18n';
 
 interface BlogSEOProps {
   post: BlogPost;
@@ -6,15 +7,16 @@ interface BlogSEOProps {
 }
 
 export default function BlogSEO({ post, isList = false }: BlogSEOProps) {
+  const { t } = useTranslation();
   const siteUrl = window.location.origin;
   const postUrl = `${siteUrl}/blog/${post.slug}`;
-  const title = isList ? 'Blog' : post.title;
+  const title = isList ? t('seo.blogTitle') : post.title;
   const description = post.meta_description || post.excerpt || post.title;
   const keywords = post.meta_keywords?.join(', ') || post.tags?.join(', ') || '';
 
   return (
     <>
-      <title>{title} | Portfolio</title>
+      <title>{title} | {t('seo.siteSuffix')}</title>
       <meta name="description" content={description} />
       {keywords && <meta name="keywords" content={keywords} />}
 
@@ -75,25 +77,28 @@ interface BlogListSEOProps {
 }
 
 export function BlogListSEO({
-  pageTitle = 'Blog',
-  pageDescription = 'Read articles about web development, design, and technology.',
+  pageTitle,
+  pageDescription,
 }: BlogListSEOProps) {
+  const { t } = useTranslation();
   const siteUrl = window.location.origin;
   const blogUrl = `${siteUrl}/blog`;
+  const resolvedTitle = pageTitle ?? t('seo.blogTitle');
+  const resolvedDescription = pageDescription ?? t('seo.blogDescription');
 
   return (
     <>
-      <title>{pageTitle} | Portfolio</title>
-      <meta name="description" content={pageDescription} />
+      <title>{resolvedTitle} | {t('seo.siteSuffix')}</title>
+      <meta name="description" content={resolvedDescription} />
 
-      <meta property="og:title" content={pageTitle} />
-      <meta property="og:description" content={pageDescription} />
+      <meta property="og:title" content={resolvedTitle} />
+      <meta property="og:description" content={resolvedDescription} />
       <meta property="og:type" content="website" />
       <meta property="og:url" content={blogUrl} />
 
       <meta name="twitter:card" content="summary" />
-      <meta name="twitter:title" content={pageTitle} />
-      <meta name="twitter:description" content={pageDescription} />
+      <meta name="twitter:title" content={resolvedTitle} />
+      <meta name="twitter:description" content={resolvedDescription} />
 
       <link rel="canonical" href={blogUrl} />
     </>

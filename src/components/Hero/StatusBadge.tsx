@@ -1,11 +1,14 @@
 import { motion } from 'framer-motion';
+import { useTranslation } from '@/i18n';
 
 interface StatusBadgeProps {
   text?: string;
   available?: boolean;
 }
 
-const StatusBadge = ({ text = 'Available to work', available = true }: StatusBadgeProps) => {
+const StatusBadge = ({ text, available = true }: StatusBadgeProps) => {
+  const { t } = useTranslation();
+  const label = text ?? t('hero.statusBadge.available');
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
@@ -21,7 +24,7 @@ const StatusBadge = ({ text = 'Available to work', available = true }: StatusBad
           <span className="relative inline-flex h-2 w-2 rounded-full bg-teal-500" />
         </span>
       )}
-      <span className="text-eyebrow text-dark-900/70">{text}</span>
+      <span className="text-eyebrow text-dark-900/70">{label}</span>
     </motion.div>
   );
 };

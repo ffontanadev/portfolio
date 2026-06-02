@@ -8,8 +8,9 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useState } from 'react';
 import BancoProvinciaLogo from './logos/BancoProvinciaLogo';
 import BBVALogo from './logos/BBVALogo';
-import { accentForCategory } from './projectTypes';
+import { accentForCategory, categoryLabelKey } from './projectTypes';
 import type { Project, CodeBlock, ProjectLeadMetric, ProjectLogo } from './projectTypes';
+import { useTranslation } from '@/i18n';
 
 // Re-export the Project type for backwards compatibility with existing importers.
 export type { Project } from './projectTypes';
@@ -27,6 +28,7 @@ interface ProjectPreviewModalProps {
 
 const CodeBlockComponent = ({ block }: { block: CodeBlock }) => {
     const [copied, setCopied] = useState(false);
+    const { t } = useTranslation();
 
     const handleCopy = async () => {
         await navigator.clipboard.writeText(block.code);
@@ -43,17 +45,17 @@ const CodeBlockComponent = ({ block }: { block: CodeBlock }) => {
                 <button
                     onClick={handleCopy}
                     className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-600 hover:text-dark-900 transition-colors rounded-lg hover:bg-gray-100"
-                    aria-label="Copy code"
+                    aria-label={t('work.modal.copyCode')}
                 >
                     {copied ? (
                         <>
                             <CheckIcon size={14} />
-                            <span>Copied!</span>
+                            <span>{t('work.modal.copied')}</span>
                         </>
                     ) : (
                         <>
                             <CopyIcon size={14} />
-                            <span>Copy</span>
+                            <span>{t('work.modal.copy')}</span>
                         </>
                     )}
                 </button>
@@ -155,6 +157,7 @@ export const LeadMetricDisplay = ({
 };
 
 export const TypographicHero = ({ project, size = 'modal' }: { project: Project; size?: 'card' | 'modal' }) => {
+    const { t } = useTranslation();
     const isModal = size === 'modal';
     const accent = accentForCategory(project.category);
     return (
@@ -176,7 +179,7 @@ export const TypographicHero = ({ project, size = 'modal' }: { project: Project;
                 aria-hidden="true"
             >
                 <span className={`font-mono text-[10px] tracking-[0.3em] uppercase ${accent.text}`}>
-                    {accent.tagLabel}
+                    {t(categoryLabelKey(project.category))}
                 </span>
                 <span className="font-display italic text-sm" style={{ fontStyle: 'italic' }}>
                     §
@@ -223,11 +226,12 @@ export const TypographicHero = ({ project, size = 'modal' }: { project: Project;
 export const EnterpriseHero = TypographicHero;
 
 const MetricBrief = ({ project }: { project: Project }) => {
+    const { t } = useTranslation();
     if (!project.metrics?.length) return null;
     return (
         <div>
             <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-4">
-                Migration Brief
+                {t('work.modal.migrationBrief')}
             </h3>
             <div className="rounded-2xl border border-dark-900/10 divide-y divide-dark-900/[0.07] overflow-hidden bg-cream-50/40">
                 {project.metrics.map((m, i) => (
@@ -252,11 +256,12 @@ const MetricBrief = ({ project }: { project: Project }) => {
 };
 
 const DevelopmentRoadmap = ({ project }: { project: Project }) => {
+    const { t } = useTranslation();
     if (!project.phases?.length) return null;
     return (
         <div>
             <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-4">
-                Development Roadmap
+                {t('work.modal.developmentRoadmap')}
             </h3>
             <div className="rounded-2xl border border-dark-900/10 divide-y divide-dark-900/[0.07] overflow-hidden bg-cream-50/40">
                 {project.phases.map((phase, i) => (
@@ -288,6 +293,7 @@ const DevelopmentRoadmap = ({ project }: { project: Project }) => {
 };
 
 const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalProps) => {
+    const { t } = useTranslation();
     const modalRef = useRef<HTMLDivElement>(null);
     const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -379,7 +385,7 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
                                 ref={closeButtonRef}
                                 onClick={onClose}
                                 className="absolute top-4 right-4 z-10 p-2 bg-white/90 hover:bg-white rounded-full transition-colors shadow-md"
-                                aria-label="Close modal"
+                                aria-label={t('work.modal.close')}
                             >
                                 <XIcon size={24} className="text-dark-900" />
                             </button>
@@ -409,7 +415,7 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
                                         <div className="space-y-4 pt-4 border-t border-gray-200">
                                             <div>
                                                 <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
-                                                    Tech Stack
+                                                    {t('work.modal.techStack')}
                                                 </h3>
                                                 <div className="flex flex-wrap gap-2">
                                                     {project.techStack.map((tech, index) => (
@@ -426,13 +432,13 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
                                             <div className="grid grid-cols-2 gap-4">
                                                 <div>
                                                     <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">
-                                                        Date
+                                                        {t('work.modal.date')}
                                                     </h3>
                                                     <p className="text-sm text-dark-900 font-medium">{project.date}</p>
                                                 </div>
                                                 <div>
                                                     <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">
-                                                        Role
+                                                        {t('work.modal.role')}
                                                     </h3>
                                                     <p className="text-sm text-dark-900 font-medium">{project.role}</p>
                                                 </div>
@@ -448,7 +454,7 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
                                     ) : (
                                         <div className="space-y-2">
                                             <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-4">
-                                                Key Implementation
+                                                {t('work.modal.keyImplementation')}
                                             </h3>
                                             {project.codeBlocks.map((block, index) => (
                                                 <CodeBlockComponent key={index} block={block} />

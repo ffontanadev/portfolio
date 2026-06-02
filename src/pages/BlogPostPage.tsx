@@ -5,25 +5,27 @@ import BlogSEO from '../components/blog/BlogSEO';
 import MarkdownRenderer from '../components/blog/MarkdownRenderer';
 import BlogPostLoader from '../components/blog/BlogPostLoader';
 import { Calendar, Clock, Tag, ArrowLeft } from 'lucide-react';
+import { useTranslation } from '@/i18n';
 
 export default function BlogPostPage() {
   const { slug } = useParams<{ slug: string }>();
   const { data: post, isLoading, error } = usePostBySlug(slug || '');
+  const { t } = useTranslation();
 
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-dark-900 mb-2">Error Loading Post</h1>
+          <h1 className="text-2xl font-bold text-dark-900 mb-2">{t('blog.post.errorTitle')}</h1>
           <p className="text-dark-600 mb-4">
-            {error instanceof Error ? error.message : 'An unexpected error occurred'}
+            {error instanceof Error ? error.message : t('common.errorOccurred')}
           </p>
           <Link
             to="/blog"
             className="inline-flex items-center gap-2 text-coral-500 hover:text-coral-600"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to Blog
+            {t('blog.post.backToBlog')}
           </Link>
         </div>
       </div>
@@ -51,7 +53,7 @@ export default function BlogPostPage() {
           className="inline-flex items-center gap-2 text-coral-500 hover:text-coral-600 mb-8 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to Blog
+          {t('blog.post.backToBlog')}
         </Link>
 
         <header className="mb-12">
@@ -75,10 +77,10 @@ export default function BlogPostPage() {
             {post.reading_time_minutes && (
               <span className="flex items-center gap-2">
                 <Clock className="w-5 h-5" />
-                {post.reading_time_minutes} min read
+                {t('blog.common.readingTime', { minutes: post.reading_time_minutes })}
               </span>
             )}
-            <span className="text-dark-700 font-medium">by {post.author}</span>
+            <span className="text-dark-700 font-medium">{t('blog.common.byAuthor', { author: post.author })}</span>
           </div>
 
           {post.tags && post.tags.length > 0 && (
@@ -104,7 +106,7 @@ export default function BlogPostPage() {
             className="inline-flex items-center gap-2 text-coral-500 hover:text-coral-600 font-medium transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to all posts
+            {t('blog.post.backToAllPosts')}
           </Link>
         </footer>
       </article>

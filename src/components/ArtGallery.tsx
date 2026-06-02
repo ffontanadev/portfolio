@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
+import { useTranslation } from '@/i18n';
 
 const ArtGallery = () => {
+    const { t } = useTranslation();
     // Placeholder images using colored divs for now
     const artPieces = [
         { height: 'h-64', color: 'bg-red-100' },
@@ -17,10 +19,10 @@ const ArtGallery = () => {
         <section id="about" className="py-32 px-6 md:px-20 max-w-[1440px] mx-auto">
             <div className="mb-16">
                 <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
-                    My 5-9 after my 9-5
+                    {t('artGallery.heading')}
                 </h2>
                 <p className="text-xl text-gray-600">
-                    Painting, journaling and more!
+                    {t('artGallery.subheading')}
                 </p>
             </div>
 
@@ -39,7 +41,7 @@ const ArtGallery = () => {
 
             <div className="mt-20 text-center">
                 <p className="text-2xl font-display font-bold mb-8">
-                    I make digital art and illustrations
+                    {t('artGallery.digitalArt')}
                 </p>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {[...Array(4)].map((_, i) => (
@@ -50,7 +52,7 @@ const ArtGallery = () => {
 
             <div className="mt-20 text-center bg-cream-100 rounded-3xl p-12">
                 <h3 className="text-2xl font-bold mb-4">
-                    I've sold notebooks, stickers, pop sockets and even do commissions
+                    {t('artGallery.commissions')}
                 </h3>
                 <a
                     href="https://instagram.com"
@@ -58,7 +60,7 @@ const ArtGallery = () => {
                     rel="noopener noreferrer"
                     className="inline-block text-coral-500 font-bold hover:underline"
                 >
-                    Reach out on @rkivesofagust
+                    {t('artGallery.reachOut')}
                 </a>
             </div>
         </section>

@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
 import ResumeViewer, { type ResumeSource } from '@/components/ResumeViewer';
 import { HTML_RESUME, MARKDOWN_RESUME } from '@/constants';
+import { useTranslation } from '@/i18n';
 
 interface AppContextType {
     isOpen: boolean;
@@ -19,6 +20,7 @@ const resumeSources: ResumeSource[] = [
 
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const { t } = useTranslation();
 
     const openResume = () => setIsOpen(true);
     const closeResume = () => setIsOpen(false);
@@ -31,7 +33,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
                 onClose={closeResume}
                 sources={resumeSources}
                 defaultFormat="pdf"
-                title="My Resume"
+                title={t('resume.title')}
             />
         </AppContext.Provider>
     );

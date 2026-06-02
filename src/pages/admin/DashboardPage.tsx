@@ -14,8 +14,10 @@ import {
   Calendar,
   FileText,
 } from 'lucide-react';
+import { useTranslation } from '@/i18n';
 
 export default function DashboardPage() {
+  const { t } = useTranslation();
   const [page, setPage] = useState(1);
   const [statusFilter, setStatusFilter] = useState<'all' | 'draft' | 'published'>('all');
   const limit = 20;
@@ -36,7 +38,7 @@ export default function DashboardPage() {
   };
 
   const handleDelete = async (id: string, title: string) => {
-    if (window.confirm(`Are you sure you want to delete "${title}"?`)) {
+    if (window.confirm(t('admin.dashboard.deleteConfirm', { title }))) {
       await deleteMutation.mutateAsync(id);
     }
   };
@@ -53,9 +55,9 @@ export default function DashboardPage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-dark-900 mb-2">Error Loading Posts</h1>
+          <h1 className="text-2xl font-bold text-dark-900 mb-2">{t('admin.dashboard.errorTitle')}</h1>
           <p className="text-dark-600">
-            {error instanceof Error ? error.message : 'An unexpected error occurred'}
+            {error instanceof Error ? error.message : t('common.errorOccurred')}
           </p>
         </div>
       </div>
@@ -68,22 +70,22 @@ export default function DashboardPage() {
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-dark-900">Blog Admin</h1>
-              <p className="text-sm text-dark-600">Welcome back, {user?.email}</p>
+              <h1 className="text-2xl font-bold text-dark-900">{t('admin.dashboard.title')}</h1>
+              <p className="text-sm text-dark-600">{t('admin.dashboard.welcome', { email: user?.email ?? '' })}</p>
             </div>
             <div className="flex items-center gap-4">
               <Link
                 to="/"
                 className="text-dark-600 hover:text-dark-900 transition-colors"
               >
-                View Site
+                {t('admin.dashboard.viewSite')}
               </Link>
               <button
                 onClick={handleSignOut}
                 className="flex items-center gap-2 px-4 py-2 text-dark-700 hover:text-dark-900 transition-colors"
               >
                 <LogOut className="w-4 h-4" />
-                Sign Out
+                {t('admin.dashboard.signOut')}
               </button>
             </div>
           </div>
@@ -100,7 +102,7 @@ export default function DashboardPage() {
                 : 'bg-white text-dark-700 hover:bg-cream-100'
                 }`}
             >
-              All Posts
+              {t('admin.dashboard.allPosts')}
             </button>
             <button
               onClick={() => setStatusFilter('published')}
@@ -109,7 +111,7 @@ export default function DashboardPage() {
                 : 'bg-white text-dark-700 hover:bg-cream-100'
                 }`}
             >
-              Published
+              {t('admin.dashboard.published')}
             </button>
             <button
               onClick={() => setStatusFilter('draft')}
@@ -118,7 +120,7 @@ export default function DashboardPage() {
                 : 'bg-white text-dark-700 hover:bg-cream-100'
                 }`}
             >
-              Drafts
+              {t('admin.dashboard.drafts')}
             </button>
           </div>
 
@@ -127,7 +129,7 @@ export default function DashboardPage() {
             className="flex items-center gap-2 px-6 py-3 bg-coral-500 text-white rounded-lg font-medium hover:bg-coral-600 transition-colors"
           >
             <Plus className="w-5 h-5" />
-            New Post
+            {t('admin.dashboard.newPost')}
           </Link>
         </div>
 
@@ -147,19 +149,19 @@ export default function DashboardPage() {
                 <thead className="bg-cream-100 border-b border-cream-200">
                   <tr>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-dark-900">
-                      Title
+                      {t('admin.dashboard.table.title')}
                     </th>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-dark-900">
-                      Status
+                      {t('admin.dashboard.table.status')}
                     </th>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-dark-900">
-                      Published
+                      {t('admin.dashboard.table.published')}
                     </th>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-dark-900">
-                      Created
+                      {t('admin.dashboard.table.created')}
                     </th>
                     <th className="px-6 py-4 text-right text-sm font-semibold text-dark-900">
-                      Actions
+                      {t('admin.dashboard.table.actions')}
                     </th>
                   </tr>
                 </thead>
@@ -186,7 +188,7 @@ export default function DashboardPage() {
                             : 'bg-yellow-100 text-yellow-700'
                             }`}
                         >
-                          {post.published_at ? 'Published' : 'Draft'}
+                          {post.published_at ? t('admin.dashboard.statusPublished') : t('admin.dashboard.statusDraft')}
                         </span>
                       </td>
                       <td className="px-6 py-4 text-sm text-dark-600">
@@ -210,14 +212,14 @@ export default function DashboardPage() {
                           <Link
                             to={`/admin/posts/${post.id}`}
                             className="p-2 text-dark-600 hover:text-coral-500 hover:bg-cream-100 rounded-lg transition-colors"
-                            title="Edit"
+                            title={t('admin.dashboard.editTitle')}
                           >
                             <Edit className="w-4 h-4" />
                           </Link>
                           <button
                             onClick={() => handleTogglePublish(post.id, post.published_at ? 'published' : 'draft')}
                             className="p-2 text-dark-600 hover:text-coral-500 hover:bg-cream-100 rounded-lg transition-colors"
-                            title={post.published_at ? 'Unpublish' : 'Publish'}
+                            title={post.published_at ? t('admin.dashboard.unpublishTitle') : t('admin.dashboard.publishTitle')}
                             disabled={publishMutation.isPending || unpublishMutation.isPending}
                           >
                             {post.published_at ? (
@@ -229,7 +231,7 @@ export default function DashboardPage() {
                           <button
                             onClick={() => handleDelete(post.id, post.title)}
                             className="p-2 text-dark-600 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
-                            title="Delete"
+                            title={t('admin.dashboard.deleteTitle')}
                             disabled={deleteMutation.isPending}
                           >
                             <Trash2 className="w-4 h-4" />
@@ -249,17 +251,17 @@ export default function DashboardPage() {
                   disabled={page === 1}
                   className="px-4 py-2 bg-white text-dark-900 rounded-lg hover:bg-cream-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
-                  Previous
+                  {t('common.pagination.previous')}
                 </button>
                 <span className="text-dark-600">
-                  Page {page} of {data.totalPages}
+                  {t('common.pagination.pageOf', { page, total: data.totalPages })}
                 </span>
                 <button
                   onClick={() => setPage((p) => Math.min(data.totalPages, p + 1))}
                   disabled={page === data.totalPages}
                   className="px-4 py-2 bg-white text-dark-900 rounded-lg hover:bg-cream-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
-                  Next
+                  {t('common.pagination.next')}
                 </button>
               </div>
             )}
@@ -267,14 +269,14 @@ export default function DashboardPage() {
         ) : (
           <div className="text-center py-12 bg-white rounded-lg">
             <FileText className="w-16 h-16 text-dark-300 mx-auto mb-4" />
-            <h3 className="text-xl font-medium text-dark-900 mb-2">No posts yet</h3>
-            <p className="text-dark-600 mb-6">Get started by creating your first blog post</p>
+            <h3 className="text-xl font-medium text-dark-900 mb-2">{t('admin.dashboard.emptyTitle')}</h3>
+            <p className="text-dark-600 mb-6">{t('admin.dashboard.emptyMessage')}</p>
             <Link
               to="/admin/posts/new"
               className="inline-flex items-center gap-2 px-6 py-3 bg-coral-500 text-white rounded-lg font-medium hover:bg-coral-600 transition-colors"
             >
               <Plus className="w-5 h-5" />
-              Create Your First Post
+              {t('admin.dashboard.createFirst')}
             </Link>
           </div>
         )}

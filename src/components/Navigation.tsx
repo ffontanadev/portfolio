@@ -4,11 +4,13 @@ import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { MenuIcon } from '@/components/ui/menu';
 import { XIcon } from '@/components/ui/x';
 import { useAppContext } from '@/contexts/AppContext';
+import { useTranslation } from '@/i18n';
 
 const Navigation = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const { openResume } = useAppContext();
+    const { t } = useTranslation();
 
     const { scrollYProgress } = useScroll();
     const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.4 });
@@ -20,11 +22,11 @@ const Navigation = () => {
     }, []);
 
     const navLinks = [
-        { name: 'Home', href: '#hero', route: '/' },
-        { name: 'Work', href: '#work' },
-        { name: 'About', href: '#about' },
-        { name: 'Connect', href: '#connect' },
-        { name: 'Blog', route: '/blog' },
+        { name: t('nav.links.home'), href: '#hero', route: '/' },
+        { name: t('nav.links.work'), href: '#work' },
+        { name: t('nav.links.about'), href: '#about' },
+        { name: t('nav.links.connect'), href: '#connect' },
+        { name: t('nav.links.blog'), route: '/blog' },
     ];
 
     return (
@@ -79,7 +81,7 @@ const Navigation = () => {
                             className="group relative overflow-hidden px-6 py-2.5 rounded-full font-medium text-sm bg-dark-900 text-cream-50 cursor-pointer"
                         >
                             <span className="relative z-10 transition-colors duration-500 group-hover:text-cream-50">
-                                Resume
+                                {t('nav.resume')}
                             </span>
                             <span className="absolute inset-0 bg-coral-500 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]" />
                         </button>
@@ -89,7 +91,7 @@ const Navigation = () => {
                     <button
                         className="md:hidden p-2 text-dark-900"
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        aria-label="Toggle menu"
+                        aria-label={t('nav.toggleMenu')}
                     >
                         {isMobileMenuOpen ? <XIcon size={24} /> : <MenuIcon size={24} />}
                     </button>
@@ -145,7 +147,7 @@ const Navigation = () => {
                                 }}
                                 className="mt-6 px-8 py-3 bg-dark-900 text-cream-50 rounded-full text-lg font-medium cursor-pointer"
                             >
-                                View Resume
+                                {t('nav.viewResume')}
                             </motion.button>
                         </div>
                     </motion.div>

@@ -1,22 +1,30 @@
 import { useRef } from 'react';
 import { motion, useScroll } from 'framer-motion';
+import { useTranslation } from '@/i18n';
 
-const sideProjects = [
-    { title: "Birla Capital", desc: "Redesigning financial tools", color: "bg-indigo-100" },
-    { title: "ICAMPS", desc: "Bringing safety to mobile", color: "bg-rose-100" },
-    { title: "Haqdarshak", desc: "Exploring government schemes", color: "bg-amber-100" },
-    { title: "Spotify", desc: "Snippets and experiments", color: "bg-emerald-100" },
-    { title: "Landing Page", desc: "Surprise! It's this one", color: "bg-cyan-100" },
-];
+// Structural data — non-translatable. Display text comes from the locale, keyed by `id`.
+const sideProjectStyles = [
+    { id: 'birla', color: 'bg-indigo-100' },
+    { id: 'icamps', color: 'bg-rose-100' },
+    { id: 'haqdarshak', color: 'bg-amber-100' },
+    { id: 'spotify', color: 'bg-emerald-100' },
+    { id: 'landing', color: 'bg-cyan-100' },
+] as const;
 
 const AdditionalProjects = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const { scrollXProgress } = useScroll({ container: containerRef });
+    const { messages } = useTranslation();
+
+    const sideProjects = sideProjectStyles.map((style) => ({
+        ...style,
+        ...messages.work.additional.projects[style.id],
+    }));
 
     return (
         <section className="py-20 border-t border-gray-100 overflow-hidden">
             <div className="px-6 md:px-20 mb-12">
-                <h2 className="text-2xl font-display font-bold">More fun stuff</h2>
+                <h2 className="text-2xl font-display font-bold">{messages.work.additional.heading}</h2>
             </div>
 
             <div

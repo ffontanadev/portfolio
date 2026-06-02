@@ -3,12 +3,14 @@ import { motion } from 'framer-motion';
 import { format } from 'date-fns';
 import { usePublishedPosts } from '../hooks/useBlog';
 import { Clock, Calendar, ArrowRight } from 'lucide-react';
+import { useTranslation } from '@/i18n';
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 const BlogCTA = () => {
   const { data, isLoading } = usePublishedPosts(1, 1);
   const latestPost = data?.posts[0];
+  const { t } = useTranslation();
 
   return (
     <section className="relative py-28 md:py-36 bg-cream-100 px-6 md:px-20 overflow-hidden">
@@ -24,7 +26,7 @@ const BlogCTA = () => {
 
       <div className="max-w-[1440px] mx-auto relative">
         <div className="flex items-center gap-4 mb-16">
-          <span className="text-eyebrow text-coral-500">§ 04 — Field Notes</span>
+          <span className="text-eyebrow text-coral-500">{t('blogCta.eyebrow')}</span>
           <span className="h-px flex-1 max-w-[160px] bg-dark-900/15" />
         </div>
 
@@ -53,7 +55,7 @@ const BlogCTA = () => {
                   </div>
                 )}
 
-                <span className="text-eyebrow text-coral-500">Latest post</span>
+                <span className="text-eyebrow text-coral-500">{t('blogCta.latestPost')}</span>
 
                 <h3 className="mt-3 text-2xl md:text-[1.75rem] font-display font-bold tracking-[-0.01em] leading-tight text-dark-900 group-hover:text-coral-500 transition-colors duration-500">
                   {latestPost.title}
@@ -81,7 +83,7 @@ const BlogCTA = () => {
                 </div>
 
                 <span className="mt-6 inline-flex items-center gap-2 text-coral-500 font-medium">
-                  <span className="reveal-underline">Read the post</span>
+                  <span className="reveal-underline">{t('blogCta.readThePost')}</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-500" />
                 </span>
               </Link>
@@ -110,22 +112,22 @@ const BlogCTA = () => {
             className="flex flex-col justify-center md:pt-12"
           >
             <h2 className="font-display font-display-md font-bold text-4xl md:text-5xl tracking-[-0.02em] leading-[1.05] text-dark-900">
-              More{' '}
+              {t('blogCta.headingBefore')}{' '}
               <span className="font-display-italic text-coral-500" style={{ fontStyle: 'italic' }}>
-                insights
+                {t('blogCta.headingEmphasis')}
               </span>
               <br />
-              on the blog.
+              {t('blogCta.headingAfter')}
             </h2>
             <p className="mt-6 max-w-md text-lg text-dark-900/60 font-light leading-relaxed">
-              Articles about web development, design patterns, and the creative process behind building modern digital experiences.
+              {t('blogCta.description')}
             </p>
             <div className="mt-10">
               <Link
                 to="/blog"
                 className="group relative inline-flex items-center gap-3 overflow-hidden bg-dark-900 text-cream-50 px-8 py-4 rounded-full font-medium"
               >
-                <span className="relative z-10">Visit the journal</span>
+                <span className="relative z-10">{t('blogCta.visitJournal')}</span>
                 <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-1 transition-transform duration-500" />
                 <span className="absolute inset-0 bg-coral-500 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]" />
               </Link>
