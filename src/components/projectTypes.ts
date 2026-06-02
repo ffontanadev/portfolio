@@ -43,6 +43,8 @@ export interface Project {
     metrics?: ProjectMetric[];
     featured?: boolean;
     phases?: ProjectPhase[];
+    /** GitHub repo as "owner/name"; enables the latest-commit badge/detail. */
+    repo?: string;
 }
 
 // Accent color is derived from category — coral for professional work, teal for personal.

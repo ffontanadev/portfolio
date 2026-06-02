@@ -2,6 +2,7 @@ import { useMemo, useState, useRef } from 'react';
 import { AnimatePresence, LayoutGroup, motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import ProjectPreviewModal, { EnterpriseHero } from './ProjectPreviewModal';
+import LatestCommit from './LatestCommit';
 import { accentForCategory, categoryLabelKey, type Project } from './projectTypes';
 import { useTranslation } from '@/i18n';
 
@@ -25,6 +26,7 @@ const projectData: ProjectStructural[] = [
     codeBlocks: [],
     category: 'personal',
     featured: true,
+    repo: 'elFonTii/efengine',
   },
   {
     id: 'bancoProvincia',
@@ -704,6 +706,9 @@ const FeaturedWorks = () => {
                   </span>
                 ))}
               </div>
+              {featuredProject.repo && (
+                <LatestCommit repo={featuredProject.repo} variant="badge" />
+              )}
             </div>
           </motion.article>
         )}
