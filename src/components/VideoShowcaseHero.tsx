@@ -34,7 +34,8 @@ const VideoShowcaseHero = ({ project, videos, size = 'modal' }: VideoShowcaseHer
 
     const isModal = size === 'modal';
 
-    // Pause when scrolled offscreen; resume (best-effort) when back in view.
+    // Pause when scrolled offscreen; resume when back in view. The `index` dep
+    // also retries play() on each new clip in case autoPlay is blocked by policy.
     useEffect(() => {
         const video = videoRef.current;
         if (!video) return;
@@ -69,14 +70,16 @@ const VideoShowcaseHero = ({ project, videos, size = 'modal' }: VideoShowcaseHer
                 aria-hidden="true"
             />
 
-            {/* Ambient clip. `key` remounts on clip change so the new src autoplays. */}
+            {/* Ambient clip. An index-based `key` remounts the element on every advance
+                so the new src autoplays; a lone clip uses native `loop` instead. */}
             <video
                 ref={videoRef}
-                key={videos[index]}
+                key={index}
                 src={videos[index]}
                 muted
                 autoPlay
                 playsInline
+                loop={videos.length === 1}
                 preload="metadata"
                 aria-hidden="true"
                 onCanPlay={() => setReady(true)}
