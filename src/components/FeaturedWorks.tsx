@@ -29,8 +29,9 @@ const projectData: ProjectStructural[] = [
     featured: true,
     repo: 'elFonTii/efengine',
     showcaseVideos: [
-      '/videos/efengine/hello-triangle.mp4',
-      '/videos/efengine/glfw-context.mp4',
+      '/videos/efengine/video_01.mp4',
+      '/videos/efengine/video_02.mp4',
+      '/videos/efengine/video_03.mp4'
     ],
   },
   {
