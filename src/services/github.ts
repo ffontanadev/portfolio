@@ -15,6 +15,7 @@ interface GithubCommitResponse {
   commit: {
     message: string;
     author: { name: string; date: string } | null;
+    committer: { name: string; date: string } | null;
   };
 }
 
@@ -63,8 +64,10 @@ export async function getLatestCommit(repo: string): Promise<LatestCommit> {
       sha: head.sha,
       shortSha: head.sha.slice(0, 7),
       message: head.commit.message.split('\n')[0],
-      authorName: head.commit.author?.name ?? 'unknown',
-      date: head.commit.author?.date ?? new Date().toISOString(),
+      // Web-flow / merge commits made via GitHub's UI have a null author but a
+      // populated committer; fall back to it so the date stays truthful.
+      authorName: head.commit.author?.name ?? head.commit.committer?.name ?? 'unknown',
+      date: head.commit.author?.date ?? head.commit.committer?.date ?? new Date().toISOString(),
       htmlUrl: head.html_url,
     };
     writeCache(repo, data);
