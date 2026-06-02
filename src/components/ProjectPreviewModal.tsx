@@ -10,6 +10,7 @@ import BancoProvinciaLogo from './logos/BancoProvinciaLogo';
 import BBVALogo from './logos/BBVALogo';
 import { accentForCategory } from './projectTypes';
 import type { Project, CodeBlock, ProjectLeadMetric, ProjectLogo } from './projectTypes';
+import LatestCommit from './LatestCommit';
 import { useTranslation } from '@/i18n';
 
 // Re-export the Project type for backwards compatibility with existing importers.
@@ -447,7 +448,12 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
                                     {project.category === 'professional' && project.metrics?.length ? (
                                         <MetricBrief project={project} />
                                     ) : project.phases?.length ? (
-                                        <DevelopmentRoadmap project={project} />
+                                        <div className="space-y-8">
+                                            <DevelopmentRoadmap project={project} />
+                                            {project.repo && (
+                                                <LatestCommit repo={project.repo} variant="detail" />
+                                            )}
+                                        </div>
                                     ) : (
                                         <div className="space-y-2">
                                             <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-4">
