@@ -45,6 +45,8 @@ export interface Project {
     phases?: ProjectPhase[];
     /** GitHub repo as "owner/name"; enables the latest-commit badge/detail. */
     repo?: string;
+    /** Public paths to ambient showcase clips, e.g. '/videos/efengine/clip.mp4'. */
+    showcaseVideos?: string[];
 }
 
 // Accent color is derived from category — coral for professional work, teal for personal.
