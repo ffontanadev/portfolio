@@ -65,6 +65,11 @@
         "professional": "Profissional"
       },
       "flagshipTag": "§ Carro-chefe · Motor C++",
+      "latestCommit": {
+        "label": "Último commit",
+        "viewOnGithub": "Ver no GitHub",
+        "by": "por {author}"
+      },
       "projects": {
         "efengine": {
           "title": "EFENGINE — Framework de Jogos em C++",

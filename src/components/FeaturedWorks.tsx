@@ -2,6 +2,8 @@ import { useMemo, useState, useRef } from 'react';
 import { AnimatePresence, LayoutGroup, motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import ProjectPreviewModal, { EnterpriseHero } from './ProjectPreviewModal';
+import LatestCommit from './LatestCommit';
+import VideoShowcaseHero from './VideoShowcaseHero';
 import { accentForCategory, categoryLabelKey, type Project } from './projectTypes';
 import { useTranslation } from '@/i18n';
 
@@ -25,6 +27,12 @@ const projectData: ProjectStructural[] = [
     codeBlocks: [],
     category: 'personal',
     featured: true,
+    repo: 'elFonTii/efengine',
+    showcaseVideos: [
+      '/videos/efengine/video_01.mp4',
+      '/videos/efengine/video_02.mp4',
+      '/videos/efengine/video_03.mp4'
+    ],
   },
   {
     id: 'bancoProvincia',
@@ -680,7 +688,15 @@ const FeaturedWorks = () => {
             </div>
 
             <div className="relative w-full aspect-[21/9] md:aspect-[3/1] bg-cream-100 border border-teal-700/20 rounded-2xl overflow-hidden soft-lift">
-              <EnterpriseHero project={featuredProject} size="modal" />
+              {featuredProject.showcaseVideos?.length ? (
+                <VideoShowcaseHero
+                  project={featuredProject}
+                  videos={featuredProject.showcaseVideos}
+                  size="modal"
+                />
+              ) : (
+                <EnterpriseHero project={featuredProject} size="modal" />
+              )}
               <div className="absolute inset-0 transition-colors duration-700 mix-blend-multiply bg-teal-700/0 group-hover:bg-teal-700/[0.05]" />
               <div className="absolute top-5 right-5 bg-cream-50/90 backdrop-blur-sm p-3 rounded-full opacity-0 translate-y-3 -translate-x-3 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
                 <ArrowUpRight size={18} className="text-dark-900" />
@@ -704,6 +720,9 @@ const FeaturedWorks = () => {
                   </span>
                 ))}
               </div>
+              {featuredProject.repo && (
+                <LatestCommit repo={featuredProject.repo} variant="badge" />
+              )}
             </div>
           </motion.article>
         )}

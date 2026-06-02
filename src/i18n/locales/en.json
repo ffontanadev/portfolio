@@ -65,6 +65,11 @@
         "professional": "Professional"
       },
       "flagshipTag": "§ Flagship · C++ Engine",
+      "latestCommit": {
+        "label": "Latest commit",
+        "viewOnGithub": "View on GitHub",
+        "by": "by {author}"
+      },
       "projects": {
         "efengine": {
           "title": "EFENGINE — C++ Game Framework",

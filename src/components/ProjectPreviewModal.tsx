@@ -8,8 +8,9 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useState } from 'react';
 import BancoProvinciaLogo from './logos/BancoProvinciaLogo';
 import BBVALogo from './logos/BBVALogo';
-import { accentForCategory, categoryLabelKey } from './projectTypes';
+import { accentForCategory } from './projectTypes';
 import type { Project, CodeBlock, ProjectLeadMetric, ProjectLogo } from './projectTypes';
+import LatestCommit from './LatestCommit';
 import { useTranslation } from '@/i18n';
 
 // Re-export the Project type for backwards compatibility with existing importers.
@@ -156,10 +157,63 @@ export const LeadMetricDisplay = ({
     );
 };
 
-export const TypographicHero = ({ project, size = 'modal' }: { project: Project; size?: 'card' | 'modal' }) => {
-    const { t } = useTranslation();
+/** Radial cream wash rendered behind both the static and video heroes. */
+export const HERO_RADIAL_BG =
+    'radial-gradient(ellipse 60% 80% at 50% 35%, #FFF8F3, transparent 70%)';
+
+/**
+ * The centered identity block shared by the static (`TypographicHero`) and
+ * video (`VideoShowcaseHero`) heroes: logo/company, lead metric, hairline, and
+ * the tech-stack line. Pure presentation, no background of its own.
+ */
+export const HeroOverlayContent = ({
+    project,
+    size = 'modal',
+}: {
+    project: Project;
+    size?: 'card' | 'modal';
+}) => {
     const isModal = size === 'modal';
     const accent = accentForCategory(project.category);
+
+    return (
+        <div className={`relative h-full flex flex-col items-center justify-center ${isModal ? 'px-8 py-14' : 'px-6 py-10'}`}>
+            {project.logo ? (
+                (() => {
+                    const Logo = LOGO_REGISTRY[project.logo];
+                    const isWide = project.logo === 'banco-provincia';
+                    const sizeClasses = isWide
+                        ? isModal
+                            ? 'h-4 mb-7 text-dark-900/85'
+                            : 'h-5 mb-5 text-dark-900/85'
+                        : isModal
+                          ? 'h-9 mb-7 text-dark-900/85'
+                          : 'h-6 mb-5 text-dark-900/85';
+                    return <Logo className={`${sizeClasses} w-auto`} />;
+                })()
+            ) : (
+                project.company && (
+                    <span
+                        className={`font-display font-display-italic text-dark-900/60 tracking-tight mb-3 ${
+                            isModal ? 'text-2xl' : 'text-lg'
+                        }`}
+                        style={{ fontStyle: 'italic' }}
+                    >
+                        {project.company}
+                    </span>
+                )
+            )}
+            {project.leadMetric && <LeadMetricDisplay metric={project.leadMetric} size={size} />}
+            <div className={`${isModal ? 'mt-8' : 'mt-5'} h-px w-12 ${accent.hairlineSoft}`} aria-hidden="true" />
+            <p className={`mt-3 font-mono tracking-[0.22em] uppercase text-dark-900/50 text-center ${isModal ? 'text-[11px]' : 'text-[9px]'}`}>
+                {project.techStack.slice(0, isModal ? 5 : 3).join(' · ')}
+            </p>
+        </div>
+    );
+};
+
+export const TypographicHero = ({ project, size = 'modal' }: { project: Project; size?: 'card' | 'modal' }) => {
+    const isModal = size === 'modal';
 
     return (
         <div
@@ -169,10 +223,7 @@ export const TypographicHero = ({ project, size = 'modal' }: { project: Project;
         >
             <div
                 className="absolute inset-0 opacity-60"
-                style={{
-                    background:
-                        'radial-gradient(ellipse 60% 80% at 50% 35%, #FFF8F3, transparent 70%)',
-                }}
+                style={{ background: HERO_RADIAL_BG }}
                 aria-hidden="true"
             />
             <div
@@ -184,38 +235,7 @@ export const TypographicHero = ({ project, size = 'modal' }: { project: Project;
                 </span>
             </div>
 
-            <div className={`relative h-full flex flex-col items-center justify-center ${isModal ? 'px-8 py-14' : 'px-6 py-10'}`}>
-                {project.logo ? (
-                    (() => {
-                        const Logo = LOGO_REGISTRY[project.logo];
-                        const isWide = project.logo === 'banco-provincia';
-                        const sizeClasses = isWide
-                            ? isModal
-                                ? 'h-4 mb-7 text-dark-900/85'
-                                : 'h-5 mb-5 text-dark-900/85'
-                            : isModal
-                              ? 'h-9 mb-7 text-dark-900/85'
-                              : 'h-6 mb-5 text-dark-900/85';
-                        return <Logo className={`${sizeClasses} w-auto`} />;
-                    })()
-                ) : (
-                    project.company && (
-                        <span
-                            className={`font-display font-display-italic text-dark-900/60 tracking-tight mb-3 ${
-                                isModal ? 'text-2xl' : 'text-lg'
-                            }`}
-                            style={{ fontStyle: 'italic' }}
-                        >
-                            {project.company}
-                        </span>
-                    )
-                )}
-                {project.leadMetric && <LeadMetricDisplay metric={project.leadMetric} size={size} />}
-                <div className={`${isModal ? 'mt-8' : 'mt-5'} h-px w-12 ${accent.hairlineSoft}`} aria-hidden="true" />
-                <p className={`mt-3 font-mono tracking-[0.22em] uppercase text-dark-900/50 text-center ${isModal ? 'text-[11px]' : 'text-[9px]'}`}>
-                    {project.techStack.slice(0, isModal ? 5 : 3).join(' · ')}
-                </p>
-            </div>
+            <HeroOverlayContent project={project} size={size} />
         </div>
     );
 };
@@ -448,7 +468,12 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
                                     {project.category === 'professional' && project.metrics?.length ? (
                                         <MetricBrief project={project} />
                                     ) : project.phases?.length ? (
-                                        <DevelopmentRoadmap project={project} />
+                                        <div className="space-y-8">
+                                            <DevelopmentRoadmap project={project} />
+                                            {project.repo && (
+                                                <LatestCommit repo={project.repo} variant="detail" />
+                                            )}
+                                        </div>
                                     ) : (
                                         <div className="space-y-2">
                                             <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-4">
