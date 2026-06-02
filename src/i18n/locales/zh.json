@@ -65,6 +65,11 @@
         "professional": "专业"
       },
       "flagshipTag": "§ 旗舰 · C++ 引擎",
+      "latestCommit": {
+        "label": "最新提交",
+        "viewOnGithub": "在 GitHub 上查看",
+        "by": "作者 {author}"
+      },
       "projects": {
         "efengine": {
           "title": "EFENGINE — C++ 游戏框架",

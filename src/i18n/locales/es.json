@@ -65,6 +65,11 @@
         "professional": "Profesional"
       },
       "flagshipTag": "§ Insignia · Motor C++",
+      "latestCommit": {
+        "label": "Último commit",
+        "viewOnGithub": "Ver en GitHub",
+        "by": "por {author}"
+      },
       "projects": {
         "efengine": {
           "title": "EFENGINE — Framework de Juegos en C++",
