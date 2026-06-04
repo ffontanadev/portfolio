@@ -27,6 +27,7 @@ export const vertexShader = /* glsl */ `
   uniform vec3  uShapeColor;
   uniform float uDriftAlpha;
   uniform float uShapeAlpha;
+  uniform float uBrandColorMix; // 0 = palette tint (loop); 1 = sampled brand color
 
   varying float vAlpha;
   varying vec3  vColor;
@@ -118,7 +119,7 @@ export const vertexShader = /* glsl */ `
 
     // Color: drift -> shape blend, with small per-particle palette tint.
     vec3 base = mix(uDriftColor, uShapeColor, pMorph);
-    vColor = mix(base, aColor, 0.22);
+    vColor = mix(base, aColor, max(0.22, uBrandColorMix));
 
     // Alpha: low in drift, higher in shape. Per-particle seed gives a subtle haze.
     float alpha = mix(uDriftAlpha, uShapeAlpha, pMorph);
