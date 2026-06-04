@@ -51,6 +51,35 @@
     "eyebrow": "技术栈 · 轮播中",
     "logoAlt": "{name} 标志"
   },
+  "techShowcase": {
+    "close": "关闭",
+    "eyebrow": "技术栈 · 聚焦",
+    "brief": {
+      "supabase": "开源的 Postgres 后端，内置身份验证、存储和实时 API。",
+      "nextjs": "用于生产应用的 React 框架，支持服务端与客户端混合渲染。",
+      "aws": "亚马逊的云平台，提供大规模的计算、存储和托管基础设施。",
+      "threejs": "用于在浏览器中渲染 3D 图形与动画的 WebGL 库。",
+      "drizzle": "轻量、类型安全的 TypeScript ORM，提供类 SQL 的查询构建器。",
+      "sqlite": "无需服务器、直接嵌入应用的自包含 SQL 数据库引擎。",
+      "mongodb": "文档数据库，存储灵活的类 JSON 记录，便于快速迭代。",
+      "postgresql": "强大的开源关系型数据库，以可靠性和丰富功能著称。",
+      "springboot": "用于以最少配置构建生产级服务的 Java 框架。",
+      "sequelize": "基于 Promise 的 Node.js ORM，支持模型定义与数据库迁移。",
+      "express": "极简、无约束的 Node.js 框架，用于构建 Web 服务器和 API。",
+      "tailwind": "实用优先的 CSS 框架，无需离开标记即可构建自定义设计。",
+      "astro": "以内容为中心的 Web 框架，默认零 JavaScript，追求极速加载。",
+      "bootstrap": "流行的 CSS 框架，提供现成的响应式组件和栅格系统。",
+      "vercel": "用于零配置部署和扩展前端应用的云平台。",
+      "godaddy": "域名注册商与托管服务商，帮助项目快速上线。",
+      "googlecloud": "谷歌的云平台，提供计算、数据和机器学习服务。",
+      "csharp": "微软推出的现代、类型安全语言，适用于后端、桌面和游戏开发。",
+      "lit": "基于 Web 标准、用于构建快速可复用 Web 组件的轻量库。",
+      "redux": "用于 JavaScript 应用的可预测状态容器，提供单一数据源。",
+      "auth0": "以托管服务方式处理身份验证与授权的身份平台。",
+      "jwt": "用于在各方之间安全传递声明的紧凑签名令牌。",
+      "vite": "快速的构建工具和开发服务器，支持即时模块热替换。"
+    }
+  },
   "work": {
     "featured": {
       "eyebrow": "§ 02 — 精选作品",
