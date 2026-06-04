@@ -52,7 +52,7 @@
     "logoAlt": "logo de {name}"
   },
   "techShowcase": {
-    "close": "Fechar",
+    "back": "Voltar",
     "eyebrow": "Stack · foco",
     "brief": {
       "supabase": "Backend Postgres open-source com autenticação, armazenamento e APIs em tempo real.",

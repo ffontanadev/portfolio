@@ -52,7 +52,7 @@
     "logoAlt": "{name} 标志"
   },
   "techShowcase": {
-    "close": "关闭",
+    "back": "返回",
     "eyebrow": "技术栈 · 聚焦",
     "brief": {
       "supabase": "开源的 Postgres 后端，内置身份验证、存储和实时 API。",
