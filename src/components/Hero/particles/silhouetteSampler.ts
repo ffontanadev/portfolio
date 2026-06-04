@@ -22,6 +22,10 @@ export function loadSilhouette(src: string): Promise<HTMLImageElement> {
       resolve(img);
     };
     img.onerror = () => reject(new Error(`Failed to load silhouette SVG: ${src}`));
+    // Request with CORS so the sampled canvas isn't tainted and getImageData
+    // works on cross-origin logos (e.g. raw.githubusercontent.com, which sends
+    // Access-Control-Allow-Origin: *).
+    img.crossOrigin = 'anonymous';
     img.src = src;
   });
   inflight.set(src, promise);

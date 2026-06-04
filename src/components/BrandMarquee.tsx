@@ -43,6 +43,7 @@ const BrandMarquee = () => {
                             <img
                                 src={brand.marqueeUrl}
                                 alt={brand.name}
+                                crossOrigin="anonymous"
                                 className="h-12 w-auto object-contain grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                                 loading="lazy"
                             />
