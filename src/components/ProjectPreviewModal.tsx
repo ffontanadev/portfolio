@@ -249,7 +249,7 @@ const MetricBrief = ({ project }: { project: Project }) => {
     return (
         <div>
             <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-4">
-                {t('work.modal.migrationBrief')}
+                {t('work.modal.projectBrief')}
             </h3>
             <div className="rounded-2xl border border-dark-900/10 divide-y divide-dark-900/[0.07] overflow-hidden bg-cream-50/40">
                 {project.metrics.map((m, i) => (

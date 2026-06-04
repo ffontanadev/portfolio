@@ -109,6 +109,19 @@
             { "label": "Year", "value": "2025" }
           ]
         },
+        "mobileBanking": {
+          "title": "Mobile Banking App (NDA)",
+          "desc": "A cross-platform mobile banking app built in React Native + Expo from external design and backend specifications, with a 3-developer team — featuring native Android biometric authentication and secure local persistence.",
+          "role": "Mobile Engineer",
+          "description": "A mobile banking application for a private banking client under NDA, built in React Native + Expo by a team of three. The backend was delivered by a separate firm, so the work was driven entirely from their design specifications and backend service contracts. I implemented native biometric authentication through the Android API, secure local persistence for session and user data, and parts of the UI from the provided design specs.",
+          "metrics": [
+            { "label": "Platform", "value": "React Native · Expo" },
+            { "label": "Auth", "value": "Android Biometric API" },
+            { "label": "Persistence", "value": "Secure local storage" },
+            { "label": "Team", "value": "3 developers" },
+            { "label": "Period", "value": "2023 → 2024" }
+          ]
+        },
         "voxel": {
           "title": "Minecraft-like Terrain Generation",
           "desc": "Three Voxel World Generation using Perlin noise algorithm in Three.js with 3D First Person Controller",
@@ -150,7 +163,7 @@
         },
         "truqui": {
           "title": "Truqui",
-          "desc": "Your one stop book shop",
+          "desc": "A Progressive Web App (PWA) specializing in digital scorekeeping for Truco, the most popular traditional card game in Uruguay and Argentina. Designed to work completely offline, it allows players to keep accurate and efficient score tracking without relying on an internet connection. The app leverages modern PWA capabilities to deliver a native cross-platform experience, installable directly from the browser on mobile devices, tablets, and desktops. Its offline-first architecture guarantees full availability through Service Workers and local storage, ensuring that games are never interrupted by connectivity issues.",
           "role": "Developer",
           "description": "A Progressive Web App (PWA) specializing in digital scorekeeping for Truco, the most popular traditional card game in Uruguay and Argentina. Designed to work completely offline, it allows players to keep accurate and efficient score tracking without relying on an internet connection. The app leverages modern PWA capabilities to deliver a native cross-platform experience, installable directly from the browser on mobile devices, tablets, and desktops. Its offline-first architecture guarantees full availability through Service Workers and local storage, ensuring that games are never interrupted by connectivity issues."
         }
@@ -178,7 +191,7 @@
       "techStack": "Tech Stack",
       "date": "Date",
       "role": "Role",
-      "migrationBrief": "Migration Brief",
+      "projectBrief": "Project Brief",
       "developmentRoadmap": "Development Roadmap",
       "keyImplementation": "Key Implementation"
     }

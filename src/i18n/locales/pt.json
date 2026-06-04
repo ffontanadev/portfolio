@@ -109,6 +109,19 @@
             { "label": "Ano", "value": "2025" }
           ]
         },
+        "mobileBanking": {
+          "title": "App de Banco Móvel (NDA)",
+          "desc": "Um app de banco móvel multiplataforma feito em React Native + Expo a partir de especificações externas de design e backend, em uma equipe de 3 desenvolvedores — com autenticação biométrica nativa pela API do Android e persistência local segura.",
+          "role": "Engenheiro Mobile",
+          "description": "Aplicativo de banco móvel para um cliente de banco privado sob NDA, desenvolvido em React Native + Expo por uma equipe de três. O backend foi entregue por outra empresa, então o trabalho foi guiado inteiramente pelas suas especificações de design e pelos contratos de serviço do backend. Implementei a autenticação biométrica nativa por meio da API do Android, a persistência local segura da sessão e dos dados do usuário, e parte da UI a partir das especificações de design fornecidas.",
+          "metrics": [
+            { "label": "Plataforma", "value": "React Native · Expo" },
+            { "label": "Auth", "value": "API Biométrica do Android" },
+            { "label": "Persistência", "value": "Armazenamento local seguro" },
+            { "label": "Equipe", "value": "3 desenvolvedores" },
+            { "label": "Período", "value": "2023 → 2024" }
+          ]
+        },
         "voxel": {
           "title": "Geração de Terreno estilo Minecraft",
           "desc": "Geração de um mundo de voxels em Three.js usando o algoritmo de ruído de Perlin com um controlador em primeira pessoa 3D",
@@ -178,7 +191,7 @@
       "techStack": "Stack Técnico",
       "date": "Data",
       "role": "Função",
-      "migrationBrief": "Resumo da Migração",
+      "projectBrief": "Resumo do Projeto",
       "developmentRoadmap": "Roteiro de Desenvolvimento",
       "keyImplementation": "Implementação Principal"
     }

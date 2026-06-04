@@ -57,10 +57,22 @@ const projectData: ProjectStructural[] = [
     leadMetric: { kind: 'scale', superscript: 'API²', value: '50+' },
   },
   {
+    // Client is under NDA — kept anonymous in code and copy. Surfaces as
+    // "Private Bank (NDA)" via the localized company label below.
+    id: 'mobileBanking',
+    color: "bg-cream-100",
+    techStack: ["React Native", "Expo", "Android Biometric API", "Local Persistence"],
+    date: "'23 — '24",
+    codeBlocks: [],
+    category: 'professional',
+    company: 'Private Bank (NDA)',
+    leadMetric: { kind: 'wordmark', value: 'Native + Expo', sub: 'e-banking application' },
+  },
+  {
     id: 'voxel',
     color: "bg-blue-50",
     category: 'personal',
-    leadMetric: { kind: 'wordmark', value: 'Voxel', sub: 'world' },
+    leadMetric: { kind: 'wordmark', value: 'Three.js Voxel', sub: 'A procedural 3D world renderer in web' },
     techStack: ["Next.js", "Three.js", "Perlin Noise", "Prototyping", "On-demand Buffer Streaming"],
     date: "JAN 25'",
     codeBlocks: [
@@ -537,6 +549,14 @@ const FeaturedWorks = () => {
         role: fp.bbva.role,
         description: fp.bbva.description,
         metrics: fp.bbva.metrics.map((m, i) => ({ ...m, accent: i === 0 })),
+      },
+      {
+        ...byId.mobileBanking,
+        title: fp.mobileBanking.title,
+        desc: fp.mobileBanking.desc,
+        role: fp.mobileBanking.role,
+        description: fp.mobileBanking.description,
+        metrics: fp.mobileBanking.metrics.map((m, i) => ({ ...m, accent: i === 1 })),
       },
       {
         ...byId.voxel,

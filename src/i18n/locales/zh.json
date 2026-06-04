@@ -109,6 +109,19 @@
             { "label": "年份", "value": "2025" }
           ]
         },
+        "mobileBanking": {
+          "title": "手机银行应用（NDA）",
+          "desc": "一款基于 React Native + Expo 的跨平台手机银行应用，依据外部的设计与后端规范开发，团队 3 人——具备通过 Android API 实现的原生生物识别认证与安全的本地持久化。",
+          "role": "移动端工程师",
+          "description": "为一家受保密协议（NDA）约束的私人银行客户开发的手机银行应用，由三人团队使用 React Native + Expo 构建。后端由另一家公司交付，因此整个工作完全依据其设计规范和后端服务契约推进。我通过 Android API 实现了原生生物识别认证、会话与用户数据的安全本地持久化，并根据所提供的设计规范完成了部分 UI。",
+          "metrics": [
+            { "label": "平台", "value": "React Native · Expo" },
+            { "label": "认证", "value": "Android 生物识别 API" },
+            { "label": "持久化", "value": "安全本地存储" },
+            { "label": "团队", "value": "3 名开发者" },
+            { "label": "周期", "value": "2023 → 2024" }
+          ]
+        },
         "voxel": {
           "title": "类 Minecraft 地形生成",
           "desc": "在 Three.js 中使用柏林噪声算法生成体素世界，并配有 3D 第一人称控制器",
@@ -178,7 +191,7 @@
       "techStack": "技术栈",
       "date": "日期",
       "role": "角色",
-      "migrationBrief": "迁移概要",
+      "projectBrief": "项目概要",
       "developmentRoadmap": "开发路线图",
       "keyImplementation": "关键实现"
     }
