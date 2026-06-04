@@ -27,7 +27,7 @@ interface StateTimings {
 
 // 'drift', 'morphIn', 'morphOut' are used only on initial entry (and post-intro);
 // the steady-state loop alternates 'hold'/'play' with 'shapeMorph' — no dissolve.
-type State = 'drift' | 'morphIn' | 'hold' | 'play' | 'morphOut' | 'shapeMorph';
+type State = 'drift' | 'morphIn' | 'hold' | 'play' | 'morphOut' | 'shapeMorph' | 'showcase';
 
 const DEFAULT_TIMINGS: StateTimings = {
   drift: .5,
@@ -76,6 +76,13 @@ export class ParticleSystem {
 
   private initialized = false;
 
+  // --- Tech showcase (externally locked logo) ---
+  private showcaseSpec: ShapeSpec | null = null;     // the locked logo spec, for resize re-sampling
+  private showcaseColors: Float32Array | null = null; // sampled brand colors for the locked logo
+  private savedColors: Float32Array | null = null;    // original aColor buffer, restored on release
+  private showcaseT = 0;                               // 0..1 morph/brand-mix progress
+  private readonly SHOWCASE_MORPH_S = 0.9;
+
   constructor(opts: ParticleSystemOptions) {
     this.particleCount = opts.particleCount;
     this.shapes = opts.shapes;
@@ -114,6 +121,7 @@ export class ParticleSystem {
         uShapeColor: { value: opts.shapeColor.clone() },
         uDriftAlpha: { value: opts.driftAlpha ?? 0.18 },
         uShapeAlpha: { value: opts.shapeAlpha ?? 0.72 },
+        uBrandColorMix: { value: 0 },
       },
       vertexShader,
       fragmentShader,
@@ -181,6 +189,16 @@ export class ParticleSystem {
       // Resampling targets must reflect intro state, not the loop shape.
       if (this.intro && !this.intro.done) {
         this.intro.applyResize();
+        return;
+      }
+      // Locked showcase logo: re-sample it (and re-upload colors) at new bounds.
+      if (this.state === 'showcase' && this.showcaseSpec) {
+        this.applyTargetTo('aTarget', this.showcaseSpec);
+        if (this.showcaseColors) {
+          const colorAttr = this.geometry.getAttribute('aColor') as THREE.BufferAttribute;
+          (colorAttr.array as Float32Array).set(this.showcaseColors);
+          colorAttr.needsUpdate = true;
+        }
         return;
       }
       // Mid-morph: aTarget holds the previous shape, aTargetNext holds the next.
@@ -292,6 +310,51 @@ export class ParticleSystem {
     this.cursorForceTarget = inside ? 1 : 0;
   }
 
+  /**
+   * Lock the field into a specific logo shape with per-particle brand colors,
+   * pausing the autonomous loop. Safe to call repeatedly to switch logos.
+   */
+  showShape(spec: ShapeSpec, colors: Float32Array): void {
+    if (!this.initialized) return; // ParticleField queues until first resize
+    this.showcaseSpec = spec;
+    this.showcaseColors = colors;
+
+    // Save original palette colors once (first entry only).
+    const colorAttr = this.geometry.getAttribute('aColor') as THREE.BufferAttribute;
+    if (!this.savedColors) {
+      this.savedColors = (colorAttr.array as Float32Array).slice();
+    }
+
+    // Sample the logo into aTarget and upload brand colors.
+    this.applyTargetTo('aTarget', spec);
+    (colorAttr.array as Float32Array).set(colors);
+    colorAttr.needsUpdate = true;
+
+    // Reset blend bookkeeping and enter the locked state from the current morph.
+    this.material.uniforms.uTargetBlend.value = 0;
+    this.frame = null;
+    this.prevFrame = null;
+    this.state = 'showcase';
+    this.stateStart = performance.now();
+    this.showcaseT = 0;
+  }
+
+  /** Release the locked logo: morph out, restore palette colors, resume the loop. */
+  releaseShape(): void {
+    if (this.state !== 'showcase') return;
+    if (this.savedColors) {
+      const colorAttr = this.geometry.getAttribute('aColor') as THREE.BufferAttribute;
+      (colorAttr.array as Float32Array).set(this.savedColors);
+      colorAttr.needsUpdate = true;
+      this.savedColors = null;
+    }
+    this.showcaseSpec = null;
+    this.showcaseColors = null;
+    // Hand back to the ambient loop starting from a morph-out of the held shape.
+    this.state = 'morphOut';
+    this.stateStart = performance.now();
+  }
+
   private stepStateMachine(now: number): number {
     const elapsed = (now - this.stateStart) / 1000;
     let m = 0;
@@ -367,11 +430,22 @@ export class ParticleSystem {
       case 'morphOut': {
         const t = Math.min(elapsed / this.timings.morphOut, 1);
         m = 1 - easeInOutCubic(t);
+        this.material.uniforms.uBrandColorMix.value =
+          Math.min(this.material.uniforms.uBrandColorMix.value as number, 1 - easeInOutCubic(t));
         if (t >= 1) {
           this.state = 'drift';
           this.stateStart = now;
           this.frame = null;  // release pre-sampled frame buffers
+          this.showcaseT = 0;
         }
+        break;
+      }
+      case 'showcase': {
+        const elapsedS = (now - this.stateStart) / 1000;
+        this.showcaseT = Math.min(elapsedS / this.SHOWCASE_MORPH_S, 1);
+        const e = easeInOutCubic(this.showcaseT);
+        this.material.uniforms.uBrandColorMix.value = e;
+        m = e; // morph drift → shape
         break;
       }
     }
