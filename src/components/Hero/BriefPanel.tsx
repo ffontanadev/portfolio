@@ -27,6 +27,10 @@ const BriefPanel = () => {
   useEffect(() => {
     if (!selected || inert) return;
 
+    // Capture the element that currently has focus so we can restore it when
+    // the panel closes (spec: "focus restored to a sensible element on close").
+    const trigger = document.activeElement as HTMLElement | null;
+
     // Bring the hero (and its particle logo) into view.
     document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth' });
     panelRef.current?.focus();
@@ -34,6 +38,10 @@ const BriefPanel = () => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') clear();
     };
+    // Switching tech while the panel is open briefly closes+reopens it (the
+    // outside-click fires on the marquee button, clears the selection, then the
+    // new selection re-opens). This is an accepted lightweight tradeoff — it
+    // avoids coupling BriefPanel to the marquee's DOM structure.
     const onPointerDown = (e: PointerEvent) => {
       if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
         clear();
@@ -51,6 +59,8 @@ const BriefPanel = () => {
       window.clearTimeout(id);
       document.removeEventListener('keydown', onKey);
       document.removeEventListener('pointerdown', onPointerDown);
+      // Restore focus to the element that had focus before the panel opened.
+      trigger?.focus();
     };
   }, [selected, inert, clear]);
 
@@ -60,7 +70,9 @@ const BriefPanel = () => {
         <motion.div
           ref={panelRef}
           role="dialog"
+          aria-modal={false}
           aria-label={selected.name}
+          aria-describedby={`tech-brief-${selected.id}`}
           tabIndex={-1}
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -80,7 +92,7 @@ const BriefPanel = () => {
             </button>
           </div>
           <h3 className="font-display text-2xl font-bold text-dark-900 mb-2">{selected.name}</h3>
-          <p className="text-dark-900/70 leading-relaxed">
+          <p id={`tech-brief-${selected.id}`} className="text-dark-900/70 leading-relaxed">
             {t('techShowcase.brief.' + selected.id)}
           </p>
         </motion.div>
