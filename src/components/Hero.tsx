@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
 import ParticleField from './Hero/ParticleField';
+import BriefPanel from './Hero/BriefPanel';
 import { useTranslation } from '@/i18n';
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -52,6 +53,7 @@ const Hero = () => {
       {/* Particle field — fills the entire hero, drifts ambient, morphs
           through Felipe / FF. / heart on a loop. Cursor pushes particles aside. */}
       <ParticleField className="z-0" />
+      <BriefPanel />
 
       {/* Container */}
       <motion.div
