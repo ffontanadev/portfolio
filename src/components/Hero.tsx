@@ -1,7 +1,9 @@
-import { useRef } from 'react';
-import { motion, useReducedMotion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
+import { useEffect, useRef } from 'react';
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
 import ParticleField from './Hero/ParticleField';
 import { useTranslation } from '@/i18n';
+import { useTechShowcase } from '@/context/TechShowcaseContext';
+import { PARTICLES_ENABLED } from '@/config/particles';
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -15,6 +17,25 @@ const Hero = () => {
   const shouldReduceMotion = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
   const { t } = useTranslation();
+  const { selected, clear } = useTechShowcase();
+
+  // The tech showcase is a progressive enhancement: inert when particles are
+  // disabled or reduced-motion is on. When inert, ignore any selection.
+  const inert = !PARTICLES_ENABLED || shouldReduceMotion;
+  const showingBrief = selected !== null && !inert;
+
+  useEffect(() => {
+    if (inert && selected) {
+      clear();
+      return;
+    }
+    if (!selected) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') clear();
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [selected, inert, clear]);
 
   // Scroll parallax for background drift
   const { scrollYProgress } = useScroll({
@@ -63,7 +84,9 @@ const Hero = () => {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: introOffset, duration: 0.8, ease }}
-          className="flex items-center gap-4 mb-12"
+          className={`relative flex items-center gap-4 mb-12 transition-[top] duration-500 ${
+            showingBrief ? 'max-md:-top-[15vh]' : 'top-0'
+          }`}
         >
           <span className="text-eyebrow text-dark-900/60">{t('hero.eyebrow')}</span>
           <span className="flex-1 max-w-[120px] hairline text-dark-900" />
@@ -132,11 +155,43 @@ const Hero = () => {
           transition={{ delay: introOffset + 0.1, duration: 0.9, ease }}
           className="max-w-xl text-lg md:text-xl text-dark-900/70 leading-relaxed font-light mt-16"
         >
-          {t('hero.subheading.lead')}{' '}
-          <span className="font-medium text-dark-900 reveal-underline cursor-default">{t('hero.subheading.role')}</span>{' '}
-          {t('hero.subheading.middle')}{' '}
-          <span className="font-medium text-dark-900">{t('hero.subheading.company')}</span>{' '}
-          <span className="text-coral-500">.</span>
+          <AnimatePresence mode="wait" initial={false}>
+            {showingBrief && selected ? (
+              <motion.p
+                key={selected.id}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.4, ease }}
+              >
+                <span className="font-medium text-dark-900">{selected.name}</span>
+                <span className="text-dark-900/40">{' — '}</span>
+                {t('techShowcase.brief.' + selected.id)}{' '}
+                <button
+                  type="button"
+                  onClick={clear}
+                  className="group/back inline-flex items-center gap-1 align-baseline font-medium text-coral-500 hover:opacity-70 transition-opacity cursor-pointer"
+                >
+                  <span aria-hidden="true" className="transition-transform group-hover/back:-translate-x-0.5">←</span>
+                  {t('techShowcase.back')}
+                </button>
+              </motion.p>
+            ) : (
+              <motion.p
+                key="subheading"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.4, ease }}
+              >
+                {t('hero.subheading.lead')}{' '}
+                <span className="font-medium text-dark-900 reveal-underline cursor-default">{t('hero.subheading.role')}</span>{' '}
+                {t('hero.subheading.middle')}{' '}
+                <span className="font-medium text-dark-900">{t('hero.subheading.company')}</span>{' '}
+                <span className="text-coral-500">.</span>
+              </motion.p>
+            )}
+          </AnimatePresence>
         </motion.div>
       </motion.div>
 

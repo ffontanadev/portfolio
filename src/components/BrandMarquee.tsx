@@ -1,36 +1,13 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from '@/i18n';
-
-const brands = [
-    { name: 'Supabase', url: 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library/supabase.svg' },
-    { name: 'Next.js', url: 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library/nextjs_icon_dark.svg' },
-    { name: 'AWS', url: 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library/aws_light.svg' },
-    { name: 'Three.js', url: 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library/threejs-light.svg' },
-    { name: 'Drizzle', url: 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library/drizzle-orm_light.svg' },
-    { name: 'SQLite', url: 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library/sqlite.svg' },
-    { name: 'MongoDB', url: 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library/mongodb-icon-light.svg' },
-    { name: 'PostgreSQL', url: 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library/postgresql.svg' },
-    { name: 'Spring Boot', url: 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library/spring.svg' },
-    { name: 'Sequelize', url: 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library/sequelize.svg' },
-    { name: 'Express.js', url: 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library/expressjs.svg' },
-    { name: 'Tailwind CSS', url: 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library/tailwindcss.svg' },
-    { name: 'Astro', url: 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library/astro-icon-light.svg' },
-    { name: 'Bootstrap', url: 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library/bootstrap.svg' },
-    { name: 'Vercel', url: 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library/vercel.svg' },
-    { name: 'GoDaddy', url: 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library/godaddy.svg' },
-    { name: 'Google Cloud', url: 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library/google-cloud.svg' },
-    { name: 'C#', url: 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library/csharp.svg' },
-    { name: 'Lit', url: 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library/lit.svg' },
-    { name: 'Redux', url: 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library/redux.svg' },
-    { name: 'Auth0', url: 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library/auth0.svg' },
-    { name: 'JWT', url: 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library/jwt.svg' },
-    { name: 'Vite', url: 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library/vitejs.svg' },
-];
+import { useTechShowcase } from '@/context/TechShowcaseContext';
+import { techCatalog } from './Hero/techCatalog';
 
 const BrandMarquee = () => {
     const [paused, setPaused] = useState(false);
     const { t } = useTranslation();
+    const { select } = useTechShowcase();
 
     return (
         <section className="py-20 overflow-hidden bg-transparent relative">
@@ -55,22 +32,25 @@ const BrandMarquee = () => {
                         ease: 'linear',
                     }}
                 >
-                    {[...brands, ...brands].map((brand, index) => (
-                        <div
-                            key={`${brand.name}-${index}`}
-                            className="group relative flex flex-col items-center justify-center min-w-[56px]"
+                    {[...techCatalog, ...techCatalog].map((brand, index) => (
+                        <button
+                            key={`${brand.id}-${index}`}
+                            type="button"
+                            onClick={() => select(brand)}
+                            className="group relative flex flex-col items-center justify-center min-w-[56px] cursor-pointer bg-transparent border-0 p-0 focus-visible:outline-2 focus-visible:outline-coral-500 focus-visible:outline-offset-4 rounded"
+                            aria-label={t('brandMarquee.logoAlt', { name: brand.name })}
                         >
                             <img
-                                src={brand.url}
+                                src={brand.marqueeUrl}
                                 alt={brand.name}
+                                crossOrigin="anonymous"
                                 className="h-12 w-auto object-contain grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                                 loading="lazy"
-                                aria-label={t('brandMarquee.logoAlt', { name: brand.name })}
                             />
                             <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] tracking-widest uppercase text-dark-900/0 group-hover:text-dark-900/65 transition-all duration-500 translate-y-1 group-hover:translate-y-0">
                                 {brand.name}
                             </span>
-                        </div>
+                        </button>
                     ))}
                 </motion.div>
             </div>

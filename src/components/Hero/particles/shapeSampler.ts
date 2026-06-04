@@ -5,7 +5,7 @@ export type ShapeSpec =
   | { kind: 'text'; text: string; fontFamily?: string; weight?: number; heightRatio?: number }
   | { kind: 'heart'; sizeRatio?: number }
   | { kind: 'rocket'; sizeRatio?: number }
-  | { kind: 'silhouette'; src: string; sizeRatio?: number; widthRatio?: number }
+  | { kind: 'silhouette'; src: string; sizeRatio?: number; widthRatio?: number; yOffsetRatio?: number }
   | { kind: 'frames'; srcs: string[]; fps?: number; sizeRatio?: number; widthRatio?: number };
 
 export interface SampleBounds {
@@ -165,4 +165,114 @@ function scatterFallback(count: number, bounds: SampleBounds): Float32Array {
     result[i * 2 + 1] = Math.random() * bounds.height;
   }
   return result;
+}
+
+export interface ColoredSample {
+  positions: Float32Array; // length count*2 — (x,y) in CSS px
+  colors: Float32Array;    // length count*3 — (r,g,b) 0..1
+}
+
+// Like sampleShape, but also returns the source pixel color at each sampled point.
+// Only meaningful for `silhouette` specs (the only kind the tech showcase uses);
+// other kinds fall back to a scatter with white color so the caller can still tint.
+export function sampleShapeWithColor(
+  spec: ShapeSpec,
+  count: number,
+  bounds: SampleBounds,
+): ColoredSample {
+  if (spec.kind !== 'silhouette') {
+    return {
+      positions: sampleShape(spec, count, bounds),
+      colors: filledColors(count),
+    };
+  }
+
+  const dpr = 2;
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.max(1, Math.floor(bounds.width * dpr));
+  canvas.height = Math.max(1, Math.floor(bounds.height * dpr));
+
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+  if (!ctx) {
+    return { positions: scatterFallback(count, bounds), colors: filledColors(count) };
+  }
+
+  ctx.scale(dpr, dpr);
+  ctx.imageSmoothingEnabled = true;
+  drawSilhouette(ctx, spec, bounds);
+
+  let sampled = collectDarkPixelsWithColor(ctx, canvas.width, canvas.height, dpr, 4);
+  if (sampled.pts.length / 2 < count * 0.6) {
+    sampled = collectDarkPixelsWithColor(ctx, canvas.width, canvas.height, dpr, 2);
+  }
+
+  return distributeToCountWithColor(sampled, count, bounds);
+}
+
+// Variant of collectDarkPixels that also reads RGB at each kept pixel.
+function collectDarkPixelsWithColor(
+  ctx: CanvasRenderingContext2D,
+  pxW: number,
+  pxH: number,
+  dpr: number,
+  stride: number,
+): { pts: number[]; rgb: number[] } {
+  const img = ctx.getImageData(0, 0, pxW, pxH);
+  const data = img.data;
+  const pts: number[] = [];
+  const rgb: number[] = [];
+  for (let y = 0; y < pxH; y += stride) {
+    for (let x = 0; x < pxW; x += stride) {
+      const o = (y * pxW + x) * 4;
+      const a = data[o + 3];
+      if (a > 96) {
+        pts.push(x / dpr, y / dpr);
+        rgb.push(data[o] / 255, data[o + 1] / 255, data[o + 2] / 255);
+      }
+    }
+  }
+  return { pts, rgb };
+}
+
+// Like distributeToCount, but carries the source color alongside each position.
+function distributeToCountWithColor(
+  sampled: { pts: number[]; rgb: number[] },
+  count: number,
+  bounds: SampleBounds,
+): ColoredSample {
+  const { pts, rgb } = sampled;
+  const positions = new Float32Array(count * 2);
+  const colors = new Float32Array(count * 3);
+  const numPts = pts.length / 2;
+
+  if (numPts === 0) {
+    return { positions: scatterFallback(count, bounds), colors: filledColors(count) };
+  }
+
+  const idx = new Uint32Array(numPts);
+  for (let i = 0; i < numPts; i++) idx[i] = i;
+  for (let i = numPts - 1; i > 0; i--) {
+    const j = (Math.random() * (i + 1)) | 0;
+    const tmp = idx[i]; idx[i] = idx[j]; idx[j] = tmp;
+  }
+
+  for (let i = 0; i < count; i++) {
+    const src = idx[i % numPts];
+    const repeated = i >= numPts;
+    const jx = repeated ? (Math.random() - 0.5) * 2.2 : 0;
+    const jy = repeated ? (Math.random() - 0.5) * 2.2 : 0;
+    positions[i * 2] = pts[src * 2] + jx;
+    positions[i * 2 + 1] = pts[src * 2 + 1] + jy;
+    colors[i * 3] = rgb[src * 3];
+    colors[i * 3 + 1] = rgb[src * 3 + 1];
+    colors[i * 3 + 2] = rgb[src * 3 + 2];
+  }
+  return { positions, colors };
+}
+
+// White fill so non-silhouette fallbacks still render visibly under brand-mix.
+function filledColors(count: number): Float32Array {
+  const colors = new Float32Array(count * 3);
+  colors.fill(1);
+  return colors;
 }

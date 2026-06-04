@@ -51,6 +51,35 @@
     "eyebrow": "Stack · in rotation",
     "logoAlt": "{name} logo"
   },
+  "techShowcase": {
+    "back": "Back",
+    "eyebrow": "Stack · focus",
+    "brief": {
+      "supabase": "Open-source Postgres backend with auth, storage, and realtime APIs.",
+      "nextjs": "React framework for production apps with hybrid server and client rendering.",
+      "aws": "Amazon's cloud platform for compute, storage, and managed infrastructure at scale.",
+      "threejs": "WebGL library for rendering 3D graphics and animation in the browser.",
+      "drizzle": "Lightweight, type-safe TypeScript ORM with a SQL-like query builder.",
+      "sqlite": "Self-contained, serverless SQL database engine embedded directly in the app.",
+      "mongodb": "Document database storing flexible, JSON-like records for fast iteration.",
+      "postgresql": "Powerful open-source relational database known for reliability and rich features.",
+      "springboot": "Java framework for building production-ready services with minimal configuration.",
+      "sequelize": "Promise-based Node.js ORM for SQL databases with model definitions and migrations.",
+      "express": "Minimal, unopinionated Node.js framework for building web servers and APIs.",
+      "tailwind": "Utility-first CSS framework for building custom designs without leaving your markup.",
+      "astro": "Content-focused web framework that ships zero JavaScript by default for speed.",
+      "bootstrap": "Popular CSS framework with ready-made responsive components and a grid system.",
+      "vercel": "Cloud platform for deploying and scaling frontend apps with zero configuration.",
+      "godaddy": "Domain registrar and hosting provider for getting projects online quickly.",
+      "googlecloud": "Google's cloud platform for compute, data, and machine-learning services.",
+      "csharp": "Modern, type-safe language from Microsoft for backend, desktop, and game development.",
+      "lit": "Lightweight library for building fast, reusable web components on web standards.",
+      "redux": "Predictable state container for JavaScript apps with a single source of truth.",
+      "auth0": "Identity platform handling authentication and authorization as a managed service.",
+      "jwt": "Compact, signed tokens for securely transmitting claims between parties.",
+      "vite": "Fast build tool and dev server with instant hot-module replacement."
+    }
+  },
   "work": {
     "featured": {
       "eyebrow": "§ 02 — Selected Work",

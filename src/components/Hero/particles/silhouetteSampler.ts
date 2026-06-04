@@ -22,6 +22,10 @@ export function loadSilhouette(src: string): Promise<HTMLImageElement> {
       resolve(img);
     };
     img.onerror = () => reject(new Error(`Failed to load silhouette SVG: ${src}`));
+    // Request with CORS so the sampled canvas isn't tainted and getImageData
+    // works on cross-origin logos (e.g. raw.githubusercontent.com, which sends
+    // Access-Control-Allow-Origin: *).
+    img.crossOrigin = 'anonymous';
     img.src = src;
   });
   inflight.set(src, promise);
@@ -54,7 +58,9 @@ export function drawSilhouette(
   const dw = naturalW * scale;
   const dh = naturalH * scale;
   const tx = (bounds.width - dw) / 2;
-  const ty = (bounds.height - dh) / 2;
+  // Optional vertical bias (fraction of height): negative shifts the mark up,
+  // used by the tech showcase so a centered logo clears the bottom brief text.
+  const ty = (bounds.height - dh) / 2 + (spec.yOffsetRatio ?? 0) * bounds.height;
 
   ctx.drawImage(img, tx, ty, dw, dh);
 

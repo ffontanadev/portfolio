@@ -51,6 +51,35 @@
     "eyebrow": "Stack · em rotação",
     "logoAlt": "logo de {name}"
   },
+  "techShowcase": {
+    "back": "Voltar",
+    "eyebrow": "Stack · foco",
+    "brief": {
+      "supabase": "Backend Postgres open-source com autenticação, armazenamento e APIs em tempo real.",
+      "nextjs": "Framework React para apps em produção com renderização híbrida servidor-cliente.",
+      "aws": "Plataforma cloud da Amazon para computação, armazenamento e infraestrutura gerenciada em escala.",
+      "threejs": "Biblioteca WebGL para renderizar gráficos 3D e animação no navegador.",
+      "drizzle": "ORM TypeScript leve e type-safe, com um construtor de consultas no estilo SQL.",
+      "sqlite": "Motor de banco de dados SQL sem servidor, embutido diretamente no aplicativo.",
+      "mongodb": "Banco de dados de documentos que guarda registros flexíveis tipo JSON para iterar rápido.",
+      "postgresql": "Poderoso banco de dados relacional open-source, conhecido pela confiabilidade e recursos.",
+      "springboot": "Framework Java para criar serviços prontos para produção com configuração mínima.",
+      "sequelize": "ORM Node.js baseado em promises para bancos SQL, com modelos e migrações.",
+      "express": "Framework minimalista e sem opiniões do Node.js para criar servidores web e APIs.",
+      "tailwind": "Framework CSS utility-first para criar designs sob medida sem sair da marcação.",
+      "astro": "Framework web focado em conteúdo que entrega zero JavaScript por padrão para mais velocidade.",
+      "bootstrap": "Popular framework CSS com componentes responsivos prontos e um sistema de grid.",
+      "vercel": "Plataforma cloud para implantar e escalar apps frontend sem configuração.",
+      "godaddy": "Registrador de domínios e provedor de hospedagem para publicar projetos rapidamente.",
+      "googlecloud": "Plataforma cloud do Google para computação, dados e serviços de machine learning.",
+      "csharp": "Linguagem moderna e type-safe da Microsoft para backend, desktop e jogos.",
+      "lit": "Biblioteca leve para construir web components rápidos e reutilizáveis sobre padrões web.",
+      "redux": "Contêiner de estado previsível para apps JavaScript com uma única fonte de verdade.",
+      "auth0": "Plataforma de identidade que gerencia autenticação e autorização como serviço.",
+      "jwt": "Tokens compactos e assinados para transmitir informações com segurança entre partes.",
+      "vite": "Ferramenta de build e servidor de desenvolvimento rápido com hot-reload instantâneo."
+    }
+  },
   "work": {
     "featured": {
       "eyebrow": "§ 02 — Trabalho selecionado",

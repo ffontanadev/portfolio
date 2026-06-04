@@ -1,3 +1,4 @@
+import { TechShowcaseProvider } from '../context/TechShowcaseContext';
 import Hero from '../components/Hero';
 import BrandMarquee from '../components/BrandMarquee';
 import FeaturedWorks from '../components/FeaturedWorks';
@@ -7,13 +8,15 @@ import Contact from '../components/Contact';
 
 export default function HomePage() {
   return (
-    <main>
-      <Hero />
-      <BrandMarquee />
-      <FeaturedWorks />
-      <OlderWorks />
-      <BlogCTA />
-      <Contact />
-    </main>
+    <TechShowcaseProvider>
+      <main>
+        <Hero />
+        <BrandMarquee />
+        <FeaturedWorks />
+        <OlderWorks />
+        <BlogCTA />
+        <Contact />
+      </main>
+    </TechShowcaseProvider>
   );
 }
