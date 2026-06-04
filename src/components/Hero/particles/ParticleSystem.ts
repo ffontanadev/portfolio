@@ -497,13 +497,22 @@ export class ParticleSystem {
         this.intro.tick(now);
         morph = this.material.uniforms.uMorph.value as number;
       } else {
-        // First frame after intro: prime the loop into morphOut so the held
-        // text dissolves into drift, then advance through shapes[0] first.
+        // First frame after intro.
         this.intro = null;
-        this.state = 'morphOut';
-        this.stateStart = now;
-        this.shapeIdx = this.shapes.length - 1;
-        morph = this.stepStateMachine(now);
+        if (this.state === 'showcase') {
+          // A tech was selected during the intro: keep the locked logo and let
+          // it form now (reset the clock so the morph-in animates from 0),
+          // instead of dissolving into the ambient loop.
+          this.stateStart = now;
+          morph = this.stepStateMachine(now);
+        } else {
+          // Prime the loop into morphOut so the held text dissolves into drift,
+          // then advance through shapes[0] first.
+          this.state = 'morphOut';
+          this.stateStart = now;
+          this.shapeIdx = this.shapes.length - 1;
+          morph = this.stepStateMachine(now);
+        }
       }
     } else {
       morph = this.stepStateMachine(now);
