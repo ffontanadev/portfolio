@@ -212,16 +212,25 @@ PR. The `BriefPanel` reads `t('techShowcase.brief.' + selected.id)`.
 
 ## Testing
 
-- **Unit:** `sampleShapeWithColor` returns `count` positions and `count` colors;
-  colors are within 0–1; near-white pixels are excluded.
-- **Unit:** catalog has a unique `id` per entry and a matching `techShowcase.brief`
-  key in every locale (a test that cross-checks catalog ids against each locale
-  file prevents missing translations).
-- **Component:** clicking a marquee item calls `select` with the right tech;
-  `BriefPanel` renders the localized brief; `Esc` and click-outside call `clear`.
-- **Manual / visual:** each of the 23 logos forms a recognizable, correctly
-  colored mark on the cream background; loop resumes cleanly on dismiss.
-- Type-check, lint, and build pass (`tsc -b`, `eslint .`, `vite build`).
+The project has **no automated test framework** and we are not introducing one
+for this feature (decision: 2026-06-04). Verification relies on static checks and
+a manual browser checklist:
+
+- **Static:** `tsc -b` (type-check), `eslint .` (lint), `vite build` (build) all
+  pass with no new errors.
+- **Catalog integrity (manual code review):** each `TechItem` has a unique `id`,
+  and every `id` has a matching `techShowcase.brief.<id>` key in all four locale
+  files. A throwaway dev-time assertion may be used during implementation but no
+  permanent test is added.
+- **Manual / visual checklist:**
+  - Clicking each of the 23 marquee items scrolls to the hero and forms a
+    recognizable, correctly colored logo.
+  - The brief panel shows the right localized text (spot-check across en/es/pt/zh).
+  - `Esc` and click-outside dismiss the panel and the particle loop resumes.
+  - Rapid re-selection morphs directly to the new logo.
+  - Resize while a logo is shown keeps it crisp.
+  - With `VITE_PARTICLE_ENABLED=false` and with reduced-motion, marquee items are
+    not interactive.
 
 ## Rollout
 
