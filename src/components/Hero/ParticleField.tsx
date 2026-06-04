@@ -2,9 +2,11 @@ import { useEffect, useRef } from 'react';
 import { useReducedMotion } from 'framer-motion';
 import * as THREE from 'three';
 import { ParticleSystem } from './particles/ParticleSystem';
-import type { ShapeSpec } from './particles/shapeSampler';
+import { sampleShapeWithColor, type ShapeSpec } from './particles/shapeSampler';
 import type { IntroShapes } from './particles/IntroSequencer';
 import { loadSilhouette } from './particles/silhouetteSampler';
+import { useTechShowcase } from '@/context/TechShowcaseContext';
+import type { TechItem } from './techCatalog';
 
 const PALETTE = {
   drift: new THREE.Color('#1A1A1A'),
@@ -97,6 +99,26 @@ const getParticleCount = (w: number): number => {
   return 24000;
 };
 
+// --- Tech showcase helpers (module-scope, stable across renders) -----------
+
+const showcaseSpecFor = (tech: TechItem): ShapeSpec => ({
+  kind: 'silhouette',
+  src: tech.logoUrl,
+  sizeRatio: 0.62,
+});
+
+async function applyShowcase(system: ParticleSystem, tech: TechItem): Promise<void> {
+  try {
+    await loadSilhouette(tech.logoUrl);
+  } catch (err) {
+    console.warn('[ParticleField] logo load failed', err);
+    return; // keep the ambient loop running
+  }
+  const spec = showcaseSpecFor(tech);
+  const { colors } = sampleShapeWithColor(spec, system.particleCountPublic, system.boundsPublic);
+  system.showShape(spec, colors);
+}
+
 interface ParticleFieldProps {
   className?: string;
   /** Override env-supplied shapes. Mostly for testing/storybook use. */
@@ -108,6 +130,10 @@ const ParticleField = ({ className = '', shapes }: ParticleFieldProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const reduced = useReducedMotion();
   const activeShapes = shapes ?? ENV_SHAPES;
+
+  const { selected } = useTechShowcase();
+  const systemRef = useRef<ParticleSystem | null>(null);
+  const pendingSelectRef = useRef<TechItem | null>(null);
 
   useEffect(() => {
     if (!ENABLED) return;
@@ -174,6 +200,13 @@ const ParticleField = ({ className = '', shapes }: ParticleFieldProps) => {
       sizeNow();
       system.start();
 
+      systemRef.current = system;
+      if (pendingSelectRef.current) {
+        const pending = pendingSelectRef.current;
+        pendingSelectRef.current = null;
+        void applyShowcase(system, pending);
+      }
+
       resizeObs = new ResizeObserver(() => sizeNow());
       resizeObs.observe(container);
 
@@ -208,6 +241,7 @@ const ParticleField = ({ className = '', shapes }: ParticleFieldProps) => {
 
     return () => {
       cancelled = true;
+      systemRef.current = null;
       if (resizeObs) resizeObs.disconnect();
       if (intersectObs) intersectObs.disconnect();
       if (onMove) window.removeEventListener('pointermove', onMove);
@@ -215,6 +249,20 @@ const ParticleField = ({ className = '', shapes }: ParticleFieldProps) => {
       if (system) system.dispose();
     };
   }, [reduced, activeShapes]);
+
+  useEffect(() => {
+    const system = systemRef.current;
+    if (!selected) {
+      if (system) system.releaseShape();
+      pendingSelectRef.current = null;
+      return;
+    }
+    if (system) {
+      void applyShowcase(system, selected);
+    } else {
+      pendingSelectRef.current = selected; // applied once the system is built
+    }
+  }, [selected]);
 
   if (!ENABLED) return null;
 

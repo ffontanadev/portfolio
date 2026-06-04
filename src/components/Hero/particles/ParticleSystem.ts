@@ -339,6 +339,10 @@ export class ParticleSystem {
     this.showcaseT = 0;
   }
 
+  // --- Public accessors for ParticleField showcase wiring --------------------
+  get particleCountPublic(): number { return this.particleCount; }
+  get boundsPublic(): SampleBounds { return this.bounds; }
+
   /** Release the locked logo: morph out, restore palette colors, resume the loop. */
   releaseShape(): void {
     if (this.state !== 'showcase') return;
