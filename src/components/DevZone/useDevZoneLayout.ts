@@ -11,16 +11,17 @@ const LAYOUT_VERSION = 1;
  */
 function createDefaultLayout(): DevZoneLayout {
   const isNarrow = typeof window !== 'undefined' && window.innerWidth < 768;
+  const centerX = isNarrow ? Math.max(8, (typeof window !== 'undefined' ? window.innerWidth : 375) - 336) / 2 : 32;
   const [music, pomodoro, status] = isNarrow
     ? [
-        { x: 16, y: 16 },
-        { x: 16, y: 250 },
-        { x: 16, y: 484 },
+        { x: centerX, y: 100 },
+        { x: centerX, y: 330 },
+        { x: centerX, y: 560 },
       ]
     : [
-        { x: 32, y: 32 },
-        { x: 372, y: 32 },
-        { x: 712, y: 32 },
+        { x: 32, y: 120 },
+        { x: 372, y: 120 },
+        { x: 712, y: 120 },
       ];
   return {
     version: LAYOUT_VERSION,

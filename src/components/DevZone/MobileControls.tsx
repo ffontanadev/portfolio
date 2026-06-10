@@ -98,7 +98,7 @@ export default function MobileControls(props: MobileControlsProps) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 12, scale: 0.98 }}
               transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-              className="glass-card fixed right-4 bottom-20 z-50 flex w-[min(20rem,calc(100vw-2rem))] flex-col gap-3 rounded-3xl p-3"
+              className="glass-card bg-white fixed right-4 bottom-20 z-50 flex w-[min(20rem,calc(100vw-2rem))] flex-col gap-3 rounded-3xl p-3"
             >
               {/* Tools */}
               <Row label={t('devZone.menu.tools')}>
