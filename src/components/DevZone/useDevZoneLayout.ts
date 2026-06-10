@@ -95,11 +95,13 @@ export function useDevZoneLayout(): DevZoneLayoutApi {
 
   const addWidget = useCallback((type: WidgetType, serviceId?: string) => {
     setLayout((prev) => {
-      // Avoid duplicate listeners for the same service.
-      if (
-        type === 'status' &&
-        prev.widgets.some((w) => w.type === 'status' && w.serviceId === serviceId)
-      ) {
+      // Status listeners are unique per service; music and pomodoro are
+      // singletons. In both cases, don't spawn a duplicate.
+      if (type === 'status') {
+        if (prev.widgets.some((w) => w.type === 'status' && w.serviceId === serviceId)) {
+          return prev;
+        }
+      } else if (prev.widgets.some((w) => w.type === type)) {
         return prev;
       }
       const nextZ = prev.zCounter + 1;

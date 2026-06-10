@@ -11,13 +11,22 @@ interface DockProps {
   onReset: () => void;
   /** Service ids already on the board, shown as active in the picker. */
   activeServiceIds: string[];
+  /** Singleton widgets already present — their dock buttons are disabled. */
+  hasMusic: boolean;
+  hasPomodoro: boolean;
 }
 
 /**
  * Bottom dock: spawn music / pomodoro widgets, pick which status listeners to
  * surface, and reset the board to its default layout.
  */
-export default function Dock({ onAdd, onReset, activeServiceIds }: DockProps) {
+export default function Dock({
+  onAdd,
+  onReset,
+  activeServiceIds,
+  hasMusic,
+  hasPomodoro,
+}: DockProps) {
   const { t } = useTranslation();
   const [statusOpen, setStatusOpen] = useState(false);
   const pickerRef = useRef<HTMLDivElement | null>(null);
@@ -37,8 +46,18 @@ export default function Dock({ onAdd, onReset, activeServiceIds }: DockProps) {
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-5 z-50 flex justify-center px-4">
       <div className="glass-card pointer-events-auto flex items-center gap-1 rounded-full px-2 py-2">
-        <DockButton icon={<Music2 size={16} />} label={t('devZone.dock.music')} onClick={() => onAdd('music')} />
-        <DockButton icon={<Timer size={16} />} label={t('devZone.dock.pomodoro')} onClick={() => onAdd('pomodoro')} />
+        <DockButton
+          icon={<Music2 size={16} />}
+          label={t('devZone.dock.music')}
+          onClick={() => onAdd('music')}
+          disabled={hasMusic}
+        />
+        <DockButton
+          icon={<Timer size={16} />}
+          label={t('devZone.dock.pomodoro')}
+          onClick={() => onAdd('pomodoro')}
+          disabled={hasPomodoro}
+        />
 
         <div ref={pickerRef} className="relative">
           <DockButton
@@ -109,17 +128,23 @@ interface DockButtonProps {
   label: string;
   onClick: () => void;
   active?: boolean;
+  disabled?: boolean;
   trailing?: React.ReactNode;
 }
 
-function DockButton({ icon, label, onClick, active, trailing }: DockButtonProps) {
+function DockButton({ icon, label, onClick, active, disabled, trailing }: DockButtonProps) {
   return (
     <button
       type="button"
       onClick={onClick}
+      disabled={disabled}
       className={cn(
         'flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-medium transition-colors',
-        active ? 'bg-dark-900 text-cream-50' : 'text-dark-900 hover:bg-dark-900/5',
+        disabled
+          ? 'cursor-default text-dark-900/30'
+          : active
+            ? 'bg-dark-900 text-cream-50'
+            : 'text-dark-900 hover:bg-dark-900/5',
       )}
     >
       {icon}

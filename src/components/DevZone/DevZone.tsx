@@ -23,6 +23,9 @@ export default function DevZone() {
   const activeServiceIds = widgets
     .filter((w) => w.type === 'status' && w.serviceId)
     .map((w) => w.serviceId as string);
+  // Music and pomodoro are singletons — track which are already on the board.
+  const hasMusic = widgets.some((w) => w.type === 'music');
+  const hasPomodoro = widgets.some((w) => w.type === 'pomodoro');
 
   const renderWidget = (instance: WidgetInstance) => {
     const shared = {
@@ -86,7 +89,13 @@ export default function DevZone() {
         {widgets.map(renderWidget)}
       </div>
 
-      <Dock onAdd={addWidget} onReset={resetLayout} activeServiceIds={activeServiceIds} />
+      <Dock
+        onAdd={addWidget}
+        onReset={resetLayout}
+        activeServiceIds={activeServiceIds}
+        hasMusic={hasMusic}
+        hasPomodoro={hasPomodoro}
+      />
     </section>
   );
 }
