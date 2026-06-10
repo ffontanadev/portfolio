@@ -15,8 +15,7 @@
       "home": "Home",
       "work": "Work",
       "about": "About",
-      "connect": "Connect",
-      "blog": "Blog"
+      "connect": "Connect"
     },
     "resume": "Resume",
     "viewResume": "View Resume",
@@ -40,9 +39,18 @@
       "play": "▶ play",
       "hold": "❚❚ hold",
       "activities": [
-        { "text": "El varón del tango", "detail": "Julio Sosa" },
-        { "text": "Psicología al Desnudo", "detail": "Marina Mammoliti" },
-        { "text": "Raro", "detail": "El Cuarteto De Nos" }
+        {
+          "text": "El varón del tango",
+          "detail": "Julio Sosa"
+        },
+        {
+          "text": "Psicología al Desnudo",
+          "detail": "Marina Mammoliti"
+        },
+        {
+          "text": "Raro",
+          "detail": "El Cuarteto De Nos"
+        }
       ]
     },
     "curvedText": "✱  CRAFTING  ·  CODING  ·  CONNECTING  ·  "
@@ -107,9 +115,21 @@
           "description": "EFENGINE is my most ambitious project: a personal 3D game framework written in C++17 on OpenGL 3.3 Core for Windows. No editor, no native scripting, no multi-platform builds — it is a library you compile your games against, where each game is a C++ project that links against efengine. The goal is mastery of low-level systems: manual memory management, the game lifecycle, and the render pipeline, built up one phase at a time. Documentation is generated with Doxygen and the build is driven by CMake.",
           "leadSub": "my most ambitious project",
           "phases": [
-            { "label": "Fase 0", "title": "Setup", "desc": "Toolchain, CMake build, project structure, and dependencies wired up (GLFW, GLAD, GLM, Doctest)." },
-            { "label": "Fase 1", "title": "Contexto GLFW", "desc": "Window and OpenGL 3.3 Core context creation, the basic game loop, and input handling." },
-            { "label": "Fase 2", "title": "Hello Triangle", "desc": "Minimal render pipeline: VBO/VAO/ setup, shader compilation, and the first triangle on screen." }
+            {
+              "label": "Fase 0",
+              "title": "Setup",
+              "desc": "Toolchain, CMake build, project structure, and dependencies wired up (GLFW, GLAD, GLM, Doctest)."
+            },
+            {
+              "label": "Fase 1",
+              "title": "Contexto GLFW",
+              "desc": "Window and OpenGL 3.3 Core context creation, the basic game loop, and input handling."
+            },
+            {
+              "label": "Fase 2",
+              "title": "Hello Triangle",
+              "desc": "Minimal render pipeline: VBO/VAO/ setup, shader compilation, and the first triangle on screen."
+            }
           ]
         },
         "bancoProvincia": {
@@ -118,11 +138,26 @@
           "role": "Backend Engineer",
           "description": "Long-running modernization of legacy Axis2 SOAP services that power core banking integrations at Banco Provincia. The work covers migrating the runtime from Java 8 to Java 17 + Spring Boot 3, replacing JNDI-bound resources with a managed MSSQL DataSource, and untangling years of tightly-coupled web service contracts — all while preserving downstream consumers.",
           "metrics": [
-            { "label": "Runtime", "value": "Java 8 → 17" },
-            { "label": "Framework", "value": "Axis2 → Spring Boot 3" },
-            { "label": "Persistence", "value": "JNDI → MSSQL DataSource" },
-            { "label": "Domain", "value": "Core banking SOAP services" },
-            { "label": "Status", "value": "In progress · 2025 →" }
+            {
+              "label": "Runtime",
+              "value": "Java 8 → 17"
+            },
+            {
+              "label": "Framework",
+              "value": "Axis2 → Spring Boot 3"
+            },
+            {
+              "label": "Persistence",
+              "value": "JNDI → MSSQL DataSource"
+            },
+            {
+              "label": "Domain",
+              "value": "Core banking SOAP services"
+            },
+            {
+              "label": "Status",
+              "value": "In progress · 2025 →"
+            }
           ]
         },
         "bbva": {
@@ -131,11 +166,26 @@
           "role": "Backend Engineer",
           "description": "Engaged on BBVA's internal platform to migrate dozens of API services to Spring Boot and stand up disciplined test coverage across the entire surface. Authored unit and integration tests for 50+ internal APIs, raising baseline coverage and protecting future refactors from regression noise.",
           "metrics": [
-            { "label": "Scope", "value": "50+ internal APIs" },
-            { "label": "Stack", "value": "Spring Boot · Java 17" },
-            { "label": "Testing", "value": "JUnit 5 · Mockito · Testcontainers" },
-            { "label": "Outcome", "value": "High coverage · Refactor-safe" },
-            { "label": "Year", "value": "2025" }
+            {
+              "label": "Scope",
+              "value": "50+ internal APIs"
+            },
+            {
+              "label": "Stack",
+              "value": "Spring Boot · Java 17"
+            },
+            {
+              "label": "Testing",
+              "value": "JUnit 5 · Mockito · Testcontainers"
+            },
+            {
+              "label": "Outcome",
+              "value": "High coverage · Refactor-safe"
+            },
+            {
+              "label": "Year",
+              "value": "2025"
+            }
           ]
         },
         "mobileBanking": {
@@ -144,11 +194,26 @@
           "role": "Mobile Engineer",
           "description": "A mobile banking application for a private banking client under NDA, built in React Native + Expo by a team of three. The backend was delivered by a separate firm, so the work was driven entirely from their design specifications and backend service contracts. I implemented native biometric authentication through the Android API, secure local persistence for session and user data, and parts of the UI from the provided design specs.",
           "metrics": [
-            { "label": "Platform", "value": "React Native · Expo" },
-            { "label": "Auth", "value": "Android Biometric API" },
-            { "label": "Persistence", "value": "Secure local storage" },
-            { "label": "Team", "value": "3 developers" },
-            { "label": "Period", "value": "2023 → 2024" }
+            {
+              "label": "Platform",
+              "value": "React Native · Expo"
+            },
+            {
+              "label": "Auth",
+              "value": "Android Biometric API"
+            },
+            {
+              "label": "Persistence",
+              "value": "Secure local storage"
+            },
+            {
+              "label": "Team",
+              "value": "3 developers"
+            },
+            {
+              "label": "Period",
+              "value": "2023 → 2024"
+            }
           ]
         },
         "voxel": {
@@ -201,11 +266,26 @@
     "additional": {
       "heading": "More fun stuff",
       "projects": {
-        "birla": { "title": "Birla Capital", "desc": "Redesigning financial tools" },
-        "icamps": { "title": "ICAMPS", "desc": "Bringing safety to mobile" },
-        "haqdarshak": { "title": "Haqdarshak", "desc": "Exploring government schemes" },
-        "spotify": { "title": "Spotify", "desc": "Snippets and experiments" },
-        "landing": { "title": "Landing Page", "desc": "Surprise! It's this one" }
+        "birla": {
+          "title": "Birla Capital",
+          "desc": "Redesigning financial tools"
+        },
+        "icamps": {
+          "title": "ICAMPS",
+          "desc": "Bringing safety to mobile"
+        },
+        "haqdarshak": {
+          "title": "Haqdarshak",
+          "desc": "Exploring government schemes"
+        },
+        "spotify": {
+          "title": "Spotify",
+          "desc": "Snippets and experiments"
+        },
+        "landing": {
+          "title": "Landing Page",
+          "desc": "Surprise! It's this one"
+        }
       }
     },
     "categories": {
@@ -225,16 +305,6 @@
       "keyImplementation": "Key Implementation"
     }
   },
-  "blogCta": {
-    "eyebrow": "§ 04 — Field Notes",
-    "latestPost": "Latest post",
-    "readThePost": "Read the post",
-    "headingBefore": "More",
-    "headingEmphasis": "insights",
-    "headingAfter": "on the blog.",
-    "description": "Articles about web development, design patterns, and the creative process behind building modern digital experiences.",
-    "visitJournal": "Visit the journal"
-  },
   "contact": {
     "eyebrow": "§ 05 — Get in touch",
     "intro": "you made it this far—",
@@ -242,9 +312,21 @@
     "side": "B · SIDE",
     "availableFor": "Set list · Available for",
     "services": [
-      { "tag": "FULL · TIME", "title": "Developer role", "note": "Open to remote or relocation. Available immediately." },
-      { "tag": "FREELANCE", "title": "Project-based work", "note": "From product MVPs to focused systems engineering." },
-      { "tag": "CONSULT", "title": "Digital solutions", "note": "Architecture, scoping, technical audits & strategy." }
+      {
+        "tag": "FULL · TIME",
+        "title": "Developer role",
+        "note": "Open to remote or relocation. Available immediately."
+      },
+      {
+        "tag": "FREELANCE",
+        "title": "Project-based work",
+        "note": "From product MVPs to focused systems engineering."
+      },
+      {
+        "tag": "CONSULT",
+        "title": "Digital solutions",
+        "note": "Architecture, scoping, technical audits & strategy."
+      }
     ],
     "replyTime": "Live · ~24h reply",
     "closing": "…and I'm always up for talking about music, or trying a new game together.",
@@ -304,117 +386,13 @@
     "message": "We couldn't find the page you're looking for.",
     "help": "The page may have been moved, deleted, or the URL might be incorrect. Try navigating back to a familiar section of the site.",
     "goHome": "Go to Homepage",
-    "viewBlog": "View Blog",
     "backToTop": "Back to Top",
     "scrollToTopAria": "Scroll to top",
     "needHelpBefore": "Need help? Check the",
     "needHelpLink": "homepage",
     "needHelpAfter": "for navigation options."
   },
-  "blog": {
-    "common": {
-      "readingTime": "{minutes} min read",
-      "byAuthor": "by {author}"
-    },
-    "list": {
-      "title": "Blog",
-      "subtitle": "Thoughts on web development, design, and technology.",
-      "allPosts": "All Posts",
-      "errorTitle": "Error Loading Posts",
-      "empty": "No blog posts found.",
-      "clearFilter": "Clear filter",
-      "readMore": "Read more →"
-    },
-    "post": {
-      "errorTitle": "Error Loading Post",
-      "backToBlog": "Back to Blog",
-      "backToAllPosts": "Back to all posts"
-    }
-  },
-  "admin": {
-    "login": {
-      "title": "Blog Auth",
-      "subtitle": "Blog management section.",
-      "email": "Email",
-      "emailPlaceholder": "admin@example.com",
-      "password": "Password",
-      "passwordPlaceholder": "••••••••",
-      "signIn": "Sign In",
-      "signingIn": "Signing in...",
-      "backToHomepage": "← Back to homepage",
-      "protectedArea": "Protected area. Authorized access only.",
-      "unexpectedError": "An unexpected error occurred"
-    },
-    "dashboard": {
-      "title": "Blog Admin",
-      "welcome": "Welcome back, {email}",
-      "viewSite": "View Site",
-      "signOut": "Sign Out",
-      "allPosts": "All Posts",
-      "published": "Published",
-      "drafts": "Drafts",
-      "newPost": "New Post",
-      "errorTitle": "Error Loading Posts",
-      "table": {
-        "title": "Title",
-        "status": "Status",
-        "published": "Published",
-        "created": "Created",
-        "actions": "Actions"
-      },
-      "statusPublished": "Published",
-      "statusDraft": "Draft",
-      "editTitle": "Edit",
-      "publishTitle": "Publish",
-      "unpublishTitle": "Unpublish",
-      "deleteTitle": "Delete",
-      "deleteConfirm": "Are you sure you want to delete \"{title}\"?",
-      "emptyTitle": "No posts yet",
-      "emptyMessage": "Get started by creating your first blog post",
-      "createFirst": "Create Your First Post"
-    },
-    "editor": {
-      "backToDashboard": "Back to Dashboard",
-      "edit": "Edit",
-      "preview": "Preview",
-      "saveDraft": "Save Draft",
-      "savePublish": "Save & Publish",
-      "updatePublish": "Update & Publish",
-      "validationError": "Title, slug, content, and author are required",
-      "saveError": "Failed to save post",
-      "untitled": "Untitled Post",
-      "noContent": "*No content yet*",
-      "basicInfo": "Basic Information",
-      "additionalInfo": "Additional Information",
-      "titleLabel": "Title *",
-      "titlePlaceholder": "Enter post title",
-      "slugLabel": "Slug *",
-      "slugHint": "(URL-friendly identifier)",
-      "slugPlaceholder": "post-url-slug",
-      "authorLabel": "Author *",
-      "authorPlaceholder": "Author name",
-      "excerptLabel": "Excerpt",
-      "excerptHint": "(Short summary)",
-      "excerptPlaceholder": "Brief description of the post",
-      "contentLabel": "Content *",
-      "contentHint": "(Markdown supported)",
-      "contentPlaceholder": "Write your post content in Markdown...",
-      "tagsLabel": "Tags",
-      "tagsHint": "(Comma-separated)",
-      "tagsPlaceholder": "react, typescript, web development",
-      "featuredImageLabel": "Featured Image URL",
-      "featuredImagePlaceholder": "https://example.com/image.jpg",
-      "metaDescriptionLabel": "Meta Description",
-      "metaDescriptionHint": "(SEO)",
-      "metaDescriptionPlaceholder": "SEO description for search engines",
-      "metaKeywordsLabel": "Meta Keywords",
-      "metaKeywordsHint": "(SEO, comma-separated)",
-      "metaKeywordsPlaceholder": "web development, programming, tutorial"
-    }
-  },
   "seo": {
-    "siteSuffix": "Portfolio",
-    "blogTitle": "Blog",
-    "blogDescription": "Read articles about web development, design, and technology."
+    "siteSuffix": "Portfolio"
   }
 }

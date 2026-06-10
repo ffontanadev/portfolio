@@ -3,15 +3,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
-import BlogListPage from './pages/BlogListPage';
-import BlogPostPage from './pages/BlogPostPage';
-import LoginPage from './pages/admin/LoginPage';
-import DashboardPage from './pages/admin/DashboardPage';
-import PostEditorPage from './pages/admin/PostEditorPage';
 import NotFoundPage from './pages/NotFoundPage';
-import ProtectedRoute from './components/ProtectedRoute';
 import { AppContextProvider } from './contexts/AppContext';
-import { AuthProvider } from './contexts/AuthContext';
 import { I18nProvider } from './i18n';
 
 const queryClient = new QueryClient({
@@ -27,7 +20,6 @@ export default function Router() {
   return (
     <QueryClientProvider client={queryClient}>
       <I18nProvider>
-        <AuthProvider>
         <AppContextProvider>
           <BrowserRouter>
             <div className="bg-cream-50 min-h-screen text-dark-900 font-sans selection:bg-coral-500 selection:text-white">
@@ -35,26 +27,6 @@ export default function Router() {
 
               <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/blog" element={<BlogListPage />} />
-                <Route path="/blog/:slug" element={<BlogPostPage />} />
-
-                <Route path="/admin/login" element={<LoginPage />} />
-                <Route
-                  path="/admin/dashboard"
-                  element={
-                    <ProtectedRoute>
-                      <DashboardPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin/posts/:id"
-                  element={
-                    <ProtectedRoute>
-                      <PostEditorPage />
-                    </ProtectedRoute>
-                  }
-                />
 
                 {/* 404 catch-all route */}
                 <Route path="*" element={<NotFoundPage />} />
@@ -65,7 +37,6 @@ export default function Router() {
             </div>
           </BrowserRouter>
         </AppContextProvider>
-        </AuthProvider>
       </I18nProvider>
     </QueryClientProvider>
   );
