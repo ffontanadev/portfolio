@@ -201,18 +201,13 @@ const Contact = () => {
 
                     <div className="flex gap-3 mt-2">
                         <a
-                            href="#"
+                            href="https://www.linkedin.com/in/felipefontana"
                             aria-label={t('contact.linkedin')}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="p-3.5 bg-cream-50/80 backdrop-blur-sm rounded-full border border-dark-900/8 text-dark-900/70 hover:text-coral-500 hover:border-coral-500/30 hover:-translate-y-1 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                         >
                             <LinkedinIcon size={20} />
-                        </a>
-                        <a
-                            href="#"
-                            aria-label={t('contact.twitter')}
-                            className="p-3.5 bg-cream-50/80 backdrop-blur-sm rounded-full border border-dark-900/8 text-dark-900/70 hover:text-coral-500 hover:border-coral-500/30 hover:-translate-y-1 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                        >
-                            <TwitterIcon size={20} />
                         </a>
                     </div>
                 </motion.div>
