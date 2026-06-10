@@ -33,6 +33,35 @@
       "unpin": "Desafixar",
       "remove": "Remover widget"
     },
+    "toolbar": {
+      "select": "Mover",
+      "draw": "Desenhar",
+      "erase": "Apagar",
+      "clear": "Limpar",
+      "undo": "Desfazer",
+      "redo": "Refazer"
+    },
+    "note": {
+      "title": "Nota",
+      "placeholder": "Escreva uma nota…"
+    },
+    "image": {
+      "title": "Imagem",
+      "unavailable": "Imagem indisponível"
+    },
+    "zoom": {
+      "in": "Aproximar",
+      "out": "Afastar",
+      "reset": "Redefinir zoom",
+      "fit": "Redefinir vista"
+    },
+    "menu": {
+      "open": "Abrir controles",
+      "close": "Fechar controles",
+      "tools": "Ferramentas",
+      "zoom": "Zoom",
+      "widgets": "Widgets"
+    },
     "music": {
       "title": "Rádio",
       "nowPlaying": "Tocando agora",

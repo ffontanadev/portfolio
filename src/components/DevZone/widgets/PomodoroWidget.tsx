@@ -8,7 +8,7 @@ import { usePomodoro, type PomodoroConfig } from '../hooks/usePomodoro';
 
 interface PomodoroWidgetProps {
   instance: WidgetInstance;
-  canvasRef: React.RefObject<HTMLDivElement | null>;
+  interactive?: boolean;
   onMove: (id: string, x: number, y: number) => void;
   onFocus: (id: string) => void;
   onTogglePin: (id: string) => void;

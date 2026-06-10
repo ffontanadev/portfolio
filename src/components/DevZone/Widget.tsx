@@ -1,17 +1,19 @@
-import type { ReactNode, RefObject } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import { motion, useDragControls, useMotionValue } from 'framer-motion';
 import { GripVertical, Pin, PinOff, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useTranslation } from '@/i18n';
+import { useIsMobile } from '@/hooks/useIsMobile';
 import type { WidgetInstance } from './types';
 
 interface WidgetFrameProps {
   instance: WidgetInstance;
-  canvasRef: RefObject<HTMLDivElement | null>;
   title: string;
   icon: ReactNode;
   /** Brand accent for the title dot (defaults to coral). */
   accent?: string;
+  /** Dragging is suspended while a drawing tool is active. */
+  interactive?: boolean;
   onMove: (id: string, x: number, y: number) => void;
   onFocus: (id: string) => void;
   onTogglePin: (id: string) => void;
@@ -28,10 +30,10 @@ interface WidgetFrameProps {
  */
 export default function Widget({
   instance,
-  canvasRef,
   title,
   icon,
   accent = 'var(--color-coral-500)',
+  interactive = true,
   onMove,
   onFocus,
   onTogglePin,
@@ -40,33 +42,45 @@ export default function Widget({
   children,
 }: WidgetFrameProps) {
   const { t } = useTranslation();
+  const isMobile = useIsMobile();
   const x = useMotionValue(instance.x);
   const y = useMotionValue(instance.y);
   const dragControls = useDragControls();
+  const draggable = interactive && !instance.pinned;
+  // Widgets are sized for the desktop board; scale them down on phones so they
+  // don't swallow the viewport. framer composes this with the drag x/y.
+  const scale = isMobile ? 0.78 : 1;
+
+  // Keep the drag motion values in sync when the position changes from outside a
+  // drag (undo/redo, layout restore). A no-op when the values already match.
+  useEffect(() => {
+    if (x.get() !== instance.x) x.set(instance.x);
+    if (y.get() !== instance.y) y.set(instance.y);
+  }, [instance.x, instance.y, x, y]);
 
   return (
     <motion.div
-      style={{ x, y, zIndex: instance.z }}
-      drag={!instance.pinned}
+      data-widget="true"
+      style={{ x, y, scale, transformOrigin: 'top left', zIndex: instance.z, touchAction: 'none' }}
+      drag={draggable}
       dragControls={dragControls}
       dragListener={false}
       dragMomentum={false}
       dragElastic={0}
-      dragConstraints={canvasRef}
       onPointerDown={() => onFocus(instance.id)}
       onDragEnd={() => onMove(instance.id, Math.round(x.get()), Math.round(y.get()))}
       className={cn(
-        'glass-card absolute top-0 left-0 w-[320px] overflow-hidden rounded-2xl text-left',
+        'glass-card absolute top-0 left-0 w-[320px] max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl text-left',
         className,
       )}
     >
       <header
         onPointerDown={(event) => {
-          if (!instance.pinned) dragControls.start(event);
+          if (draggable) dragControls.start(event);
         }}
         className={cn(
           'flex items-center gap-2 border-b border-dark-900/10 px-3 py-2 select-none',
-          instance.pinned ? 'cursor-default' : 'cursor-grab active:cursor-grabbing',
+          !draggable ? 'cursor-default' : 'cursor-grab active:cursor-grabbing',
         )}
       >
         <GripVertical

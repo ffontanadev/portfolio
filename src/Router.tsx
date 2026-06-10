@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
@@ -17,26 +17,39 @@ const queryClient = new QueryClient({
   },
 });
 
+/**
+ * App shell rendered inside the router. The Dev Zone is a full-screen,
+ * self-contained whiteboard, so the global navigation and footer are hidden
+ * there to give the canvas the entire viewport.
+ */
+function AppShell() {
+  const { pathname } = useLocation();
+  const isDevZone = pathname === '/dev-zone';
+
+  return (
+    <div className="bg-cream-50 min-h-screen text-dark-900 font-sans selection:bg-coral-500 selection:text-white">
+      {!isDevZone && <Navigation />}
+
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/dev-zone" element={<DevZonePage />} />
+
+        {/* 404 catch-all route */}
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+
+      {!isDevZone && <Footer />}
+    </div>
+  );
+}
+
 export default function Router() {
   return (
     <QueryClientProvider client={queryClient}>
       <I18nProvider>
         <AppContextProvider>
           <BrowserRouter>
-            <div className="bg-cream-50 min-h-screen text-dark-900 font-sans selection:bg-coral-500 selection:text-white">
-              <Navigation />
-
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/dev-zone" element={<DevZonePage />} />
-
-                {/* 404 catch-all route */}
-                <Route path="*" element={<NotFoundPage />} />
-              </Routes>
-
-              <Footer />
-
-            </div>
+            <AppShell />
           </BrowserRouter>
         </AppContextProvider>
       </I18nProvider>
