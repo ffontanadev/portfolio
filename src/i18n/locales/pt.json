@@ -19,7 +19,65 @@
     },
     "resume": "Currículo",
     "viewResume": "Ver currículo",
-    "toggleMenu": "Abrir menu"
+    "toggleMenu": "Abrir menu",
+    "devZone": "Dev Zone"
+  },
+  "devZone": {
+    "back": "Voltar ao portfólio",
+    "eyebrow": "Dev Zone",
+    "title": "Dev Zone",
+    "subtitle": "Um whiteboard com as ferramentas que uso todos os dias. Arraste os widgets, fixe os que quiser manter e adicione mais pelo dock. Seu layout fica salvo neste dispositivo.",
+    "empty": "Adicione um widget pelo dock abaixo",
+    "widget": {
+      "pin": "Fixar",
+      "unpin": "Desafixar",
+      "remove": "Remover widget"
+    },
+    "music": {
+      "title": "Rádio",
+      "nowPlaying": "Tocando agora",
+      "error": "Stream indisponível",
+      "previous": "Estação anterior",
+      "next": "Próxima estação",
+      "play": "Tocar",
+      "pause": "Pausar",
+      "mute": "Silenciar",
+      "unmute": "Ativar som",
+      "volume": "Volume"
+    },
+    "pomodoro": {
+      "title": "Pomodoro",
+      "workLabel": "Trabalho (min)",
+      "breakLabel": "Pausa (min)",
+      "goalLabel": "Meta / dia",
+      "save": "Salvar",
+      "cancel": "Cancelar",
+      "phaseWork": "Foco",
+      "phaseBreak": "Pausa",
+      "settings": "Ajustes",
+      "pause": "Pausar",
+      "start": "Iniciar",
+      "skip": "Pular",
+      "reset": "Reiniciar",
+      "today": "Hoje"
+    },
+    "status": {
+      "title": "Status",
+      "unavailable": "Serviço indisponível",
+      "unreachable": "Status indisponível",
+      "checking": "Verificando…",
+      "updated": "Atualizado",
+      "refresh": "Atualizar agora",
+      "openPage": "Abrir página de status"
+    },
+    "dock": {
+      "music": "Rádio",
+      "pomodoro": "Pomodoro",
+      "status": "Status",
+      "statusHint": "Adicionar um listener",
+      "added": "adicionado",
+      "reset": "Reiniciar"
+    }
   },
   "hero": {
     "eyebrow": "01 — Introdução",
@@ -344,24 +402,6 @@
     "digitalArt": "Faço arte digital e ilustrações",
     "commissions": "Já vendi cadernos, adesivos, pop sockets e até faço comissões",
     "reachOut": "Fale comigo em @rkivesofagust"
-  },
-  "chat": {
-    "placeholder": "Pergunte-me algo...",
-    "historyTitle": "Histórico do chat",
-    "clearHistory": "Limpar histórico do chat",
-    "closeHistory": "Fechar histórico",
-    "showHistory": "Mostrar histórico do chat",
-    "hideHistory": "Ocultar histórico do chat",
-    "showHistoryShort": "Mostrar histórico",
-    "hideHistoryShort": "Ocultar histórico",
-    "noHistory": "Ainda não há histórico de chat",
-    "thinking": "Pensando...",
-    "inputAriaLabel": "Campo de mensagem do chat",
-    "sendAriaLabel": "Enviar mensagem",
-    "errorLabel": "Erro:",
-    "genericError": "Ocorreu um erro",
-    "errorReply": "Desculpe, encontrei um erro: {error}",
-    "clearConfirm": "Tem certeza de que deseja limpar o histórico do chat?"
   },
   "footer": {
     "tagline": "Construindo software tranquilo e deliberado.",

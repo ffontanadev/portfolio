@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
+import DevZonePage from './pages/DevZonePage';
 import NotFoundPage from './pages/NotFoundPage';
 import { AppContextProvider } from './contexts/AppContext';
 import { I18nProvider } from './i18n';
@@ -27,6 +28,7 @@ export default function Router() {
 
               <Routes>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/dev-zone" element={<DevZonePage />} />
 
                 {/* 404 catch-all route */}
                 <Route path="*" element={<NotFoundPage />} />
