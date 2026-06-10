@@ -74,8 +74,10 @@ export default function DevZone() {
   // --- Panning (select tool, dragging empty canvas) ---------------------------
   const handleViewportPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
     if (tool !== 'select') return;
-    const target = event.target as HTMLElement;
-    if (target.closest('[data-widget="true"]')) return; // let the widget drag itself
+    // Only pan when the bare canvas background is grabbed. Capturing the pointer
+    // for clicks that land on a widget, the toolbar or the dock would swallow
+    // their click events (those targets are descendants of this viewport).
+    if (event.target !== event.currentTarget) return;
     panStateRef.current = {
       pointerId: event.pointerId,
       startX: event.clientX,
