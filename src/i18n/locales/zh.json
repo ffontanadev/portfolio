@@ -15,8 +15,7 @@
       "home": "首页",
       "work": "作品",
       "about": "关于",
-      "connect": "联系",
-      "blog": "博客"
+      "connect": "联系"
     },
     "resume": "简历",
     "viewResume": "查看简历",
@@ -40,9 +39,18 @@
       "play": "▶ 播放",
       "hold": "❚❚ 暂停",
       "activities": [
-        { "text": "El varón del tango", "detail": "Julio Sosa" },
-        { "text": "Psicología al Desnudo", "detail": "Marina Mammoliti" },
-        { "text": "Raro", "detail": "El Cuarteto De Nos" }
+        {
+          "text": "El varón del tango",
+          "detail": "Julio Sosa"
+        },
+        {
+          "text": "Psicología al Desnudo",
+          "detail": "Marina Mammoliti"
+        },
+        {
+          "text": "Raro",
+          "detail": "El Cuarteto De Nos"
+        }
       ]
     },
     "curvedText": "✱  创造  ·  编程  ·  连接  ·  "
@@ -107,9 +115,21 @@
           "description": "EFENGINE 是我最有野心的项目：一个面向 Windows、用 C++17 基于 OpenGL 3.3 Core 编写的个人 3D 游戏框架。没有编辑器、没有原生脚本、没有跨平台构建——它是一个供你编译游戏所链接的库，每个游戏都是一个链接到 efengine 的 C++ 项目。目标是掌握底层系统：手动内存管理、游戏生命周期和渲染管线，逐阶段构建。文档由 Doxygen 生成，构建由 CMake 驱动。",
           "leadSub": "我最有野心的项目",
           "phases": [
-            { "label": "阶段 0", "title": "环境搭建", "desc": "工具链、CMake 构建、项目结构与依赖配置完毕（GLFW、GLAD、GLM、Doctest）。" },
-            { "label": "阶段 1", "title": "GLFW 上下文", "desc": "创建窗口与 OpenGL 3.3 Core 上下文、基础游戏循环以及输入处理。" },
-            { "label": "阶段 2", "title": "Hello Triangle", "desc": "最小渲染管线：VBO/VAO 配置、着色器编译，以及屏幕上的第一个三角形。" }
+            {
+              "label": "阶段 0",
+              "title": "环境搭建",
+              "desc": "工具链、CMake 构建、项目结构与依赖配置完毕（GLFW、GLAD、GLM、Doctest）。"
+            },
+            {
+              "label": "阶段 1",
+              "title": "GLFW 上下文",
+              "desc": "创建窗口与 OpenGL 3.3 Core 上下文、基础游戏循环以及输入处理。"
+            },
+            {
+              "label": "阶段 2",
+              "title": "Hello Triangle",
+              "desc": "最小渲染管线：VBO/VAO 配置、着色器编译，以及屏幕上的第一个三角形。"
+            }
           ]
         },
         "bancoProvincia": {
@@ -118,11 +138,26 @@
           "role": "后端工程师",
           "description": "对支撑 Banco Provincia 核心银行集成的遗留 Axis2 SOAP 服务进行的长期现代化改造。工作内容包括将运行时从 Java 8 迁移到 Java 17 + Spring Boot 3，用受管理的 MSSQL DataSource 替换绑定 JNDI 的资源，并梳理多年来高度耦合的 Web 服务契约——同时保证下游消费者不受影响。",
           "metrics": [
-            { "label": "运行时", "value": "Java 8 → 17" },
-            { "label": "框架", "value": "Axis2 → Spring Boot 3" },
-            { "label": "持久化", "value": "JNDI → MSSQL DataSource" },
-            { "label": "领域", "value": "核心银行 SOAP 服务" },
-            { "label": "状态", "value": "进行中 · 2025 →" }
+            {
+              "label": "运行时",
+              "value": "Java 8 → 17"
+            },
+            {
+              "label": "框架",
+              "value": "Axis2 → Spring Boot 3"
+            },
+            {
+              "label": "持久化",
+              "value": "JNDI → MSSQL DataSource"
+            },
+            {
+              "label": "领域",
+              "value": "核心银行 SOAP 服务"
+            },
+            {
+              "label": "状态",
+              "value": "进行中 · 2025 →"
+            }
           ]
         },
         "bbva": {
@@ -131,11 +166,26 @@
           "role": "后端工程师",
           "description": "参与 BBVA 的内部平台，将数十个 API 服务迁移到 Spring Boot，并在整个体系中建立严谨的测试覆盖。为 50 多个内部 API 编写了单元测试和集成测试，提升了基线覆盖率，并保护未来的重构免受回归噪声的影响。",
           "metrics": [
-            { "label": "范围", "value": "50 多个内部 API" },
-            { "label": "技术栈", "value": "Spring Boot · Java 17" },
-            { "label": "测试", "value": "JUnit 5 · Mockito · Testcontainers" },
-            { "label": "成果", "value": "高覆盖率 · 可安全重构" },
-            { "label": "年份", "value": "2025" }
+            {
+              "label": "范围",
+              "value": "50 多个内部 API"
+            },
+            {
+              "label": "技术栈",
+              "value": "Spring Boot · Java 17"
+            },
+            {
+              "label": "测试",
+              "value": "JUnit 5 · Mockito · Testcontainers"
+            },
+            {
+              "label": "成果",
+              "value": "高覆盖率 · 可安全重构"
+            },
+            {
+              "label": "年份",
+              "value": "2025"
+            }
           ]
         },
         "mobileBanking": {
@@ -144,11 +194,26 @@
           "role": "移动端工程师",
           "description": "为一家受保密协议（NDA）约束的私人银行客户开发的手机银行应用，由三人团队使用 React Native + Expo 构建。后端由另一家公司交付，因此整个工作完全依据其设计规范和后端服务契约推进。我通过 Android API 实现了原生生物识别认证、会话与用户数据的安全本地持久化，并根据所提供的设计规范完成了部分 UI。",
           "metrics": [
-            { "label": "平台", "value": "React Native · Expo" },
-            { "label": "认证", "value": "Android 生物识别 API" },
-            { "label": "持久化", "value": "安全本地存储" },
-            { "label": "团队", "value": "3 名开发者" },
-            { "label": "周期", "value": "2023 → 2024" }
+            {
+              "label": "平台",
+              "value": "React Native · Expo"
+            },
+            {
+              "label": "认证",
+              "value": "Android 生物识别 API"
+            },
+            {
+              "label": "持久化",
+              "value": "安全本地存储"
+            },
+            {
+              "label": "团队",
+              "value": "3 名开发者"
+            },
+            {
+              "label": "周期",
+              "value": "2023 → 2024"
+            }
           ]
         },
         "voxel": {
@@ -201,11 +266,26 @@
     "additional": {
       "heading": "更多有趣的东西",
       "projects": {
-        "birla": { "title": "Birla Capital", "desc": "重新设计金融工具" },
-        "icamps": { "title": "ICAMPS", "desc": "为移动端带来安全" },
-        "haqdarshak": { "title": "Haqdarshak", "desc": "探索政府项目" },
-        "spotify": { "title": "Spotify", "desc": "片段与实验" },
-        "landing": { "title": "落地页", "desc": "惊喜！就是这一个" }
+        "birla": {
+          "title": "Birla Capital",
+          "desc": "重新设计金融工具"
+        },
+        "icamps": {
+          "title": "ICAMPS",
+          "desc": "为移动端带来安全"
+        },
+        "haqdarshak": {
+          "title": "Haqdarshak",
+          "desc": "探索政府项目"
+        },
+        "spotify": {
+          "title": "Spotify",
+          "desc": "片段与实验"
+        },
+        "landing": {
+          "title": "落地页",
+          "desc": "惊喜！就是这一个"
+        }
       }
     },
     "categories": {
@@ -225,16 +305,6 @@
       "keyImplementation": "关键实现"
     }
   },
-  "blogCta": {
-    "eyebrow": "§ 04 — 随笔",
-    "latestPost": "最新文章",
-    "readThePost": "阅读文章",
-    "headingBefore": "在博客上",
-    "headingEmphasis": "更多见解",
-    "headingAfter": "。",
-    "description": "关于 Web 开发、设计模式，以及构建现代数字体验背后创作过程的文章。",
-    "visitJournal": "访问博客"
-  },
   "contact": {
     "eyebrow": "§ 05 — 取得联系",
     "intro": "你都看到这里了——",
@@ -242,9 +312,21 @@
     "side": "B 面",
     "availableFor": "歌单 · 可接",
     "services": [
-      { "tag": "全 · 职", "title": "开发者职位", "note": "接受远程或搬迁。可立即到岗。" },
-      { "tag": "自由职业", "title": "按项目合作", "note": "从产品 MVP 到专注的系统工程。" },
-      { "tag": "咨询", "title": "数字化解决方案", "note": "架构、范围界定、技术审计与策略。" }
+      {
+        "tag": "全 · 职",
+        "title": "开发者职位",
+        "note": "接受远程或搬迁。可立即到岗。"
+      },
+      {
+        "tag": "自由职业",
+        "title": "按项目合作",
+        "note": "从产品 MVP 到专注的系统工程。"
+      },
+      {
+        "tag": "咨询",
+        "title": "数字化解决方案",
+        "note": "架构、范围界定、技术审计与策略。"
+      }
     ],
     "replyTime": "在线 · 约 24 小时回复",
     "closing": "……我也随时乐意聊聊音乐，或者一起试试新游戏。",
@@ -304,117 +386,13 @@
     "message": "我们找不到你要访问的页面。",
     "help": "该页面可能已被移动、删除，或者 URL 有误。请尝试返回站点中你熟悉的部分。",
     "goHome": "前往首页",
-    "viewBlog": "查看博客",
     "backToTop": "返回顶部",
     "scrollToTopAria": "滚动到顶部",
     "needHelpBefore": "需要帮助？请查看",
     "needHelpLink": "首页",
     "needHelpAfter": "以获取导航选项。"
   },
-  "blog": {
-    "common": {
-      "readingTime": "阅读约 {minutes} 分钟",
-      "byAuthor": "作者：{author}"
-    },
-    "list": {
-      "title": "博客",
-      "subtitle": "关于 Web 开发、设计与技术的思考。",
-      "allPosts": "全部文章",
-      "errorTitle": "加载文章出错",
-      "empty": "未找到博客文章。",
-      "clearFilter": "清除筛选",
-      "readMore": "阅读更多 →"
-    },
-    "post": {
-      "errorTitle": "加载文章出错",
-      "backToBlog": "返回博客",
-      "backToAllPosts": "返回所有文章"
-    }
-  },
-  "admin": {
-    "login": {
-      "title": "博客登录",
-      "subtitle": "博客管理区。",
-      "email": "邮箱",
-      "emailPlaceholder": "admin@example.com",
-      "password": "密码",
-      "passwordPlaceholder": "••••••••",
-      "signIn": "登录",
-      "signingIn": "登录中……",
-      "backToHomepage": "← 返回首页",
-      "protectedArea": "受保护区域。仅限授权访问。",
-      "unexpectedError": "发生了意外错误"
-    },
-    "dashboard": {
-      "title": "博客管理",
-      "welcome": "欢迎回来，{email}",
-      "viewSite": "查看网站",
-      "signOut": "退出登录",
-      "allPosts": "全部",
-      "published": "已发布",
-      "drafts": "草稿",
-      "newPost": "新建文章",
-      "errorTitle": "加载文章出错",
-      "table": {
-        "title": "标题",
-        "status": "状态",
-        "published": "发布于",
-        "created": "创建于",
-        "actions": "操作"
-      },
-      "statusPublished": "已发布",
-      "statusDraft": "草稿",
-      "editTitle": "编辑",
-      "publishTitle": "发布",
-      "unpublishTitle": "取消发布",
-      "deleteTitle": "删除",
-      "deleteConfirm": "确定要删除“{title}”吗？",
-      "emptyTitle": "暂无文章",
-      "emptyMessage": "从创建你的第一篇博客文章开始吧",
-      "createFirst": "创建你的第一篇文章"
-    },
-    "editor": {
-      "backToDashboard": "返回控制台",
-      "edit": "编辑",
-      "preview": "预览",
-      "saveDraft": "保存草稿",
-      "savePublish": "保存并发布",
-      "updatePublish": "更新并发布",
-      "validationError": "标题、slug、内容和作者均为必填项",
-      "saveError": "保存文章失败",
-      "untitled": "无标题文章",
-      "noContent": "*暂无内容*",
-      "basicInfo": "基本信息",
-      "additionalInfo": "附加信息",
-      "titleLabel": "标题 *",
-      "titlePlaceholder": "输入文章标题",
-      "slugLabel": "Slug *",
-      "slugHint": "（URL 友好的标识符）",
-      "slugPlaceholder": "article-url-slug",
-      "authorLabel": "作者 *",
-      "authorPlaceholder": "作者姓名",
-      "excerptLabel": "摘要",
-      "excerptHint": "（简短概要）",
-      "excerptPlaceholder": "文章的简短描述",
-      "contentLabel": "内容 *",
-      "contentHint": "（支持 Markdown）",
-      "contentPlaceholder": "用 Markdown 撰写你的文章内容……",
-      "tagsLabel": "标签",
-      "tagsHint": "（用逗号分隔）",
-      "tagsPlaceholder": "react, typescript, web 开发",
-      "featuredImageLabel": "特色图片 URL",
-      "featuredImagePlaceholder": "https://example.com/image.jpg",
-      "metaDescriptionLabel": "Meta 描述",
-      "metaDescriptionHint": "（SEO）",
-      "metaDescriptionPlaceholder": "用于搜索引擎的 SEO 描述",
-      "metaKeywordsLabel": "Meta 关键词",
-      "metaKeywordsHint": "（SEO，用逗号分隔）",
-      "metaKeywordsPlaceholder": "web 开发, 编程, 教程"
-    }
-  },
   "seo": {
-    "siteSuffix": "Portfolio",
-    "blogTitle": "博客",
-    "blogDescription": "阅读关于 Web 开发、设计与技术的文章。"
+    "siteSuffix": "Portfolio"
   }
 }

@@ -27,7 +27,6 @@ const Navigation = () => {
         { name: t('nav.links.work'), href: '#work' },
         { name: t('nav.links.about'), href: '#about' },
         { name: t('nav.links.connect'), href: '#connect' },
-        { name: t('nav.links.blog'), route: '/blog' },
     ];
 
     return (

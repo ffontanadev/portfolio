@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { SearchX, Home, BookOpen, ArrowUp } from 'lucide-react';
+import { SearchX, Home, ArrowUp } from 'lucide-react';
 import { useTranslation } from '@/i18n';
 
 export default function NotFoundPage() {
@@ -58,14 +58,6 @@ export default function NotFoundPage() {
             >
               <Home className="w-5 h-5" />
               {t('notFound.goHome')}
-            </Link>
-
-            <Link
-              to="/blog"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-cream-100 text-dark-900 font-medium rounded-lg hover:bg-cream-200 transition-colors focus:outline-none focus:ring-2 focus:ring-dark-900 focus:ring-offset-2"
-            >
-              <BookOpen className="w-5 h-5" />
-              {t('notFound.viewBlog')}
             </Link>
 
             <button
