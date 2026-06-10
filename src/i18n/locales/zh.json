@@ -37,7 +37,23 @@
       "select": "移动",
       "draw": "绘制",
       "erase": "橡皮擦",
-      "clear": "清除"
+      "clear": "清除",
+      "undo": "撤销",
+      "redo": "重做"
+    },
+    "note": {
+      "title": "便签",
+      "placeholder": "输入便签…"
+    },
+    "image": {
+      "title": "图片",
+      "unavailable": "图片不可用"
+    },
+    "zoom": {
+      "in": "放大",
+      "out": "缩小",
+      "reset": "重置缩放",
+      "fit": "重置视图"
     },
     "music": {
       "title": "电台",

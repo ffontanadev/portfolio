@@ -37,7 +37,23 @@
       "select": "Mover",
       "draw": "Desenhar",
       "erase": "Apagar",
-      "clear": "Limpar"
+      "clear": "Limpar",
+      "undo": "Desfazer",
+      "redo": "Refazer"
+    },
+    "note": {
+      "title": "Nota",
+      "placeholder": "Escreva uma nota…"
+    },
+    "image": {
+      "title": "Imagem",
+      "unavailable": "Imagem indisponível"
+    },
+    "zoom": {
+      "in": "Aproximar",
+      "out": "Afastar",
+      "reset": "Redefinir zoom",
+      "fit": "Redefinir vista"
     },
     "music": {
       "title": "Rádio",

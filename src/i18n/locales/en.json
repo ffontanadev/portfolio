@@ -37,7 +37,23 @@
       "select": "Move",
       "draw": "Draw",
       "erase": "Erase",
-      "clear": "Clear"
+      "clear": "Clear",
+      "undo": "Undo",
+      "redo": "Redo"
+    },
+    "note": {
+      "title": "Note",
+      "placeholder": "Type a note…"
+    },
+    "image": {
+      "title": "Image",
+      "unavailable": "Image unavailable"
+    },
+    "zoom": {
+      "in": "Zoom in",
+      "out": "Zoom out",
+      "reset": "Reset zoom",
+      "fit": "Reset view"
     },
     "music": {
       "title": "Radio",

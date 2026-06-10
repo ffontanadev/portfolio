@@ -6,7 +6,7 @@
  * state) is serialized to localStorage so a developer's setup survives reloads.
  */
 
-export type WidgetType = 'music' | 'pomodoro' | 'status';
+export type WidgetType = 'music' | 'pomodoro' | 'status' | 'note' | 'image';
 
 export interface WidgetInstance {
   /** Unique per instance (multiple status widgets can coexist). */
@@ -21,6 +21,13 @@ export interface WidgetInstance {
   pinned: boolean;
   /** Status widgets reference a service from the predefined registry. */
   serviceId?: string;
+  /** Note widgets carry their (editable) text content. */
+  text?: string;
+  /** Image widgets carry their pasted source as a data URL. */
+  src?: string;
+  /** Render size for image widgets, in world px. */
+  width?: number;
+  height?: number;
 }
 
 export interface DevZoneLayout {
@@ -47,12 +54,14 @@ export interface Stroke {
 }
 
 /**
- * Persisted whiteboard surface state: the pan offset of the infinite canvas and
- * every freehand stroke drawn on it. Kept separate from the widget layout so the
- * two concerns evolve (and version) independently.
+ * Persisted whiteboard surface state: the pan offset and zoom of the infinite
+ * canvas plus every freehand stroke drawn on it. Kept separate from the widget
+ * layout so the two concerns evolve (and version) independently.
  */
 export interface WhiteboardState {
   version: number;
   pan: Point;
+  /** Canvas zoom factor (1 = 100%). */
+  zoom: number;
   strokes: Stroke[];
 }

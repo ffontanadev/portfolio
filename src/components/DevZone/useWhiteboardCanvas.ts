@@ -4,8 +4,15 @@ import type { Point, Stroke, WhiteboardState } from './types';
 const STORAGE_KEY = 'portfolio.devzone.whiteboard.v1';
 const WHITEBOARD_VERSION = 1;
 
+export const MIN_ZOOM = 0.25;
+export const MAX_ZOOM = 3;
+
+export function clampZoom(zoom: number): number {
+  return Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, zoom));
+}
+
 function createDefaultState(): WhiteboardState {
-  return { version: WHITEBOARD_VERSION, pan: { x: 0, y: 0 }, strokes: [] };
+  return { version: WHITEBOARD_VERSION, pan: { x: 0, y: 0 }, zoom: 1, strokes: [] };
 }
 
 function isPoint(value: unknown): value is Point {
@@ -40,7 +47,9 @@ function readState(): WhiteboardState {
     ) {
       return createDefaultState();
     }
-    return { version: WHITEBOARD_VERSION, pan: parsed.pan, strokes: parsed.strokes };
+    // `zoom` was added after v1 shipped — default missing/invalid values to 100%.
+    const zoom = typeof parsed.zoom === 'number' ? clampZoom(parsed.zoom) : 1;
+    return { version: WHITEBOARD_VERSION, pan: parsed.pan, zoom, strokes: parsed.strokes };
   } catch {
     return createDefaultState();
   }
@@ -54,9 +63,14 @@ function makeStrokeId(): string {
 
 export interface WhiteboardApi {
   pan: Point;
+  zoom: number;
   strokes: Stroke[];
   setPan: (pan: Point) => void;
+  /** Set pan and zoom together (used by wheel zoom to stay atomic). */
+  setView: (pan: Point, zoom: number) => void;
   addStroke: (stroke: Omit<Stroke, 'id'>) => void;
+  /** Replace the whole stroke list (used by undo/redo). */
+  setStrokes: (strokes: Stroke[]) => void;
   /** Remove any stroke passing within `radius` (world units) of the point. */
   eraseAt: (point: Point, radius: number) => void;
   clearStrokes: () => void;
@@ -85,12 +99,25 @@ export function useWhiteboardCanvas(): WhiteboardApi {
     setState((prev) => (prev.pan.x === pan.x && prev.pan.y === pan.y ? prev : { ...prev, pan }));
   }, []);
 
+  const setView = useCallback((pan: Point, zoom: number) => {
+    const clamped = clampZoom(zoom);
+    setState((prev) =>
+      prev.pan.x === pan.x && prev.pan.y === pan.y && prev.zoom === clamped
+        ? prev
+        : { ...prev, pan, zoom: clamped },
+    );
+  }, []);
+
   const addStroke = useCallback((stroke: Omit<Stroke, 'id'>) => {
     if (stroke.points.length === 0) return;
     setState((prev) => ({
       ...prev,
       strokes: [...prev.strokes, { ...stroke, id: makeStrokeId() }],
     }));
+  }, []);
+
+  const setStrokes = useCallback((strokes: Stroke[]) => {
+    setState((prev) => (prev.strokes === strokes ? prev : { ...prev, strokes }));
   }, []);
 
   const eraseAt = useCallback((point: Point, radius: number) => {
@@ -112,14 +139,21 @@ export function useWhiteboardCanvas(): WhiteboardApi {
   }, []);
 
   const resetView = useCallback(() => {
-    setState((prev) => (prev.pan.x === 0 && prev.pan.y === 0 ? prev : { ...prev, pan: { x: 0, y: 0 } }));
+    setState((prev) =>
+      prev.pan.x === 0 && prev.pan.y === 0 && prev.zoom === 1
+        ? prev
+        : { ...prev, pan: { x: 0, y: 0 }, zoom: 1 },
+    );
   }, []);
 
   return {
     pan: state.pan,
+    zoom: state.zoom,
     strokes: state.strokes,
     setPan,
+    setView,
     addStroke,
+    setStrokes,
     eraseAt,
     clearStrokes,
     resetView,

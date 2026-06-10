@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import { motion, useDragControls, useMotionValue } from 'framer-motion';
 import { GripVertical, Pin, PinOff, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -45,6 +45,13 @@ export default function Widget({
   const y = useMotionValue(instance.y);
   const dragControls = useDragControls();
   const draggable = interactive && !instance.pinned;
+
+  // Keep the drag motion values in sync when the position changes from outside a
+  // drag (undo/redo, layout restore). A no-op when the values already match.
+  useEffect(() => {
+    if (x.get() !== instance.x) x.set(instance.x);
+    if (y.get() !== instance.y) y.set(instance.y);
+  }, [instance.x, instance.y, x, y]);
 
   return (
     <motion.div
