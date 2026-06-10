@@ -30,8 +30,8 @@ export const STATUS_SERVICES: StatusService[] = [
     id: 'anthropic',
     name: 'Anthropic',
     provider: 'statuspage',
-    statusUrl: 'https://status.anthropic.com/api/v2/status.json',
-    homepage: 'https://status.anthropic.com',
+    statusUrl: 'https://status.claude.com/api/v2/status.json',
+    homepage: 'https://status.claude.com',
     accent: '#D97757',
   },
   {
