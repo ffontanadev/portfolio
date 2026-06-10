@@ -19,7 +19,65 @@
     },
     "resume": "Resume",
     "viewResume": "View Resume",
-    "toggleMenu": "Toggle menu"
+    "toggleMenu": "Toggle menu",
+    "devZone": "Dev Zone"
+  },
+  "devZone": {
+    "back": "Back to portfolio",
+    "eyebrow": "Dev Zone",
+    "title": "Dev Zone",
+    "subtitle": "A draggable whiteboard of the tools I reach for daily. Drag widgets around, pin the ones you want to keep, and add more from the dock. Your layout is saved on this device.",
+    "empty": "Add a widget from the dock below",
+    "widget": {
+      "pin": "Pin in place",
+      "unpin": "Unpin",
+      "remove": "Remove widget"
+    },
+    "music": {
+      "title": "Radio",
+      "nowPlaying": "Now playing",
+      "error": "Stream unavailable",
+      "previous": "Previous station",
+      "next": "Next station",
+      "play": "Play",
+      "pause": "Pause",
+      "mute": "Mute",
+      "unmute": "Unmute",
+      "volume": "Volume"
+    },
+    "pomodoro": {
+      "title": "Pomodoro",
+      "workLabel": "Work (min)",
+      "breakLabel": "Break (min)",
+      "goalLabel": "Goal / day",
+      "save": "Save",
+      "cancel": "Cancel",
+      "phaseWork": "Focus",
+      "phaseBreak": "Break",
+      "settings": "Settings",
+      "pause": "Pause",
+      "start": "Start",
+      "skip": "Skip",
+      "reset": "Reset",
+      "today": "Today"
+    },
+    "status": {
+      "title": "Status",
+      "unavailable": "Service unavailable",
+      "unreachable": "Status unreachable",
+      "checking": "Checking…",
+      "updated": "Updated",
+      "refresh": "Refresh now",
+      "openPage": "Open status page"
+    },
+    "dock": {
+      "music": "Radio",
+      "pomodoro": "Pomodoro",
+      "status": "Status",
+      "statusHint": "Add a listener",
+      "added": "added",
+      "reset": "Reset"
+    }
   },
   "hero": {
     "eyebrow": "01 — Introduction",

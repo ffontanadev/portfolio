@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
+import { Terminal } from 'lucide-react';
 import { MenuIcon } from '@/components/ui/menu';
 import { XIcon } from '@/components/ui/x';
 import { useAppContext } from '@/contexts/AppContext';
@@ -77,6 +78,13 @@ const Navigation = () => {
                             </div>
                         ))}
                         <LanguageSwitcher />
+                        <Link
+                            to="/dev-zone"
+                            className="group flex items-center gap-2 rounded-full border border-dark-900/15 px-4 py-2.5 text-sm font-medium text-dark-900 transition-colors duration-300 hover:border-coral-500 hover:text-coral-500"
+                        >
+                            <Terminal size={15} />
+                            {t('nav.devZone')}
+                        </Link>
                         <button
                             onClick={openResume}
                             className="group relative overflow-hidden px-6 py-2.5 rounded-full font-medium text-sm bg-dark-900 text-cream-50 cursor-pointer"
@@ -141,6 +149,20 @@ const Navigation = () => {
                                     )}
                                 </motion.div>
                             ))}
+                            <motion.div
+                                initial={{ opacity: 0, y: 12 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.3, duration: 0.5 }}
+                            >
+                                <Link
+                                    to="/dev-zone"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="mt-6 flex items-center gap-2 rounded-full border border-dark-900/15 px-8 py-3 text-lg font-medium text-dark-900"
+                                >
+                                    <Terminal size={18} />
+                                    {t('nav.devZone')}
+                                </Link>
+                            </motion.div>
                             <motion.button
                                 initial={{ opacity: 0, y: 12 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -149,7 +171,7 @@ const Navigation = () => {
                                     openResume();
                                     setIsMobileMenuOpen(false);
                                 }}
-                                className="mt-6 px-8 py-3 bg-dark-900 text-cream-50 rounded-full text-lg font-medium cursor-pointer"
+                                className="mt-2 px-8 py-3 bg-dark-900 text-cream-50 rounded-full text-lg font-medium cursor-pointer"
                             >
                                 {t('nav.viewResume')}
                             </motion.button>

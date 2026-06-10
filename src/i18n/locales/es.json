@@ -19,7 +19,65 @@
     },
     "resume": "CV",
     "viewResume": "Ver CV",
-    "toggleMenu": "Abrir menú"
+    "toggleMenu": "Abrir menú",
+    "devZone": "Dev Zone"
+  },
+  "devZone": {
+    "back": "Volver al portafolio",
+    "eyebrow": "Dev Zone",
+    "title": "Dev Zone",
+    "subtitle": "Un whiteboard con las herramientas que uso a diario. Arrastrá los widgets, anclá los que quieras mantener y agregá más desde el dock. Tu disposición se guarda en este dispositivo.",
+    "empty": "Agregá un widget desde el dock",
+    "widget": {
+      "pin": "Anclar",
+      "unpin": "Desanclar",
+      "remove": "Quitar widget"
+    },
+    "music": {
+      "title": "Radio",
+      "nowPlaying": "Sonando ahora",
+      "error": "Stream no disponible",
+      "previous": "Estación anterior",
+      "next": "Estación siguiente",
+      "play": "Reproducir",
+      "pause": "Pausar",
+      "mute": "Silenciar",
+      "unmute": "Activar sonido",
+      "volume": "Volumen"
+    },
+    "pomodoro": {
+      "title": "Pomodoro",
+      "workLabel": "Trabajo (min)",
+      "breakLabel": "Pausa (min)",
+      "goalLabel": "Meta / día",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "phaseWork": "Enfoque",
+      "phaseBreak": "Pausa",
+      "settings": "Ajustes",
+      "pause": "Pausar",
+      "start": "Iniciar",
+      "skip": "Saltar",
+      "reset": "Reiniciar",
+      "today": "Hoy"
+    },
+    "status": {
+      "title": "Estado",
+      "unavailable": "Servicio no disponible",
+      "unreachable": "Estado no disponible",
+      "checking": "Comprobando…",
+      "updated": "Actualizado",
+      "refresh": "Actualizar ahora",
+      "openPage": "Abrir página de estado"
+    },
+    "dock": {
+      "music": "Radio",
+      "pomodoro": "Pomodoro",
+      "status": "Estado",
+      "statusHint": "Agregar un listener",
+      "added": "agregado",
+      "reset": "Reiniciar"
+    }
   },
   "hero": {
     "eyebrow": "01 — Introducción",

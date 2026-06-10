@@ -19,7 +19,65 @@
     },
     "resume": "简历",
     "viewResume": "查看简历",
-    "toggleMenu": "打开菜单"
+    "toggleMenu": "打开菜单",
+    "devZone": "开发专区"
+  },
+  "devZone": {
+    "back": "返回作品集",
+    "eyebrow": "开发专区",
+    "title": "开发专区",
+    "subtitle": "一个可拖拽的白板，集合了我每天常用的工具。拖动小组件，固定你想保留的，并从底部工具栏添加更多。布局会保存在本设备上。",
+    "empty": "从下方工具栏添加小组件",
+    "widget": {
+      "pin": "固定",
+      "unpin": "取消固定",
+      "remove": "移除小组件"
+    },
+    "music": {
+      "title": "电台",
+      "nowPlaying": "正在播放",
+      "error": "无法播放",
+      "previous": "上一个电台",
+      "next": "下一个电台",
+      "play": "播放",
+      "pause": "暂停",
+      "mute": "静音",
+      "unmute": "取消静音",
+      "volume": "音量"
+    },
+    "pomodoro": {
+      "title": "番茄钟",
+      "workLabel": "工作（分钟）",
+      "breakLabel": "休息（分钟）",
+      "goalLabel": "每日目标",
+      "save": "保存",
+      "cancel": "取消",
+      "phaseWork": "专注",
+      "phaseBreak": "休息",
+      "settings": "设置",
+      "pause": "暂停",
+      "start": "开始",
+      "skip": "跳过",
+      "reset": "重置",
+      "today": "今天"
+    },
+    "status": {
+      "title": "状态",
+      "unavailable": "服务不可用",
+      "unreachable": "无法获取状态",
+      "checking": "检查中…",
+      "updated": "更新于",
+      "refresh": "立即刷新",
+      "openPage": "打开状态页"
+    },
+    "dock": {
+      "music": "电台",
+      "pomodoro": "番茄钟",
+      "status": "状态",
+      "statusHint": "添加监听器",
+      "added": "已添加",
+      "reset": "重置"
+    }
   },
   "hero": {
     "eyebrow": "01 — 简介",
