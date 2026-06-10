@@ -403,24 +403,6 @@
     "commissions": "He vendido cuadernos, stickers, pop sockets e incluso hago comisiones",
     "reachOut": "Escríbeme en @rkivesofagust"
   },
-  "chat": {
-    "placeholder": "Pregúntame algo...",
-    "historyTitle": "Historial de chat",
-    "clearHistory": "Borrar historial de chat",
-    "closeHistory": "Cerrar historial",
-    "showHistory": "Mostrar historial de chat",
-    "hideHistory": "Ocultar historial de chat",
-    "showHistoryShort": "Mostrar historial",
-    "hideHistoryShort": "Ocultar historial",
-    "noHistory": "Aún no hay historial de chat",
-    "thinking": "Pensando...",
-    "inputAriaLabel": "Campo de mensaje del chat",
-    "sendAriaLabel": "Enviar mensaje",
-    "errorLabel": "Error:",
-    "genericError": "Ocurrió un error",
-    "errorReply": "Lo siento, encontré un error: {error}",
-    "clearConfirm": "¿Seguro que quieres borrar el historial de chat?"
-  },
   "footer": {
     "tagline": "Construyendo software tranquilo y deliberado.",
     "links": {

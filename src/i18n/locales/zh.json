@@ -403,24 +403,6 @@
     "commissions": "我卖过笔记本、贴纸、手机气囊支架，甚至接受约稿",
     "reachOut": "在 @rkivesofagust 联系我"
   },
-  "chat": {
-    "placeholder": "问我点什么……",
-    "historyTitle": "聊天记录",
-    "clearHistory": "清除聊天记录",
-    "closeHistory": "关闭记录",
-    "showHistory": "显示聊天记录",
-    "hideHistory": "隐藏聊天记录",
-    "showHistoryShort": "显示记录",
-    "hideHistoryShort": "隐藏记录",
-    "noHistory": "暂无聊天记录",
-    "thinking": "思考中……",
-    "inputAriaLabel": "聊天消息输入框",
-    "sendAriaLabel": "发送消息",
-    "errorLabel": "错误：",
-    "genericError": "发生了错误",
-    "errorReply": "抱歉，我遇到了一个错误：{error}",
-    "clearConfirm": "确定要清除聊天记录吗？"
-  },
   "footer": {
     "tagline": "打造沉静而审慎的软件。",
     "links": {

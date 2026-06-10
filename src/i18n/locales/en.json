@@ -403,24 +403,6 @@
     "commissions": "I've sold notebooks, stickers, pop sockets and even do commissions",
     "reachOut": "Reach out on @rkivesofagust"
   },
-  "chat": {
-    "placeholder": "Ask me something...",
-    "historyTitle": "Chat History",
-    "clearHistory": "Clear chat history",
-    "closeHistory": "Close history",
-    "showHistory": "Show chat history",
-    "hideHistory": "Hide chat history",
-    "showHistoryShort": "Show history",
-    "hideHistoryShort": "Hide history",
-    "noHistory": "No chat history yet",
-    "thinking": "Thinking...",
-    "inputAriaLabel": "Chat message input",
-    "sendAriaLabel": "Send message",
-    "errorLabel": "Error:",
-    "genericError": "An error occurred",
-    "errorReply": "Sorry, I encountered an error: {error}",
-    "clearConfirm": "Are you sure you want to clear the chat history?"
-  },
   "footer": {
     "tagline": "Building quiet, deliberate software.",
     "links": {
