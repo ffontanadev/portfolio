@@ -13,7 +13,7 @@ export default function ZoomControls({ zoom, onZoomIn, onZoomOut, onReset }: Zoo
   const { t } = useTranslation();
 
   return (
-    <div data-no-zoom className="pointer-events-none fixed right-5 bottom-5 z-40 flex justify-end">
+    <div data-no-zoom className="pointer-events-none fixed right-5 bottom-5 z-40 hidden justify-end sm:flex">
       <div className="glass-card pointer-events-auto flex items-center gap-0.5 rounded-full px-1.5 py-1.5">
         <button
           type="button"

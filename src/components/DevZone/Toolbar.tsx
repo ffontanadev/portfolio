@@ -40,7 +40,7 @@ export default function Toolbar({
   return (
     <div
       data-no-zoom
-      className="pointer-events-none fixed inset-x-0 top-5 z-40 flex flex-col items-center gap-2 px-4"
+      className="pointer-events-none fixed inset-x-0 top-5 z-40 hidden flex-col items-center gap-2 px-4 sm:flex"
     >
       <div className="glass-card pointer-events-auto flex items-center gap-1 rounded-full px-2 py-2">
         <ToolButton

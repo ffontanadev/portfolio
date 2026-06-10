@@ -55,6 +55,13 @@
       "reset": "Reset zoom",
       "fit": "Reset view"
     },
+    "menu": {
+      "open": "Open controls",
+      "close": "Close controls",
+      "tools": "Tools",
+      "zoom": "Zoom",
+      "widgets": "Widgets"
+    },
     "music": {
       "title": "Radio",
       "nowPlaying": "Now playing",

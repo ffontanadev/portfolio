@@ -3,6 +3,7 @@ import { motion, useDragControls, useMotionValue } from 'framer-motion';
 import { GripVertical, Pin, PinOff, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useTranslation } from '@/i18n';
+import { useIsMobile } from '@/hooks/useIsMobile';
 import type { WidgetInstance } from './types';
 
 interface WidgetFrameProps {
@@ -41,10 +42,14 @@ export default function Widget({
   children,
 }: WidgetFrameProps) {
   const { t } = useTranslation();
+  const isMobile = useIsMobile();
   const x = useMotionValue(instance.x);
   const y = useMotionValue(instance.y);
   const dragControls = useDragControls();
   const draggable = interactive && !instance.pinned;
+  // Widgets are sized for the desktop board; scale them down on phones so they
+  // don't swallow the viewport. framer composes this with the drag x/y.
+  const scale = isMobile ? 0.78 : 1;
 
   // Keep the drag motion values in sync when the position changes from outside a
   // drag (undo/redo, layout restore). A no-op when the values already match.
@@ -56,7 +61,7 @@ export default function Widget({
   return (
     <motion.div
       data-widget="true"
-      style={{ x, y, zIndex: instance.z, touchAction: 'none' }}
+      style={{ x, y, scale, transformOrigin: 'top left', zIndex: instance.z, touchAction: 'none' }}
       drag={draggable}
       dragControls={dragControls}
       dragListener={false}

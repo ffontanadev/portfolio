@@ -10,6 +10,7 @@ import { useHistory, type Snapshot } from './useHistory';
 import Dock from './Dock';
 import Toolbar, { PEN_COLORS } from './Toolbar';
 import ZoomControls from './ZoomControls';
+import MobileControls from './MobileControls';
 import MusicPlayerWidget from './widgets/MusicPlayerWidget';
 import PomodoroWidget from './widgets/PomodoroWidget';
 import StatusListenerWidget from './widgets/StatusListenerWidget';
@@ -455,6 +456,27 @@ export default function DevZone() {
       <Dock
         onAdd={addWidget}
         onReset={resetLayout}
+        activeServiceIds={activeServiceIds}
+        hasMusic={hasMusic}
+        hasPomodoro={hasPomodoro}
+      />
+
+      <MobileControls
+        tool={tool}
+        color={color}
+        onToolChange={setTool}
+        onColorChange={setColor}
+        onClear={clearStrokes}
+        onUndo={undo}
+        onRedo={redo}
+        canUndo={canUndo}
+        canRedo={canRedo}
+        zoom={zoom}
+        onZoomIn={() => zoomFromButton(ZOOM_STEP)}
+        onZoomOut={() => zoomFromButton(1 / ZOOM_STEP)}
+        onResetView={resetView}
+        onAdd={addWidget}
+        onResetLayout={resetLayout}
         activeServiceIds={activeServiceIds}
         hasMusic={hasMusic}
         hasPomodoro={hasPomodoro}

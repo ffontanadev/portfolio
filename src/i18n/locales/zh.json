@@ -55,6 +55,13 @@
       "reset": "重置缩放",
       "fit": "重置视图"
     },
+    "menu": {
+      "open": "打开控件",
+      "close": "关闭控件",
+      "tools": "工具",
+      "zoom": "缩放",
+      "widgets": "小组件"
+    },
     "music": {
       "title": "电台",
       "nowPlaying": "正在播放",

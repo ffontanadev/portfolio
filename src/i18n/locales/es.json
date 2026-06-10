@@ -55,6 +55,13 @@
       "reset": "Restablecer zoom",
       "fit": "Restablecer vista"
     },
+    "menu": {
+      "open": "Abrir controles",
+      "close": "Cerrar controles",
+      "tools": "Herramientas",
+      "zoom": "Zoom",
+      "widgets": "Widgets"
+    },
     "music": {
       "title": "Radio",
       "nowPlaying": "Sonando ahora",

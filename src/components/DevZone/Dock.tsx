@@ -46,7 +46,7 @@ export default function Dock({
   return (
     <div
       data-no-zoom
-      className="pointer-events-none fixed inset-x-0 bottom-5 z-50 flex justify-center px-4"
+      className="pointer-events-none fixed inset-x-0 bottom-5 z-50 hidden justify-center px-4 sm:flex"
     >
       <div className="glass-card pointer-events-auto flex items-center gap-1 rounded-full px-2 py-2">
         <DockButton
