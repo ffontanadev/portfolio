@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { LinkedinIcon } from '@/components/ui/linkedin';
-import { TwitterIcon } from '@/components/ui/twitter';
 import { DownloadIcon } from '@/components/ui/download';
 import { useAppContext } from '@/contexts/AppContext';
 import { useTranslation } from '@/i18n';
