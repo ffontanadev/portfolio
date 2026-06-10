@@ -4,20 +4,35 @@ import type { DevZoneLayout, WidgetInstance, WidgetType } from './types';
 const STORAGE_KEY = 'portfolio.devzone.layout.v1';
 const LAYOUT_VERSION = 1;
 
-/** Sensible starting board for first-time visitors. */
+/**
+ * Sensible starting board for first-time visitors. On narrow (phone) viewports
+ * the three default widgets stack in a single readable column instead of running
+ * off the right edge; on wider screens they sit side by side.
+ */
 function createDefaultLayout(): DevZoneLayout {
+  const isNarrow = typeof window !== 'undefined' && window.innerWidth < 768;
+  const [music, pomodoro, status] = isNarrow
+    ? [
+        { x: 16, y: 16 },
+        { x: 16, y: 250 },
+        { x: 16, y: 484 },
+      ]
+    : [
+        { x: 32, y: 32 },
+        { x: 372, y: 32 },
+        { x: 712, y: 32 },
+      ];
   return {
     version: LAYOUT_VERSION,
     zCounter: 3,
     widgets: [
-      { id: 'music-default', type: 'music', x: 32, y: 32, z: 1, pinned: false },
-      { id: 'pomodoro-default', type: 'pomodoro', x: 372, y: 32, z: 2, pinned: false },
+      { id: 'music-default', type: 'music', ...music, z: 1, pinned: false },
+      { id: 'pomodoro-default', type: 'pomodoro', ...pomodoro, z: 2, pinned: false },
       {
         id: 'status-anthropic-default',
         type: 'status',
         serviceId: 'anthropic',
-        x: 712,
-        y: 32,
+        ...status,
         z: 3,
         pinned: false,
       },

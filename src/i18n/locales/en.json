@@ -33,6 +33,12 @@
       "unpin": "Unpin",
       "remove": "Remove widget"
     },
+    "toolbar": {
+      "select": "Move",
+      "draw": "Draw",
+      "erase": "Erase",
+      "clear": "Clear"
+    },
     "music": {
       "title": "Radio",
       "nowPlaying": "Now playing",

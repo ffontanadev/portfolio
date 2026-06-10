@@ -16,7 +16,7 @@ import { DEFAULT_STATION_ID, RADIO_STATIONS } from '../data/radioStations';
 
 interface MusicWidgetProps {
   instance: WidgetInstance;
-  canvasRef: React.RefObject<HTMLDivElement | null>;
+  interactive?: boolean;
   onMove: (id: string, x: number, y: number) => void;
   onFocus: (id: string) => void;
   onTogglePin: (id: string) => void;

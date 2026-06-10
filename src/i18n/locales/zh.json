@@ -33,6 +33,12 @@
       "unpin": "取消固定",
       "remove": "移除小组件"
     },
+    "toolbar": {
+      "select": "移动",
+      "draw": "绘制",
+      "erase": "橡皮擦",
+      "clear": "清除"
+    },
     "music": {
       "title": "电台",
       "nowPlaying": "正在播放",

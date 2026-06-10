@@ -28,3 +28,31 @@ export interface DevZoneLayout {
   zCounter: number;
   widgets: WidgetInstance[];
 }
+
+/** A 2D point in world (canvas) coordinates. */
+export interface Point {
+  x: number;
+  y: number;
+}
+
+/** Active interaction mode for the whiteboard surface. */
+export type CanvasTool = 'select' | 'draw' | 'erase';
+
+/** A single freehand pen stroke, captured in world coordinates. */
+export interface Stroke {
+  id: string;
+  color: string;
+  width: number;
+  points: Point[];
+}
+
+/**
+ * Persisted whiteboard surface state: the pan offset of the infinite canvas and
+ * every freehand stroke drawn on it. Kept separate from the widget layout so the
+ * two concerns evolve (and version) independently.
+ */
+export interface WhiteboardState {
+  version: number;
+  pan: Point;
+  strokes: Stroke[];
+}
