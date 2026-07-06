@@ -33,7 +33,7 @@ export default function StatusListenerWidget(props: StatusWidgetProps) {
   if (!service) {
     return (
       <Widget {...props} title={t('devZone.status.title')} icon={<Activity size={14} />}>
-        <p className="text-sm text-dark-900/50">{t('devZone.status.unavailable')}</p>
+        <p className="text-sm text-dark-900/50 dark:text-cream-50/50">{t('devZone.status.unavailable')}</p>
       </Widget>
     );
   }
@@ -83,17 +83,17 @@ function StatusBody({
         </span>
         <div className="min-w-0 flex-1">
           {isPending ? (
-            <span className="inline-flex items-center gap-1.5 text-sm text-dark-900/50">
+            <span className="inline-flex items-center gap-1.5 text-sm text-dark-900/50 dark:text-cream-50/50">
               <Loader2 size={13} className="animate-spin" />
               {t('devZone.status.checking')}
             </span>
           ) : (
-            <p className="text-sm leading-snug text-dark-900">{description}</p>
+            <p className="text-sm leading-snug text-dark-900 dark:text-cream-50">{description}</p>
           )}
         </div>
       </div>
 
-      <div className="mt-3 flex items-center justify-between border-t border-dark-900/10 pt-2 font-mono text-[10px] text-dark-900/40">
+      <div className="mt-3 flex items-center justify-between border-t border-dark-900/10 dark:border-cream-50/10 pt-2 font-mono text-[10px] text-dark-900/40 dark:text-cream-50/40">
         <span>
           {t('devZone.status.updated')} {updatedLabel}
         </span>
@@ -101,7 +101,7 @@ function StatusBody({
           <button
             type="button"
             onClick={() => refetch()}
-            className="rounded p-1 transition-colors hover:bg-dark-900/5 hover:text-dark-900"
+            className="rounded p-1 transition-colors hover:bg-dark-900/5 hover:text-dark-900 dark:hover:bg-cream-50/10 dark:hover:text-cream-50"
             aria-label={t('devZone.status.refresh')}
           >
             <RefreshCw size={12} className={cn(isFetching && 'animate-spin')} />
@@ -110,7 +110,7 @@ function StatusBody({
             href={service.homepage}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded p-1 transition-colors hover:bg-dark-900/5 hover:text-dark-900"
+            className="rounded p-1 transition-colors hover:bg-dark-900/5 hover:text-dark-900 dark:hover:bg-cream-50/10 dark:hover:text-cream-50"
             aria-label={t('devZone.status.openPage')}
           >
             <ExternalLink size={12} />

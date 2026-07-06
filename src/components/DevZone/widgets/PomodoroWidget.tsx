@@ -54,7 +54,7 @@ export default function PomodoroWidget(props: PomodoroWidgetProps) {
             ] as const
           ).map((field) => (
             <label key={field.key} className="flex items-center justify-between gap-3 text-sm">
-              <span className="text-dark-900/70">{field.label}</span>
+              <span className="text-dark-900/70 dark:text-cream-50/70">{field.label}</span>
               <input
                 type="number"
                 min={field.min}
@@ -63,7 +63,7 @@ export default function PomodoroWidget(props: PomodoroWidgetProps) {
                 onChange={(event) =>
                   setDraft((d) => ({ ...d, [field.key]: Number(event.target.value) }))
                 }
-                className="w-16 rounded-lg border border-dark-900/15 bg-white/60 px-2 py-1 text-right font-mono text-sm text-dark-900 focus:border-coral-500 focus:outline-none"
+                className="w-16 rounded-lg border border-dark-900/15 bg-white/60 px-2 py-1 text-right font-mono text-sm text-dark-900 focus:border-coral-500 focus:outline-none dark:border-cream-50/15 dark:bg-cream-50/10 dark:text-cream-50"
               />
             </label>
           ))}
@@ -71,14 +71,14 @@ export default function PomodoroWidget(props: PomodoroWidgetProps) {
             <button
               type="button"
               onClick={saveSettings}
-              className="flex-1 rounded-lg bg-dark-900 px-3 py-2 text-sm font-medium text-cream-50 transition-colors hover:bg-coral-500"
+              className="flex-1 rounded-lg bg-dark-900 px-3 py-2 text-sm font-medium text-cream-50 transition-colors hover:bg-coral-500 dark:bg-cream-50 dark:text-dark-900 dark:hover:bg-coral-500 dark:hover:text-cream-50"
             >
               {t('devZone.pomodoro.save')}
             </button>
             <button
               type="button"
               onClick={() => setShowSettings(false)}
-              className="rounded-lg border border-dark-900/15 px-3 py-2 text-sm text-dark-900/70 transition-colors hover:bg-dark-900/5"
+              className="rounded-lg border border-dark-900/15 px-3 py-2 text-sm text-dark-900/70 transition-colors hover:bg-dark-900/5 dark:border-cream-50/15 dark:text-cream-50/70 dark:hover:bg-cream-50/10"
             >
               {t('devZone.pomodoro.cancel')}
             </button>
@@ -102,18 +102,18 @@ export default function PomodoroWidget(props: PomodoroWidgetProps) {
             <button
               type="button"
               onClick={openSettings}
-              className="rounded-md p-1 text-dark-900/40 transition-colors hover:bg-dark-900/5 hover:text-dark-900"
+              className="rounded-md p-1 text-dark-900/40 transition-colors hover:bg-dark-900/5 hover:text-dark-900 dark:text-cream-50/40 dark:hover:bg-cream-50/10 dark:hover:text-cream-50"
               aria-label={t('devZone.pomodoro.settings')}
             >
               <Settings size={15} />
             </button>
           </div>
 
-          <p className="my-2 text-center font-mono text-5xl font-semibold tabular-nums text-dark-900">
+          <p className="my-2 text-center font-mono text-5xl font-semibold tabular-nums text-dark-900 dark:text-cream-50">
             {formatTime(pomodoro.secondsLeft)}
           </p>
 
-          <div className="mb-3 h-1 w-full overflow-hidden rounded-full bg-dark-900/10">
+          <div className="mb-3 h-1 w-full overflow-hidden rounded-full bg-dark-900/10 dark:bg-cream-50/15">
             <div
               className={cn(
                 'h-full rounded-full transition-[width] duration-1000 ease-linear',
@@ -127,7 +127,7 @@ export default function PomodoroWidget(props: PomodoroWidgetProps) {
             <button
               type="button"
               onClick={pomodoro.toggle}
-              className="flex size-11 items-center justify-center rounded-full bg-dark-900 text-cream-50 transition-transform hover:scale-105 active:scale-95"
+              className="flex size-11 items-center justify-center rounded-full bg-dark-900 text-cream-50 transition-transform hover:scale-105 active:scale-95 dark:bg-cream-50 dark:text-dark-900"
               aria-label={pomodoro.isRunning ? t('devZone.pomodoro.pause') : t('devZone.pomodoro.start')}
             >
               {pomodoro.isRunning ? <Pause size={18} /> : <Play size={18} className="translate-x-0.5" />}
@@ -135,7 +135,7 @@ export default function PomodoroWidget(props: PomodoroWidgetProps) {
             <button
               type="button"
               onClick={pomodoro.skip}
-              className="rounded-full p-2 text-dark-900/60 transition-colors hover:bg-dark-900/5 hover:text-dark-900"
+              className="rounded-full p-2 text-dark-900/60 transition-colors hover:bg-dark-900/5 hover:text-dark-900 dark:text-cream-50/60 dark:hover:bg-cream-50/10 dark:hover:text-cream-50"
               aria-label={t('devZone.pomodoro.skip')}
             >
               <SkipForward size={18} />
@@ -143,15 +143,15 @@ export default function PomodoroWidget(props: PomodoroWidgetProps) {
             <button
               type="button"
               onClick={pomodoro.reset}
-              className="rounded-full p-2 text-dark-900/60 transition-colors hover:bg-dark-900/5 hover:text-dark-900"
+              className="rounded-full p-2 text-dark-900/60 transition-colors hover:bg-dark-900/5 hover:text-dark-900 dark:text-cream-50/60 dark:hover:bg-cream-50/10 dark:hover:text-cream-50"
               aria-label={t('devZone.pomodoro.reset')}
             >
               <RotateCcw size={18} />
             </button>
           </div>
 
-          <div className="mt-4 border-t border-dark-900/10 pt-3">
-            <div className="mb-1.5 flex items-center justify-between font-mono text-[10px] tracking-widest text-dark-900/40 uppercase">
+          <div className="mt-4 border-t border-dark-900/10 dark:border-cream-50/10 pt-3">
+            <div className="mb-1.5 flex items-center justify-between font-mono text-[10px] tracking-widest text-dark-900/40 dark:text-cream-50/40 uppercase">
               <span>{t('devZone.pomodoro.today')}</span>
               <span className={cn(pomodoro.goalReached && 'text-teal-700')}>
                 {pomodoro.completedToday}/{pomodoro.config.dailyGoal}
@@ -164,7 +164,7 @@ export default function PomodoroWidget(props: PomodoroWidgetProps) {
                   key={index}
                   className={cn(
                     'size-2.5 rounded-full',
-                    index < pomodoro.completedToday ? 'bg-coral-500' : 'bg-dark-900/12',
+                    index < pomodoro.completedToday ? 'bg-coral-500' : 'bg-dark-900/12 dark:bg-cream-50/15',
                   )}
                 />
               ))}

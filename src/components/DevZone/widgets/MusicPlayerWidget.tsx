@@ -148,13 +148,13 @@ export default function MusicPlayerWidget(props: MusicWidgetProps) {
       />
 
       <div className="mb-3">
-        <p className="font-mono text-[10px] tracking-widest text-dark-900/40 uppercase">
+        <p className="font-mono text-[10px] tracking-widest text-dark-900/40 dark:text-cream-50/40 uppercase">
           {t('devZone.music.nowPlaying')}
         </p>
-        <p className="truncate font-display text-lg leading-tight font-semibold text-dark-900">
+        <p className="truncate font-display text-lg leading-tight font-semibold text-dark-900 dark:text-cream-50">
           {station.name}
         </p>
-        <p className="truncate text-xs text-dark-900/50">
+        <p className="truncate text-xs text-dark-900/50 dark:text-cream-50/50">
           {hasError ? t('devZone.music.error') : station.description}
         </p>
       </div>
@@ -163,7 +163,7 @@ export default function MusicPlayerWidget(props: MusicWidgetProps) {
         <button
           type="button"
           onClick={() => changeStation(-1)}
-          className="rounded-full p-2 text-dark-900/60 transition-colors hover:bg-dark-900/5 hover:text-dark-900"
+          className="rounded-full p-2 text-dark-900/60 transition-colors hover:bg-dark-900/5 hover:text-dark-900 dark:text-cream-50/60 dark:hover:bg-cream-50/10 dark:hover:text-cream-50"
           aria-label={t('devZone.music.previous')}
         >
           <SkipBack size={18} />
@@ -171,7 +171,7 @@ export default function MusicPlayerWidget(props: MusicWidgetProps) {
         <button
           type="button"
           onClick={togglePlay}
-          className="flex size-11 items-center justify-center rounded-full bg-dark-900 text-cream-50 transition-transform hover:scale-105 active:scale-95"
+          className="flex size-11 items-center justify-center rounded-full bg-dark-900 text-cream-50 transition-transform hover:scale-105 active:scale-95 dark:bg-cream-50 dark:text-dark-900"
           aria-label={isPlaying ? t('devZone.music.pause') : t('devZone.music.play')}
         >
           {isLoading ? (
@@ -185,7 +185,7 @@ export default function MusicPlayerWidget(props: MusicWidgetProps) {
         <button
           type="button"
           onClick={() => changeStation(1)}
-          className="rounded-full p-2 text-dark-900/60 transition-colors hover:bg-dark-900/5 hover:text-dark-900"
+          className="rounded-full p-2 text-dark-900/60 transition-colors hover:bg-dark-900/5 hover:text-dark-900 dark:text-cream-50/60 dark:hover:bg-cream-50/10 dark:hover:text-cream-50"
           aria-label={t('devZone.music.next')}
         >
           <SkipForward size={18} />
@@ -196,7 +196,7 @@ export default function MusicPlayerWidget(props: MusicWidgetProps) {
         <button
           type="button"
           onClick={() => setMuted((m) => !m)}
-          className="text-dark-900/50 transition-colors hover:text-dark-900"
+          className="text-dark-900/50 transition-colors hover:text-dark-900 dark:text-cream-50/50 dark:hover:text-cream-50"
           aria-label={muted ? t('devZone.music.unmute') : t('devZone.music.mute')}
         >
           {muted || prefs.volume === 0 ? <VolumeX size={16} /> : <Volume2 size={16} />}
@@ -211,10 +211,10 @@ export default function MusicPlayerWidget(props: MusicWidgetProps) {
             setMuted(false);
             setPrefs((p) => ({ ...p, volume: value }));
           }}
-          className="h-1 flex-1 cursor-pointer appearance-none rounded-full bg-dark-900/15 accent-coral-500"
+          className="h-1 flex-1 cursor-pointer appearance-none rounded-full bg-dark-900/15 dark:bg-cream-50/15 accent-coral-500"
           aria-label={t('devZone.music.volume')}
         />
-        <span className="w-8 text-right font-mono text-[10px] text-dark-900/40">
+        <span className="w-8 text-right font-mono text-[10px] text-dark-900/40 dark:text-cream-50/40">
           {muted ? 0 : volumePct}
         </span>
       </div>

@@ -33,7 +33,7 @@ export default function ImageWidget(props: ImageWidgetProps) {
           className="block max-w-[70vw] select-none object-contain"
         />
       ) : (
-        <p className="p-4 text-sm text-dark-900/50">{t('devZone.image.unavailable')}</p>
+        <p className="p-4 text-sm text-dark-900/50 dark:text-cream-50/50">{t('devZone.image.unavailable')}</p>
       )}
     </Widget>
   );
