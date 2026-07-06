@@ -5,6 +5,7 @@ import { ArrowLeft, MousePointer2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useTranslation } from '@/i18n';
 import { useDevZoneLayout } from './useDevZoneLayout';
+import { useDevZoneTheme } from './hooks/useDevZoneTheme';
 import { clampZoom, strokeToPath, useWhiteboardCanvas } from './useWhiteboardCanvas';
 import { useHistory, type Snapshot } from './useHistory';
 import Dock from './Dock';
@@ -61,6 +62,7 @@ export default function DevZone() {
   } = useDevZoneLayout();
   const { pan, zoom, strokes, setPan, setView, addStroke, setStrokes, eraseAt, clearStrokes, resetView } =
     useWhiteboardCanvas();
+  const { theme, toggleTheme } = useDevZoneTheme();
 
   // Live mirrors of pan/zoom for handlers attached imperatively (wheel) or that
   // must read the latest view without being re-created (drag transform, paste).
@@ -353,11 +355,14 @@ export default function DevZone() {
       onPointerMove={handleViewportPointerMove}
       onPointerUp={handleViewportPointerUp}
       className={cn(
-        'fixed inset-0 touch-none overflow-hidden bg-cream-50',
+        'fixed inset-0 touch-none overflow-hidden bg-cream-50 dark:bg-dark-900',
+        theme === 'dark' && 'dz-dark',
         tool === 'select' && 'cursor-grab active:cursor-grabbing',
       )}
       style={{
-        backgroundImage: 'radial-gradient(circle, rgba(26,26,26,0.08) 1px, transparent 1px)',
+        backgroundImage: `radial-gradient(circle, ${
+          theme === 'dark' ? 'rgba(255,248,243,0.10)' : 'rgba(26,26,26,0.08)'
+        } 1px, transparent 1px)`,
         backgroundSize: `${22 * zoom}px ${22 * zoom}px`,
         backgroundPosition: `${pan.x}px ${pan.y}px`,
       }}
@@ -414,7 +419,7 @@ export default function DevZone() {
 
       {/* Empty-board hint. */}
       {widgets.length === 0 && strokes.length === 0 && !draft && (
-        <div className="pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center gap-2 text-dark-900/35">
+        <div className="pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center gap-2 text-dark-900/35 dark:text-cream-50/35">
           <MousePointer2 size={28} />
           <p className="font-mono text-xs tracking-wide">{t('devZone.empty')}</p>
         </div>
@@ -424,12 +429,12 @@ export default function DevZone() {
       <div className="pointer-events-none fixed top-5 left-5 z-40 flex flex-col gap-1">
         <Link
           to="/"
-          className="reveal-underline pointer-events-auto inline-flex w-fit items-center gap-1.5 font-mono text-xs text-dark-900/50 transition-colors hover:text-coral-500"
+          className="reveal-underline pointer-events-auto inline-flex w-fit items-center gap-1.5 font-mono text-xs text-dark-900/50 transition-colors hover:text-coral-500 dark:text-cream-50/50"
         >
           <ArrowLeft size={14} />
           {t('devZone.back')}
         </Link>
-        <h1 className="font-display text-lg font-semibold tracking-tight text-dark-900">
+        <h1 className="font-display text-lg font-semibold tracking-tight text-dark-900 dark:text-cream-50">
           {t('devZone.title')}
         </h1>
       </div>
@@ -444,6 +449,8 @@ export default function DevZone() {
         onRedo={redo}
         canUndo={canUndo}
         canRedo={canRedo}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
 
       <ZoomControls

@@ -39,7 +39,8 @@
       "erase": "Erase",
       "clear": "Clear",
       "undo": "Undo",
-      "redo": "Redo"
+      "redo": "Redo",
+      "theme": "Toggle theme"
     },
     "note": {
       "title": "Note",

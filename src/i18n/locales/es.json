@@ -39,7 +39,8 @@
       "erase": "Borrar",
       "clear": "Limpiar",
       "undo": "Deshacer",
-      "redo": "Rehacer"
+      "redo": "Rehacer",
+      "theme": "Cambiar tema"
     },
     "note": {
       "title": "Nota",

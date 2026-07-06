@@ -39,7 +39,8 @@
       "erase": "橡皮擦",
       "clear": "清除",
       "undo": "撤销",
-      "redo": "重做"
+      "redo": "重做",
+      "theme": "切换主题"
     },
     "note": {
       "title": "便签",

@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
+/* Dark mode is scoped to the DevZone screen: `dark:` utilities only apply
+   under a `.dz-dark` ancestor, so no other page is affected. */
+@custom-variant dark (&:where(.dz-dark, .dz-dark *));
+
 @theme {
   --color-cream-50: #FFF8F3;
   --color-cream-100: #FFE8D6;
@@ -132,6 +136,15 @@ body::before {
     0 2px 6px -2px rgba(26, 26, 26, 0.06);
 }
 
+.dz-dark .glass-card {
+  background: rgba(36, 36, 36, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.05) inset,
+    0 24px 60px -28px rgba(0, 0, 0, 0.55),
+    0 2px 6px -2px rgba(0, 0, 0, 0.4);
+}
+
 .soft-lift {
   transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1),
               box-shadow 600ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -164,6 +177,11 @@ body::before {
 .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(26,26,26,0.18); border-radius: 10px; transition: background 0.2s ease; }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(26,26,26,0.32); }
 .custom-scrollbar { scrollbar-width: thin; scrollbar-color: rgba(26,26,26,0.18) rgba(26,26,26,0.04); }
+
+.dz-dark .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 248, 243, 0.05); }
+.dz-dark .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 248, 243, 0.2); }
+.dz-dark .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255, 248, 243, 0.32); }
+.dz-dark .custom-scrollbar { scrollbar-color: rgba(255, 248, 243, 0.2) rgba(255, 248, 243, 0.05); }
 
 /* Section progress bar (top of viewport) */
 .scroll-progress {
