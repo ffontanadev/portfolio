@@ -42,9 +42,8 @@
       "redo": "Redo",
       "theme": "Toggle theme"
     },
-    "note": {
-      "title": "Note",
-      "placeholder": "Type a note…"
+    "text": {
+      "placeholder": "Type text…"
     },
     "image": {
       "title": "Image",

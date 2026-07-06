@@ -42,9 +42,8 @@
       "redo": "Rehacer",
       "theme": "Cambiar tema"
     },
-    "note": {
-      "title": "Nota",
-      "placeholder": "Escribe una nota…"
+    "text": {
+      "placeholder": "Escribe texto…"
     },
     "image": {
       "title": "Imagen",

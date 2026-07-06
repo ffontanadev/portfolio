@@ -4,6 +4,10 @@ import type { DevZoneLayout, WidgetInstance, WidgetType } from './types';
 const STORAGE_KEY = 'portfolio.devzone.layout.v1';
 const LAYOUT_VERSION = 1;
 
+export const DEFAULT_FONT_SIZE = 16;
+export const FONT_MIN = 10;
+export const FONT_MAX = 96;
+
 /**
  * Sensible starting board for first-time visitors. On narrow (phone) viewports
  * the three default widgets stack in a single readable column instead of running
@@ -41,14 +45,14 @@ function createDefaultLayout(): DevZoneLayout {
   };
 }
 
-const WIDGET_TYPES: WidgetType[] = ['music', 'pomodoro', 'status', 'note', 'image'];
+const WIDGET_TYPES: WidgetType[] = ['music', 'pomodoro', 'status', 'text', 'image'];
 
 function isWidgetInstance(value: unknown): value is WidgetInstance {
   if (typeof value !== 'object' || value === null) return false;
   const w = value as Record<string, unknown>;
   return (
     typeof w.id === 'string' &&
-    WIDGET_TYPES.includes(w.type as WidgetType) &&
+    (WIDGET_TYPES.includes(w.type as WidgetType) || w.type === 'note') &&
     typeof w.x === 'number' &&
     typeof w.y === 'number' &&
     typeof w.z === 'number' &&
@@ -69,10 +73,15 @@ function readLayout(): DevZoneLayout {
     ) {
       return createDefaultLayout();
     }
+    const widgets = parsed.widgets.map((w) =>
+      w.type === ('note' as WidgetType)
+        ? { ...w, type: 'text' as WidgetType, fontSize: w.fontSize ?? DEFAULT_FONT_SIZE }
+        : w,
+    );
     return {
       version: LAYOUT_VERSION,
-      zCounter: typeof parsed.zCounter === 'number' ? parsed.zCounter : parsed.widgets.length,
-      widgets: parsed.widgets,
+      zCounter: typeof parsed.zCounter === 'number' ? parsed.zCounter : widgets.length,
+      widgets,
     };
   } catch {
     return createDefaultLayout();
@@ -88,12 +97,14 @@ function makeId(type: WidgetType): string {
 export interface DevZoneLayoutApi {
   widgets: WidgetInstance[];
   addWidget: (type: WidgetType, serviceId?: string) => void;
-  /** Drop a pasted text note at the given world position; returns its id. */
-  addNote: (text: string, x: number, y: number) => void;
+  /** Drop a free text element at the given world position; returns its id. */
+  addText: (text: string, x: number, y: number) => string;
   /** Drop a pasted image (data URL) at the given world position. */
   addImage: (src: string, width: number, height: number, x: number, y: number) => void;
-  /** Update a note's text content. */
-  updateNote: (id: string, text: string) => void;
+  /** Update a text element's content. */
+  updateText: (id: string, text: string) => void;
+  /** Set a text element's font size (clamped to the allowed range). */
+  setTextFontSize: (id: string, size: number) => void;
   removeWidget: (id: string) => void;
   moveWidget: (id: string, x: number, y: number) => void;
   togglePin: (id: string) => void;
@@ -145,13 +156,15 @@ export function useDevZoneLayout(): DevZoneLayoutApi {
     });
   }, []);
 
-  const addNote = useCallback((text: string, x: number, y: number) => {
+  const addText = useCallback((text: string, x: number, y: number): string => {
+    const id = makeId('text');
     setLayout((prev) => {
       const nextZ = prev.zCounter + 1;
       const widget: WidgetInstance = {
-        id: makeId('note'),
-        type: 'note',
+        id,
+        type: 'text',
         text,
+        fontSize: DEFAULT_FONT_SIZE,
         x: Math.round(x),
         y: Math.round(y),
         z: nextZ,
@@ -159,6 +172,7 @@ export function useDevZoneLayout(): DevZoneLayoutApi {
       };
       return { ...prev, zCounter: nextZ, widgets: [...prev.widgets, widget] };
     });
+    return id;
   }, []);
 
   const addImage = useCallback(
@@ -182,10 +196,18 @@ export function useDevZoneLayout(): DevZoneLayoutApi {
     [],
   );
 
-  const updateNote = useCallback((id: string, text: string) => {
+  const updateText = useCallback((id: string, text: string) => {
     setLayout((prev) => ({
       ...prev,
       widgets: prev.widgets.map((w) => (w.id === id ? { ...w, text } : w)),
+    }));
+  }, []);
+
+  const setTextFontSize = useCallback((id: string, size: number) => {
+    const clamped = Math.min(FONT_MAX, Math.max(FONT_MIN, Math.round(size)));
+    setLayout((prev) => ({
+      ...prev,
+      widgets: prev.widgets.map((w) => (w.id === id ? { ...w, fontSize: clamped } : w)),
     }));
   }, []);
 
@@ -233,9 +255,10 @@ export function useDevZoneLayout(): DevZoneLayoutApi {
   return {
     widgets: layout.widgets,
     addWidget,
-    addNote,
+    addText,
     addImage,
-    updateNote,
+    updateText,
+    setTextFontSize,
     removeWidget,
     moveWidget,
     togglePin,

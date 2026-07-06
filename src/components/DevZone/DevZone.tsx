@@ -15,7 +15,7 @@ import MobileControls from './MobileControls';
 import MusicPlayerWidget from './widgets/MusicPlayerWidget';
 import PomodoroWidget from './widgets/PomodoroWidget';
 import StatusListenerWidget from './widgets/StatusListenerWidget';
-import NoteWidget from './widgets/NoteWidget';
+import TextWidget from './widgets/TextWidget';
 import ImageWidget from './widgets/ImageWidget';
 import type { CanvasTool, Point, Stroke, WidgetInstance } from './types';
 
@@ -50,9 +50,10 @@ export default function DevZone() {
   const {
     widgets,
     addWidget,
-    addNote,
+    addText,
     addImage,
-    updateNote,
+    updateText,
+    setTextFontSize,
     removeWidget,
     moveWidget,
     togglePin,
@@ -75,6 +76,8 @@ export default function DevZone() {
 
   const [tool, setTool] = useState<CanvasTool>('select');
   const [color, setColor] = useState<string>(PEN_COLORS[0]);
+  const [selectedTextId, setSelectedTextId] = useState<string | null>(null);
+  const [editingTextId, setEditingTextId] = useState<string | null>(null);
 
   // --- Undo / redo over the combined widget + stroke snapshot -----------------
   const restore = useCallback(
@@ -182,6 +185,23 @@ export default function DevZone() {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [undo, redo]);
 
+  // --- Text tool shortcuts (T to arm, Esc to cancel) --------------------------
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
+      if (isEditableTarget(document.activeElement)) return;
+      const key = event.key.toLowerCase();
+      if (key === 't') {
+        event.preventDefault();
+        setTool('text');
+      } else if (event.key === 'Escape') {
+        setTool('select');
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
+
   // --- Paste text & images -----------------------------------------------------
   useEffect(() => {
     const dropImage = (file: File, worldX: number, worldY: number) => {
@@ -240,13 +260,13 @@ export default function DevZone() {
       const text = data.getData('text/plain');
       if (text && text.trim()) {
         event.preventDefault();
-        addNote(text, centerX - 160, centerY - 70);
+        addText(text, centerX, centerY);
       }
     };
 
     window.addEventListener('paste', onPaste);
     return () => window.removeEventListener('paste', onPaste);
-  }, [addNote, addImage]);
+  }, [addText, addImage]);
 
   // --- Panning (select tool, dragging empty canvas) ---------------------------
   const handleViewportPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
@@ -255,6 +275,9 @@ export default function DevZone() {
     // for clicks that land on a widget, the toolbar or the dock would swallow
     // their click events (those targets are descendants of this viewport).
     if (event.target !== event.currentTarget) return;
+    // Clicking bare canvas deselects any selected text element.
+    setSelectedTextId(null);
+    setEditingTextId(null);
     panStateRef.current = {
       pointerId: event.pointerId,
       startX: event.clientX,
@@ -283,6 +306,14 @@ export default function DevZone() {
   };
 
   // --- Drawing / erasing (overlay captures pointer in draw/erase tools) -------
+  const handleTextPlace = (event: React.PointerEvent<HTMLDivElement>) => {
+    const world = toWorld(event.clientX, event.clientY);
+    const id = addText('', world.x, world.y);
+    setSelectedTextId(id);
+    setEditingTextId(id);
+    setTool('select');
+  };
+
   const handleDrawPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
     event.currentTarget.setPointerCapture(event.pointerId);
     const world = toWorld(event.clientX, event.clientY);
@@ -337,8 +368,23 @@ export default function DevZone() {
         return <PomodoroWidget {...shared} />;
       case 'status':
         return <StatusListenerWidget {...shared} />;
-      case 'note':
-        return <NoteWidget {...shared} onUpdate={updateNote} />;
+      case 'text':
+        return (
+          <TextWidget
+            {...shared}
+            editing={editingTextId === instance.id}
+            selected={selectedTextId === instance.id}
+            onUpdate={updateText}
+            onSetFontSize={setTextFontSize}
+            onSelect={setSelectedTextId}
+            onEditStart={(id) => {
+              setSelectedTextId(id);
+              setEditingTextId(id);
+            }}
+            onEditEnd={() => setEditingTextId(null)}
+            zoom={zoom}
+          />
+        );
       case 'image':
         return <ImageWidget {...shared} />;
       default:
@@ -406,14 +452,21 @@ export default function DevZone() {
 
       {/* Drawing overlay — only intercepts pointers while a draw tool is active. */}
       <div
-        onPointerDown={isDrawingTool ? handleDrawPointerDown : undefined}
-        onPointerMove={isDrawingTool ? handleDrawPointerMove : undefined}
-        onPointerUp={isDrawingTool ? handleDrawPointerUp : undefined}
+        onPointerDown={
+          tool === 'text'
+            ? handleTextPlace
+            : isDrawingTool
+              ? handleDrawPointerDown
+              : undefined
+        }
+        onPointerMove={tool === 'text' ? undefined : isDrawingTool ? handleDrawPointerMove : undefined}
+        onPointerUp={tool === 'text' ? undefined : isDrawingTool ? handleDrawPointerUp : undefined}
         className={cn(
           'absolute inset-0 z-30 touch-none',
           tool === 'select' && 'pointer-events-none',
           tool === 'draw' && 'cursor-crosshair',
           tool === 'erase' && 'cursor-cell',
+          tool === 'text' && 'cursor-text',
         )}
       />
 

@@ -42,9 +42,8 @@
       "redo": "重做",
       "theme": "切换主题"
     },
-    "note": {
-      "title": "便签",
-      "placeholder": "输入便签…"
+    "text": {
+      "placeholder": "输入文字…"
     },
     "image": {
       "title": "图片",

@@ -6,7 +6,7 @@
  * state) is serialized to localStorage so a developer's setup survives reloads.
  */
 
-export type WidgetType = 'music' | 'pomodoro' | 'status' | 'note' | 'image';
+export type WidgetType = 'music' | 'pomodoro' | 'status' | 'text' | 'image';
 
 export interface WidgetInstance {
   /** Unique per instance (multiple status widgets can coexist). */
@@ -21,8 +21,10 @@ export interface WidgetInstance {
   pinned: boolean;
   /** Status widgets reference a service from the predefined registry. */
   serviceId?: string;
-  /** Note widgets carry their (editable) text content. */
+  /** Text widgets carry their (editable) content. */
   text?: string;
+  /** Font size for text widgets, in world px. */
+  fontSize?: number;
   /** Image widgets carry their pasted source as a data URL. */
   src?: string;
   /** Render size for image widgets, in world px. */
@@ -43,7 +45,7 @@ export interface Point {
 }
 
 /** Active interaction mode for the whiteboard surface. */
-export type CanvasTool = 'select' | 'draw' | 'erase';
+export type CanvasTool = 'select' | 'draw' | 'erase' | 'text';
 
 /** A single freehand pen stroke, captured in world coordinates. */
 export interface Stroke {
