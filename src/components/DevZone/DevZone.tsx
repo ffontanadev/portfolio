@@ -487,6 +487,8 @@ export default function DevZone() {
         activeServiceIds={activeServiceIds}
         hasMusic={hasMusic}
         hasPomodoro={hasPomodoro}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
     </div>
   );

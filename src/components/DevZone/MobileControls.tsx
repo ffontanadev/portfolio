@@ -5,6 +5,7 @@ import {
   Eraser,
   Maximize,
   Minus,
+  Moon,
   MousePointer2,
   Music2,
   Pen,
@@ -12,6 +13,7 @@ import {
   Redo2,
   RotateCcw,
   SlidersHorizontal,
+  Sun,
   Timer,
   Trash2,
   Undo2,
@@ -42,6 +44,8 @@ interface MobileControlsProps {
   activeServiceIds: string[];
   hasMusic: boolean;
   hasPomodoro: boolean;
+  theme: 'light' | 'dark';
+  onToggleTheme: () => void;
 }
 
 /**
@@ -70,6 +74,8 @@ export default function MobileControls(props: MobileControlsProps) {
     activeServiceIds,
     hasMusic,
     hasPomodoro,
+    theme,
+    onToggleTheme,
   } = props;
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -91,14 +97,14 @@ export default function MobileControls(props: MobileControlsProps) {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.15 }}
               onClick={close}
-              className="fixed inset-0 z-40 bg-dark-900/10"
+              className="fixed inset-0 z-40 bg-dark-900/10 dark:bg-black/40"
             />
             <motion.div
               initial={{ opacity: 0, y: 12, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 12, scale: 0.98 }}
               transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-              className="glass-card bg-white fixed right-4 bottom-20 z-50 flex w-[min(20rem,calc(100vw-2rem))] flex-col gap-3 rounded-3xl p-3"
+              className="glass-card bg-white dark:bg-dark-800 fixed right-4 bottom-20 z-50 flex w-[min(20rem,calc(100vw-2rem))] flex-col gap-3 rounded-3xl p-3"
             >
               {/* Tools */}
               <Row label={t('devZone.menu.tools')}>
@@ -120,7 +126,7 @@ export default function MobileControls(props: MobileControlsProps) {
                   active={tool === 'erase'}
                   onClick={() => onToolChange('erase')}
                 />
-                <span className="mx-1 h-7 w-px bg-dark-900/10" aria-hidden="true" />
+                <span className="mx-1 h-7 w-px bg-dark-900/10 dark:bg-cream-50/15" aria-hidden="true" />
                 <IconButton
                   icon={<Undo2 size={18} />}
                   label={t('devZone.toolbar.undo')}
@@ -138,6 +144,13 @@ export default function MobileControls(props: MobileControlsProps) {
                   label={t('devZone.toolbar.clear')}
                   onClick={onClear}
                 />
+                <span className="mx-1 h-7 w-px bg-dark-900/10 dark:bg-cream-50/15" aria-hidden="true" />
+                <IconButton
+                  icon={theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                  label={t('devZone.toolbar.theme')}
+                  active={theme === 'dark'}
+                  onClick={onToggleTheme}
+                />
               </Row>
 
               {tool === 'draw' && (
@@ -150,8 +163,8 @@ export default function MobileControls(props: MobileControlsProps) {
                       className={cn(
                         'size-6 rounded-full transition-transform active:scale-95',
                         color === swatch
-                          ? 'ring-2 ring-dark-900/70 ring-offset-1 ring-offset-cream-50'
-                          : 'ring-1 ring-dark-900/15',
+                          ? 'ring-2 ring-dark-900/70 ring-offset-1 ring-offset-cream-50 dark:ring-cream-50/70 dark:ring-offset-dark-900'
+                          : 'ring-1 ring-dark-900/15 dark:ring-cream-50/15',
                       )}
                       style={{ backgroundColor: swatch }}
                       aria-label={swatch}
@@ -167,12 +180,12 @@ export default function MobileControls(props: MobileControlsProps) {
                 <button
                   type="button"
                   onClick={onResetView}
-                  className="min-w-14 rounded-xl px-2 py-2 text-center font-mono text-xs font-medium text-dark-900 tabular-nums transition-colors hover:bg-dark-900/5"
+                  className="min-w-14 rounded-xl px-2 py-2 text-center font-mono text-xs font-medium text-dark-900 tabular-nums transition-colors hover:bg-dark-900/5 dark:text-cream-50 dark:hover:bg-cream-50/10"
                 >
                   {Math.round(zoom * 100)}%
                 </button>
                 <IconButton icon={<Plus size={18} />} label={t('devZone.zoom.in')} onClick={onZoomIn} />
-                <span className="mx-1 h-7 w-px bg-dark-900/10" aria-hidden="true" />
+                <span className="mx-1 h-7 w-px bg-dark-900/10 dark:bg-cream-50/15" aria-hidden="true" />
                 <IconButton
                   icon={<Maximize size={17} />}
                   label={t('devZone.zoom.fit')}
@@ -200,7 +213,7 @@ export default function MobileControls(props: MobileControlsProps) {
                   active={statusOpen}
                   onClick={() => setStatusOpen((v) => !v)}
                 />
-                <span className="mx-1 h-7 w-px bg-dark-900/10" aria-hidden="true" />
+                <span className="mx-1 h-7 w-px bg-dark-900/10 dark:bg-cream-50/15" aria-hidden="true" />
                 <IconButton
                   icon={<RotateCcw size={18} />}
                   label={t('devZone.dock.reset')}
@@ -212,7 +225,7 @@ export default function MobileControls(props: MobileControlsProps) {
               </Row>
 
               {statusOpen && (
-                <div className="custom-scrollbar -mt-1 flex max-h-44 flex-col gap-0.5 overflow-y-auto rounded-2xl bg-dark-900/[0.03] p-1.5">
+                <div className="custom-scrollbar -mt-1 flex max-h-44 flex-col gap-0.5 overflow-y-auto rounded-2xl bg-dark-900/[0.03] dark:bg-cream-50/[0.06] p-1.5">
                   {STATUS_SERVICES.map((service) => {
                     const active = activeServiceIds.includes(service.id);
                     return (
@@ -226,7 +239,9 @@ export default function MobileControls(props: MobileControlsProps) {
                         }}
                         className={cn(
                           'flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-left text-sm transition-colors',
-                          active ? 'cursor-default text-dark-900/35' : 'text-dark-900 active:bg-dark-900/5',
+                          active
+                            ? 'cursor-default text-dark-900/35 dark:text-cream-50/35'
+                            : 'text-dark-900 active:bg-dark-900/5 dark:text-cream-50 dark:active:bg-cream-50/10',
                         )}
                       >
                         <span
@@ -235,7 +250,7 @@ export default function MobileControls(props: MobileControlsProps) {
                         />
                         <span className="flex-1 truncate">{service.name}</span>
                         {active && (
-                          <span className="font-mono text-[10px] text-dark-900/35">
+                          <span className="font-mono text-[10px] text-dark-900/35 dark:text-cream-50/35">
                             {t('devZone.dock.added')}
                           </span>
                         )}
@@ -255,7 +270,7 @@ export default function MobileControls(props: MobileControlsProps) {
         onClick={() => (open ? close() : setOpen(true))}
         aria-expanded={open}
         aria-label={open ? t('devZone.menu.close') : t('devZone.menu.open')}
-        className="glass-card fixed right-4 bottom-4 z-50 flex size-14 items-center justify-center rounded-full text-dark-900 active:scale-95"
+        className="glass-card fixed right-4 bottom-4 z-50 flex size-14 items-center justify-center rounded-full text-dark-900 dark:text-cream-50 active:scale-95"
       >
         {open ? <X size={22} /> : <SlidersHorizontal size={20} />}
       </button>
@@ -266,7 +281,7 @@ export default function MobileControls(props: MobileControlsProps) {
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <p className="px-1 pb-1.5 font-mono text-[10px] tracking-widest text-dark-900/40 uppercase">
+      <p className="px-1 pb-1.5 font-mono text-[10px] tracking-widest text-dark-900/40 dark:text-cream-50/40 uppercase">
         {label}
       </p>
       <div className="flex flex-wrap items-center gap-0.5">{children}</div>
@@ -294,10 +309,10 @@ function IconButton({ icon, label, onClick, active, disabled }: IconButtonProps)
       className={cn(
         'flex size-10 items-center justify-center rounded-xl transition-colors',
         disabled
-          ? 'cursor-default text-dark-900/25'
+          ? 'cursor-default text-dark-900/25 dark:text-cream-50/25'
           : active
-            ? 'bg-dark-900 text-cream-50'
-            : 'text-dark-900 active:bg-dark-900/5',
+            ? 'bg-dark-900 text-cream-50 dark:bg-cream-50 dark:text-dark-900'
+            : 'text-dark-900 active:bg-dark-900/5 dark:text-cream-50 dark:active:bg-cream-50/10',
       )}
     >
       {icon}

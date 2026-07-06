@@ -79,13 +79,13 @@ export default function Widget({
           if (draggable) dragControls.start(event);
         }}
         className={cn(
-          'flex items-center gap-2 border-b border-dark-900/10 px-3 py-2 select-none',
+          'flex items-center gap-2 border-b border-dark-900/10 dark:border-cream-50/10 px-3 py-2 select-none',
           !draggable ? 'cursor-default' : 'cursor-grab active:cursor-grabbing',
         )}
       >
         <GripVertical
           size={14}
-          className={cn('shrink-0 text-dark-900/30', instance.pinned && 'opacity-30')}
+          className={cn('shrink-0 text-dark-900/30 dark:text-cream-50/30', instance.pinned && 'opacity-30')}
           aria-hidden="true"
         />
         <span
@@ -93,15 +93,15 @@ export default function Widget({
           style={{ backgroundColor: accent }}
           aria-hidden="true"
         />
-        <span className="flex items-center gap-1.5 text-dark-900/70">{icon}</span>
-        <h3 className="flex-1 truncate font-mono text-xs font-medium tracking-wide text-dark-900">
+        <span className="flex items-center gap-1.5 text-dark-900/70 dark:text-cream-50/70">{icon}</span>
+        <h3 className="flex-1 truncate font-mono text-xs font-medium tracking-wide text-dark-900 dark:text-cream-50">
           {title}
         </h3>
         <button
           type="button"
           onPointerDown={(event) => event.stopPropagation()}
           onClick={() => onTogglePin(instance.id)}
-          className="rounded-md p-1 text-dark-900/40 transition-colors hover:bg-dark-900/5 hover:text-coral-500"
+          className="rounded-md p-1 text-dark-900/40 transition-colors hover:bg-dark-900/5 hover:text-coral-500 dark:text-cream-50/40 dark:hover:bg-cream-50/10"
           aria-pressed={instance.pinned}
           aria-label={instance.pinned ? t('devZone.widget.unpin') : t('devZone.widget.pin')}
           title={instance.pinned ? t('devZone.widget.unpin') : t('devZone.widget.pin')}
@@ -112,7 +112,7 @@ export default function Widget({
           type="button"
           onPointerDown={(event) => event.stopPropagation()}
           onClick={() => onRemove(instance.id)}
-          className="rounded-md p-1 text-dark-900/40 transition-colors hover:bg-dark-900/5 hover:text-coral-500"
+          className="rounded-md p-1 text-dark-900/40 transition-colors hover:bg-dark-900/5 hover:text-coral-500 dark:text-cream-50/40 dark:hover:bg-cream-50/10"
           aria-label={t('devZone.widget.remove')}
           title={t('devZone.widget.remove')}
         >

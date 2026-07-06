@@ -20,7 +20,7 @@ export default function ZoomControls({ zoom, onZoomIn, onZoomOut, onReset }: Zoo
           onClick={onZoomOut}
           title={t('devZone.zoom.out')}
           aria-label={t('devZone.zoom.out')}
-          className="rounded-full p-1.5 text-dark-900 transition-colors hover:bg-dark-900/5"
+          className="rounded-full p-1.5 text-dark-900 transition-colors hover:bg-dark-900/5 dark:text-cream-50 dark:hover:bg-cream-50/10"
         >
           <Minus size={16} />
         </button>
@@ -29,7 +29,7 @@ export default function ZoomControls({ zoom, onZoomIn, onZoomOut, onReset }: Zoo
           onClick={onReset}
           title={t('devZone.zoom.reset')}
           aria-label={t('devZone.zoom.reset')}
-          className="min-w-12 rounded-full px-2 py-1 text-center font-mono text-xs font-medium text-dark-900 tabular-nums transition-colors hover:bg-dark-900/5"
+          className="min-w-12 rounded-full px-2 py-1 text-center font-mono text-xs font-medium text-dark-900 tabular-nums transition-colors hover:bg-dark-900/5 dark:text-cream-50 dark:hover:bg-cream-50/10"
         >
           {Math.round(zoom * 100)}%
         </button>
@@ -38,17 +38,17 @@ export default function ZoomControls({ zoom, onZoomIn, onZoomOut, onReset }: Zoo
           onClick={onZoomIn}
           title={t('devZone.zoom.in')}
           aria-label={t('devZone.zoom.in')}
-          className="rounded-full p-1.5 text-dark-900 transition-colors hover:bg-dark-900/5"
+          className="rounded-full p-1.5 text-dark-900 transition-colors hover:bg-dark-900/5 dark:text-cream-50 dark:hover:bg-cream-50/10"
         >
           <Plus size={16} />
         </button>
-        <span className="mx-0.5 h-5 w-px bg-dark-900/10" aria-hidden="true" />
+        <span className="mx-0.5 h-5 w-px bg-dark-900/10 dark:bg-cream-50/15" aria-hidden="true" />
         <button
           type="button"
           onClick={onReset}
           title={t('devZone.zoom.fit')}
           aria-label={t('devZone.zoom.fit')}
-          className="rounded-full p-1.5 text-dark-900 transition-colors hover:bg-dark-900/5"
+          className="rounded-full p-1.5 text-dark-900 transition-colors hover:bg-dark-900/5 dark:text-cream-50 dark:hover:bg-cream-50/10"
         >
           <Maximize size={15} />
         </button>
