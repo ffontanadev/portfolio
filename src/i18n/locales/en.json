@@ -43,7 +43,8 @@
       "theme": "Toggle theme"
     },
     "text": {
-      "placeholder": "Type text…"
+      "placeholder": "Type text…",
+      "resize": "Resize text"
     },
     "image": {
       "title": "Image",

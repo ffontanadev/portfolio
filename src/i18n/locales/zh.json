@@ -43,7 +43,8 @@
       "theme": "切换主题"
     },
     "text": {
-      "placeholder": "输入文字…"
+      "placeholder": "输入文字…",
+      "resize": "调整文字大小"
     },
     "image": {
       "title": "图片",

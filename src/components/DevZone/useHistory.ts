@@ -25,7 +25,7 @@ function signature({ widgets, strokes }: Snapshot): string {
   const widgetSig = widgets
     .map(
       (w) =>
-        `${w.id}:${w.x},${w.y},${w.pinned ? 1 : 0},${w.text ?? ''},${w.src ? 1 : 0},${w.width ?? ''},${w.height ?? ''}`,
+        `${w.id}:${w.x},${w.y},${w.pinned ? 1 : 0},${w.text ?? ''},${w.src ? 1 : 0},${w.width ?? ''},${w.height ?? ''},${w.fontSize ?? ''}`,
     )
     .join('|');
   const strokeSig = strokes.map((s) => s.id).join('|');
