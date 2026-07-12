@@ -19,6 +19,32 @@ export interface ProjectPhase {
     current?: boolean;
 }
 
+export interface MetricStat {
+    value: string;
+    label: string;
+}
+
+export interface MigrationBeforeAfter {
+    heading: string;
+    items: string[];
+}
+
+export interface MigrationModule {
+    label: string;
+    role: string;
+    scale: string;
+}
+
+export interface MigrationDossier {
+    scope: MetricStat[];
+    before: MigrationBeforeAfter;
+    after: MigrationBeforeAfter;
+    modulesHeading: string;
+    modules: MigrationModule[];
+    phasesHeading: string;
+    phases: ProjectPhase[];
+}
+
 export type ProjectLeadMetric =
     | { kind: 'migration'; from: string; to: string }
     | { kind: 'scale'; superscript?: string; value: string }
@@ -43,6 +69,7 @@ export interface Project {
     metrics?: ProjectMetric[];
     featured?: boolean;
     phases?: ProjectPhase[];
+    migration?: MigrationDossier;
     /** GitHub repo as "owner/name"; enables the latest-commit badge/detail. */
     repo?: string;
     /** Public paths to ambient showcase clips, e.g. '/videos/efengine/clip.mp4'. */
