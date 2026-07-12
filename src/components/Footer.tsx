@@ -1,9 +1,15 @@
 import { HeartIcon } from '@/components/ui/heart';
 import { useTranslation } from '@/i18n';
+import { TOUR_REPLAY_EVENT, clearTourSeen } from './PageTour/useFirstVisit';
 
 const Footer = () => {
     const year = new Date().getFullYear();
     const { t } = useTranslation();
+
+    const replayTour = () => {
+        clearTourSeen();
+        window.dispatchEvent(new CustomEvent(TOUR_REPLAY_EVENT));
+    };
 
     const links = [
         { name: t('footer.links.home'), href: '#hero' },
@@ -50,6 +56,13 @@ const Footer = () => {
                     <span className="font-mono text-[10px] uppercase tracking-widest text-dark-900/45">
                         {t('footer.copyright', { year })}
                     </span>
+                    <button
+                        type="button"
+                        onClick={replayTour}
+                        className="text-xs font-medium text-dark-900/50 underline-offset-4 transition-colors hover:text-coral-500 hover:underline"
+                    >
+                        {t('tour.replay')}
+                    </button>
                     <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-dark-900/45">
                         {t('footer.craftedWith')}
                         <HeartIcon size={12} className="fill-coral-500 text-coral-500" />
