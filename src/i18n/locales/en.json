@@ -335,7 +335,7 @@
       }
     },
     "older": {
-      "eyebrow": "§ 03 — Archive",
+      "eyebrow": "§ 04 — Archive",
       "headingBefore": "Older",
       "headingEmphasis": "works",
       "description": "Relics of my developing journey — still dear to me, but no longer the main event.",
@@ -402,6 +402,37 @@
       "developmentRoadmap": "Development Roadmap",
       "keyImplementation": "Key Implementation"
     }
+  },
+  "agents": {
+    "eyebrow": "§ 03 — Method",
+    "headingBefore": "How I work",
+    "headingEmphasis": "with agents",
+    "headingAfter": "",
+    "intro": "AI isn't a magic wand here — it's a disciplined force-multiplier under tight human direction. Three practices keep it reliable.",
+    "leadStat": {
+      "value": "13 repos · ~73k nodes · ~260k relationships",
+      "label": "indexed into memory"
+    },
+    "pillars": [
+      {
+        "index": "01",
+        "title": "Knowledge-graph indexing",
+        "body": "I index every codebase into a memory graph so agents reason over real call chains and service contracts — not guesses. It's how the Banco Provincia migration surface (~4,600 classes) became navigable.",
+        "proof": "13 repos · ~73k nodes"
+      },
+      {
+        "index": "02",
+        "title": "Spec- & plan-driven workflow",
+        "body": "Every feature starts as a brainstormed spec, then a written plan, then implementation and verification — each committed to the repo. The migration's contract-testing work shipped exactly this way.",
+        "proof": "specs & plans in-repo"
+      },
+      {
+        "index": "03",
+        "title": "Custom skills & slash commands",
+        "body": "Purpose-built skills encode the hard, repeatable workflows — SOAP→REST conversion, Spring Boot optimization, legacy-Java debugging — so they stay consistent and reviewable.",
+        "proof": "soap-to-rest-converter · java-springboot-optimizer"
+      }
+    ]
   },
   "contact": {
     "eyebrow": "§ 05 — Get in touch",

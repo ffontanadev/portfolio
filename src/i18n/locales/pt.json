@@ -335,7 +335,7 @@
       }
     },
     "older": {
-      "eyebrow": "§ 03 — Arquivo",
+      "eyebrow": "§ 04 — Arquivo",
       "headingBefore": "Trabalhos",
       "headingEmphasis": "antigos",
       "description": "Relíquias da minha jornada como desenvolvedor — ainda queridas, mas não mais o prato principal.",
@@ -402,6 +402,37 @@
       "developmentRoadmap": "Roteiro de Desenvolvimento",
       "keyImplementation": "Implementação Principal"
     }
+  },
+  "agents": {
+    "eyebrow": "§ 03 — Método",
+    "headingBefore": "Como eu trabalho",
+    "headingEmphasis": "com agentes",
+    "headingAfter": "",
+    "intro": "IA não é mágica aqui — é um multiplicador de força disciplinado sob rígida direção humana. Três práticas a mantêm confiável.",
+    "leadStat": {
+      "value": "13 repos · ~73k nodes · ~260k relationships",
+      "label": "indexados em memória"
+    },
+    "pillars": [
+      {
+        "index": "01",
+        "title": "Indexação em grafo de conhecimento",
+        "body": "Indexo cada código em um grafo de memória para que os agentes raciocinem sobre cadeias de chamadas e contratos reais — não suposições. Foi assim que a superfície de migração do Banco Provincia (~4,600 classes) ficou navegável.",
+        "proof": "13 repos · ~73k nodes"
+      },
+      {
+        "index": "02",
+        "title": "Fluxo guiado por specs e planos",
+        "body": "Cada feature começa como um spec, depois um plano escrito, depois implementação e verificação — tudo versionado no repo. Os testes de contrato da migração foram feitos exatamente assim.",
+        "proof": "specs & plans in-repo"
+      },
+      {
+        "index": "03",
+        "title": "Skills e comandos sob medida",
+        "body": "Skills sob medida codificam os fluxos difíceis e repetíveis — conversão SOAP→REST, otimização de Spring Boot, debugging de Java legado — para que sejam consistentes e revisáveis.",
+        "proof": "soap-to-rest-converter · java-springboot-optimizer"
+      }
+    ]
   },
   "contact": {
     "eyebrow": "§ 05 — Fale comigo",

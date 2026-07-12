@@ -335,7 +335,7 @@
       }
     },
     "older": {
-      "eyebrow": "§ 03 — Archivo",
+      "eyebrow": "§ 04 — Archivo",
       "headingBefore": "Trabajos",
       "headingEmphasis": "antiguos",
       "description": "Reliquias de mi camino como desarrollador — aún queridas, pero ya no el plato principal.",
@@ -402,6 +402,37 @@
       "developmentRoadmap": "Hoja de Ruta",
       "keyImplementation": "Implementación Clave"
     }
+  },
+  "agents": {
+    "eyebrow": "§ 03 — Método",
+    "headingBefore": "Cómo trabajo",
+    "headingEmphasis": "con agentes",
+    "headingAfter": "",
+    "intro": "La IA no es magia aquí — es un multiplicador de fuerza disciplinado bajo estricta dirección humana. Tres prácticas la mantienen confiable.",
+    "leadStat": {
+      "value": "13 repos · ~73k nodes · ~260k relationships",
+      "label": "indexados en memoria"
+    },
+    "pillars": [
+      {
+        "index": "01",
+        "title": "Indexado en grafo de conocimiento",
+        "body": "Indexo cada código en un grafo de memoria para que los agentes razonen sobre cadenas de llamadas y contratos reales — no suposiciones. Así la superficie de migración de Banco Provincia (~4,600 clases) se volvió navegable.",
+        "proof": "13 repos · ~73k nodes"
+      },
+      {
+        "index": "02",
+        "title": "Flujo guiado por specs y planes",
+        "body": "Cada feature empieza como un spec, luego un plan escrito, luego implementación y verificación — todo versionado en el repo. El testing de contratos de la migración se hizo exactamente así.",
+        "proof": "specs & plans in-repo"
+      },
+      {
+        "index": "03",
+        "title": "Skills y comandos a medida",
+        "body": "Skills hechos a medida codifican los flujos difíciles y repetibles — conversión SOAP→REST, optimización de Spring Boot, debugging de Java legado — para que sean consistentes y revisables.",
+        "proof": "soap-to-rest-converter · java-springboot-optimizer"
+      }
+    ]
   },
   "contact": {
     "eyebrow": "§ 05 — Hablemos",

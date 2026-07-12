@@ -335,7 +335,7 @@
       }
     },
     "older": {
-      "eyebrow": "§ 03 — 存档",
+      "eyebrow": "§ 04 — 存档",
       "headingBefore": "早期",
       "headingEmphasis": "作品",
       "description": "我开发旅程中的遗珍——依然珍视，但已不再是主角。",
@@ -402,6 +402,37 @@
       "developmentRoadmap": "开发路线图",
       "keyImplementation": "关键实现"
     }
+  },
+  "agents": {
+    "eyebrow": "§ 03 — 方法",
+    "headingBefore": "我如何",
+    "headingEmphasis": "与智能体协作",
+    "headingAfter": "",
+    "intro": "这里的 AI 不是魔法 —— 而是在严格人为主导下的、有纪律的力量倍增器。三条实践让它保持可靠。",
+    "leadStat": {
+      "value": "13 repos · ~73k nodes · ~260k relationships",
+      "label": "已索引进记忆"
+    },
+    "pillars": [
+      {
+        "index": "01",
+        "title": "知识图谱索引",
+        "body": "我把每个代码库都索引进记忆图谱，让智能体基于真实的调用链与服务契约推理，而非猜测。正是如此，Banco Provincia 的迁移代码面（约 4,600 个类）才变得可导航。",
+        "proof": "13 repos · ~73k nodes"
+      },
+      {
+        "index": "02",
+        "title": "以规格与计划驱动的流程",
+        "body": "每个功能都从头脑风暴的规格开始，再到书面计划，再到实现与验证 —— 每一步都提交进仓库。这次迁移的契约测试正是这样交付的。",
+        "proof": "specs & plans in-repo"
+      },
+      {
+        "index": "03",
+        "title": "定制技能与斜杠命令",
+        "body": "定制技能把困难、可复用的流程固化下来 —— SOAP→REST 转换、Spring Boot 优化、遗留 Java 调试 —— 让它们保持一致且可审查。",
+        "proof": "soap-to-rest-converter · java-springboot-optimizer"
+      }
+    ]
   },
   "contact": {
     "eyebrow": "§ 05 — 取得联系",
