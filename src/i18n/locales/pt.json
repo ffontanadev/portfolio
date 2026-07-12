@@ -220,32 +220,43 @@
           ]
         },
         "bancoProvincia": {
-          "title": "Banco Provincia — Migração de Serviços Core",
-          "desc": "Modernização dos serviços web legados Axis2 / Java 8 do Banco Provincia para uma plataforma moderna Spring Boot 3 sobre Java 17, com a conectividade de banco de dados migrada de JNDI para um DataSource MSSQL gerenciado.",
-          "role": "Engenheiro Backend",
-          "description": "Modernização de longa duração de serviços SOAP legados em Axis2 que sustentam integrações bancárias core no Banco Provincia. O trabalho abrange migrar o runtime de Java 8 para Java 17 + Spring Boot 3, substituir os recursos vinculados ao JNDI por um DataSource MSSQL gerenciado e desemaranhar anos de contratos de serviços web fortemente acoplados — tudo preservando os consumidores existentes.",
-          "metrics": [
-            {
-              "label": "Runtime",
-              "value": "Java 8 → 17"
+          "title": "Banco Provincia — Migração de serviços core",
+          "desc": "Migração dos serviços web legados Axis2 / Java 8 do Banco Provincia para uma plataforma moderna Spring Boot 3 em Java 17 — 7 repositórios, ~4,600 classes — com a conectividade reescrita de JNDI para um MSSQL DataSource gerenciado.",
+          "role": "Backend Engineer",
+          "description": "Modernização de longo prazo de serviços SOAP Axis2 legados que sustentam integrações bancárias core no Banco Provincia. O trabalho cobre migrar o runtime de Java 8 para Java 17 + Spring Boot 3, substituir recursos ligados a JNDI por um MSSQL DataSource gerenciado e desemaranhar anos de contratos de serviços web fortemente acoplados — sempre preservando os consumidores.",
+          "migration": {
+            "scope": [
+              { "value": "7", "label": "repositórios" },
+              { "value": "~4,600", "label": "classes Java" },
+              { "value": "~24,000", "label": "métodos" },
+              { "value": "82", "label": "scripts SQL" }
+            ],
+            "before": {
+              "heading": "Antes",
+              "items": ["Axis2 · SOAP / XML", "Recursos ligados a JNDI", "Runtime Java 8", "Contratos XML feitos à mão"]
             },
-            {
-              "label": "Framework",
-              "value": "Axis2 → Spring Boot 3"
+            "after": {
+              "heading": "Depois",
+              "items": ["Spring Boot 3 · REST / JSON", "MSSQL DataSource gerenciado", "Runtime Java 17", "Testes OpenAPI + Schemathesis"]
             },
-            {
-              "label": "Persistência",
-              "value": "JNDI → MSSQL DataSource"
-            },
-            {
-              "label": "Domínio",
-              "value": "Serviços SOAP bancários core"
-            },
-            {
-              "label": "Status",
-              "value": "Em andamento · 2025 →"
-            }
-          ]
+            "modulesHeading": "Módulos migrados",
+            "modules": [
+              { "label": "Core Services", "role": "Despachante SOAP→REST com respostas duplas XML/JSON.", "scale": "128 classes" },
+              { "label": "Service Plugins", "role": "Lógica de negócio por serviço carregada pelo despachante.", "scale": "636 classes" },
+              { "label": "Security", "role": "Autenticação, sessões e controle de acesso.", "scale": "617 classes" },
+              { "label": "Messaging & Transaction Format", "role": "Contratos de mensagens bancárias e formatação de transações.", "scale": "164 classes" },
+              { "label": "Web Tier — Common", "role": "Contratos e utilitários compartilhados da camada web.", "scale": "209 classes" },
+              { "label": "Web Tier — Core", "role": "A camada de apresentação — a maior superfície da plataforma.", "scale": "1,623 classes" },
+              { "label": "Web Tier — Services", "role": "Camada cliente de serviços entre a camada web e o backend.", "scale": "1,246 classes" }
+            ],
+            "phasesHeading": "Caminho da migração",
+            "phases": [
+              { "label": "01", "title": "Descoberta e indexação", "desc": "Indexar os sete repositórios em um grafo de conhecimento para mapear a superfície real de serviços e chamadas." },
+              { "label": "02", "title": "Migração serviço a serviço", "desc": "Levar os módulos para Spring Boot 3 e Java 17, reescrever JNDI para um MSSQL DataSource gerenciado e preservar os contratos SOAP via XML/JSON duplo." },
+              { "label": "03", "title": "Testes de contrato", "desc": "Definições OpenAPI (Swagger) com testes de propriedade e fuzzing Schemathesis para garantir paridade com os serviços legados." },
+              { "label": "04", "title": "Cutover", "desc": "Módulo a módulo — Core Services e Security já rodam em Spring Boot 3; o restante está em andamento." }
+            ]
+          }
         },
         "bbva": {
           "title": "BBVA — Migração de APIs e Cobertura de Testes",

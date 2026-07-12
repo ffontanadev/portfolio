@@ -221,31 +221,42 @@
         },
         "bancoProvincia": {
           "title": "Banco Provincia — 核心服务迁移",
-          "desc": "将 Banco Provincia 的遗留 Axis2 / Java 8 Web 服务迁移到基于 Java 17 的现代 Spring Boot 3 平台，并将数据库连接从 JNDI 改造为受管理的 MSSQL DataSource。",
+          "desc": "将 Banco Provincia 遗留的 Axis2 / Java 8 Web 服务迁移到基于 Java 17 的现代 Spring Boot 3 平台 —— 7 个代码库、约 4,600 个类 —— 并将数据库连接从 JNDI 改写为托管的 MSSQL DataSource。",
           "role": "后端工程师",
-          "description": "对支撑 Banco Provincia 核心银行集成的遗留 Axis2 SOAP 服务进行的长期现代化改造。工作内容包括将运行时从 Java 8 迁移到 Java 17 + Spring Boot 3，用受管理的 MSSQL DataSource 替换绑定 JNDI 的资源，并梳理多年来高度耦合的 Web 服务契约——同时保证下游消费者不受影响。",
-          "metrics": [
-            {
-              "label": "运行时",
-              "value": "Java 8 → 17"
+          "description": "对支撑 Banco Provincia 核心银行集成的遗留 Axis2 SOAP 服务进行长期现代化改造。工作内容包括将运行时从 Java 8 迁移到 Java 17 + Spring Boot 3、以托管的 MSSQL DataSource 替换 JNDI 绑定资源，并理清多年来紧耦合的 Web 服务契约 —— 同时始终保持下游消费方可用。",
+          "migration": {
+            "scope": [
+              { "value": "7", "label": "代码库" },
+              { "value": "~4,600", "label": "Java 类" },
+              { "value": "~24,000", "label": "方法" },
+              { "value": "82", "label": "SQL 脚本" }
+            ],
+            "before": {
+              "heading": "迁移前",
+              "items": ["Axis2 · SOAP / XML", "JNDI 绑定资源", "Java 8 运行时", "手写的 XML 契约"]
             },
-            {
-              "label": "框架",
-              "value": "Axis2 → Spring Boot 3"
+            "after": {
+              "heading": "迁移后",
+              "items": ["Spring Boot 3 · REST / JSON", "托管的 MSSQL DataSource", "Java 17 运行时", "OpenAPI + Schemathesis 测试"]
             },
-            {
-              "label": "持久化",
-              "value": "JNDI → MSSQL DataSource"
-            },
-            {
-              "label": "领域",
-              "value": "核心银行 SOAP 服务"
-            },
-            {
-              "label": "状态",
-              "value": "进行中 · 2025 →"
-            }
-          ]
+            "modulesHeading": "已迁移模块",
+            "modules": [
+              { "label": "Core Services", "role": "SOAP→REST 调度器，支持 XML/JSON 双响应。", "scale": "128 类" },
+              { "label": "Service Plugins", "role": "由调度器加载的各服务业务逻辑。", "scale": "636 类" },
+              { "label": "Security", "role": "认证、会话与访问控制。", "scale": "617 类" },
+              { "label": "Messaging & Transaction Format", "role": "银行报文契约与交易格式化。", "scale": "164 类" },
+              { "label": "Web Tier — Common", "role": "Web 层共享契约与工具。", "scale": "209 类" },
+              { "label": "Web Tier — Core", "role": "表现层 —— 平台最大的代码面。", "scale": "1,623 类" },
+              { "label": "Web Tier — Services", "role": "Web 层与后端之间的服务客户端层。", "scale": "1,246 类" }
+            ],
+            "phasesHeading": "迁移路径",
+            "phases": [
+              { "label": "01", "title": "梳理与索引", "desc": "将全部七个代码库索引进知识图谱，映射出真实的服务与调用面。" },
+              { "label": "02", "title": "逐服务迁移", "desc": "将模块迁移到 Spring Boot 3 与 Java 17，把 JNDI 改写为托管的 MSSQL DataSource，并通过 XML/JSON 双响应保留 SOAP 契约。" },
+              { "label": "03", "title": "契约测试", "desc": "以 OpenAPI（Swagger）定义配合 Schemathesis 属性与模糊测试，确保与遗留服务保持一致。" },
+              { "label": "04", "title": "切换上线", "desc": "逐个模块推进 —— Core Services 与 Security 已在 Spring Boot 3 上线，其余仍在进行中。" }
+            ]
+          }
         },
         "bbva": {
           "title": "BBVA — API 迁移与测试覆盖",

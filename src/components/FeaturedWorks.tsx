@@ -14,7 +14,7 @@ type Filter = 'all' | 'personal' | 'professional';
 // Structural data — non-translatable (styling, stacks, dates, code, lead-metric
 // glyphs). Display text (title/desc/role/description, phase + metric copy) is
 // merged in from the locale inside the component, keyed by `id`.
-type ProjectStructural = Omit<Project, 'title' | 'desc' | 'role' | 'description' | 'phases' | 'metrics'> & {
+type ProjectStructural = Omit<Project, 'title' | 'desc' | 'role' | 'description' | 'phases' | 'metrics' | 'migration'> & {
   id: string;
 };
 
@@ -540,7 +540,13 @@ const FeaturedWorks = () => {
         desc: fp.bancoProvincia.desc,
         role: fp.bancoProvincia.role,
         description: fp.bancoProvincia.description,
-        metrics: fp.bancoProvincia.metrics.map((m, i) => ({ ...m, accent: i === 1 })),
+        migration: {
+          ...fp.bancoProvincia.migration,
+          phases: fp.bancoProvincia.migration.phases.map((ph, i, arr) => ({
+            ...ph,
+            current: i === arr.length - 1,
+          })),
+        },
       },
       {
         ...byId.bbva,

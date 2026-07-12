@@ -221,31 +221,42 @@
         },
         "bancoProvincia": {
           "title": "Banco Provincia — Core Services Migration",
-          "desc": "Lifting Banco Provincia's legacy Axis2 / Java 8 web services into a modern Spring Boot 3 platform on Java 17, with database connectivity rewired from JNDI to a managed MSSQL DataSource.",
+          "desc": "Lifting Banco Provincia's legacy Axis2 / Java 8 web services into a modern Spring Boot 3 platform on Java 17 — 7 repositories, ~4,600 classes — with connectivity rewired from JNDI to a managed MSSQL DataSource.",
           "role": "Backend Engineer",
           "description": "Long-running modernization of legacy Axis2 SOAP services that power core banking integrations at Banco Provincia. The work covers migrating the runtime from Java 8 to Java 17 + Spring Boot 3, replacing JNDI-bound resources with a managed MSSQL DataSource, and untangling years of tightly-coupled web service contracts — all while preserving downstream consumers.",
-          "metrics": [
-            {
-              "label": "Runtime",
-              "value": "Java 8 → 17"
+          "migration": {
+            "scope": [
+              { "value": "7", "label": "repositories" },
+              { "value": "~4,600", "label": "Java classes" },
+              { "value": "~24,000", "label": "methods" },
+              { "value": "82", "label": "SQL scripts" }
+            ],
+            "before": {
+              "heading": "Before",
+              "items": ["Axis2 · SOAP / XML", "JNDI-bound resources", "Java 8 runtime", "Hand-rolled XML contracts"]
             },
-            {
-              "label": "Framework",
-              "value": "Axis2 → Spring Boot 3"
+            "after": {
+              "heading": "After",
+              "items": ["Spring Boot 3 · REST / JSON", "Managed MSSQL DataSource", "Java 17 runtime", "OpenAPI + Schemathesis tests"]
             },
-            {
-              "label": "Persistence",
-              "value": "JNDI → MSSQL DataSource"
-            },
-            {
-              "label": "Domain",
-              "value": "Core banking SOAP services"
-            },
-            {
-              "label": "Status",
-              "value": "In progress · 2025 →"
-            }
-          ]
+            "modulesHeading": "Modules migrated",
+            "modules": [
+              { "label": "Core Services", "role": "SOAP→REST dispatcher with dual XML/JSON responses.", "scale": "128 classes" },
+              { "label": "Service Plugins", "role": "Per-service business logic loaded by the dispatcher.", "scale": "636 classes" },
+              { "label": "Security", "role": "Authentication, sessions and access control.", "scale": "617 classes" },
+              { "label": "Messaging & Transaction Format", "role": "Banking message contracts and transaction formatting.", "scale": "164 classes" },
+              { "label": "Web Tier — Common", "role": "Shared web-tier contracts and utilities.", "scale": "209 classes" },
+              { "label": "Web Tier — Core", "role": "The presentation tier — the platform's largest surface.", "scale": "1,623 classes" },
+              { "label": "Web Tier — Services", "role": "Service-client layer between the web tier and backend.", "scale": "1,246 classes" }
+            ],
+            "phasesHeading": "Migration path",
+            "phases": [
+              { "label": "01", "title": "Discovery & indexing", "desc": "Index all seven repositories into a knowledge graph to map the real service and call surface." },
+              { "label": "02", "title": "Service-by-service migration", "desc": "Lift modules onto Spring Boot 3 and Java 17, rewire JNDI to a managed MSSQL DataSource, and preserve SOAP contracts via dual XML/JSON." },
+              { "label": "03", "title": "Contract testing", "desc": "OpenAPI (Swagger) definitions with Schemathesis property and fuzz testing to guarantee parity with the legacy services." },
+              { "label": "04", "title": "Cutover", "desc": "Module by module — Core Services and Security are live on Spring Boot 3; the rest are in flight." }
+            ]
+          }
         },
         "bbva": {
           "title": "BBVA — API Migration & Test Coverage",
