@@ -1,4 +1,14 @@
 {
+  "tour": {
+    "skip": "Pular tour",
+    "replay": "Repetir tour guiado",
+    "stops": {
+      "techStack": "Clique em qualquer logo para vê-lo se formar no hero, com uma nota de como eu o uso.",
+      "featuredWorks": "Abra um projeto para ver o estudo de caso completo e o dossiê de migração.",
+      "agents": "Como eu realmente construo com agentes de IA, do início ao fim.",
+      "devZone": "Entre na Dev Zone — uma mesa oculta e arrastável com minhas ferramentas do dia a dia."
+    }
+  },
   "common": {
     "pagination": {
       "previous": "Anterior",

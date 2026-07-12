@@ -1,4 +1,14 @@
 {
+  "tour": {
+    "skip": "Skip tour",
+    "replay": "Replay guided tour",
+    "stops": {
+      "techStack": "Click any logo to watch it form in the hero, with a short note on how I use it.",
+      "featuredWorks": "Open a project for the full case study and migration dossier.",
+      "agents": "How I actually build with AI agents — end to end.",
+      "devZone": "Step into the Dev Zone — a hidden, draggable desk of my daily tools."
+    }
+  },
   "common": {
     "pagination": {
       "previous": "Previous",

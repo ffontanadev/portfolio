@@ -34,7 +34,10 @@ export function rectCenter(r: Rect): Vec2 {
 /** Fixed-capacity ring buffer of recent points; `toArray` returns oldest-first. */
 export class TrailBuffer {
   private points: Vec2[] = [];
-  constructor(private capacity: number) {}
+  private capacity: number;
+  constructor(capacity: number) {
+    this.capacity = capacity;
+  }
   push(p: Vec2): void {
     this.points.push({ x: p.x, y: p.y });
     if (this.points.length > this.capacity) this.points.shift();

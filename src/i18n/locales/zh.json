@@ -1,4 +1,14 @@
 {
+  "tour": {
+    "skip": "跳过导览",
+    "replay": "重新播放导览",
+    "stops": {
+      "techStack": "点击任意徽标，即可看到它在主视觉中生成，并附上我如何使用它的说明。",
+      "featuredWorks": "打开项目查看完整案例研究与迁移档案。",
+      "agents": "我如何真正地用 AI 智能体从头到尾进行构建。",
+      "devZone": "进入 Dev Zone —— 一张隐藏的、可拖拽的日常工具桌面。"
+    }
+  },
   "common": {
     "pagination": {
       "previous": "上一页",
