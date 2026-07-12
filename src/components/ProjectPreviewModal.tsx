@@ -9,7 +9,7 @@ import { useState } from 'react';
 import BancoProvinciaLogo from './logos/BancoProvinciaLogo';
 import BBVALogo from './logos/BBVALogo';
 import { accentForCategory } from './projectTypes';
-import type { Project, CodeBlock, ProjectLeadMetric, ProjectLogo } from './projectTypes';
+import type { Project, CodeBlock, ProjectLeadMetric, ProjectLogo, MigrationDossier } from './projectTypes';
 import LatestCommit from './LatestCommit';
 import { useTranslation } from '@/i18n';
 
@@ -273,6 +273,109 @@ const MetricBrief = ({ project }: { project: Project }) => {
     );
 };
 
+const MigrationStatTiles = ({ stats }: { stats: MigrationDossier['scope'] }) => (
+    <div className="grid grid-cols-2 gap-3">
+        {stats.map((s, i) => (
+            <div key={i} className="rounded-xl border border-dark-900/10 bg-cream-50/40 px-4 py-3">
+                <div className="font-display font-bold text-2xl md:text-3xl tracking-[-0.03em] text-dark-900 leading-none">
+                    {s.value}
+                </div>
+                <div className="mt-1.5 font-mono text-[10px] tracking-[0.18em] uppercase text-dark-900/55">
+                    {s.label}
+                </div>
+            </div>
+        ))}
+    </div>
+);
+
+const MigrationDossierView = ({ dossier }: { dossier: MigrationDossier }) => (
+    <div className="space-y-8">
+        <MigrationStatTiles stats={dossier.scope} />
+
+        {/* Before -> After */}
+        <div className="grid grid-cols-[1fr_auto_1fr] items-start gap-3">
+            {[dossier.before, dossier.after].map((col, idx) => (
+                <div key={idx} className={idx === 0 ? '' : 'col-start-3'}>
+                    <h4 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-3">
+                        {col.heading}
+                    </h4>
+                    <ul className="space-y-2">
+                        {col.items.map((item, i) => (
+                            <li
+                                key={i}
+                                className={`text-sm leading-snug ${
+                                    idx === 0 ? 'text-dark-900/50 line-through decoration-dark-900/20' : 'text-dark-900 font-medium'
+                                }`}
+                            >
+                                {item}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ))}
+            <span
+                className="col-start-2 row-start-1 self-center font-display-italic text-coral-500 text-3xl font-light pt-6"
+                style={{ fontStyle: 'italic' }}
+                aria-hidden="true"
+            >
+                &rarr;
+            </span>
+        </div>
+
+        {/* Module breakdown */}
+        <div>
+            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-4">
+                {dossier.modulesHeading}
+            </h3>
+            <div className="rounded-2xl border border-dark-900/10 divide-y divide-dark-900/[0.07] overflow-hidden bg-cream-50/40">
+                {dossier.modules.map((m, i) => (
+                    <div key={i} className="flex items-baseline justify-between gap-4 px-5 py-3.5">
+                        <div className="min-w-0">
+                            <p className="font-display text-base md:text-lg tracking-tight text-dark-900 font-medium">
+                                {m.label}
+                            </p>
+                            <p className="mt-0.5 text-sm text-dark-900/55 leading-snug">{m.role}</p>
+                        </div>
+                        <span className="font-mono text-[10px] tracking-[0.18em] uppercase text-dark-900/55 shrink-0">
+                            {m.scale}
+                        </span>
+                    </div>
+                ))}
+            </div>
+        </div>
+
+        {/* Phases */}
+        <div>
+            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-4">
+                {dossier.phasesHeading}
+            </h3>
+            <div className="rounded-2xl border border-dark-900/10 divide-y divide-dark-900/[0.07] overflow-hidden bg-cream-50/40">
+                {dossier.phases.map((phase, i) => (
+                    <div key={i} className="flex items-start gap-4 px-5 py-4">
+                        <span
+                            className={`font-mono text-[10px] tracking-[0.2em] uppercase shrink-0 mt-1 ${
+                                phase.current ? 'text-coral-500 font-semibold' : 'text-dark-900/45'
+                            }`}
+                        >
+                            {phase.label}
+                        </span>
+                        <div className="min-w-0">
+                            <p
+                                className={`font-display text-lg tracking-tight ${
+                                    phase.current ? 'text-coral-500 font-semibold' : 'text-dark-900 font-medium'
+                                }`}
+                            >
+                                {phase.title}
+                            </p>
+                            <p className="mt-1 text-sm text-dark-900/55 leading-relaxed">{phase.desc}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </div>
+);
+
 const DevelopmentRoadmap = ({ project }: { project: Project }) => {
     const { t } = useTranslation();
     if (!project.phases?.length) return null;
@@ -465,7 +568,9 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
                                     </div>
 
                                     {/* Right Column — Migration Brief, Development Roadmap, or Code Blocks */}
-                                    {project.category === 'professional' && project.metrics?.length ? (
+                                    {project.migration ? (
+                                        <MigrationDossierView dossier={project.migration} />
+                                    ) : project.category === 'professional' && project.metrics?.length ? (
                                         <MetricBrief project={project} />
                                     ) : project.phases?.length ? (
                                         <div className="space-y-8">
