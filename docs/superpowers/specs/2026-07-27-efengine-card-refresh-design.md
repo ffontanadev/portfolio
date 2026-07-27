@@ -99,7 +99,7 @@ The tables in §4.5 and §4.6 give the **`es` copy**, which is the version that 
 | Fase 5 | Grafo, `.efe` y editor | `SceneGraph` por handles con generación, behaviors por nodo, y el formato binario `.efe` — chunkeado, versionado y con reader hostil a archivos corruptos. El sandbox se vuelve editor dockeado. | Jul 24–25 |
 | **Fase 6** *(current)* | IBL completo | Irradiancia difusa más especular por split-sum: prefiltrado GGX con un dispatch por mip y BRDF LUT, ambos por compute shader. Se suman mapas de emisión y normal strength. | Jul 26 |
 
-Labels stay as `Fase N` in every locale — that is the existing convention in the card and it matches how the phases are named in the engine repo.
+Labels follow each locale's existing convention: `Fase N` in `en`, `es` and `pt` (the English locale already uses the Spanish word — that is how the card ships today, and it matches how the phases are named in the engine repo), `阶段 N` in `zh`.
 
 ### 4.6 Engine systems — 6 rows (new block)
 
@@ -142,6 +142,8 @@ Optional, like `phases` and `metrics`. No other project declares it and none is 
 ### 5.2 New component — `EngineSystems` in `ProjectPreviewModal.tsx`
 
 A sibling of `DevelopmentRoadmap`: the same `rounded-2xl border divide-y` container, two columns instead of three, no `current` state. `label` renders in mono, `role` in body text. Returns `null` when `project.systems` is empty, so other phase-bearing cards are unaffected.
+
+Its heading needs a new locale key, `work.modal.engineSystems`, added beside the existing `work.modal.developmentRoadmap` in all four files.
 
 It is deliberately **not** merged with `DevelopmentRoadmap` into a shared abstraction. The two share four container class names but differ in field count and in phase state; a shared wrapper for two callers would cost more than the repetition.
 
