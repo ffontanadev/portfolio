@@ -22,7 +22,7 @@ const projectData: ProjectStructural[] = [
   {
     id: 'efengine',
     color: "bg-cream-100",
-    techStack: ["C++17", "OpenGL 3.3 Core", "GLFW", "GLAD", "GLM", "Doctest", "CMake"],
+    techStack: ["C++17", "OpenGL 4.5 Core", "PBR + IBL", "Dear ImGui", "Assimp", "GLFW", "GLM", "doctest", "CMake"],
     date: "'26 — NOW",
     codeBlocks: [],
     category: 'personal',
@@ -532,7 +532,8 @@ const FeaturedWorks = () => {
         role: fp.efengine.role,
         description: fp.efengine.description,
         leadMetric: { kind: 'wordmark', value: 'EFENGINE', sub: fp.efengine.leadSub },
-        phases: fp.efengine.phases.map((ph, i) => ({ ...ph, current: i === 2 })),
+        phases: fp.efengine.phases.map((ph, i, arr) => ({ ...ph, current: i === arr.length - 1 })),
+        systems: fp.efengine.systems,
       },
       {
         ...byId.bancoProvincia,

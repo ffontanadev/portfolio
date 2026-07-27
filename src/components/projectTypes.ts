@@ -19,6 +19,12 @@ export interface ProjectPhase {
     current?: boolean;
 }
 
+export interface ProjectSystem {
+    /** Module name as it appears in the repo, e.g. "efecom · RHI". */
+    label: string;
+    role: string;
+}
+
 export interface MetricStat {
     value: string;
     label: string;
@@ -69,6 +75,8 @@ export interface Project {
     metrics?: ProjectMetric[];
     featured?: boolean;
     phases?: ProjectPhase[];
+    /** Architecture breakdown — one row per engine subsystem. */
+    systems?: ProjectSystem[];
     migration?: MigrationDossier;
     /** GitHub repo as "owner/name"; enables the latest-commit badge/detail. */
     repo?: string;
