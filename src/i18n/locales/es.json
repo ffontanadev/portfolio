@@ -206,26 +206,72 @@
       },
       "projects": {
         "efengine": {
-          "title": "EFENGINE — Framework de Juegos en C++",
-          "desc": "Un framework de juegos 3D hecho desde cero en C++17 sobre OpenGL 3.3 Core — una biblioteca contra la que compilas tus juegos, creada para dominar la gestión de memoria y el ciclo de vida del juego.",
+          "title": "EFENGINE — Motor de Juegos en C++",
+          "desc": "Motor 3D hecho desde cero en C++17 sobre OpenGL 4.5 Core — PBR con IBL split-sum, shadow mapping, cadena de post-proceso HDR, formato binario propio de escenas y un editor ImGui dockeado, todo bajo reglas RAII y sin excepciones.",
           "role": "Autor del Motor",
-          "description": "EFENGINE es mi proyecto más ambicioso: un framework personal de juegos 3D escrito en C++17 sobre OpenGL 3.3 Core para Windows. Sin editor, sin scripting nativo, sin compilaciones multiplataforma — es una biblioteca contra la que compilas tus juegos, donde cada juego es un proyecto C++ que enlaza con efengine. El objetivo es dominar los sistemas de bajo nivel: gestión manual de memoria, el ciclo de vida del juego y el pipeline de renderizado, construido fase a fase. La documentación se genera con Doxygen y la compilación se gestiona con CMake.",
-          "leadSub": "mi proyecto más ambicioso",
+          "description": "EFENGINE es mi proyecto más ambicioso: un motor 3D escrito desde cero en C++17 sobre OpenGL 4.5 Core. Renderiza materiales PBR iluminados por luces puntuales y direccional con iluminación basada en imagen completa —irradiancia difusa más especular por split-sum, ambas precalculadas por compute shaders— sobre shadow mapping, un skybox y una cadena de post-proceso HDR de bloom, tonemap y FXAA. Las escenas viven en un grafo de nodos direccionado por handles con generación y se persisten en .efe, un formato binario propio, chunkeado y versionado, con un reader hostil a la entrada corrupta. Encima corre un editor ImGui dockeado: jerarquía, inspector, edición de materiales en vivo y guardado/carga de escenas.\n\nLo que lo sostiene es un conjunto de reglas no negociables. Cada llamada gl* está confinada a efecom, la capa RHI — el renderer nunca ve OpenGL. Sin new/delete crudos y sin excepciones: la propiedad es un valor o un unique_ptr, los errores de programación disparan un assert, los fallos recuperables vuelven como valor de retorno, y todo subsistema es RAII — construirlo lo levanta, destruirlo lo baja.",
+          "leadSub": "C++17 · OpenGL 4.5 Core",
           "phases": [
             {
               "label": "Fase 0",
-              "title": "Configuración",
-              "desc": "Toolchain, compilación con CMake, estructura del proyecto y dependencias listas (GLFW, GLAD, GLM, Doctest)."
+              "title": "Cimientos",
+              "desc": "CMake con FetchContent, GLFW/GLAD/GLM, Log y Assert, Window y Application con RAII de punta a punta, doctest sobre CTest. Cierra con el primer triángulo en pantalla."
             },
             {
               "label": "Fase 1",
-              "title": "Contexto GLFW",
-              "desc": "Creación de la ventana y del contexto OpenGL 3.3 Core, el bucle de juego básico y el manejo de entradas."
+              "title": "Render base",
+              "desc": "Shader, Texture con stb_image, Material, layout de vértices y Mesh; cámara con órbita, pan y zoom. Los shaders pasan a cargarse desde disco."
             },
             {
               "label": "Fase 2",
-              "title": "Hello Triangle",
-              "desc": "Pipeline de renderizado mínimo: configuración de VBO/VAO, compilación de shaders y el primer triángulo en pantalla."
+              "title": "Escena y luces",
+              "desc": "Time, ResourceManager con caché por clave, Renderer con BeginScene/Submit, luces puntuales, framebuffer y la primera UI de debug en ImGui."
+            },
+            {
+              "label": "Fase 3",
+              "title": "HDR y post-proceso",
+              "desc": "Exposición en la cámara, TonemapPass como primer IPostPass, y bloom y FXAA encadenados por ping-pong entre dos framebuffers scratch."
+            },
+            {
+              "label": "Fase 4",
+              "title": "OpenGL 4.5 y el RHI",
+              "desc": "Salto a 4.5 Core con DSA y shaders a #version 450. Nace efecom: ninguna llamada gl* vive fuera del RHI. Skybox y shadow mapping direccional."
+            },
+            {
+              "label": "Fase 5",
+              "title": "Grafo, .efe y editor",
+              "desc": "SceneGraph por handles con generación, behaviors por nodo, y el formato binario .efe — chunkeado, versionado y con reader hostil a archivos corruptos. El sandbox se vuelve editor dockeado."
+            },
+            {
+              "label": "Fase 6",
+              "title": "IBL completo",
+              "desc": "Irradiancia difusa más especular por split-sum: prefiltrado GGX con un dispatch por mip y BRDF LUT, ambos por compute shader. Se suman mapas de emisión y normal strength."
+            }
+          ],
+          "systems": [
+            {
+              "label": "efecom · RHI",
+              "role": "La única superficie que habla con la GPU. Handles u32 opacos, cero tipos de OpenGL en la API, backend GL 4.5 reemplazable. No depende de efengine."
+            },
+            {
+              "label": "renderer",
+              "role": "PBR con luces puntuales y direccional, IBL difuso y especular, shadow pass, skybox y la PostChain de bloom, tonemap y FXAA."
+            },
+            {
+              "label": "scene",
+              "role": "Grafo de nodos con handle + generación: destruir un nodo invalida sus handles viejos. Transforms jerárquicos que sólo recalculan lo dirty, y behaviors por nodo."
+            },
+            {
+              "label": "resources",
+              "role": "Dueño de todo lo que llega de disco por path: shaders, texturas con color space explícito y modelos FBX vía Assimp. Cachea y devuelve punteros observadores."
+            },
+            {
+              "label": "serialization",
+              "role": "El formato .efe: header versionado y chunks con FourCC. Un solo Serialize(Ar&) por tipo sirve para leer y escribir; los chunks desconocidos se saltean por tamaño."
+            },
+            {
+              "label": "sandbox",
+              "role": "Editor ImGui dockeado tipo Unity: jerarquía, inspector, materiales en vivo, panel de render, stats de frame y guardado/carga de escenas."
             }
           ]
         },
@@ -410,6 +456,7 @@
       "role": "Rol",
       "projectBrief": "Resumen del Proyecto",
       "developmentRoadmap": "Hoja de Ruta",
+      "engineSystems": "Sistemas del Motor",
       "keyImplementation": "Implementación Clave"
     }
   },
@@ -418,31 +465,36 @@
     "headingBefore": "Cómo trabajo",
     "headingEmphasis": "con agentes",
     "headingAfter": "",
-    "intro": "La IA no es magia aquí — es un multiplicador de fuerza disciplinado bajo estricta dirección humana. Tres prácticas la mantienen confiable.",
-    "leadStat": {
-      "value": "13 repos · ~73k nodes · ~260k relationships",
-      "label": "indexados en memoria"
-    },
+    "intro": "En bases de código demasiado grandes para tener en la cabeza, un agente es tan bueno como la verdad de base que le das. Mi método mantiene la IA anclada a estructura real y contratos demostrables — cada respuesta trazada por un grafo, cada endpoint contrastado con su spec.",
     "pillars": [
       {
         "index": "01",
-        "title": "Indexado en grafo de conocimiento",
-        "body": "Indexo cada código en un grafo de memoria para que los agentes razonen sobre cadenas de llamadas y contratos reales — no suposiciones. Así la superficie de migración de Banco Provincia (~4,600 clases) se volvió navegable.",
-        "proof": "13 repos · ~73k nodes"
+        "principle": "Recorré el grafo, no lo grepees",
+        "title": "Indexado del proyecto",
+        "body": "Indexo cada código en un grafo de conocimiento de funciones, rutas, cadenas de llamadas y contratos de servicio. Los agentes recorren cómo se conecta el código de verdad, en vez de grepear o adivinar con búsqueda semántica — así una superficie de migración enorme se responde con una consulta, no con un escaneo de texto completo."
       },
       {
         "index": "02",
-        "title": "Flujo guiado por specs y planes",
-        "body": "Cada feature empieza como un spec, luego un plan escrito, luego implementación y verificación — todo versionado en el repo. El testing de contratos de la migración se hizo exactamente así.",
-        "proof": "specs & plans in-repo"
+        "principle": "El spec es la suite de tests",
+        "title": "Schemathesis + OpenAPI",
+        "body": "Schemathesis lee el esquema OpenAPI de un servicio y genera tests basados en propiedades — cientos de casos límite, malformados y con estado que el contrato implica pero que nadie escribe a mano. Expone el desfase de esquema y los 500 inesperados antes de que un cliente los vea — justo lo que un endpoint migrado tiene que demostrar."
       },
       {
         "index": "03",
-        "title": "Skills y comandos a medida",
-        "body": "Skills hechos a medida codifican los flujos difíciles y repetibles — conversión SOAP→REST, optimización de Spring Boot, debugging de Java legado — para que sean consistentes y revisables.",
-        "proof": "soap-to-rest-converter · java-springboot-optimizer"
+        "principle": "Un harness, cualquier OpenAPI",
+        "title": "Harness de testing de APIs",
+        "body": "Envolví ese flujo en una app pequeña: apuntalo a cualquier servicio que exponga un esquema OpenAPI y corre la suite completa de Schemathesis, muestra las fallas y reporta la cobertura del contrato. Testear un microservicio nuevo pasa a ser configuración, no un proyecto de tests desde cero."
       }
-    ]
+    ],
+    "toolkit": {
+      "label": "Herramientas",
+      "items": [
+        { "name": "Playwright", "note": "E2E de navegador · visual" },
+        { "name": "Superpowers", "note": "skills y comandos" },
+        { "name": "MCP memory", "note": "grafo para agentes" },
+        { "name": "Spec + plan", "note": "brainstorm → plan → verificar" }
+      ]
+    }
   },
   "contact": {
     "eyebrow": "§ 05 — Hablemos",

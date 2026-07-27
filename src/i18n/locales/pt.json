@@ -206,26 +206,72 @@
       },
       "projects": {
         "efengine": {
-          "title": "EFENGINE — Framework de Jogos em C++",
-          "desc": "Um framework de jogos 3D feito do zero em C++17 sobre OpenGL 3.3 Core — uma biblioteca contra a qual você compila seus jogos, criada para dominar o gerenciamento de memória e o ciclo de vida do jogo.",
+          "title": "EFENGINE — Motor de Jogos em C++",
+          "desc": "Motor 3D feito do zero em C++17 sobre OpenGL 4.5 Core — PBR com IBL split-sum, shadow mapping, cadeia de pós-processamento HDR, formato binário próprio de cenas e um editor ImGui dockado, tudo sob regras RAII e sem exceções.",
           "role": "Autor do Motor",
-          "description": "EFENGINE é meu projeto mais ambicioso: um framework pessoal de jogos 3D escrito em C++17 sobre OpenGL 3.3 Core para Windows. Sem editor, sem scripting nativo, sem builds multiplataforma — é uma biblioteca contra a qual você compila seus jogos, onde cada jogo é um projeto C++ que faz link com a efengine. O objetivo é dominar os sistemas de baixo nível: gerenciamento manual de memória, o ciclo de vida do jogo e o pipeline de renderização, construídos fase a fase. A documentação é gerada com Doxygen e a compilação é conduzida pelo CMake.",
-          "leadSub": "meu projeto mais ambicioso",
+          "description": "EFENGINE é meu projeto mais ambicioso: um motor 3D escrito do zero em C++17 sobre OpenGL 4.5 Core. Ele renderiza materiais PBR iluminados por luzes pontuais e direcional com iluminação baseada em imagem completa —irradiância difusa mais especular por split-sum, ambas pré-computadas por compute shaders— sobre shadow mapping, um skybox e uma cadeia de pós-processamento HDR de bloom, tonemap e FXAA. As cenas vivem em um grafo de nós endereçado por handles com geração e são persistidas em .efe, um formato binário próprio, em chunks e versionado, com um reader hostil a entradas corrompidas. Por cima roda um editor ImGui dockado: hierarquia, inspetor, edição de materiais ao vivo e salvar/carregar cenas.\n\nO que sustenta tudo é um conjunto de regras inegociáveis. Cada chamada gl* está confinada ao efecom, a camada RHI — o renderer nunca vê OpenGL. Sem new/delete crus e sem exceções: a propriedade é um valor ou um unique_ptr, erros de programação disparam um assert, falhas recuperáveis voltam como valor de retorno, e todo subsistema é RAII — construí-lo o levanta, destruí-lo o desliga.",
+          "leadSub": "C++17 · OpenGL 4.5 Core",
           "phases": [
             {
               "label": "Fase 0",
-              "title": "Configuração",
-              "desc": "Toolchain, build com CMake, estrutura do projeto e dependências configuradas (GLFW, GLAD, GLM, Doctest)."
+              "title": "Fundações",
+              "desc": "CMake com FetchContent, GLFW/GLAD/GLM, Log e Assert, Window e Application com RAII de ponta a ponta, doctest sobre CTest. Fecha com o primeiro triângulo na tela."
             },
             {
               "label": "Fase 1",
-              "title": "Contexto GLFW",
-              "desc": "Criação da janela e do contexto OpenGL 3.3 Core, o loop de jogo básico e o tratamento de entradas."
+              "title": "Renderização base",
+              "desc": "Shader, Texture com stb_image, Material, layout de vértices e Mesh; câmera com órbita, pan e zoom. Os shaders passam a ser carregados do disco."
             },
             {
               "label": "Fase 2",
-              "title": "Hello Triangle",
-              "desc": "Pipeline de renderização mínimo: configuração de VBO/VAO, compilação de shaders e o primeiro triângulo na tela."
+              "title": "Cena e luzes",
+              "desc": "Time, ResourceManager com cache por chave, Renderer com BeginScene/Submit, luzes pontuais, framebuffer e a primeira UI de debug em ImGui."
+            },
+            {
+              "label": "Fase 3",
+              "title": "HDR e pós-processamento",
+              "desc": "Exposição na câmera, TonemapPass como primeiro IPostPass, e bloom e FXAA encadeados por ping-pong entre dois framebuffers scratch."
+            },
+            {
+              "label": "Fase 4",
+              "title": "OpenGL 4.5 e o RHI",
+              "desc": "Salto para 4.5 Core com DSA e shaders em #version 450. Nasce o efecom: nenhuma chamada gl* vive fora do RHI. Skybox e shadow mapping direcional."
+            },
+            {
+              "label": "Fase 5",
+              "title": "Grafo, .efe e editor",
+              "desc": "SceneGraph por handles com geração, behaviors por nó, e o formato binário .efe — em chunks, versionado e com reader hostil a arquivos corrompidos. O sandbox vira um editor dockado."
+            },
+            {
+              "label": "Fase 6",
+              "title": "IBL completo",
+              "desc": "Irradiância difusa mais especular por split-sum: pré-filtragem GGX com um dispatch por mip e BRDF LUT, ambos por compute shader. Somam-se mapas de emissão e normal strength."
+            }
+          ],
+          "systems": [
+            {
+              "label": "efecom · RHI",
+              "role": "A única superfície que fala com a GPU. Handles u32 opacos, zero tipos de OpenGL na API, backend GL 4.5 substituível. Não depende da efengine."
+            },
+            {
+              "label": "renderer",
+              "role": "PBR com luzes pontuais e direcional, IBL difuso e especular, shadow pass, skybox e a PostChain de bloom, tonemap e FXAA."
+            },
+            {
+              "label": "scene",
+              "role": "Grafo de nós com handle + geração: destruir um nó invalida seus handles antigos. Transforms hierárquicos que só recalculam o que está dirty, e behaviors por nó."
+            },
+            {
+              "label": "resources",
+              "role": "Dono de tudo o que chega do disco por path: shaders, texturas com color space explícito e modelos FBX via Assimp. Faz cache e devolve ponteiros observadores."
+            },
+            {
+              "label": "serialization",
+              "role": "O formato .efe: header versionado e chunks com FourCC. Um único Serialize(Ar&) por tipo serve para ler e escrever; chunks desconhecidos são pulados por tamanho."
+            },
+            {
+              "label": "sandbox",
+              "role": "Editor ImGui dockado estilo Unity: hierarquia, inspetor, materiais ao vivo, painel de render, stats de frame e salvar/carregar cenas."
             }
           ]
         },
@@ -410,6 +456,7 @@
       "role": "Função",
       "projectBrief": "Resumo do Projeto",
       "developmentRoadmap": "Roteiro de Desenvolvimento",
+      "engineSystems": "Sistemas do Motor",
       "keyImplementation": "Implementação Principal"
     }
   },
@@ -418,31 +465,36 @@
     "headingBefore": "Como eu trabalho",
     "headingEmphasis": "com agentes",
     "headingAfter": "",
-    "intro": "IA não é mágica aqui — é um multiplicador de força disciplinado sob rígida direção humana. Três práticas a mantêm confiável.",
-    "leadStat": {
-      "value": "13 repos · ~73k nodes · ~260k relationships",
-      "label": "indexados em memória"
-    },
+    "intro": "Em bases de código grandes demais para caber na cabeça, um agente é tão bom quanto a verdade de base que você dá a ele. Meu método mantém a IA ancorada em estrutura real e contratos demonstráveis — cada resposta traçada por um grafo, cada endpoint conferido contra o seu spec.",
     "pillars": [
       {
         "index": "01",
-        "title": "Indexação em grafo de conhecimento",
-        "body": "Indexo cada código em um grafo de memória para que os agentes raciocinem sobre cadeias de chamadas e contratos reais — não suposições. Foi assim que a superfície de migração do Banco Provincia (~4,600 classes) ficou navegável.",
-        "proof": "13 repos · ~73k nodes"
+        "principle": "Percorra o grafo, não faça grep",
+        "title": "Indexação do projeto",
+        "body": "Indexo cada código em um grafo de conhecimento de funções, rotas, cadeias de chamadas e contratos de serviço. Os agentes percorrem como o código realmente se conecta, em vez de fazer grep ou adivinhar com busca semântica — assim uma superfície de migração enorme responde a uma consulta, não a uma varredura de texto completo."
       },
       {
         "index": "02",
-        "title": "Fluxo guiado por specs e planos",
-        "body": "Cada feature começa como um spec, depois um plano escrito, depois implementação e verificação — tudo versionado no repo. Os testes de contrato da migração foram feitos exatamente assim.",
-        "proof": "specs & plans in-repo"
+        "principle": "O spec é a suíte de testes",
+        "title": "Schemathesis + OpenAPI",
+        "body": "O Schemathesis lê o esquema OpenAPI de um serviço e gera testes baseados em propriedades — centenas de casos-limite, malformados e com estado que o contrato implica mas ninguém escreve à mão. Ele expõe o desvio de esquema e os 500 inesperados antes de um cliente vê-los — exatamente o que um endpoint migrado precisa provar."
       },
       {
         "index": "03",
-        "title": "Skills e comandos sob medida",
-        "body": "Skills sob medida codificam os fluxos difíceis e repetíveis — conversão SOAP→REST, otimização de Spring Boot, debugging de Java legado — para que sejam consistentes e revisáveis.",
-        "proof": "soap-to-rest-converter · java-springboot-optimizer"
+        "principle": "Um harness, qualquer OpenAPI",
+        "title": "Harness de testes de API",
+        "body": "Envolvi esse fluxo em um app pequeno: aponte-o para qualquer serviço que exponha um esquema OpenAPI e ele roda a suíte completa do Schemathesis, mostra as falhas e reporta a cobertura do contrato. Testar um novo microsserviço vira configuração, não um projeto de testes do zero."
       }
-    ]
+    ],
+    "toolkit": {
+      "label": "Ferramentas",
+      "items": [
+        { "name": "Playwright", "note": "E2E de navegador · visual" },
+        { "name": "Superpowers", "note": "skills e comandos" },
+        { "name": "MCP memory", "note": "grafo para agentes" },
+        { "name": "Spec + plan", "note": "brainstorm → plano → verificar" }
+      ]
+    }
   },
   "contact": {
     "eyebrow": "§ 05 — Fale comigo",

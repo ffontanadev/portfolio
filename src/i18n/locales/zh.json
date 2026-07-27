@@ -206,26 +206,72 @@
       },
       "projects": {
         "efengine": {
-          "title": "EFENGINE — C++ 游戏框架",
-          "desc": "一个基于 OpenGL 3.3 Core、用 C++17 从零打造的 3D 游戏框架——一个供你编译游戏所链接的库，旨在掌握内存管理与游戏生命周期。",
+          "title": "EFENGINE — C++ 游戏引擎",
+          "desc": "用 C++17 从零打造、基于 OpenGL 4.5 Core 的 3D 引擎——PBR 与 split-sum IBL、阴影映射、HDR 后处理链、自研的带版本二进制场景格式，以及一个停靠式 ImGui 编辑器，全部遵循 RAII 规则且不使用异常。",
           "role": "引擎作者",
-          "description": "EFENGINE 是我最有野心的项目：一个面向 Windows、用 C++17 基于 OpenGL 3.3 Core 编写的个人 3D 游戏框架。没有编辑器、没有原生脚本、没有跨平台构建——它是一个供你编译游戏所链接的库，每个游戏都是一个链接到 efengine 的 C++ 项目。目标是掌握底层系统：手动内存管理、游戏生命周期和渲染管线，逐阶段构建。文档由 Doxygen 生成，构建由 CMake 驱动。",
-          "leadSub": "我最有野心的项目",
+          "description": "EFENGINE 是我最有野心的项目：一个用 C++17 从零编写、基于 OpenGL 4.5 Core 的 3D 引擎。它渲染由点光源与平行光照亮的 PBR 材质，配合完整的基于图像的光照——漫反射辐照度加 split-sum 镜面反射，两者均由 compute shader 预计算——之上还有阴影映射、天空盒，以及由 bloom、tonemap 和 FXAA 组成的 HDR 后处理链。场景存放在以带世代句柄寻址的节点图中，并持久化为 .efe：我自己设计的分块、带版本号的二进制格式，其读取器对损坏输入极为苛刻。最上层是一个停靠式 ImGui 编辑器：层级、检视器、材质实时编辑与场景的保存/加载。\n\n把这一切串起来的是一组不可妥协的规则。每一次 gl* 调用都被限制在 RHI 层 efecom 之内——渲染器永远看不到 OpenGL。没有裸 new/delete，也没有异常：所有权是值或 unique_ptr，编程错误触发断言，可恢复的失败以返回值传出，每个子系统都遵循 RAII——构造即启动，析构即关闭。",
+          "leadSub": "C++17 · OpenGL 4.5 Core",
           "phases": [
             {
               "label": "阶段 0",
-              "title": "环境搭建",
-              "desc": "工具链、CMake 构建、项目结构与依赖配置完毕（GLFW、GLAD、GLM、Doctest）。"
+              "title": "奠基",
+              "desc": "CMake 配合 FetchContent、GLFW/GLAD/GLM、Log 与 Assert、全程 RAII 的 Window 与 Application，以及跑在 CTest 上的 doctest。以屏幕上的第一个三角形收尾。"
             },
             {
               "label": "阶段 1",
-              "title": "GLFW 上下文",
-              "desc": "创建窗口与 OpenGL 3.3 Core 上下文、基础游戏循环以及输入处理。"
+              "title": "渲染基础",
+              "desc": "Shader、基于 stb_image 的 Texture、Material、顶点布局与 Mesh；支持环绕、平移与缩放的相机。着色器改为从磁盘加载。"
             },
             {
               "label": "阶段 2",
-              "title": "Hello Triangle",
-              "desc": "最小渲染管线：VBO/VAO 配置、着色器编译，以及屏幕上的第一个三角形。"
+              "title": "场景与光照",
+              "desc": "Time、按键缓存的 ResourceManager、带 BeginScene/Submit 的 Renderer、点光源、帧缓冲，以及第一版 ImGui 调试界面。"
+            },
+            {
+              "label": "阶段 3",
+              "title": "HDR 与后处理",
+              "desc": "相机上的曝光、作为首个 IPostPass 的 TonemapPass，以及在两个临时帧缓冲之间乒乓串联的 bloom 与 FXAA。"
+            },
+            {
+              "label": "阶段 4",
+              "title": "OpenGL 4.5 与 RHI",
+              "desc": "升级到 4.5 Core 并启用 DSA，着色器改为 #version 450。efecom 诞生：任何 gl* 调用都不得存在于 RHI 之外。天空盒与平行光阴影映射。"
+            },
+            {
+              "label": "阶段 5",
+              "title": "场景图、.efe 与编辑器",
+              "desc": "带世代句柄的 SceneGraph、按节点的 behaviors，以及 .efe 二进制格式——分块、带版本号，读取器对损坏文件极为苛刻。sandbox 演进为停靠式编辑器。"
+            },
+            {
+              "label": "阶段 6",
+              "title": "完整 IBL",
+              "desc": "漫反射辐照度加 split-sum 镜面反射：每个 mip 一次 dispatch 的 GGX 预过滤与 BRDF LUT，均由 compute shader 完成。同时加入自发光贴图与 normal strength。"
+            }
+          ],
+          "systems": [
+            {
+              "label": "efecom · RHI",
+              "role": "唯一与 GPU 对话的表面。不透明的 u32 句柄，API 中不出现任何 OpenGL 类型，GL 4.5 后端可替换。它不依赖 efengine。"
+            },
+            {
+              "label": "renderer",
+              "role": "点光源与平行光下的 PBR、漫反射与镜面 IBL、阴影 pass、天空盒，以及由 bloom、tonemap 和 FXAA 组成的 PostChain。"
+            },
+            {
+              "label": "scene",
+              "role": "以句柄 + 世代寻址的节点图：销毁节点会使其旧句柄失效。只重算 dirty 部分的层级变换，以及按节点的 behaviors。"
+            },
+            {
+              "label": "resources",
+              "role": "凡是按路径从磁盘加载的资源都归它所有：着色器、带显式色彩空间的贴图，以及经 Assimp 导入的 FBX 模型。缓存并返回观察者指针。"
+            },
+            {
+              "label": "serialization",
+              "role": ".efe 格式：带版本号的文件头与 FourCC 分块。每个类型只需一个 Serialize(Ar&) 即可读写；未知分块按大小跳过。"
+            },
+            {
+              "label": "sandbox",
+              "role": "Unity 风格的停靠式 ImGui 编辑器：层级、检视器、材质实时编辑、渲染面板、帧统计与场景的保存/加载。"
             }
           ]
         },
@@ -410,6 +456,7 @@
       "role": "角色",
       "projectBrief": "项目概要",
       "developmentRoadmap": "开发路线图",
+      "engineSystems": "引擎系统",
       "keyImplementation": "关键实现"
     }
   },
@@ -418,31 +465,36 @@
     "headingBefore": "我如何",
     "headingEmphasis": "与智能体协作",
     "headingAfter": "",
-    "intro": "这里的 AI 不是魔法 —— 而是在严格人为主导下的、有纪律的力量倍增器。三条实践让它保持可靠。",
-    "leadStat": {
-      "value": "13 repos · ~73k nodes · ~260k relationships",
-      "label": "已索引进记忆"
-    },
+    "intro": "面对大到无法全部装进脑子的代码库，智能体的水平取决于你交给它的事实依据。我的方法让 AI 始终锚定在真实结构与可证明的契约上 —— 每个答案都经由图谱追溯，每个接口都对照其规格校验。",
     "pillars": [
       {
         "index": "01",
-        "title": "知识图谱索引",
-        "body": "我把每个代码库都索引进记忆图谱，让智能体基于真实的调用链与服务契约推理，而非猜测。正是如此，Banco Provincia 的迁移代码面（约 4,600 个类）才变得可导航。",
-        "proof": "13 repos · ~73k nodes"
+        "principle": "遍历图谱，而非 grep",
+        "title": "项目索引",
+        "body": "我把每个代码库索引成由函数、路由、调用链与服务契约构成的知识图谱。智能体沿着代码真实的连接方式去遍历，而不是用 grep 或语义搜索去猜 —— 于是庞大的迁移代码面只需一次查询即可回答，而非全文扫描。"
       },
       {
         "index": "02",
-        "title": "以规格与计划驱动的流程",
-        "body": "每个功能都从头脑风暴的规格开始，再到书面计划，再到实现与验证 —— 每一步都提交进仓库。这次迁移的契约测试正是这样交付的。",
-        "proof": "specs & plans in-repo"
+        "principle": "规格即测试套件",
+        "title": "Schemathesis + OpenAPI",
+        "body": "Schemathesis 读取服务的 OpenAPI 规格，生成基于属性的测试 —— 数百个边界、畸形与有状态的用例，都是契约所隐含、却没人会手写的。它在客户端看到之前就暴露出规格漂移与意外的 500 —— 这正是一个迁移后的接口必须证明的。"
       },
       {
         "index": "03",
-        "title": "定制技能与斜杠命令",
-        "body": "定制技能把困难、可复用的流程固化下来 —— SOAP→REST 转换、Spring Boot 优化、遗留 Java 调试 —— 让它们保持一致且可审查。",
-        "proof": "soap-to-rest-converter · java-springboot-optimizer"
+        "principle": "一套装置，任意 OpenAPI",
+        "title": "API 测试装置",
+        "body": "我把这套流程封装成一个小应用：把它指向任意暴露 OpenAPI 规格的服务，它就会运行完整的 Schemathesis 套件、列出失败并报告契约覆盖率。测试一个新的微服务因此变成配置，而不是从零搭建的测试项目。"
       }
-    ]
+    ],
+    "toolkit": {
+      "label": "工具箱",
+      "items": [
+        { "name": "Playwright", "note": "浏览器 E2E 与视觉" },
+        { "name": "Superpowers", "note": "技能与斜杠命令" },
+        { "name": "MCP memory", "note": "面向智能体的图谱工具" },
+        { "name": "Spec + plan", "note": "头脑风暴 → 计划 → 验证" }
+      ]
+    }
   },
   "contact": {
     "eyebrow": "§ 05 — 取得联系",
