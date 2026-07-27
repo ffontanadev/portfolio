@@ -413,6 +413,36 @@ const DevelopmentRoadmap = ({ project }: { project: Project }) => {
     );
 };
 
+// Sibling of DevelopmentRoadmap: same container, two columns instead of
+// three, no phase state. The roadmap says when things happened; this says
+// how the engine is put together.
+const EngineSystems = ({ project }: { project: Project }) => {
+    const { t } = useTranslation();
+    if (!project.systems?.length) return null;
+    return (
+        <div>
+            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-4">
+                {t('work.modal.engineSystems')}
+            </h3>
+            <div className="rounded-2xl border border-dark-900/10 divide-y divide-dark-900/[0.07] overflow-hidden bg-cream-50/40">
+                {project.systems.map((system, i) => (
+                    <div
+                        key={i}
+                        className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 px-5 py-4"
+                    >
+                        <span className="font-mono text-[11px] tracking-[0.12em] text-teal-700 shrink-0 sm:w-32">
+                            {system.label}
+                        </span>
+                        <p className="min-w-0 text-sm text-dark-900/60 leading-relaxed">
+                            {system.role}
+                        </p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
+
 const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalProps) => {
     const { t } = useTranslation();
     const modalRef = useRef<HTMLDivElement>(null);
@@ -527,7 +557,7 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
                                             >
                                                 {project.title}
                                             </h2>
-                                            <p className="text-lg text-gray-600 leading-relaxed">
+                                            <p className="text-lg text-gray-600 leading-relaxed whitespace-pre-line">
                                                 {project.description}
                                             </p>
                                         </div>
@@ -575,6 +605,7 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
                                     ) : project.phases?.length ? (
                                         <div className="space-y-8">
                                             <DevelopmentRoadmap project={project} />
+                                            <EngineSystems project={project} />
                                             {project.repo && (
                                                 <LatestCommit repo={project.repo} variant="detail" />
                                             )}
