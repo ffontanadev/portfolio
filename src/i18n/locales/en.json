@@ -456,7 +456,8 @@
       "role": "Role",
       "projectBrief": "Project Brief",
       "developmentRoadmap": "Development Roadmap",
-      "engineSystems": "Engine Systems",
+      "engineSystems": "Engine Systems | 2026-27-07",
+      "gpuBoundary": "the only path to the GPU",
       "keyImplementation": "Key Implementation"
     }
   },

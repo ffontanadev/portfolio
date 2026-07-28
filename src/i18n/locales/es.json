@@ -318,7 +318,7 @@
           "title": "BBVA — Migración de APIs y Cobertura de Tests",
           "desc": "Migración de la superficie de APIs internas de BBVA a Spring Boot y desarrollo de suites de tests con alta cobertura en más de 50 servicios — convirtiendo internos frágiles en una plataforma que se puede refactorizar sin miedo.",
           "role": "Ingeniero Backend",
-          "description": "Participé en la plataforma interna de BBVA para migrar decenas de servicios API a Spring Boot y establecer una cobertura de tests disciplinada en toda la superficie. Escribí tests unitarios y de integración para más de 50 APIs internas, elevando la cobertura base y protegiendo futuras refactorizaciones del ruido de las regresiones.",
+          "description": "Participé en la plataforma interna de BBVA ayudando en  tareas pre-migratorias en aproximadamente 50 servicios Spring Boot y agregué una cobertura de tests disciplinada en toda la superficie. Escribí tests unitarios para más de 50 APIs internas, elevando la cobertura base y protegiendo futuras refactorizaciones de posibles regresiones.",
           "metrics": [
             {
               "label": "Alcance",
@@ -456,7 +456,8 @@
       "role": "Rol",
       "projectBrief": "Resumen del Proyecto",
       "developmentRoadmap": "Hoja de Ruta",
-      "engineSystems": "Sistemas del Motor",
+      "engineSystems": "Sistemas del Motor | 2026-27-07",
+      "gpuBoundary": "la única vía a la GPU",
       "keyImplementation": "Implementación Clave"
     }
   },

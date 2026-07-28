@@ -4,7 +4,7 @@ import { ArrowUpRight } from 'lucide-react';
 import ProjectPreviewModal, { EnterpriseHero } from './ProjectPreviewModal';
 import LatestCommit from './LatestCommit';
 import VideoShowcaseHero from './VideoShowcaseHero';
-import { accentForCategory, categoryLabelKey, type Project } from './projectTypes';
+import { accentForCategory, categoryLabelKey, type Project, type ProjectSystemTier } from './projectTypes';
 import { useTranslation } from '@/i18n';
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -17,6 +17,19 @@ type Filter = 'all' | 'personal' | 'professional';
 type ProjectStructural = Omit<Project, 'title' | 'desc' | 'role' | 'description' | 'phases' | 'metrics' | 'migration'> & {
   id: string;
 };
+
+// The efengine `systems` locale array is authored in dependency order —
+// efecom, renderer, scene, resources, serialization, sandbox — and its length
+// is pinned by src/test/localeCard.test.ts. Tiers describe architecture rather
+// than copy, so they live here instead of in the locale files.
+const EFENGINE_SYSTEM_TIERS: ProjectSystemTier[] = [
+  'rhi',
+  'runtime',
+  'runtime',
+  'runtime',
+  'runtime',
+  'editor',
+];
 
 const projectData: ProjectStructural[] = [
   {
@@ -533,7 +546,10 @@ const FeaturedWorks = () => {
         description: fp.efengine.description,
         leadMetric: { kind: 'wordmark', value: 'EFENGINE', sub: fp.efengine.leadSub },
         phases: fp.efengine.phases.map((ph, i, arr) => ({ ...ph, current: i === arr.length - 1 })),
-        systems: fp.efengine.systems,
+        systems: fp.efengine.systems.map((s, i) => ({
+          ...s,
+          tier: EFENGINE_SYSTEM_TIERS[i] ?? 'runtime',
+        })),
       },
       {
         ...byId.bancoProvincia,

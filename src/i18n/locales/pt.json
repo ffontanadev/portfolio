@@ -456,7 +456,8 @@
       "role": "Função",
       "projectBrief": "Resumo do Projeto",
       "developmentRoadmap": "Roteiro de Desenvolvimento",
-      "engineSystems": "Sistemas do Motor",
+      "engineSystems": "Sistemas do Motor | 2026-27-07",
+      "gpuBoundary": "o único caminho até a GPU",
       "keyImplementation": "Implementação Principal"
     }
   },

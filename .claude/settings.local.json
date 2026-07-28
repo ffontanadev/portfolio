@@ -13,7 +13,8 @@
       "mcp__plugin_playwright_playwright__browser_take_screenshot",
       "Bash(more +1)",
       "Bash(findstr /n \".\")",
-      "Bash(findstr /b \"1: 2: 3:\")"
+      "Bash(findstr /b \"1: 2: 3:\")",
+      "PowerShell(pnpm test *)"
     ]
   }
 }

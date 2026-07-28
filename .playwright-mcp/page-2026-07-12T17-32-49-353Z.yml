@@ -1,0 +1,545 @@
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - generic [ref=e5]:
+      - link "FF ." [ref=e6] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e7]: FF
+        - generic [ref=e8]: .
+      - generic [ref=e9]:
+        - generic [ref=e10]:
+          - generic [ref=e11]: "01"
+          - link "Home" [ref=e12] [cursor=pointer]:
+            - /url: /
+        - generic [ref=e13]:
+          - generic [ref=e14]: "02"
+          - link "Work" [ref=e15] [cursor=pointer]:
+            - /url: "#work"
+        - generic [ref=e16]:
+          - generic [ref=e17]: "03"
+          - link "About" [ref=e18] [cursor=pointer]:
+            - /url: "#about"
+        - generic [ref=e19]:
+          - generic [ref=e20]: "04"
+          - link "Connect" [ref=e21] [cursor=pointer]:
+            - /url: "#connect"
+        - button "Select language" [ref=e23] [cursor=pointer]:
+          - generic [ref=e32]: en
+        - link "Dev Zone" [ref=e33] [cursor=pointer]:
+          - /url: /dev-zone
+        - button "Resume" [ref=e36] [cursor=pointer]
+  - main [ref=e38]:
+    - generic [ref=e40]:
+      - generic [ref=e41]: 01 — Introduction
+      - paragraph [ref=e48]: A developer crafting digital solutions at Magenta Innova .
+    - generic [ref=e49]:
+      - generic [ref=e50]: Stack · in rotation
+      - generic [ref=e55]:
+        - button "Supabase logo" [ref=e56] [cursor=pointer]:
+          - img "Supabase" [ref=e57]
+          - generic [ref=e58]: Supabase
+        - button "Next.js logo" [ref=e59] [cursor=pointer]:
+          - img "Next.js" [ref=e60]
+          - generic [ref=e61]: Next.js
+        - button "AWS logo" [ref=e62] [cursor=pointer]:
+          - img "AWS" [ref=e63]
+          - generic [ref=e64]: AWS
+        - button "Three.js logo" [ref=e65] [cursor=pointer]:
+          - img "Three.js" [ref=e66]
+          - generic [ref=e67]: Three.js
+        - button "Drizzle logo" [ref=e68] [cursor=pointer]:
+          - img "Drizzle" [ref=e69]
+          - generic [ref=e70]: Drizzle
+        - button "SQLite logo" [ref=e71] [cursor=pointer]:
+          - img "SQLite" [ref=e72]
+          - generic [ref=e73]: SQLite
+        - button "MongoDB logo" [ref=e74] [cursor=pointer]:
+          - img "MongoDB" [ref=e75]
+          - generic [ref=e76]: MongoDB
+        - button "PostgreSQL logo" [ref=e77] [cursor=pointer]:
+          - img "PostgreSQL" [ref=e78]
+          - generic [ref=e79]: PostgreSQL
+        - button "Spring Boot logo" [ref=e80] [cursor=pointer]:
+          - img "Spring Boot" [ref=e81]
+          - generic [ref=e82]: Spring Boot
+        - button "Sequelize logo" [ref=e83] [cursor=pointer]:
+          - img "Sequelize" [ref=e84]
+          - generic [ref=e85]: Sequelize
+        - button "Express.js logo" [ref=e86] [cursor=pointer]:
+          - img "Express.js" [ref=e87]
+          - generic [ref=e88]: Express.js
+        - button "Tailwind CSS logo" [ref=e89] [cursor=pointer]:
+          - img "Tailwind CSS" [ref=e90]
+          - generic [ref=e91]: Tailwind CSS
+        - button "Astro logo" [ref=e92] [cursor=pointer]:
+          - img "Astro" [ref=e93]
+          - generic [ref=e94]: Astro
+        - button "Bootstrap logo" [ref=e95] [cursor=pointer]:
+          - img "Bootstrap" [ref=e96]
+          - generic [ref=e97]: Bootstrap
+        - button "Vercel logo" [ref=e98] [cursor=pointer]:
+          - img "Vercel" [ref=e99]
+          - generic [ref=e100]: Vercel
+        - button "GoDaddy logo" [ref=e101] [cursor=pointer]:
+          - img "GoDaddy" [ref=e102]
+          - generic [ref=e103]: GoDaddy
+        - button "Google Cloud logo" [ref=e104] [cursor=pointer]:
+          - img "Google Cloud"
+          - generic [ref=e105]: Google Cloud
+        - button "C# logo" [ref=e106] [cursor=pointer]:
+          - img "C#"
+          - generic [ref=e107]: C#
+        - button "Lit logo" [ref=e108] [cursor=pointer]:
+          - img "Lit"
+          - generic [ref=e109]: Lit
+        - button "Redux logo" [ref=e110] [cursor=pointer]:
+          - img "Redux"
+          - generic [ref=e111]: Redux
+        - button "Auth0 logo" [ref=e112] [cursor=pointer]:
+          - img "Auth0"
+          - generic [ref=e113]: Auth0
+        - button "JWT logo" [ref=e114] [cursor=pointer]:
+          - img "JWT"
+          - generic [ref=e115]: JWT
+        - button "Vite logo" [ref=e116] [cursor=pointer]:
+          - img "Vite"
+          - generic [ref=e117]: Vite
+        - button "Supabase logo" [ref=e118] [cursor=pointer]:
+          - img "Supabase" [ref=e119]
+          - generic [ref=e120]: Supabase
+        - button "Next.js logo" [ref=e121] [cursor=pointer]:
+          - img "Next.js" [ref=e122]
+          - generic [ref=e123]: Next.js
+        - button "AWS logo" [ref=e124] [cursor=pointer]:
+          - img "AWS" [ref=e125]
+          - generic [ref=e126]: AWS
+        - button "Three.js logo" [ref=e127] [cursor=pointer]:
+          - img "Three.js" [ref=e128]
+          - generic [ref=e129]: Three.js
+        - button "Drizzle logo" [ref=e130] [cursor=pointer]:
+          - img "Drizzle" [ref=e131]
+          - generic [ref=e132]: Drizzle
+        - button "SQLite logo" [ref=e133] [cursor=pointer]:
+          - img "SQLite" [ref=e134]
+          - generic [ref=e135]: SQLite
+        - button "MongoDB logo" [ref=e136] [cursor=pointer]:
+          - img "MongoDB" [ref=e137]
+          - generic [ref=e138]: MongoDB
+        - button "PostgreSQL logo" [ref=e139] [cursor=pointer]:
+          - img "PostgreSQL" [ref=e140]
+          - generic [ref=e141]: PostgreSQL
+        - button "Spring Boot logo" [ref=e142] [cursor=pointer]:
+          - img "Spring Boot" [ref=e143]
+          - generic [ref=e144]: Spring Boot
+        - button "Sequelize logo" [ref=e145] [cursor=pointer]:
+          - img "Sequelize" [ref=e146]
+          - generic [ref=e147]: Sequelize
+        - button "Express.js logo" [ref=e148] [cursor=pointer]:
+          - img "Express.js" [ref=e149]
+          - generic [ref=e150]: Express.js
+        - button "Tailwind CSS logo" [ref=e151] [cursor=pointer]:
+          - img "Tailwind CSS" [ref=e152]
+          - generic [ref=e153]: Tailwind CSS
+        - button "Astro logo" [ref=e154] [cursor=pointer]:
+          - img "Astro" [ref=e155]
+          - generic [ref=e156]: Astro
+        - button "Bootstrap logo" [ref=e157] [cursor=pointer]:
+          - img "Bootstrap" [ref=e158]
+          - generic [ref=e159]: Bootstrap
+        - button "Vercel logo" [ref=e160] [cursor=pointer]:
+          - img "Vercel" [ref=e161]
+          - generic [ref=e162]: Vercel
+        - button "GoDaddy logo" [ref=e163] [cursor=pointer]:
+          - img "GoDaddy" [ref=e164]
+          - generic [ref=e165]: GoDaddy
+        - button "Google Cloud logo" [ref=e166] [cursor=pointer]:
+          - img "Google Cloud"
+          - generic [ref=e167]: Google Cloud
+        - button "C# logo" [ref=e168] [cursor=pointer]:
+          - img "C#"
+          - generic [ref=e169]: C#
+        - button "Lit logo" [ref=e170] [cursor=pointer]:
+          - img "Lit"
+          - generic [ref=e171]: Lit
+        - button "Redux logo" [ref=e172] [cursor=pointer]:
+          - img "Redux"
+          - generic [ref=e173]: Redux
+        - button "Auth0 logo" [ref=e174] [cursor=pointer]:
+          - img "Auth0"
+          - generic [ref=e175]: Auth0
+        - button "JWT logo" [ref=e176] [cursor=pointer]:
+          - img "JWT"
+          - generic [ref=e177]: JWT
+        - button "Vite logo" [ref=e178] [cursor=pointer]:
+          - img "Vite"
+          - generic [ref=e179]: Vite
+    - generic [ref=e180]:
+      - generic [ref=e181]:
+        - generic [ref=e182]: § 02 — Selected Work
+        - heading "What I've been pouring my soul into." [level=2] [ref=e185]
+        - paragraph [ref=e186]: A small collection of recent experiments, enterprise migrations, and side-quests.
+      - tablist "Filter projects by category" [ref=e187]:
+        - tab "All07" [selected] [ref=e188]
+        - tab "Personal04" [ref=e190]
+        - tab "Professional03" [ref=e191]
+      - article [ref=e192] [cursor=pointer]:
+        - generic [ref=e193]:
+          - generic [ref=e194]: § Flagship · C++ Engine
+          - generic [ref=e196]: "'26 — NOW"
+        - generic [ref=e198]:
+          - generic [ref=e202]: §
+          - generic [ref=e204]:
+            - generic [ref=e205]:
+              - generic [ref=e206]: EFENGINE
+              - generic [ref=e207]: my most ambitious project
+            - paragraph [ref=e209]: C++17 · OpenGL 3.3 Core · GLFW · GLAD · GLM
+        - generic [ref=e215]:
+          - heading "EFENGINE — C++ Game Framework" [level=3] [ref=e216]
+          - paragraph [ref=e217]: A from-scratch 3D game framework in C++17 on OpenGL 3.3 Core — a library you compile your games against, built to master memory management and the game lifecycle.
+          - generic [ref=e218]:
+            - generic [ref=e219]: C++17
+            - generic [ref=e220]: OpenGL 3.3 Core
+            - generic [ref=e221]: GLFW
+            - generic [ref=e222]: GLAD
+            - generic [ref=e223]: GLM
+            - generic [ref=e224]: Doctest
+            - generic [ref=e225]: CMake
+      - generic [ref=e226]:
+        - article [ref=e227] [cursor=pointer]:
+          - generic [ref=e228]:
+            - generic [ref=e229]:
+              - text: "01"
+              - generic [ref=e230]: / 06
+            - generic [ref=e231]: Enterprise
+            - generic [ref=e233]: "'25 — NOW"
+          - generic [ref=e235]:
+            - generic [ref=e237]: §
+            - generic [ref=e239]:
+              - img "Banco Provincia" [ref=e240]
+              - generic [ref=e259]:
+                - generic [ref=e260]: Axis 2
+                - generic [ref=e261]: →
+                - generic [ref=e262]: Boot
+              - paragraph [ref=e264]: Java 17 · Spring Boot 3 · Axis2 (legacy)
+          - generic [ref=e270]:
+            - heading "Banco Provincia — Core Services Migration" [level=3] [ref=e271]
+            - paragraph [ref=e272]: Lifting Banco Provincia's legacy Axis2 / Java 8 web services into a modern Spring Boot 3 platform on Java 17 — 7 repositories, ~4,600 classes — with connectivity rewired from JNDI to a managed MSSQL DataSource.
+            - generic [ref=e273]:
+              - generic [ref=e274]: Java 17
+              - generic [ref=e275]: Spring Boot 3
+              - generic [ref=e276]: Axis2 (legacy)
+              - generic [ref=e277]: "+2"
+        - article [ref=e278] [cursor=pointer]:
+          - generic [ref=e279]:
+            - generic [ref=e280]:
+              - text: "02"
+              - generic [ref=e281]: / 06
+            - generic [ref=e282]: Enterprise
+            - generic [ref=e284]: "'25"
+          - generic [ref=e286]:
+            - generic [ref=e288]: §
+            - generic [ref=e290]:
+              - img "BBVA" [ref=e291]
+              - generic [ref=e293]:
+                - generic [ref=e294]: API²
+                - generic [ref=e295]: 50+
+              - paragraph [ref=e297]: Java 17 · Spring Boot · JUnit 5
+          - generic [ref=e303]:
+            - heading "BBVA — API Migration & Test Coverage" [level=3] [ref=e304]
+            - paragraph [ref=e305]: Migrating BBVA's internal API surface to Spring Boot and engineering high-coverage test suites across more than 50 services — turning fragile internals into a platform that can be refactored without fear.
+            - generic [ref=e306]:
+              - generic [ref=e307]: Java 17
+              - generic [ref=e308]: Spring Boot
+              - generic [ref=e309]: JUnit 5
+              - generic [ref=e310]: "+2"
+        - article [ref=e311] [cursor=pointer]:
+          - generic [ref=e312]:
+            - generic [ref=e313]:
+              - text: "03"
+              - generic [ref=e314]: / 06
+            - generic [ref=e315]: Enterprise
+            - generic [ref=e317]: "'23 — '24"
+          - generic [ref=e319]:
+            - generic [ref=e321]: §
+            - generic [ref=e323]:
+              - generic [ref=e324]: Private Bank (NDA)
+              - generic [ref=e325]:
+                - generic [ref=e326]: Native + Expo
+                - generic [ref=e327]: e-banking application
+              - paragraph [ref=e329]: React Native · Expo · Android Biometric API
+          - generic [ref=e335]:
+            - heading "Mobile Banking App (NDA)" [level=3] [ref=e336]
+            - paragraph [ref=e337]: A cross-platform mobile banking app built in React Native + Expo from external design and backend specifications, with a 3-developer team — featuring native Android biometric authentication and secure local persistence.
+            - generic [ref=e338]:
+              - generic [ref=e339]: React Native
+              - generic [ref=e340]: Expo
+              - generic [ref=e341]: Android Biometric API
+              - generic [ref=e342]: "+1"
+        - article [ref=e343] [cursor=pointer]:
+          - generic [ref=e344]:
+            - generic [ref=e345]:
+              - text: "04"
+              - generic [ref=e346]: / 06
+            - generic [ref=e347]: Personal
+            - generic [ref=e349]: JAN 25'
+          - generic [ref=e351]:
+            - generic [ref=e353]: §
+            - generic [ref=e355]:
+              - generic [ref=e356]:
+                - generic [ref=e357]: Three.js Voxel
+                - generic [ref=e358]: A procedural 3D world renderer in web
+              - paragraph [ref=e360]: Next.js · Three.js · Perlin Noise
+          - generic [ref=e366]:
+            - heading "Minecraft-like Terrain Generation" [level=3] [ref=e367]
+            - paragraph [ref=e368]: Three Voxel World Generation using Perlin noise algorithm in Three.js with 3D First Person Controller
+            - generic [ref=e369]:
+              - generic [ref=e370]: Next.js
+              - generic [ref=e371]: Three.js
+              - generic [ref=e372]: Perlin Noise
+              - generic [ref=e373]: "+2"
+        - article [ref=e374] [cursor=pointer]:
+          - generic [ref=e375]:
+            - generic [ref=e376]:
+              - text: "05"
+              - generic [ref=e377]: / 06
+            - generic [ref=e378]: Personal
+            - generic [ref=e380]: JUN 23'
+          - generic [ref=e382]:
+            - generic [ref=e384]: §
+            - generic [ref=e386]:
+              - generic [ref=e387]:
+                - generic [ref=e388]: Twitter
+                - generic [ref=e389]: clone
+              - paragraph [ref=e391]: Node.js · Express · Express Session
+          - generic [ref=e397]:
+            - heading "Twitter Clone" [level=3] [ref=e398]
+            - paragraph [ref=e399]: A functional clone of the old app Twitter with authentication, feed, following and likes!
+            - generic [ref=e400]:
+              - generic [ref=e401]: Node.js
+              - generic [ref=e402]: Express
+              - generic [ref=e403]: Express Session
+              - generic [ref=e404]: "+2"
+        - article [ref=e405] [cursor=pointer]:
+          - generic [ref=e406]:
+            - generic [ref=e407]:
+              - text: "06"
+              - generic [ref=e408]: / 06
+            - generic [ref=e409]: Personal
+            - generic [ref=e411]: AUG 25'
+          - generic [ref=e413]:
+            - generic [ref=e415]: §
+            - generic [ref=e417]:
+              - generic [ref=e418]:
+                - generic [ref=e419]: MHC
+                - generic [ref=e420]: cli
+              - paragraph [ref=e422]: Commander.js · Google Cloud Platform · SQLite
+          - generic [ref=e428]:
+            - heading "Magenta Hours Collector (MHC-CLI)" [level=3] [ref=e429]
+            - paragraph [ref=e430]: A command line application that connects to an email inbox and extract hour reports using AI and search for emails matching the configured criteria and then give the email to Claude Sonnet 4.5 to collect all the relevant information and alert from use
+            - generic [ref=e431]:
+              - generic [ref=e432]: Commander.js
+              - generic [ref=e433]: Google Cloud Platform
+              - generic [ref=e434]: SQLite
+    - generic [ref=e435]:
+      - generic [ref=e436]:
+        - generic [ref=e437]: § 03 — Method
+        - heading "How I work with agents" [level=2] [ref=e440]
+        - paragraph [ref=e441]: On codebases too large to hold in one head, an agent is only as sharp as the ground truth you give it. My method keeps AI anchored to real structure and provable contracts — every answer traced through a graph, every endpoint checked against its spec.
+      - generic [ref=e442]:
+        - article [ref=e443]:
+          - generic [ref=e444]:
+            - generic [ref=e445]: "01"
+            - img [ref=e447]:
+              - generic [ref=e465]: trace_path()
+          - generic [ref=e466]:
+            - paragraph [ref=e467]: // Traverse the graph — don't grep it
+            - heading "Project indexing" [level=3] [ref=e468]
+            - paragraph [ref=e469]: I index each codebase into a knowledge graph of functions, routes, call chains and service contracts. Agents traverse how the code actually connects instead of grepping or guessing through semantic search — so a sprawling migration surface answers to a query, not a full-text scan.
+        - article [ref=e470]:
+          - generic [ref=e471]:
+            - generic [ref=e472]: "02"
+            - img [ref=e474]:
+              - generic [ref=e475]: GET /acct
+              - generic [ref=e482]:
+                - generic [ref=e485]: "200"
+                - generic [ref=e486]: ✓
+              - generic [ref=e487]: "422"
+              - generic [ref=e491]:
+                - generic [ref=e494]: "500"
+                - generic [ref=e495]: ✕
+              - generic [ref=e496]: 142 cases
+              - generic [ref=e497]: 1 contract bug
+          - generic [ref=e498]:
+            - paragraph [ref=e499]: // The spec is the test suite
+            - heading "Schemathesis + OpenAPI" [level=3] [ref=e500]
+            - paragraph [ref=e501]: Schemathesis reads a service's OpenAPI schema and generates property-based tests — hundreds of boundary, malformed and stateful cases the contract implies but nobody writes by hand. It surfaces schema drift and unexpected 500s before a client ever sees them — exactly what a migrated endpoint has to prove.
+        - article [ref=e502]:
+          - generic [ref=e503]:
+            - generic [ref=e504]: "03"
+            - img [ref=e506]:
+              - generic [ref=e507]:
+                - generic [ref=e511]: "{ }"
+                - generic [ref=e512]: openapi.json
+              - generic [ref=e513]: ▶ run
+              - generic [ref=e516]:
+                - generic [ref=e517]: ✓
+                - generic [ref=e518]: 2xx
+              - generic [ref=e519]:
+                - generic [ref=e520]: ✓
+                - generic [ref=e521]: 4xx
+              - generic [ref=e522]:
+                - generic [ref=e523]: ✕
+                - generic [ref=e524]: 5xx
+              - generic [ref=e525]:
+                - generic [ref=e526]: contract coverage
+                - generic [ref=e527]: 88%
+          - generic [ref=e529]:
+            - paragraph [ref=e530]: // One harness, any OpenAPI
+            - heading "API test harness" [level=3] [ref=e531]
+            - paragraph [ref=e532]: "I wrapped that flow into a small app: point it at any service exposing an OpenAPI schema and it runs the full Schemathesis suite, surfaces failures and reports contract coverage. Testing a new microservice becomes configuration, not a fresh test project."
+      - generic [ref=e533]:
+        - generic [ref=e534]: Toolkit
+        - generic [ref=e537]:
+          - generic [ref=e538]:
+            - generic [ref=e540]: Playwright
+            - generic [ref=e541]: browser E2E & visual checks
+          - generic [ref=e542]:
+            - generic [ref=e544]: Superpowers
+            - generic [ref=e545]: skills & slash-commands
+          - generic [ref=e546]:
+            - generic [ref=e548]: MCP memory
+            - generic [ref=e549]: graph tools for agents
+          - generic [ref=e550]:
+            - generic [ref=e552]: Spec + plan
+            - generic [ref=e553]: brainstorm → plan → verify
+    - generic [ref=e555]:
+      - generic [ref=e556]:
+        - generic [ref=e557]: § 04 — Archive
+        - heading "Older works" [level=2] [ref=e560]
+        - paragraph [ref=e561]: Relics of my developing journey — still dear to me, but no longer the main event.
+      - generic [ref=e562]:
+        - generic [ref=e564] [cursor=pointer]:
+          - generic [ref=e565]:
+            - img "Biome Terrain Engine" [ref=e566]
+            - generic [ref=e567]: "2021"
+          - generic [ref=e568]:
+            - heading "Biome Terrain Engine" [level=3] [ref=e569]
+            - paragraph [ref=e570]: Procedural generation
+            - generic [ref=e571]: View
+        - generic [ref=e575] [cursor=pointer]:
+          - generic [ref=e576]:
+            - img "Hackflix" [ref=e577]
+            - generic [ref=e578]: "2022"
+          - generic [ref=e579]:
+            - heading "Hackflix" [level=3] [ref=e580]
+            - paragraph [ref=e581]: Browse for the latest movies easily.
+            - generic [ref=e582]: View
+        - generic [ref=e586] [cursor=pointer]:
+          - generic [ref=e587]:
+            - img "Truqui" [ref=e588]
+            - generic [ref=e589]: "2022"
+          - generic [ref=e590]:
+            - heading "Truqui" [level=3] [ref=e591]
+            - paragraph [ref=e592]: A Progressive Web App (PWA) specializing in digital scorekeeping for Truco, the most popular traditional card game in Uruguay and Argentina. Designed to work completely offline, it allows players to keep accurate and efficient score tracking without relying on an internet connection. The app leverages modern PWA capabilities to deliver a native cross-platform experience, installable directly from the browser on mobile devices, tablets, and desktops. Its offline-first architecture guarantees full availability through Service Workers and local storage, ensuring that games are never interrupted by connectivity issues.
+            - generic [ref=e593]: View
+    - generic [ref=e597]:
+      - generic [ref=e598]: § 05 — Get in touch
+      - paragraph [ref=e602]: you made it this far—
+      - heading "C o m e s a y h i ." [level=2] [ref=e603]:
+        - generic [ref=e604]: C
+        - generic [ref=e605]: o
+        - generic [ref=e606]: m
+        - generic [ref=e607]: e
+        - generic [ref=e609]: s
+        - generic [ref=e610]: a
+        - generic [ref=e611]: "y"
+        - generic [ref=e613]: h
+        - generic [ref=e614]: i
+        - generic [ref=e615]: .
+      - generic [ref=e616]:
+        - generic [ref=e617]:
+          - generic [ref=e618]: Set list · Available for
+          - generic [ref=e622]: B · SIDE
+        - list [ref=e626]:
+          - listitem [ref=e627]:
+            - generic [ref=e628]: "01"
+            - generic [ref=e629]:
+              - generic [ref=e630]:
+                - generic [ref=e631]: FULL · TIME
+                - generic [ref=e632]: Developer role
+              - generic: Open to remote or relocation. Available immediately.
+          - listitem [ref=e637]:
+            - generic [ref=e638]: "02"
+            - generic [ref=e639]:
+              - generic [ref=e640]:
+                - generic [ref=e641]: FREELANCE
+                - generic [ref=e642]: Project-based work
+              - generic: From product MVPs to focused systems engineering.
+          - listitem [ref=e647]:
+            - generic [ref=e648]: "03"
+            - generic [ref=e649]:
+              - generic [ref=e650]:
+                - generic [ref=e651]: CONSULT
+                - generic [ref=e652]: Digital solutions
+              - generic: Architecture, scoping, technical audits & strategy.
+        - generic [ref=e657]: Live · ~24h reply
+      - paragraph [ref=e692]: …and I'm always up for talking about music, or trying a new game together.
+      - generic [ref=e693]:
+        - button "View Resume" [ref=e694] [cursor=pointer]
+        - link "c o n t a c t o @ f f o n t a n a . d e v" [ref=e702] [cursor=pointer]:
+          - /url: mailto:contacto@ffontana.dev
+          - generic [ref=e703]: c
+          - generic [ref=e704]: o
+          - generic [ref=e705]: "n"
+          - generic [ref=e706]: t
+          - generic [ref=e707]: a
+          - generic [ref=e708]: c
+          - generic [ref=e709]: t
+          - generic [ref=e710]: o
+          - generic [ref=e711]: "@"
+          - generic [ref=e712]: f
+          - generic [ref=e713]: f
+          - generic [ref=e714]: o
+          - generic [ref=e715]: "n"
+          - generic [ref=e716]: t
+          - generic [ref=e717]: a
+          - generic [ref=e718]: "n"
+          - generic [ref=e719]: a
+          - generic [ref=e720]: .
+          - generic [ref=e721]: d
+          - generic [ref=e722]: e
+          - generic [ref=e723]: v
+        - link "LinkedIn" [ref=e725] [cursor=pointer]:
+          - /url: https://www.linkedin.com/in/felipefontana
+  - contentinfo [ref=e731]:
+    - generic [ref=e732]:
+      - generic [ref=e733]:
+        - generic [ref=e734]:
+          - generic [ref=e735]:
+            - generic [ref=e736]: FF
+            - generic [ref=e737]: .
+          - paragraph [ref=e738]: Building quiet, deliberate software.
+        - navigation [ref=e739]:
+          - link "01 Home" [ref=e740] [cursor=pointer]:
+            - /url: "#hero"
+            - generic [ref=e741]: "01"
+            - text: Home
+          - link "02 Work" [ref=e742] [cursor=pointer]:
+            - /url: "#work"
+            - generic [ref=e743]: "02"
+            - text: Work
+          - link "03 About" [ref=e744] [cursor=pointer]:
+            - /url: "#about"
+            - generic [ref=e745]: "03"
+            - text: About
+          - link "04 Connect" [ref=e746] [cursor=pointer]:
+            - /url: "#connect"
+            - generic [ref=e747]: "04"
+            - text: Connect
+          - link "05 Resume" [ref=e748] [cursor=pointer]:
+            - /url: /resume.pdf
+            - generic [ref=e749]: "05"
+            - text: Resume
+      - generic [ref=e751]:
+        - generic [ref=e752]: © 2026 · Felipe Fontana · All rights reserved
+        - button "Replay guided tour" [ref=e753]
+        - generic [ref=e754]: Crafted withand React

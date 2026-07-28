@@ -19,10 +19,18 @@ export interface ProjectPhase {
     current?: boolean;
 }
 
+/**
+ * Dependency tier a module sits in, top to bottom: the editor drives the
+ * runtime, the runtime goes through the RHI, and only the RHI talks to the GPU.
+ */
+export type ProjectSystemTier = 'editor' | 'runtime' | 'rhi';
+
 export interface ProjectSystem {
     /** Module name as it appears in the repo, e.g. "efecom · RHI". */
     label: string;
     role: string;
+    /** Architecture, not copy — assigned where the card data is assembled. */
+    tier?: ProjectSystemTier;
 }
 
 export interface MetricStat {

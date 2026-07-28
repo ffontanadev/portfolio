@@ -1,0 +1,123 @@
+- generic [ref=e3]:
+  - main:
+    - generic [ref=e4]:
+      - generic:
+        - img
+        - generic [ref=e5]:
+          - generic [ref=e6]:
+            - img [ref=e7]
+            - img [ref=e16]
+            - heading "Radio" [level=3] [ref=e19]
+            - button "Pin in place" [ref=e20]:
+              - img [ref=e21]
+            - button "Remove widget" [ref=e25]:
+              - img [ref=e26]
+          - generic [ref=e29]:
+            - generic [ref=e30]:
+              - paragraph [ref=e31]: Now playing
+              - paragraph [ref=e32]: Groove Salad
+              - paragraph [ref=e33]: Ambient · downtempo
+            - generic [ref=e34]:
+              - button "Previous station" [ref=e35]:
+                - img [ref=e36]
+              - button "Play" [ref=e38]:
+                - img [ref=e39]
+              - button "Next station" [ref=e41]:
+                - img [ref=e42]
+            - generic [ref=e44]:
+              - button "Mute" [ref=e45]:
+                - img [ref=e46]
+              - slider "Volume" [ref=e50] [cursor=pointer]: "70"
+              - generic [ref=e51]: "70"
+        - generic [ref=e52]:
+          - generic [ref=e53]:
+            - img [ref=e54]
+            - img [ref=e63]
+            - heading "Pomodoro" [level=3] [ref=e66]
+            - button "Pin in place" [ref=e67]:
+              - img [ref=e68]
+            - button "Remove widget" [ref=e72]:
+              - img [ref=e73]
+          - generic [ref=e76]:
+            - generic [ref=e77]:
+              - generic [ref=e78]: Focus
+              - button "Settings" [ref=e79]:
+                - img [ref=e80]
+            - paragraph [ref=e83]: 25:00
+            - generic [ref=e85]:
+              - button "Start" [ref=e86]:
+                - img [ref=e87]
+              - button "Skip" [ref=e89]:
+                - img [ref=e90]
+              - button "Reset" [ref=e92]:
+                - img [ref=e93]
+            - generic [ref=e97]:
+              - generic [ref=e98]: Today
+              - generic [ref=e99]: 0/8
+        - generic [ref=e109]:
+          - generic [ref=e110]:
+            - img [ref=e111]
+            - img [ref=e120]
+            - heading "Anthropic" [level=3] [ref=e122]
+            - button "Pin in place" [ref=e123]:
+              - img [ref=e124]
+            - button "Remove widget" [ref=e128]:
+              - img [ref=e129]
+          - generic [ref=e132]:
+            - generic [ref=e137]:
+              - img [ref=e138]
+              - text: Checking…
+            - generic [ref=e140]:
+              - generic [ref=e141]: Updated —
+              - generic [ref=e142]:
+                - button "Refresh now" [ref=e143]:
+                  - img [ref=e144]
+                - link "Open status page" [ref=e149] [cursor=pointer]:
+                  - /url: https://status.claude.com
+                  - img [ref=e150]
+      - generic:
+        - link "Back to portfolio" [ref=e154] [cursor=pointer]:
+          - /url: /
+          - img [ref=e155]
+          - text: Back to portfolio
+        - heading "Dev Zone" [level=1]
+      - generic [ref=e157]:
+        - button "Move" [pressed] [ref=e158]:
+          - img [ref=e159]
+          - generic [ref=e161]: Move
+        - button "Draw" [ref=e162]:
+          - img [ref=e163]
+          - generic [ref=e165]: Draw
+        - button "Erase" [ref=e166]:
+          - img [ref=e167]
+          - generic [ref=e170]: Erase
+        - button "Undo" [disabled] [ref=e172]:
+          - img [ref=e173]
+        - button "Redo" [disabled] [ref=e176]:
+          - img [ref=e177]
+        - button "Clear" [ref=e180]:
+          - img [ref=e181]
+        - button "Toggle theme" [ref=e185]:
+          - img [ref=e186]
+      - generic [ref=e188]:
+        - button "Zoom out" [ref=e189]:
+          - img [ref=e190]
+        - button "Reset zoom" [ref=e191]: 100%
+        - button "Zoom in" [ref=e192]:
+          - img [ref=e193]
+        - button "Reset view" [ref=e195]:
+          - img [ref=e196]
+      - generic [ref=e201]:
+        - button "Radio" [disabled] [ref=e202]:
+          - img [ref=e203]
+          - generic [ref=e206]: Radio
+        - button "Pomodoro" [disabled] [ref=e207]:
+          - img [ref=e208]
+          - generic [ref=e211]: Pomodoro
+        - button "Status" [ref=e213]:
+          - img [ref=e214]
+          - generic [ref=e216]: Status
+          - img [ref=e217]
+        - button "Reset" [ref=e219]:
+          - img [ref=e220]
+          - generic [ref=e223]: Reset

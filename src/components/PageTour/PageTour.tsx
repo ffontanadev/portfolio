@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslation } from '@/i18n';
 import { PARTICLES_ENABLED } from '@/config/particles';
@@ -41,7 +42,10 @@ const PageTour = () => {
     const begin = () => {
       if (started) return;
       started = true;
-      setActive(true);
+      // Commit the overlay synchronously so the <canvas> is mounted before we
+      // read its ref below — a plain setState would leave canvasRef.current null
+      // on the next line and silently abort the tour.
+      flushSync(() => setActive(true));
 
       const canvas = canvasRef.current;
       if (!canvas) return;

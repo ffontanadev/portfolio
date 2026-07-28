@@ -456,7 +456,8 @@
       "role": "角色",
       "projectBrief": "项目概要",
       "developmentRoadmap": "开发路线图",
-      "engineSystems": "引擎系统",
+      "engineSystems": "引擎系统 | 2026-27-07",
+      "gpuBoundary": "通往 GPU 的唯一路径",
       "keyImplementation": "关键实现"
     }
   },
