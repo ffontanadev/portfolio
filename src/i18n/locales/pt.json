@@ -1,4 +1,14 @@
 {
+  "tour": {
+    "skip": "Pular tour",
+    "replay": "Repetir tour guiado",
+    "stops": {
+      "techStack": "Clique em qualquer logo para vê-lo se formar no hero, com uma nota de como eu o uso.",
+      "featuredWorks": "Abra um projeto para ver o estudo de caso completo e o dossiê de migração.",
+      "agents": "Como eu realmente construo com agentes de IA, do início ao fim.",
+      "devZone": "Entre na Dev Zone — uma mesa oculta e arrastável com minhas ferramentas do dia a dia."
+    }
+  },
   "common": {
     "pagination": {
       "previous": "Anterior",
@@ -196,56 +206,113 @@
       },
       "projects": {
         "efengine": {
-          "title": "EFENGINE — Framework de Jogos em C++",
-          "desc": "Um framework de jogos 3D feito do zero em C++17 sobre OpenGL 3.3 Core — uma biblioteca contra a qual você compila seus jogos, criada para dominar o gerenciamento de memória e o ciclo de vida do jogo.",
+          "title": "EFENGINE — Motor de Jogos em C++",
+          "desc": "Motor 3D feito do zero em C++17 sobre OpenGL 4.5 Core — PBR com IBL split-sum, shadow mapping, cadeia de pós-processamento HDR, formato binário próprio de cenas e um editor ImGui dockado, tudo sob regras RAII e sem exceções.",
           "role": "Autor do Motor",
-          "description": "EFENGINE é meu projeto mais ambicioso: um framework pessoal de jogos 3D escrito em C++17 sobre OpenGL 3.3 Core para Windows. Sem editor, sem scripting nativo, sem builds multiplataforma — é uma biblioteca contra a qual você compila seus jogos, onde cada jogo é um projeto C++ que faz link com a efengine. O objetivo é dominar os sistemas de baixo nível: gerenciamento manual de memória, o ciclo de vida do jogo e o pipeline de renderização, construídos fase a fase. A documentação é gerada com Doxygen e a compilação é conduzida pelo CMake.",
-          "leadSub": "meu projeto mais ambicioso",
+          "description": "EFENGINE é meu projeto mais ambicioso: um motor 3D escrito do zero em C++17 sobre OpenGL 4.5 Core. Ele renderiza materiais PBR iluminados por luzes pontuais e direcional com iluminação baseada em imagem completa —irradiância difusa mais especular por split-sum, ambas pré-computadas por compute shaders— sobre shadow mapping, um skybox e uma cadeia de pós-processamento HDR de bloom, tonemap e FXAA. As cenas vivem em um grafo de nós endereçado por handles com geração e são persistidas em .efe, um formato binário próprio, em chunks e versionado, com um reader hostil a entradas corrompidas. Por cima roda um editor ImGui dockado: hierarquia, inspetor, edição de materiais ao vivo e salvar/carregar cenas.\n\nO que sustenta tudo é um conjunto de regras inegociáveis. Cada chamada gl* está confinada ao efecom, a camada RHI — o renderer nunca vê OpenGL. Sem new/delete crus e sem exceções: a propriedade é um valor ou um unique_ptr, erros de programação disparam um assert, falhas recuperáveis voltam como valor de retorno, e todo subsistema é RAII — construí-lo o levanta, destruí-lo o desliga.",
+          "leadSub": "C++17 · OpenGL 4.5 Core",
           "phases": [
             {
               "label": "Fase 0",
-              "title": "Configuração",
-              "desc": "Toolchain, build com CMake, estrutura do projeto e dependências configuradas (GLFW, GLAD, GLM, Doctest)."
+              "title": "Fundações",
+              "desc": "CMake com FetchContent, GLFW/GLAD/GLM, Log e Assert, Window e Application com RAII de ponta a ponta, doctest sobre CTest. Fecha com o primeiro triângulo na tela."
             },
             {
               "label": "Fase 1",
-              "title": "Contexto GLFW",
-              "desc": "Criação da janela e do contexto OpenGL 3.3 Core, o loop de jogo básico e o tratamento de entradas."
+              "title": "Renderização base",
+              "desc": "Shader, Texture com stb_image, Material, layout de vértices e Mesh; câmera com órbita, pan e zoom. Os shaders passam a ser carregados do disco."
             },
             {
               "label": "Fase 2",
-              "title": "Hello Triangle",
-              "desc": "Pipeline de renderização mínimo: configuração de VBO/VAO, compilação de shaders e o primeiro triângulo na tela."
+              "title": "Cena e luzes",
+              "desc": "Time, ResourceManager com cache por chave, Renderer com BeginScene/Submit, luzes pontuais, framebuffer e a primeira UI de debug em ImGui."
+            },
+            {
+              "label": "Fase 3",
+              "title": "HDR e pós-processamento",
+              "desc": "Exposição na câmera, TonemapPass como primeiro IPostPass, e bloom e FXAA encadeados por ping-pong entre dois framebuffers scratch."
+            },
+            {
+              "label": "Fase 4",
+              "title": "OpenGL 4.5 e o RHI",
+              "desc": "Salto para 4.5 Core com DSA e shaders em #version 450. Nasce o efecom: nenhuma chamada gl* vive fora do RHI. Skybox e shadow mapping direcional."
+            },
+            {
+              "label": "Fase 5",
+              "title": "Grafo, .efe e editor",
+              "desc": "SceneGraph por handles com geração, behaviors por nó, e o formato binário .efe — em chunks, versionado e com reader hostil a arquivos corrompidos. O sandbox vira um editor dockado."
+            },
+            {
+              "label": "Fase 6",
+              "title": "IBL completo",
+              "desc": "Irradiância difusa mais especular por split-sum: pré-filtragem GGX com um dispatch por mip e BRDF LUT, ambos por compute shader. Somam-se mapas de emissão e normal strength."
+            }
+          ],
+          "systems": [
+            {
+              "label": "efecom · RHI",
+              "role": "A única superfície que fala com a GPU. Handles u32 opacos, zero tipos de OpenGL na API, backend GL 4.5 substituível. Não depende da efengine."
+            },
+            {
+              "label": "renderer",
+              "role": "PBR com luzes pontuais e direcional, IBL difuso e especular, shadow pass, skybox e a PostChain de bloom, tonemap e FXAA."
+            },
+            {
+              "label": "scene",
+              "role": "Grafo de nós com handle + geração: destruir um nó invalida seus handles antigos. Transforms hierárquicos que só recalculam o que está dirty, e behaviors por nó."
+            },
+            {
+              "label": "resources",
+              "role": "Dono de tudo o que chega do disco por path: shaders, texturas com color space explícito e modelos FBX via Assimp. Faz cache e devolve ponteiros observadores."
+            },
+            {
+              "label": "serialization",
+              "role": "O formato .efe: header versionado e chunks com FourCC. Um único Serialize(Ar&) por tipo serve para ler e escrever; chunks desconhecidos são pulados por tamanho."
+            },
+            {
+              "label": "sandbox",
+              "role": "Editor ImGui dockado estilo Unity: hierarquia, inspetor, materiais ao vivo, painel de render, stats de frame e salvar/carregar cenas."
             }
           ]
         },
         "bancoProvincia": {
-          "title": "Banco Provincia — Migração de Serviços Core",
-          "desc": "Modernização dos serviços web legados Axis2 / Java 8 do Banco Provincia para uma plataforma moderna Spring Boot 3 sobre Java 17, com a conectividade de banco de dados migrada de JNDI para um DataSource MSSQL gerenciado.",
-          "role": "Engenheiro Backend",
-          "description": "Modernização de longa duração de serviços SOAP legados em Axis2 que sustentam integrações bancárias core no Banco Provincia. O trabalho abrange migrar o runtime de Java 8 para Java 17 + Spring Boot 3, substituir os recursos vinculados ao JNDI por um DataSource MSSQL gerenciado e desemaranhar anos de contratos de serviços web fortemente acoplados — tudo preservando os consumidores existentes.",
-          "metrics": [
-            {
-              "label": "Runtime",
-              "value": "Java 8 → 17"
+          "title": "Banco Provincia — Migração de serviços core",
+          "desc": "Migração dos serviços web legados Axis2 / Java 8 do Banco Provincia para uma plataforma moderna Spring Boot 3 em Java 17 — 7 repositórios, ~4,600 classes — com a conectividade reescrita de JNDI para um MSSQL DataSource gerenciado.",
+          "role": "Backend Engineer",
+          "description": "Modernização de longo prazo de serviços SOAP Axis2 legados que sustentam integrações bancárias core no Banco Provincia. O trabalho cobre migrar o runtime de Java 8 para Java 17 + Spring Boot 3, substituir recursos ligados a JNDI por um MSSQL DataSource gerenciado e desemaranhar anos de contratos de serviços web fortemente acoplados — sempre preservando os consumidores.",
+          "migration": {
+            "scope": [
+              { "value": "7", "label": "repositórios" },
+              { "value": "~4,600", "label": "classes Java" },
+              { "value": "~24,000", "label": "métodos" },
+              { "value": "82", "label": "scripts SQL" }
+            ],
+            "before": {
+              "heading": "Antes",
+              "items": ["Axis2 · SOAP / XML", "Recursos ligados a JNDI", "Runtime Java 8", "Contratos XML feitos à mão"]
             },
-            {
-              "label": "Framework",
-              "value": "Axis2 → Spring Boot 3"
+            "after": {
+              "heading": "Depois",
+              "items": ["Spring Boot 3 · REST / JSON", "MSSQL DataSource gerenciado", "Runtime Java 17", "Testes OpenAPI + Schemathesis"]
             },
-            {
-              "label": "Persistência",
-              "value": "JNDI → MSSQL DataSource"
-            },
-            {
-              "label": "Domínio",
-              "value": "Serviços SOAP bancários core"
-            },
-            {
-              "label": "Status",
-              "value": "Em andamento · 2025 →"
-            }
-          ]
+            "modulesHeading": "Módulos migrados",
+            "modules": [
+              { "label": "Core Services", "role": "Despachante SOAP→REST com respostas duplas XML/JSON.", "scale": "128 classes" },
+              { "label": "Service Plugins", "role": "Lógica de negócio por serviço carregada pelo despachante.", "scale": "636 classes" },
+              { "label": "Security", "role": "Autenticação, sessões e controle de acesso.", "scale": "617 classes" },
+              { "label": "Messaging & Transaction Format", "role": "Contratos de mensagens bancárias e formatação de transações.", "scale": "164 classes" },
+              { "label": "Web Tier — Common", "role": "Contratos e utilitários compartilhados da camada web.", "scale": "209 classes" },
+              { "label": "Web Tier — Core", "role": "A camada de apresentação — a maior superfície da plataforma.", "scale": "1,623 classes" },
+              { "label": "Web Tier — Services", "role": "Camada cliente de serviços entre a camada web e o backend.", "scale": "1,246 classes" }
+            ],
+            "phasesHeading": "Caminho da migração",
+            "phases": [
+              { "label": "01", "title": "Descoberta e indexação", "desc": "Indexar os sete repositórios em um grafo de conhecimento para mapear a superfície real de serviços e chamadas." },
+              { "label": "02", "title": "Migração serviço a serviço", "desc": "Levar os módulos para Spring Boot 3 e Java 17, reescrever JNDI para um MSSQL DataSource gerenciado e preservar os contratos SOAP via XML/JSON duplo." },
+              { "label": "03", "title": "Testes de contrato", "desc": "Definições OpenAPI (Swagger) com testes de propriedade e fuzzing Schemathesis para garantir paridade com os serviços legados." },
+              { "label": "04", "title": "Cutover", "desc": "Módulo a módulo — Core Services e Security já rodam em Spring Boot 3; o restante está em andamento." }
+            ]
+          }
         },
         "bbva": {
           "title": "BBVA — Migração de APIs e Cobertura de Testes",
@@ -324,7 +391,7 @@
       }
     },
     "older": {
-      "eyebrow": "§ 03 — Arquivo",
+      "eyebrow": "§ 04 — Arquivo",
       "headingBefore": "Trabalhos",
       "headingEmphasis": "antigos",
       "description": "Relíquias da minha jornada como desenvolvedor — ainda queridas, mas não mais o prato principal.",
@@ -389,7 +456,45 @@
       "role": "Função",
       "projectBrief": "Resumo do Projeto",
       "developmentRoadmap": "Roteiro de Desenvolvimento",
+      "engineSystems": "Sistemas do Motor | 2026-27-07",
+      "gpuBoundary": "o único caminho até a GPU",
       "keyImplementation": "Implementação Principal"
+    }
+  },
+  "agents": {
+    "eyebrow": "§ 03 — Método",
+    "headingBefore": "Como eu trabalho",
+    "headingEmphasis": "com agentes",
+    "headingAfter": "",
+    "intro": "Em bases de código grandes demais para caber na cabeça, um agente é tão bom quanto a verdade de base que você dá a ele. Meu método mantém a IA ancorada em estrutura real e contratos demonstráveis — cada resposta traçada por um grafo, cada endpoint conferido contra o seu spec.",
+    "pillars": [
+      {
+        "index": "01",
+        "principle": "Percorra o grafo, não faça grep",
+        "title": "Indexação do projeto",
+        "body": "Indexo cada código em um grafo de conhecimento de funções, rotas, cadeias de chamadas e contratos de serviço. Os agentes percorrem como o código realmente se conecta, em vez de fazer grep ou adivinhar com busca semântica — assim uma superfície de migração enorme responde a uma consulta, não a uma varredura de texto completo."
+      },
+      {
+        "index": "02",
+        "principle": "O spec é a suíte de testes",
+        "title": "Schemathesis + OpenAPI",
+        "body": "O Schemathesis lê o esquema OpenAPI de um serviço e gera testes baseados em propriedades — centenas de casos-limite, malformados e com estado que o contrato implica mas ninguém escreve à mão. Ele expõe o desvio de esquema e os 500 inesperados antes de um cliente vê-los — exatamente o que um endpoint migrado precisa provar."
+      },
+      {
+        "index": "03",
+        "principle": "Um harness, qualquer OpenAPI",
+        "title": "Harness de testes de API",
+        "body": "Envolvi esse fluxo em um app pequeno: aponte-o para qualquer serviço que exponha um esquema OpenAPI e ele roda a suíte completa do Schemathesis, mostra as falhas e reporta a cobertura do contrato. Testar um novo microsserviço vira configuração, não um projeto de testes do zero."
+      }
+    ],
+    "toolkit": {
+      "label": "Ferramentas",
+      "items": [
+        { "name": "Playwright", "note": "E2E de navegador · visual" },
+        { "name": "Superpowers", "note": "skills e comandos" },
+        { "name": "MCP memory", "note": "grafo para agentes" },
+        { "name": "Spec + plan", "note": "brainstorm → plano → verificar" }
+      ]
     }
   },
   "contact": {

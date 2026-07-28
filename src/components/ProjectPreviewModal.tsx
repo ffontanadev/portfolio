@@ -1,4 +1,15 @@
 import { useEffect, useRef } from 'react';
+import {
+    Binary,
+    Boxes,
+    CircuitBoard,
+    Cpu,
+    HardDrive,
+    LayoutDashboard,
+    Network,
+    Sparkles,
+    type LucideIcon,
+} from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { XIcon } from '@/components/ui/x';
 import { CopyIcon } from '@/components/ui/copy';
@@ -9,7 +20,15 @@ import { useState } from 'react';
 import BancoProvinciaLogo from './logos/BancoProvinciaLogo';
 import BBVALogo from './logos/BBVALogo';
 import { accentForCategory } from './projectTypes';
-import type { Project, CodeBlock, ProjectLeadMetric, ProjectLogo } from './projectTypes';
+import type {
+    Project,
+    CodeBlock,
+    ProjectLeadMetric,
+    ProjectLogo,
+    MigrationDossier,
+    ProjectSystem,
+    ProjectSystemTier,
+} from './projectTypes';
 import LatestCommit from './LatestCommit';
 import { useTranslation } from '@/i18n';
 
@@ -273,6 +292,109 @@ const MetricBrief = ({ project }: { project: Project }) => {
     );
 };
 
+const MigrationStatTiles = ({ stats }: { stats: MigrationDossier['scope'] }) => (
+    <div className="grid grid-cols-2 gap-3">
+        {stats.map((s, i) => (
+            <div key={i} className="rounded-xl border border-dark-900/10 bg-cream-50/40 px-4 py-3">
+                <div className="font-display font-bold text-2xl md:text-3xl tracking-[-0.03em] text-dark-900 leading-none">
+                    {s.value}
+                </div>
+                <div className="mt-1.5 font-mono text-[10px] tracking-[0.18em] uppercase text-dark-900/55">
+                    {s.label}
+                </div>
+            </div>
+        ))}
+    </div>
+);
+
+const MigrationDossierView = ({ dossier }: { dossier: MigrationDossier }) => (
+    <div className="space-y-8">
+        <MigrationStatTiles stats={dossier.scope} />
+
+        {/* Before -> After */}
+        <div className="grid grid-cols-[1fr_auto_1fr] items-start gap-3">
+            {[dossier.before, dossier.after].map((col, idx) => (
+                <div key={idx} className={idx === 0 ? '' : 'col-start-3'}>
+                    <h4 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-3">
+                        {col.heading}
+                    </h4>
+                    <ul className="space-y-2">
+                        {col.items.map((item, i) => (
+                            <li
+                                key={i}
+                                className={`text-sm leading-snug ${
+                                    idx === 0 ? 'text-dark-900/50 line-through decoration-dark-900/20' : 'text-dark-900 font-medium'
+                                }`}
+                            >
+                                {item}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ))}
+            <span
+                className="col-start-2 row-start-1 self-center font-display-italic text-coral-500 text-3xl font-light pt-6"
+                style={{ fontStyle: 'italic' }}
+                aria-hidden="true"
+            >
+                &rarr;
+            </span>
+        </div>
+
+        {/* Module breakdown */}
+        <div>
+            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-4">
+                {dossier.modulesHeading}
+            </h3>
+            <div className="rounded-2xl border border-dark-900/10 divide-y divide-dark-900/[0.07] overflow-hidden bg-cream-50/40">
+                {dossier.modules.map((m, i) => (
+                    <div key={i} className="flex items-baseline justify-between gap-4 px-5 py-3.5">
+                        <div className="min-w-0">
+                            <p className="font-display text-base md:text-lg tracking-tight text-dark-900 font-medium">
+                                {m.label}
+                            </p>
+                            <p className="mt-0.5 text-sm text-dark-900/55 leading-snug">{m.role}</p>
+                        </div>
+                        <span className="font-mono text-[10px] tracking-[0.18em] uppercase text-dark-900/55 shrink-0">
+                            {m.scale}
+                        </span>
+                    </div>
+                ))}
+            </div>
+        </div>
+
+        {/* Phases */}
+        <div>
+            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-4">
+                {dossier.phasesHeading}
+            </h3>
+            <div className="rounded-2xl border border-dark-900/10 divide-y divide-dark-900/[0.07] overflow-hidden bg-cream-50/40">
+                {dossier.phases.map((phase, i) => (
+                    <div key={i} className="flex items-start gap-4 px-5 py-4">
+                        <span
+                            className={`font-mono text-[10px] tracking-[0.2em] uppercase shrink-0 mt-1 ${
+                                phase.current ? 'text-coral-500 font-semibold' : 'text-dark-900/45'
+                            }`}
+                        >
+                            {phase.label}
+                        </span>
+                        <div className="min-w-0">
+                            <p
+                                className={`font-display text-lg tracking-tight ${
+                                    phase.current ? 'text-coral-500 font-semibold' : 'text-dark-900 font-medium'
+                                }`}
+                            >
+                                {phase.title}
+                            </p>
+                            <p className="mt-1 text-sm text-dark-900/55 leading-relaxed">{phase.desc}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </div>
+);
+
 const DevelopmentRoadmap = ({ project }: { project: Project }) => {
     const { t } = useTranslation();
     if (!project.phases?.length) return null;
@@ -305,6 +427,144 @@ const DevelopmentRoadmap = ({ project }: { project: Project }) => {
                         </div>
                     </div>
                 ))}
+            </div>
+        </div>
+    );
+};
+
+type SystemStyle = {
+    Icon: LucideIcon;
+    text: string;
+    border: string;
+    bg: string;
+    chip: string;
+    /** Spans the whole runtime row instead of sharing it with a sibling. */
+    wide?: boolean;
+    /** Position within the runtime tier; the wide cards bracket the pair. */
+    rank?: number;
+};
+
+/**
+ * One hue and one glyph per module. Keyed by the bare module name, which is a
+ * repo identifier and therefore identical in every locale — `efecom · RHI`
+ * resolves on `efecom`.
+ */
+const SYSTEM_STYLES: Record<string, SystemStyle> = {
+    efecom: { Icon: Cpu, text: 'text-teal-700', border: 'border-teal-700/35', bg: 'bg-teal-700/[0.06]', chip: 'bg-teal-700/10' },
+    renderer: { Icon: Sparkles, text: 'text-amber-700', border: 'border-amber-700/30', bg: 'bg-amber-700/[0.05]', chip: 'bg-amber-700/10', rank: 0 },
+    scene: { Icon: Network, text: 'text-sky-700', border: 'border-sky-700/30', bg: 'bg-sky-700/[0.05]', chip: 'bg-sky-700/10', rank: 1 },
+    resources: { Icon: HardDrive, text: 'text-emerald-700', border: 'border-emerald-700/30', bg: 'bg-emerald-700/[0.05]', chip: 'bg-emerald-700/10', rank: 2 },
+    serialization: { Icon: Binary, text: 'text-rose-700', border: 'border-rose-700/30', bg: 'bg-rose-700/[0.05]', chip: 'bg-rose-700/10', rank: 3 },
+    sandbox: { Icon: LayoutDashboard, text: 'text-violet-700', border: 'border-violet-700/30', bg: 'bg-violet-700/[0.05]', chip: 'bg-violet-700/10' },
+};
+
+const FALLBACK_SYSTEM_STYLE: SystemStyle = {
+    Icon: Boxes,
+    text: 'text-dark-900/75',
+    border: 'border-dark-900/10',
+    bg: 'bg-cream-50/70',
+    chip: 'bg-dark-900/[0.06]',
+};
+
+const styleForSystem = (label: string): SystemStyle =>
+    SYSTEM_STYLES[label.split('·')[0].trim().toLowerCase()] ?? FALLBACK_SYSTEM_STYLE;
+
+const SystemCard = ({ system, emphasis }: { system: ProjectSystem; emphasis?: boolean }) => {
+    const { Icon, text, border, bg, chip, wide } = styleForSystem(system.label);
+    return (
+        <div
+            className={`flex gap-3 rounded-xl border px-4 py-3 ${border} ${bg} ${
+                emphasis ? 'shadow-sm' : ''
+            } ${wide ? 'sm:col-span-2' : ''}`}
+        >
+            <span className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ${chip}`}>
+                <Icon className={`h-3.5 w-3.5 ${text}`} strokeWidth={1.75} aria-hidden="true" />
+            </span>
+            <div className="min-w-0">
+                <p className={`font-mono text-[11px] tracking-[0.12em] font-semibold ${text}`}>
+                    {system.label}
+                </p>
+                <p className="mt-1.5 text-[13px] leading-relaxed text-dark-900/55">{system.role}</p>
+            </div>
+        </div>
+    );
+};
+
+/** Vertical rule between tiers, with an optional caption riding on it. */
+const TierLink = ({ caption }: { caption?: string }) => (
+    <div className="flex flex-col items-center gap-1 py-1.5" aria-hidden="true">
+        <span className="h-4 w-px bg-dark-900/15" />
+        {caption && (
+            <span className="font-mono text-[9px] tracking-[0.18em] uppercase text-dark-900/35">
+                {caption}
+            </span>
+        )}
+        <span className="h-4 w-px bg-dark-900/15" />
+    </div>
+);
+
+// Sibling of DevelopmentRoadmap. The roadmap says when things happened; this
+// draws how the engine is stacked — the editor drives the runtime, the runtime
+// goes through the RHI, and only the RHI reaches the GPU.
+const EngineSystems = ({ project }: { project: Project }) => {
+    const { t } = useTranslation();
+    const systems = project.systems;
+    if (!systems?.length) return null;
+
+    const inTier = (tier: ProjectSystemTier) => systems.filter((s) => (s.tier ?? 'runtime') === tier);
+    const editor = inTier('editor');
+    // Ranked so the two full-width cards bracket the paired half-width ones,
+    // leaving no hole in the two-column grid.
+    const runtime = inTier('runtime').sort(
+        (a, b) => (styleForSystem(a.label).rank ?? 0) - (styleForSystem(b.label).rank ?? 0),
+    );
+    const rhi = inTier('rhi');
+
+    return (
+        <div>
+            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-4">
+                {t('work.modal.engineSystems')}
+            </h3>
+            <div className="rounded-2xl border border-dark-900/10 bg-cream-50/40 px-4 py-5 sm:px-5">
+                {editor.map((system, i) => (
+                    <SystemCard key={`editor-${i}`} system={system} />
+                ))}
+
+                {editor.length > 0 && runtime.length > 0 && <TierLink />}
+
+                {runtime.length > 0 && (
+                    <div className="relative rounded-xl border border-dashed border-dark-900/15 px-3 pt-6 pb-3">
+                        <span className="absolute -top-2 left-4 bg-cream-50 px-1.5 font-mono text-[9px] tracking-[0.18em] uppercase text-dark-900/40">
+                            efengine
+                        </span>
+                        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                            {runtime.map((system, i) => (
+                                <SystemCard key={`runtime-${i}`} system={system} />
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {rhi.length > 0 && (
+                    <>
+                        {(runtime.length > 0 || editor.length > 0) && (
+                            <TierLink caption={t('work.modal.gpuBoundary')} />
+                        )}
+                        {rhi.map((system, i) => (
+                            <SystemCard key={`rhi-${i}`} system={system} emphasis />
+                        ))}
+                        <div className="flex flex-col items-center gap-1 pt-1.5" aria-hidden="true">
+                            <span className="h-4 w-px bg-teal-700/30" />
+                            <span className="text-[9px] leading-none text-teal-700/50">▼</span>
+                        </div>
+                        <div className="flex justify-center pt-1.5">
+                            <span className="inline-flex items-center gap-2 rounded-full border border-dashed border-dark-900/20 px-3.5 py-1.5 font-mono text-[10px] tracking-[0.16em] uppercase text-dark-900/45">
+                                <CircuitBoard className="h-3 w-3" strokeWidth={1.75} aria-hidden="true" />
+                                GPU · OpenGL 4.5
+                            </span>
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     );
@@ -424,7 +684,7 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
                                             >
                                                 {project.title}
                                             </h2>
-                                            <p className="text-lg text-gray-600 leading-relaxed">
+                                            <p className="text-lg text-gray-600 leading-relaxed whitespace-pre-line">
                                                 {project.description}
                                             </p>
                                         </div>
@@ -465,7 +725,9 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
                                     </div>
 
                                     {/* Right Column — Migration Brief, Development Roadmap, or Code Blocks */}
-                                    {project.category === 'professional' && project.metrics?.length ? (
+                                    {project.migration ? (
+                                        <MigrationDossierView dossier={project.migration} />
+                                    ) : project.category === 'professional' && project.metrics?.length ? (
                                         <MetricBrief project={project} />
                                     ) : project.phases?.length ? (
                                         <div className="space-y-8">
@@ -484,6 +746,13 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
                                             ))}
                                         </div>
                                     )}
+
+                                    {/* Architecture diagram — spans both columns, its own sheet. */}
+                                    {project.systems?.length ? (
+                                        <div className="lg:col-span-2">
+                                            <EngineSystems project={project} />
+                                        </div>
+                                    ) : null}
                                 </div>
                             </div>
                         </motion.div>

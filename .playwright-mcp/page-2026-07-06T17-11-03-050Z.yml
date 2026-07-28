@@ -1,0 +1,52 @@
+- generic [ref=f1e3]:
+  - main:
+    - generic [ref=f1e4]:
+      - generic:
+        - img
+        - generic [ref=f1e6]: legacy note text
+      - generic:
+        - link "Back to portfolio" [ref=f1e7] [cursor=pointer]:
+          - /url: /
+          - img [ref=f1e8]
+          - text: Back to portfolio
+        - heading "Dev Zone" [level=1]
+      - generic [ref=f1e10]:
+        - button "Move" [pressed] [ref=f1e11]:
+          - img [ref=f1e12]
+          - generic [ref=f1e14]: Move
+        - button "Draw" [ref=f1e15]:
+          - img [ref=f1e16]
+          - generic [ref=f1e18]: Draw
+        - button "Erase" [ref=f1e19]:
+          - img [ref=f1e20]
+          - generic [ref=f1e23]: Erase
+        - button "Undo" [disabled] [ref=f1e25]:
+          - img [ref=f1e26]
+        - button "Redo" [disabled] [ref=f1e29]:
+          - img [ref=f1e30]
+        - button "Clear" [ref=f1e33]:
+          - img [ref=f1e34]
+        - button "Toggle theme" [ref=f1e38]:
+          - img [ref=f1e39]
+      - generic [ref=f1e41]:
+        - button "Zoom out" [ref=f1e42]:
+          - img [ref=f1e43]
+        - button "Reset zoom" [ref=f1e44]: 100%
+        - button "Zoom in" [ref=f1e45]:
+          - img [ref=f1e46]
+        - button "Reset view" [ref=f1e48]:
+          - img [ref=f1e49]
+      - generic [ref=f1e54]:
+        - button "Radio" [ref=f1e55]:
+          - img [ref=f1e56]
+          - generic [ref=f1e59]: Radio
+        - button "Pomodoro" [ref=f1e60]:
+          - img [ref=f1e61]
+          - generic [ref=f1e64]: Pomodoro
+        - button "Status" [ref=f1e66]:
+          - img [ref=f1e67]
+          - generic [ref=f1e69]: Status
+          - img [ref=f1e70]
+        - button "Reset" [ref=f1e72]:
+          - img [ref=f1e73]
+          - generic [ref=f1e76]: Reset

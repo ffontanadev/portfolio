@@ -4,7 +4,7 @@ import { ArrowUpRight } from 'lucide-react';
 import ProjectPreviewModal, { EnterpriseHero } from './ProjectPreviewModal';
 import LatestCommit from './LatestCommit';
 import VideoShowcaseHero from './VideoShowcaseHero';
-import { accentForCategory, categoryLabelKey, type Project } from './projectTypes';
+import { accentForCategory, categoryLabelKey, type Project, type ProjectSystemTier } from './projectTypes';
 import { useTranslation } from '@/i18n';
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -14,15 +14,28 @@ type Filter = 'all' | 'personal' | 'professional';
 // Structural data — non-translatable (styling, stacks, dates, code, lead-metric
 // glyphs). Display text (title/desc/role/description, phase + metric copy) is
 // merged in from the locale inside the component, keyed by `id`.
-type ProjectStructural = Omit<Project, 'title' | 'desc' | 'role' | 'description' | 'phases' | 'metrics'> & {
+type ProjectStructural = Omit<Project, 'title' | 'desc' | 'role' | 'description' | 'phases' | 'metrics' | 'migration'> & {
   id: string;
 };
+
+// The efengine `systems` locale array is authored in dependency order —
+// efecom, renderer, scene, resources, serialization, sandbox — and its length
+// is pinned by src/test/localeCard.test.ts. Tiers describe architecture rather
+// than copy, so they live here instead of in the locale files.
+const EFENGINE_SYSTEM_TIERS: ProjectSystemTier[] = [
+  'rhi',
+  'runtime',
+  'runtime',
+  'runtime',
+  'runtime',
+  'editor',
+];
 
 const projectData: ProjectStructural[] = [
   {
     id: 'efengine',
     color: "bg-cream-100",
-    techStack: ["C++17", "OpenGL 3.3 Core", "GLFW", "GLAD", "GLM", "Doctest", "CMake"],
+    techStack: ["C++17", "OpenGL 4.5 Core", "PBR + IBL", "Dear ImGui", "Assimp", "GLFW", "GLM", "doctest", "CMake"],
     date: "'26 — NOW",
     codeBlocks: [],
     category: 'personal',
@@ -532,7 +545,11 @@ const FeaturedWorks = () => {
         role: fp.efengine.role,
         description: fp.efengine.description,
         leadMetric: { kind: 'wordmark', value: 'EFENGINE', sub: fp.efengine.leadSub },
-        phases: fp.efengine.phases.map((ph, i) => ({ ...ph, current: i === 2 })),
+        phases: fp.efengine.phases.map((ph, i, arr) => ({ ...ph, current: i === arr.length - 1 })),
+        systems: fp.efengine.systems.map((s, i) => ({
+          ...s,
+          tier: EFENGINE_SYSTEM_TIERS[i] ?? 'runtime',
+        })),
       },
       {
         ...byId.bancoProvincia,
@@ -540,7 +557,13 @@ const FeaturedWorks = () => {
         desc: fp.bancoProvincia.desc,
         role: fp.bancoProvincia.role,
         description: fp.bancoProvincia.description,
-        metrics: fp.bancoProvincia.metrics.map((m, i) => ({ ...m, accent: i === 1 })),
+        migration: {
+          ...fp.bancoProvincia.migration,
+          phases: fp.bancoProvincia.migration.phases.map((ph, i, arr) => ({
+            ...ph,
+            current: i === arr.length - 1,
+          })),
+        },
       },
       {
         ...byId.bbva,
@@ -617,6 +640,7 @@ const FeaturedWorks = () => {
     <>
       <section
         ref={sectionRef}
+        data-tour-id="featured-works"
         id="work"
         className="relative py-32 md:py-40 px-6 md:px-20 max-w-[1440px] mx-auto"
       >

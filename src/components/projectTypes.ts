@@ -19,6 +19,46 @@ export interface ProjectPhase {
     current?: boolean;
 }
 
+/**
+ * Dependency tier a module sits in, top to bottom: the editor drives the
+ * runtime, the runtime goes through the RHI, and only the RHI talks to the GPU.
+ */
+export type ProjectSystemTier = 'editor' | 'runtime' | 'rhi';
+
+export interface ProjectSystem {
+    /** Module name as it appears in the repo, e.g. "efecom · RHI". */
+    label: string;
+    role: string;
+    /** Architecture, not copy — assigned where the card data is assembled. */
+    tier?: ProjectSystemTier;
+}
+
+export interface MetricStat {
+    value: string;
+    label: string;
+}
+
+export interface MigrationBeforeAfter {
+    heading: string;
+    items: string[];
+}
+
+export interface MigrationModule {
+    label: string;
+    role: string;
+    scale: string;
+}
+
+export interface MigrationDossier {
+    scope: MetricStat[];
+    before: MigrationBeforeAfter;
+    after: MigrationBeforeAfter;
+    modulesHeading: string;
+    modules: MigrationModule[];
+    phasesHeading: string;
+    phases: ProjectPhase[];
+}
+
 export type ProjectLeadMetric =
     | { kind: 'migration'; from: string; to: string }
     | { kind: 'scale'; superscript?: string; value: string }
@@ -43,6 +83,9 @@ export interface Project {
     metrics?: ProjectMetric[];
     featured?: boolean;
     phases?: ProjectPhase[];
+    /** Architecture breakdown — one row per engine subsystem. */
+    systems?: ProjectSystem[];
+    migration?: MigrationDossier;
     /** GitHub repo as "owner/name"; enables the latest-commit badge/detail. */
     repo?: string;
     /** Public paths to ambient showcase clips, e.g. '/videos/efengine/clip.mp4'. */

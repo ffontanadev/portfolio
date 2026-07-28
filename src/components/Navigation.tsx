@@ -80,6 +80,7 @@ const Navigation = () => {
                         <LanguageSwitcher />
                         <Link
                             to="/dev-zone"
+                            data-tour-id="dev-zone"
                             className="group flex items-center gap-2 rounded-full border border-dark-900/15 px-4 py-2.5 text-sm font-medium text-dark-900 transition-colors duration-300 hover:border-coral-500 hover:text-coral-500"
                         >
                             <Terminal size={15} />

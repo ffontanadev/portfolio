@@ -1,4 +1,14 @@
 {
+  "tour": {
+    "skip": "Skip tour",
+    "replay": "Replay guided tour",
+    "stops": {
+      "techStack": "Click any logo to watch it form in the hero, with a short note on how I use it.",
+      "featuredWorks": "Open a project for the full case study and migration dossier.",
+      "agents": "How I actually build with AI agents — end to end.",
+      "devZone": "Step into the Dev Zone — a hidden, draggable desk of my daily tools."
+    }
+  },
   "common": {
     "pagination": {
       "previous": "Previous",
@@ -196,56 +206,113 @@
       },
       "projects": {
         "efengine": {
-          "title": "EFENGINE — C++ Game Framework",
-          "desc": "A from-scratch 3D game framework in C++17 on OpenGL 3.3 Core — a library you compile your games against, built to master memory management and the game lifecycle.",
+          "title": "EFENGINE — C++ Game Engine",
+          "desc": "A from-scratch 3D engine in C++17 on OpenGL 4.5 Core — PBR with split-sum IBL, shadow mapping, an HDR post chain, a versioned binary scene format and a docked ImGui editor, all under RAII rules with no exceptions.",
           "role": "Engine Author",
-          "description": "EFENGINE is my most ambitious project: a personal 3D game framework written in C++17 on OpenGL 3.3 Core for Windows. No editor, no native scripting, no multi-platform builds — it is a library you compile your games against, where each game is a C++ project that links against efengine. The goal is mastery of low-level systems: manual memory management, the game lifecycle, and the render pipeline, built up one phase at a time. Documentation is generated with Doxygen and the build is driven by CMake.",
-          "leadSub": "my most ambitious project",
+          "description": "EFENGINE is my most ambitious project: a 3D engine written from scratch in C++17 on OpenGL 4.5 Core. It renders PBR materials lit by point and directional lights with full image-based lighting — diffuse irradiance plus split-sum specular, both precomputed by compute shaders — over shadow mapping, a skybox and an HDR post chain of bloom, tonemap and FXAA. Scenes live in a node graph addressed by generational handles and persist to .efe, a chunked, versioned binary format of my own with a reader hostile to corrupt input. On top sits a docked ImGui editor: hierarchy, inspector, live material editing and scene save/load.\n\nWhat holds it together is a set of non-negotiable rules. Every gl* call is confined to efecom, the RHI layer — the renderer never sees OpenGL. No raw new/delete and no exceptions: ownership is a value or a unique_ptr, programmer errors trip an assert, recoverable failures come back as return values, and every subsystem is RAII — constructing it brings it up, destroying it tears it down.",
+          "leadSub": "C++17 · OpenGL 4.5 Core",
           "phases": [
             {
               "label": "Fase 0",
-              "title": "Setup",
-              "desc": "Toolchain, CMake build, project structure, and dependencies wired up (GLFW, GLAD, GLM, Doctest)."
+              "title": "Foundations",
+              "desc": "CMake with FetchContent, GLFW/GLAD/GLM, Log and Assert, Window and Application under end-to-end RAII, doctest on CTest. Closes with the first triangle on screen."
             },
             {
               "label": "Fase 1",
-              "title": "Contexto GLFW",
-              "desc": "Window and OpenGL 3.3 Core context creation, the basic game loop, and input handling."
+              "title": "Core rendering",
+              "desc": "Shader, Texture via stb_image, Material, vertex layouts and Mesh; a camera with orbit, pan and zoom. Shaders move to being loaded from disk."
             },
             {
               "label": "Fase 2",
-              "title": "Hello Triangle",
-              "desc": "Minimal render pipeline: VBO/VAO/ setup, shader compilation, and the first triangle on screen."
+              "title": "Scene and lights",
+              "desc": "Time, a ResourceManager cached by key, a Renderer with BeginScene/Submit, point lights, framebuffers and the first ImGui debug UI."
+            },
+            {
+              "label": "Fase 3",
+              "title": "HDR and post-processing",
+              "desc": "Exposure on the camera, TonemapPass as the first IPostPass, and bloom and FXAA chained by ping-pong between two scratch framebuffers."
+            },
+            {
+              "label": "Fase 4",
+              "title": "OpenGL 4.5 and the RHI",
+              "desc": "The jump to 4.5 Core with DSA and shaders at #version 450. efecom is born: no gl* call lives outside the RHI. Skybox and directional shadow mapping."
+            },
+            {
+              "label": "Fase 5",
+              "title": "Graph, .efe and editor",
+              "desc": "SceneGraph by generational handles, per-node behaviors, and the .efe binary format — chunked, versioned, with a reader hostile to corrupt files. The sandbox becomes a docked editor."
+            },
+            {
+              "label": "Fase 6",
+              "title": "Full IBL",
+              "desc": "Diffuse irradiance plus split-sum specular: GGX prefiltering at one dispatch per mip and a BRDF LUT, both by compute shader. Emission maps and normal strength land too."
+            }
+          ],
+          "systems": [
+            {
+              "label": "efecom · RHI",
+              "role": "The only surface that talks to the GPU. Opaque u32 handles, zero OpenGL types in the API, a replaceable GL 4.5 backend. It does not depend on efengine."
+            },
+            {
+              "label": "renderer",
+              "role": "PBR with point and directional lights, diffuse and specular IBL, the shadow pass, the skybox and the PostChain of bloom, tonemap and FXAA."
+            },
+            {
+              "label": "scene",
+              "role": "A node graph keyed by handle + generation: destroying a node invalidates its old handles. Hierarchical transforms that only recompute what is dirty, and per-node behaviors."
+            },
+            {
+              "label": "resources",
+              "role": "Owner of everything that arrives from disk by path: shaders, textures with an explicit color space, and FBX models via Assimp. Caches and hands back observer pointers."
+            },
+            {
+              "label": "serialization",
+              "role": "The .efe format: a versioned header and FourCC chunks. A single Serialize(Ar&) per type serves both reading and writing; unknown chunks are skipped by size."
+            },
+            {
+              "label": "sandbox",
+              "role": "A docked Unity-style ImGui editor: hierarchy, inspector, live materials, a render panel, frame stats and scene save/load."
             }
           ]
         },
         "bancoProvincia": {
           "title": "Banco Provincia — Core Services Migration",
-          "desc": "Lifting Banco Provincia's legacy Axis2 / Java 8 web services into a modern Spring Boot 3 platform on Java 17, with database connectivity rewired from JNDI to a managed MSSQL DataSource.",
+          "desc": "Lifting Banco Provincia's legacy Axis2 / Java 8 web services into a modern Spring Boot 3 platform on Java 17 — 7 repositories, ~4,600 classes — with connectivity rewired from JNDI to a managed MSSQL DataSource.",
           "role": "Backend Engineer",
           "description": "Long-running modernization of legacy Axis2 SOAP services that power core banking integrations at Banco Provincia. The work covers migrating the runtime from Java 8 to Java 17 + Spring Boot 3, replacing JNDI-bound resources with a managed MSSQL DataSource, and untangling years of tightly-coupled web service contracts — all while preserving downstream consumers.",
-          "metrics": [
-            {
-              "label": "Runtime",
-              "value": "Java 8 → 17"
+          "migration": {
+            "scope": [
+              { "value": "7", "label": "repositories" },
+              { "value": "~4,600", "label": "Java classes" },
+              { "value": "~24,000", "label": "methods" },
+              { "value": "82", "label": "SQL scripts" }
+            ],
+            "before": {
+              "heading": "Before",
+              "items": ["Axis2 · SOAP / XML", "JNDI-bound resources", "Java 8 runtime", "Hand-rolled XML contracts"]
             },
-            {
-              "label": "Framework",
-              "value": "Axis2 → Spring Boot 3"
+            "after": {
+              "heading": "After",
+              "items": ["Spring Boot 3 · REST / JSON", "Managed MSSQL DataSource", "Java 17 runtime", "OpenAPI + Schemathesis tests"]
             },
-            {
-              "label": "Persistence",
-              "value": "JNDI → MSSQL DataSource"
-            },
-            {
-              "label": "Domain",
-              "value": "Core banking SOAP services"
-            },
-            {
-              "label": "Status",
-              "value": "In progress · 2025 →"
-            }
-          ]
+            "modulesHeading": "Modules migrated",
+            "modules": [
+              { "label": "Core Services", "role": "SOAP→REST dispatcher with dual XML/JSON responses.", "scale": "128 classes" },
+              { "label": "Service Plugins", "role": "Per-service business logic loaded by the dispatcher.", "scale": "636 classes" },
+              { "label": "Security", "role": "Authentication, sessions and access control.", "scale": "617 classes" },
+              { "label": "Messaging & Transaction Format", "role": "Banking message contracts and transaction formatting.", "scale": "164 classes" },
+              { "label": "Web Tier — Common", "role": "Shared web-tier contracts and utilities.", "scale": "209 classes" },
+              { "label": "Web Tier — Core", "role": "The presentation tier — the platform's largest surface.", "scale": "1,623 classes" },
+              { "label": "Web Tier — Services", "role": "Service-client layer between the web tier and backend.", "scale": "1,246 classes" }
+            ],
+            "phasesHeading": "Migration path",
+            "phases": [
+              { "label": "01", "title": "Discovery & indexing", "desc": "Index all seven repositories into a knowledge graph to map the real service and call surface." },
+              { "label": "02", "title": "Service-by-service migration", "desc": "Lift modules onto Spring Boot 3 and Java 17, rewire JNDI to a managed MSSQL DataSource, and preserve SOAP contracts via dual XML/JSON." },
+              { "label": "03", "title": "Contract testing", "desc": "OpenAPI (Swagger) definitions with Schemathesis property and fuzz testing to guarantee parity with the legacy services." },
+              { "label": "04", "title": "Cutover", "desc": "Module by module — Core Services and Security are live on Spring Boot 3; the rest are in flight." }
+            ]
+          }
         },
         "bbva": {
           "title": "BBVA — API Migration & Test Coverage",
@@ -324,7 +391,7 @@
       }
     },
     "older": {
-      "eyebrow": "§ 03 — Archive",
+      "eyebrow": "§ 04 — Archive",
       "headingBefore": "Older",
       "headingEmphasis": "works",
       "description": "Relics of my developing journey — still dear to me, but no longer the main event.",
@@ -389,7 +456,45 @@
       "role": "Role",
       "projectBrief": "Project Brief",
       "developmentRoadmap": "Development Roadmap",
+      "engineSystems": "Engine Systems | 2026-27-07",
+      "gpuBoundary": "the only path to the GPU",
       "keyImplementation": "Key Implementation"
+    }
+  },
+  "agents": {
+    "eyebrow": "§ 03 — Method",
+    "headingBefore": "How I work",
+    "headingEmphasis": "with agents",
+    "headingAfter": "",
+    "intro": "On codebases too large to hold in one head, an agent is only as sharp as the ground truth you give it. My method keeps AI anchored to real structure and provable contracts — every answer traced through a graph, every endpoint checked against its spec.",
+    "pillars": [
+      {
+        "index": "01",
+        "principle": "Traverse the graph — don't grep it",
+        "title": "Project indexing",
+        "body": "I index each codebase into a knowledge graph of functions, routes, call chains and service contracts. Agents traverse how the code actually connects instead of grepping or guessing through semantic search — so a sprawling migration surface answers to a query, not a full-text scan."
+      },
+      {
+        "index": "02",
+        "principle": "The spec is the test suite",
+        "title": "Schemathesis + OpenAPI",
+        "body": "Schemathesis reads a service's OpenAPI schema and generates property-based tests — hundreds of boundary, malformed and stateful cases the contract implies but nobody writes by hand. It surfaces schema drift and unexpected 500s before a client ever sees them — exactly what a migrated endpoint has to prove."
+      },
+      {
+        "index": "03",
+        "principle": "One harness, any OpenAPI",
+        "title": "API test harness",
+        "body": "I wrapped that flow into a small app: point it at any service exposing an OpenAPI schema and it runs the full Schemathesis suite, surfaces failures and reports contract coverage. Testing a new microservice becomes configuration, not a fresh test project."
+      }
+    ],
+    "toolkit": {
+      "label": "Toolkit",
+      "items": [
+        { "name": "Playwright", "note": "browser E2E & visual checks" },
+        { "name": "Superpowers", "note": "skills & slash-commands" },
+        { "name": "MCP memory", "note": "graph tools for agents" },
+        { "name": "Spec + plan", "note": "brainstorm → plan → verify" }
+      ]
     }
   },
   "contact": {
