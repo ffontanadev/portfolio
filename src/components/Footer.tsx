@@ -26,8 +26,8 @@ const Footer = () => {
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 mb-16">
                     <div>
                         <div className="flex items-baseline gap-1 mb-4">
-                            <span className="text-5xl md:text-6xl font-display font-bold tracking-tighter">FF</span>
-                            <span className="text-5xl md:text-6xl font-display italic font-light text-coral-500">.</span>
+                            <span className="text-3xl md:text-5xl font-display font-bold tracking-tighter">FF</span>
+                            <span className="text-3xl md:text-5xl font-display italic font-light text-coral-500">.</span>
                         </div>
                         <p className="font-display italic text-dark-900/55 max-w-xs leading-relaxed">
                             {t('footer.tagline')}

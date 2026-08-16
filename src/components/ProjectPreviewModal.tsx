@@ -100,6 +100,31 @@ const CodeBlockComponent = ({ block }: { block: CodeBlock }) => {
     );
 };
 
+/**
+ * Lead-metric type scale (spec §5.1: "the h1 is the largest text at every
+ * breakpoint").
+ *
+ * The h1 steps 36 / 56 / 72px at the 768 and 1024 breakpoints, so the binding
+ * width is 767px — the last pixel before it jumps to 56. A `clamp(min, Nvw,
+ * max)` stays under the h1 everywhere as long as N ≤ 4.5vw (767 × 0.045 = 34.5)
+ * and the max is under 4.5rem. Both the floor and the ceiling matter: the old
+ * floors alone (48px) already out-sized the h1 on every phone.
+ *
+ * Raise nothing here without re-checking 767px and 1023px.
+ */
+const LEAD_METRIC_SIZE = {
+    modal: {
+        migration: 'text-[clamp(1.5rem,3.5vw,3rem)]',
+        wordmark: 'text-[clamp(1.75rem,4vw,3.5rem)]',
+        scale: 'text-[clamp(2rem,4.5vw,4rem)]',
+    },
+    card: {
+        migration: 'text-[clamp(1.25rem,2.5vw,2.25rem)]',
+        wordmark: 'text-[clamp(1.5rem,3vw,2.75rem)]',
+        scale: 'text-[clamp(1.75rem,3.5vw,3.25rem)]',
+    },
+} as const;
+
 export const LeadMetricDisplay = ({
     metric,
     size = 'card',
@@ -113,7 +138,7 @@ export const LeadMetricDisplay = ({
         return (
             <div
                 className={`flex items-baseline justify-center gap-3 font-display font-bold tracking-[-0.04em] leading-none text-dark-900 ${
-                    isModal ? 'text-[clamp(2.75rem,6vw,5rem)]' : 'text-[clamp(1.75rem,4.5vw,3rem)]'
+                    LEAD_METRIC_SIZE[isModal ? 'modal' : 'card'].migration
                 }`}
             >
                 <span>{metric.from}</span>
@@ -134,7 +159,7 @@ export const LeadMetricDisplay = ({
             <div className="flex flex-col items-center">
                 <span
                     className={`font-display font-bold tracking-[-0.04em] leading-none text-dark-900 ${
-                        isModal ? 'text-[clamp(3rem,8vw,6rem)]' : 'text-[clamp(2.25rem,6vw,3.75rem)]'
+                        LEAD_METRIC_SIZE[isModal ? 'modal' : 'card'].wordmark
                     }`}
                 >
                     {metric.value}
@@ -167,7 +192,7 @@ export const LeadMetricDisplay = ({
             )}
             <span
                 className={`font-display font-bold tracking-[-0.04em] leading-none text-dark-900 ${
-                    isModal ? 'text-[clamp(4rem,10vw,7rem)]' : 'text-[clamp(3rem,7vw,4.5rem)]'
+                    LEAD_METRIC_SIZE[isModal ? 'modal' : 'card'].scale
                 }`}
             >
                 {metric.value}
