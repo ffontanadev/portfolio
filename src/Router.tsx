@@ -1,16 +1,21 @@
 import { BrowserRouter, Navigate, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useCallback } from 'react';
+import { useCallback, lazy, Suspense } from 'react';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
-import DevZonePage from './pages/DevZonePage';
 import NotFoundPage from './pages/NotFoundPage';
 import LocaleHead from './components/LocaleHead';
 import { AppContextProvider } from './contexts/AppContext';
 import { I18nProvider } from './i18n';
 import { DEFAULT_LOCALE, STORAGE_KEY, type Locale } from './i18n/config';
 import { buildLocalePath, negotiateLocale, parseLocalePath } from './i18n/routing';
+
+// The Dev Zone is a self-contained whiteboard that most visitors never open,
+// and it drags in the document renderers. A static import put all of it in the
+// home page's critical path; as a route-level chunk it costs nothing until
+// someone navigates to /:locale/dev-zone.
+const DevZonePage = lazy(() => import('./pages/DevZonePage'));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -81,18 +86,20 @@ function AppShell() {
         <div className="bg-cream-50 min-h-screen text-dark-900 font-sans selection:bg-coral-500 selection:text-white">
           {!isDevZone && <Navigation />}
 
-          <Routes>
-            <Route path="/:locale" element={isUnknownLocale ? <NotFoundPage /> : <HomePage />} />
-            <Route
-              path="/:locale/dev-zone"
-              element={isUnknownLocale ? <NotFoundPage /> : <DevZonePage />}
-            />
+          <Suspense fallback={null}>
+            <Routes>
+              <Route path="/:locale" element={isUnknownLocale ? <NotFoundPage /> : <HomePage />} />
+              <Route
+                path="/:locale/dev-zone"
+                element={isUnknownLocale ? <NotFoundPage /> : <DevZonePage />}
+              />
 
-            <Route path="/" element={<LocaleRedirect />} />
-            <Route path="/dev-zone" element={<LocaleRedirect />} />
+              <Route path="/" element={<LocaleRedirect />} />
+              <Route path="/dev-zone" element={<LocaleRedirect />} />
 
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </Suspense>
 
           {!isDevZone && <Footer />}
         </div>

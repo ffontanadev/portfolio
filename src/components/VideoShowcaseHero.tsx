@@ -30,15 +30,22 @@ const VideoShowcaseHero = ({ project, videos, size = 'modal' }: VideoShowcaseHer
 
     const containerRef = useRef<HTMLDivElement>(null);
     const videoRef = useRef<HTMLVideoElement>(null);
-    const inView = useInView(containerRef, { margin: '0px' });
+    // 300px of lead time: start fetching just before the banner scrolls in, so
+    // the first frame is ready by the time it is actually on screen.
+    const inView = useInView(containerRef, { margin: '300px' });
+
+    // Same element, but `once` keeps returning true after the first entry. The
+    // `src` hangs off this rather than off `inView` so scrolling back and forth
+    // doesn't restart the fetch, while `inView` still drives pause/resume.
+    const armed = useInView(containerRef, { once: true, margin: '300px' });
 
     const isModal = size === 'modal';
 
     // Pause when scrolled offscreen; resume when back in view. The `index` dep
-    // also retries play() on each new clip in case autoPlay is blocked by policy.
+    // also retries play() on each new clip in case autoplay is blocked by policy.
     useEffect(() => {
         const video = videoRef.current;
-        if (!video) return;
+        if (!video || !armed) return;
         if (inView) {
             void video.play().catch(() => {
                 /* Autoplay may be rejected by the browser; the static look still holds. */
@@ -46,7 +53,7 @@ const VideoShowcaseHero = ({ project, videos, size = 'modal' }: VideoShowcaseHer
         } else {
             video.pause();
         }
-    }, [inView, index]);
+    }, [inView, index, armed]);
 
     // No clips, reduced motion, or a load failure → static hero.
     if (!videos.length || prefersReducedMotion || failed) {
@@ -71,16 +78,25 @@ const VideoShowcaseHero = ({ project, videos, size = 'modal' }: VideoShowcaseHer
             />
 
             {/* Ambient clip. An index-based `key` remounts the element on every advance
-                so the new src autoplays; a lone clip uses native `loop` instead. */}
+                so the new src plays; a lone clip uses native `loop` instead.
+
+                `src` stays undefined until `armed`, and there is no `autoPlay`
+                attribute, for two reasons that compound badly otherwise:
+                `autoPlay` overrides `preload`, so the browser buffers the whole
+                clip regardless; and this banner sits ~2000px down the page, so
+                that download would otherwise start during the prerendered
+                snapshot — before any script runs — and saturate the connection
+                while the hero is still trying to paint. Playback is driven from
+                the effect above instead, once the element is actually near the
+                viewport. */}
             <video
                 ref={videoRef}
                 key={index}
-                src={videos[index]}
+                src={armed ? videos[index] : undefined}
                 muted
-                autoPlay
                 playsInline
                 loop={videos.length === 1}
-                preload="metadata"
+                preload="none"
                 aria-hidden="true"
                 onCanPlay={() => setReady(true)}
                 onEnded={handleEnded}

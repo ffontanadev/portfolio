@@ -1,4 +1,10 @@
-const SVGL = 'https://raw.githubusercontent.com/pheralb/svgl/main/static/library';
+// Vendored from github.com/pheralb/svgl (static/library) into public/logos/tech.
+// Hot-linking raw.githubusercontent.com cost a DNS lookup plus a TLS handshake
+// to a third origin before any of the seven marks could start downloading, and
+// left the marquee at the mercy of an uptime and a cache policy we don't
+// control. Same-origin also means the particle silhouette sampler reads them
+// without relying on someone else's CORS headers.
+const SVGL = '/logos/tech';
 
 export interface TechItem {
   /** Stable id; also the i18n key suffix: techShowcase.brief.<id> */

@@ -1,9 +1,14 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, lazy, Suspense } from 'react';
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
-import ParticleField from './Hero/ParticleField';
 import { useTranslation } from '@/i18n';
 import { useTechShowcase } from '@/context/TechShowcaseContext';
 import { PARTICLES_ENABLED } from '@/config/particles';
+
+// three.js is ~600KB of the bundle and the field is decorative, so it loads as
+// its own chunk after the hero's markup is on screen rather than blocking it.
+// `PARTICLES_ENABLED` gates the import itself: when the flag is off the chunk
+// is never requested, where the old static import shipped three.js regardless.
+const ParticleField = lazy(() => import('./Hero/ParticleField'));
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -73,7 +78,11 @@ const Hero = () => {
       {/* Particle field — fills the entire hero. The rocket flies in, morphs
           into the first tech logo, and the field then cycles the stack's logos
           on the right-hand side. Cursor pushes particles aside. */}
-      <ParticleField className="z-0" />
+      {PARTICLES_ENABLED && (
+        <Suspense fallback={null}>
+          <ParticleField className="z-0" />
+        </Suspense>
+      )}
 
       {/* Container */}
       <motion.div

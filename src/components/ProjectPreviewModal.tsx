@@ -15,9 +15,22 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { XIcon } from '@/components/ui/x';
 import { CopyIcon } from '@/components/ui/copy';
 import { CheckIcon } from '@/components/ui/check';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+// `Prism` bundles refractor's entire grammar set — 594KB raw / 214KB gzipped,
+// every language it supports. This module is reachable from FeaturedWorks, so
+// all of it was landing in the home page's critical path for a modal that only
+// opens on click. `PrismLight` ships the highlighter with no grammars and takes
+// only the three the code blocks in projectData actually declare.
+import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import typescript from 'react-syntax-highlighter/dist/esm/languages/prism/typescript';
+import javascript from 'react-syntax-highlighter/dist/esm/languages/prism/javascript';
+import csharp from 'react-syntax-highlighter/dist/esm/languages/prism/csharp';
 import { useState } from 'react';
+
+SyntaxHighlighter.registerLanguage('typescript', typescript);
+SyntaxHighlighter.registerLanguage('javascript', javascript);
+SyntaxHighlighter.registerLanguage('csharp', csharp);
+
 import BBVALogo from './logos/BBVALogo';
 import BancoProvinciaLogo from './logos/BancoProvinciaLogo';
 import { accentForCategory } from './projectTypes';

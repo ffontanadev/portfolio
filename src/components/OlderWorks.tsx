@@ -10,7 +10,7 @@ const projectData = [
     {
         id: "biome",
         color: "bg-gradient-to-br from-amber-50 to-stone-100",
-        image: "/images/biome-terrain-engine.png",
+        image: "/images/biome-terrain-engine.webp",
         techStack: ["Unity", "C Sharp", "Perlin Noise"],
         date: "2021",
         codeBlocks: [
@@ -157,7 +157,7 @@ const projectData = [
     {
         id: "hackflix",
         color: "bg-gradient-to-br from-stone-50 to-neutral-100",
-        image: "/images/hackflix.png",
+        image: "/images/hackflix.webp",
         techStack: ["React", "TMDb", "Pure CSS", "Responsive Design", "Vercel"],
         date: "2022",
         demoUrl: "https://hackflix-app.vercel.app",
@@ -208,7 +208,7 @@ async function processUPIPayment(paymentDetails) {
     {
         id: "truqui",
         color: "bg-gradient-to-br from-warmGray-50 to-stone-100",
-        image: "/images/truqui.png",
+        image: "/images/truqui.webp",
         techStack: ["React", "Redux", "PWA", "Tailwind v3", "Vercel"],
         date: "2022",
         demoUrl: "https://truqui-app.vercel.app",
@@ -350,7 +350,7 @@ export default gameSlice.reducer;`,
     {
         id: "threeVoxelEngine",
         color: "bg-gradient-to-br from-slate-50 to-stone-100",
-        image: "/images/voxel-world-engine.png",
+        image: "/images/voxel-world-engine.webp",
         techStack: ["Next.js", "Three.js", "Perlin Noise", "Server-side Chunk Generation", "Real-time Streaming"],
         date: "2025",
         demoUrl: "https://three-voxel-engine.vercel.app",

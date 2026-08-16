@@ -1,4 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+/* Fraunces + JetBrains Mono are requested from index.html, not with an @import
+   here. An @import inside the bundled stylesheet serializes the whole thing:
+   the browser has to download and parse 86KB of CSS before it even learns the
+   font host exists, then open a connection to fonts.googleapis.com, fetch a
+   second stylesheet, and only then discover fonts.gstatic.com. Declaring the
+   link in the head lets that happen in parallel, off a preconnected socket. */
 @import "tailwindcss";
 
 @theme {
