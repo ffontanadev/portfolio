@@ -1,5 +1,5 @@
-// Vitest setup. localStorage and matchMedia are used by the tour; jsdom
-// provides localStorage but not matchMedia, so stub a minimal version here.
+// Vitest setup. jsdom provides localStorage but not matchMedia, which Framer
+// Motion's reduced-motion hooks query, so stub a minimal version here.
 import { beforeEach, vi } from 'vitest';
 
 beforeEach(() => {

@@ -1,15 +1,9 @@
 import { HeartIcon } from '@/components/ui/heart';
 import { useTranslation } from '@/i18n';
-import { TOUR_REPLAY_EVENT, clearTourSeen } from './PageTour/useFirstVisit';
 
 const Footer = () => {
     const year = new Date().getFullYear();
     const { t } = useTranslation();
-
-    const replayTour = () => {
-        clearTourSeen();
-        window.dispatchEvent(new CustomEvent(TOUR_REPLAY_EVENT));
-    };
 
     const links = [
         { name: t('footer.links.home'), href: '#hero' },
@@ -19,7 +13,7 @@ const Footer = () => {
         { name: t('footer.links.resume'), href: '/docs/resume.pdf' },
         // Demoted from the header (§4.1): a recruiter with fifteen seconds
         // should not reach a pomodoro timer from the primary nav.
-        { name: t('footer.links.devZone'), href: '/dev-zone', tourId: 'dev-zone' },
+        { name: t('footer.links.devZone'), href: '/dev-zone' },
     ];
 
     return (
@@ -42,7 +36,6 @@ const Footer = () => {
                             <a
                                 key={link.name}
                                 href={link.href}
-                                data-tour-id={link.tourId}
                                 className="reveal-underline text-sm font-medium text-dark-900/80 hover:text-coral-500 transition-colors duration-500 flex items-baseline gap-2"
                             >
                                 <span className="font-mono text-[10px] text-dark-900/30">0{idx + 1}</span>
@@ -62,13 +55,6 @@ const Footer = () => {
                         <span aria-hidden="true" className="h-3 w-px bg-dark-900/15" />
                         {t('footer.location')}
                     </span>
-                    <button
-                        type="button"
-                        onClick={replayTour}
-                        className="text-xs font-medium text-dark-900/50 underline-offset-4 transition-colors hover:text-coral-500 hover:underline"
-                    >
-                        {t('tour.replay')}
-                    </button>
                     <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-dark-900/45">
                         {t('footer.craftedWith')}
                         <HeartIcon size={12} className="fill-coral-500 text-coral-500" />

@@ -14,7 +14,6 @@ const HowIWorkWithAgents = () => {
 
   return (
     <section
-      data-tour-id="agents"
       id="about"
       className="relative py-32 md:py-40 px-6 md:px-20 max-w-[1440px] mx-auto"
     >

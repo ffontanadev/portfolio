@@ -512,7 +512,6 @@ const FeaturedWorks = () => {
     <>
       <section
         ref={sectionRef}
-        data-tour-id="featured-works"
         id="work"
         className="relative py-32 md:py-40 px-6 md:px-20 max-w-[1440px] mx-auto"
       >

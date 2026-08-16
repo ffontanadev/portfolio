@@ -24,7 +24,6 @@ const BrandMarquee = () => {
                 onMouseLeave={() => setPaused(false)}
             >
                 <motion.div
-                    data-tour-id="tech-stack"
                     className="flex gap-16 items-center whitespace-nowrap pr-16"
                     animate={{ x: paused ? undefined : '-50%' }}
                     transition={{
