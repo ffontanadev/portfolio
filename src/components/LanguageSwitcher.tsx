@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import type { ComponentType } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslation, LOCALE_LABELS, SUPPORTED_LOCALES, type Locale } from '@/i18n';
+import { buildLocalePath, parseLocalePath } from '@/i18n/routing';
 import { FlagEN, FlagES, FlagPT, FlagZH, type FlagProps } from '@/components/ui/flags';
 
 const FLAGS: Record<Locale, ComponentType<FlagProps>> = {
@@ -17,9 +19,12 @@ interface LanguageSwitcherProps {
 }
 
 const LanguageSwitcher = ({ variant = 'compact' }: LanguageSwitcherProps) => {
-  const { locale, setLocale, t } = useTranslation();
+  const { locale, t } = useTranslation();
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const { pathname } = useLocation();
+  // §8: switching language on a deep path stays on that path.
+  const { rest } = parseLocalePath(pathname);
 
   const ActiveFlag = FLAGS[locale];
 
@@ -41,11 +46,6 @@ const LanguageSwitcher = ({ variant = 'compact' }: LanguageSwitcherProps) => {
       document.removeEventListener('keydown', handleKey);
     };
   }, [open]);
-
-  const handleSelect = (next: Locale) => {
-    setLocale(next);
-    setOpen(false);
-  };
 
   return (
     <div ref={containerRef} className="relative">
@@ -86,9 +86,10 @@ const LanguageSwitcher = ({ variant = 'compact' }: LanguageSwitcherProps) => {
               const isActive = code === locale;
               return (
                 <li key={code} role="option" aria-selected={isActive}>
-                  <button
-                    type="button"
-                    onClick={() => handleSelect(code)}
+                  <Link
+                    to={buildLocalePath(code, rest)}
+                    hrefLang={code}
+                    onClick={() => setOpen(false)}
                     className={`flex w-full items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors cursor-pointer ${
                       isActive
                         ? 'bg-coral-500/10 text-coral-500'
@@ -97,7 +98,7 @@ const LanguageSwitcher = ({ variant = 'compact' }: LanguageSwitcherProps) => {
                   >
                     <Flag size={20} />
                     <span className="font-medium">{LOCALE_LABELS[code]}</span>
-                  </button>
+                  </Link>
                 </li>
               );
             })}
