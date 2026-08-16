@@ -8,6 +8,62 @@ const SILHOUETTE_MAX_WIDTH_RATIO = 0.75;
 // Pixels with luminance above this threshold are treated as background/highlights
 // and dropped — the sampler then picks up only the dark silhouette.
 const LIGHT_LUMINANCE_THRESHOLD = 0.98;
+/**
+ * Breathing room kept between an x-offset mark and the canvas edge, as a
+ * fraction of width. Without it a wide wordmark pushed toward the right column
+ * would sample with its tail cropped off the canvas.
+ */
+export const SILHOUETTE_EDGE_MARGIN_RATIO = 0.04;
+
+export interface SilhouettePlacement {
+  tx: number;
+  ty: number;
+  dw: number;
+  dh: number;
+}
+
+/**
+ * Where and how large to draw a silhouette on the sampling canvas. Pure so the
+ * placement rules — in particular the right-edge clamp that keeps an offset
+ * wordmark on screen — are testable without a canvas.
+ */
+export function silhouettePlacement(
+  spec: Extract<ShapeSpec, { kind: 'silhouette' }>,
+  bounds: SampleBounds,
+  naturalW: number,
+  naturalH: number,
+): SilhouettePlacement {
+  const sizeRatio = spec.sizeRatio ?? 0.55;
+  const widthRatio = spec.widthRatio ?? SILHOUETTE_MAX_WIDTH_RATIO;
+
+  // Cap by both bounds — same trick as drawRocket: narrow viewports otherwise
+  // produce a silhouette wider than the canvas because bounds.height stays large
+  // (hero is min-h-screen) while bounds.width shrinks.
+  const heightScale = (bounds.height * sizeRatio) / naturalH;
+  const widthScale = (bounds.width * widthRatio) / naturalW;
+  const scale = Math.min(heightScale, widthScale);
+
+  const dw = naturalW * scale;
+  const dh = naturalH * scale;
+
+  const centeredX = (bounds.width - dw) / 2;
+  // Optional horizontal bias (fraction of width): positive pushes the mark
+  // right, used by the tech showcase so logos sit in the hero's empty right
+  // column instead of behind the headline.
+  const biasedX = centeredX + (spec.xOffsetRatio ?? 0) * bounds.width;
+
+  const margin = bounds.width * SILHOUETTE_EDGE_MARGIN_RATIO;
+  const maxX = bounds.width - margin - dw;
+  // A mark too wide to sit between the margins can't be clamped into them —
+  // centring is the least-bad placement, and matches the un-offset behaviour.
+  const tx = maxX < margin ? centeredX : Math.min(Math.max(biasedX, margin), maxX);
+
+  // Optional vertical bias (fraction of height): negative shifts the mark up,
+  // used by the tech showcase so a centered logo clears the bottom brief text.
+  const ty = (bounds.height - dh) / 2 + (spec.yOffsetRatio ?? 0) * bounds.height;
+
+  return { tx, ty, dw, dh };
+}
 
 export function loadSilhouette(src: string): Promise<HTMLImageElement> {
   const existing = cache.get(src);
@@ -29,7 +85,14 @@ export function loadSilhouette(src: string): Promise<HTMLImageElement> {
     img.src = src;
   });
   inflight.set(src, promise);
-  promise.finally(() => inflight.delete(src));
+  // Two handlers rather than `.finally()`: that derives a *new* promise which
+  // rejects alongside this one and has no catch of its own, so every failed
+  // logo fetch would surface as an unhandled rejection. Callers still get the
+  // original promise and handle it themselves.
+  promise.then(
+    () => inflight.delete(src),
+    () => inflight.delete(src),
+  );
   return promise;
 }
 
@@ -43,24 +106,9 @@ export function drawSilhouette(
   // falls back to scatter, so the loop visibly skips this shape rather than crashing.
   if (!img) return;
 
-  const sizeRatio = spec.sizeRatio ?? 0.55;
-  const widthRatio = spec.widthRatio ?? SILHOUETTE_MAX_WIDTH_RATIO;
   const naturalW = img.naturalWidth || img.width || 100;
   const naturalH = img.naturalHeight || img.height || 100;
-
-  // Cap by both bounds — same trick as drawRocket: narrow viewports otherwise
-  // produce a silhouette wider than the canvas because bounds.height stays large
-  // (hero is min-h-screen) while bounds.width shrinks.
-  const heightScale = (bounds.height * sizeRatio) / naturalH;
-  const widthScale = (bounds.width * widthRatio) / naturalW;
-  const scale = Math.min(heightScale, widthScale);
-
-  const dw = naturalW * scale;
-  const dh = naturalH * scale;
-  const tx = (bounds.width - dw) / 2;
-  // Optional vertical bias (fraction of height): negative shifts the mark up,
-  // used by the tech showcase so a centered logo clears the bottom brief text.
-  const ty = (bounds.height - dh) / 2 + (spec.yOffsetRatio ?? 0) * bounds.height;
+  const { tx, ty, dw, dh } = silhouettePlacement(spec, bounds, naturalW, naturalH);
 
   ctx.drawImage(img, tx, ty, dw, dh);
 

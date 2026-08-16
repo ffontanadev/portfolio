@@ -7,11 +7,11 @@ import { PARTICLES_ENABLED } from '@/config/particles';
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-// Seconds before the particle intro hands off to the recurring loop:
-// rocketFly (4.0) + crossMorph (1.0) + textHold (1.5). Surrounding HTML text
-// is delayed by this so it doesn't compete with the particle animation.
-// Kept in sync with DEFAULT_TIMINGS in particles/IntroSequencer.ts.
-const INTRO_TOTAL_S = 4.8;
+// Seconds the rocket spends flying in (rocketFly in IntroSequencer's
+// DEFAULT_TIMINGS). Surrounding HTML text is delayed by this so it doesn't
+// compete with the particle animation; it lands as the rocket does, while the
+// rocket cross-morphs into the first tech logo.
+const INTRO_TOTAL_S = 4.0;
 
 const Hero = () => {
   const shouldReduceMotion = useReducedMotion();
@@ -70,8 +70,9 @@ const Hero = () => {
       onMouseMove={handleMouseMove}
       className="relative select-none min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-cream-50 to-cream-100"
     >
-      {/* Particle field — fills the entire hero, drifts ambient, morphs
-          through Felipe / FF. / heart on a loop. Cursor pushes particles aside. */}
+      {/* Particle field — fills the entire hero. The rocket flies in, morphs
+          into the first tech logo, and the field then cycles the stack's logos
+          on the right-hand side. Cursor pushes particles aside. */}
       <ParticleField className="z-0" />
 
       {/* Container */}

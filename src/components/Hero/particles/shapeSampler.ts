@@ -5,7 +5,14 @@ export type ShapeSpec =
   | { kind: 'text'; text: string; fontFamily?: string; weight?: number; heightRatio?: number }
   | { kind: 'heart'; sizeRatio?: number }
   | { kind: 'rocket'; sizeRatio?: number }
-  | { kind: 'silhouette'; src: string; sizeRatio?: number; widthRatio?: number; yOffsetRatio?: number }
+  | {
+      kind: 'silhouette';
+      src: string;
+      sizeRatio?: number;
+      widthRatio?: number;
+      xOffsetRatio?: number;
+      yOffsetRatio?: number;
+    }
   | { kind: 'frames'; srcs: string[]; fps?: number; sizeRatio?: number; widthRatio?: number };
 
 export interface SampleBounds {

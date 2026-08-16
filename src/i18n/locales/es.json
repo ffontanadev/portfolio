@@ -113,7 +113,7 @@
   "hero": {
     "eyebrow": "01 — Introducción",
     "headline": {
-      "lead": "Modernizo sistemas bancarios heredados —",
+      "lead": "Modernizo sistemas bancarios legacy —",
       "emphasis": "y demuestro que la migración no rompió nada."
     },
     "subhead": "Ingeniero de Software, cuatro años en Magenta Innova sobre servicios core de bancos uruguayos y de la región. ~4.600 clases migradas de Axis2/Java 8 a Spring Boot 3. Más de 50 APIs migradas, cobertura de tests del 20% al 85%. También React Native en producción, y un renderer en C++17 como proyecto propio.",

@@ -2,18 +2,26 @@
 import * as THREE from 'three';
 import type { ShapeSpec, SampleBounds } from './shapeSampler';
 
-type Phase = 'rocket-fly' | 'cross-morph' | 'text-hold' | 'done';
+type Phase = 'rocket-fly' | 'cross-morph' | 'done';
 
 export interface IntroShapes {
   rocket: ShapeSpec;
-  text: ShapeSpec;
+  /**
+   * The first tech logo, which the rocket morphs straight into. Null when its
+   * SVG hasn't loaded in time (the marks come off a CDN) — the intro then ends
+   * with the rocket and the showcase loop forms the logo on its own once it
+   * arrives, rather than cross-morphing into an empty sample.
+   */
+  handoff: ShapeSpec | null;
 }
 
 export interface IntroAdapter {
   /** Write a shape's sampled positions into the named slot. */
   applyTargetTo(slot: 'aTarget' | 'aTargetNext', shape: ShapeSpec): void;
-  /** Copy aTargetNext over aTarget (used during handoff). */
-  copyNextIntoPrimary(): void;
+  /** Write a shape's positions *and* its sampled brand colours into the slot. */
+  applyColoredTargetTo(slot: 'aTarget' | 'aTargetNext', shape: ShapeSpec): void;
+  /** Fold the secondary slot into the primary one at the given blend factor. */
+  promoteNextIntoPrimary(blend: number): void;
   /** Material uniforms the sequencer drives. */
   uniforms: {
     uMorph: { value: number };
@@ -21,6 +29,7 @@ export interface IntroAdapter {
     uTargetOffset: { value: THREE.Vector2 };
     uTargetScale: { value: number };
     uMorphSmear: { value: number };
+    uBrandColorMix: { value: number };
   };
   /** Current canvas bounds, needed for rocket-fly offset. */
   bounds: SampleBounds;
@@ -29,13 +38,11 @@ export interface IntroAdapter {
 export interface IntroTimings {
   rocketFly: number;
   crossMorph: number;
-  textHold: number;
 }
 
 const DEFAULT_TIMINGS: IntroTimings = {
   rocketFly: 4.0,
   crossMorph: 1.0,
-  textHold: 1.5,
 };
 
 const SMEAR_AMOUNT = .020;
@@ -64,6 +71,7 @@ export class IntroSequencer {
   private phaseStart: number;
   // Captured target offset at the start of cross-morph, used to ease toward (0,0).
   private offsetAtCrossMorphStart = new THREE.Vector2(0, 0);
+  private formed = false;
 
   /** Construct AFTER ParticleSystem.resize() has run at least once so adapter.bounds is non-zero. */
   constructor(
@@ -80,7 +88,9 @@ export class IntroSequencer {
     // Prime both target slots up-front so resize during any phase can resample
     // without losing context.
     this.adapter.applyTargetTo('aTarget', shapes.rocket);
-    this.adapter.applyTargetTo('aTargetNext', shapes.text);
+    if (shapes.handoff) {
+      this.adapter.applyColoredTargetTo('aTargetNext', shapes.handoff);
+    }
 
     // Initial uniform state: drift (uMorph=0), no blend, far-left offset, full smear,
     // and the rocket starts shrunk to ROCKET_START_SCALE so it can grow toward the camera.
@@ -88,6 +98,7 @@ export class IntroSequencer {
     this.adapter.uniforms.uTargetBlend.value = 0;
     this.adapter.uniforms.uMorphSmear.value = SMEAR_AMOUNT;
     this.adapter.uniforms.uTargetScale.value = ROCKET_START_SCALE;
+    this.adapter.uniforms.uBrandColorMix.value = 0;
     this.adapter.uniforms.uTargetOffset.value.set(
       -adapter.bounds.width * 0.6,
       0,
@@ -98,6 +109,15 @@ export class IntroSequencer {
     return this.phase === 'done';
   }
 
+  /**
+   * Whether the intro left the first logo formed in the primary slot. False
+   * when the logo never loaded, in which case the showcase loop has to morph
+   * it in from drift itself.
+   */
+  get handedOffFormed(): boolean {
+    return this.formed;
+  }
+
   /** Shift internal clock by `deltaMs` (used after pause/resume). */
   shiftClock(deltaMs: number): void {
     this.phaseStart += deltaMs;
@@ -106,7 +126,9 @@ export class IntroSequencer {
   /** Resample both targets at the current bounds without rewinding. */
   applyResize(): void {
     this.adapter.applyTargetTo('aTarget', this.shapes.rocket);
-    this.adapter.applyTargetTo('aTargetNext', this.shapes.text);
+    if (this.shapes.handoff) {
+      this.adapter.applyColoredTargetTo('aTargetNext', this.shapes.handoff);
+    }
   }
 
   tick(nowMs: number): void {
@@ -136,6 +158,11 @@ export class IntroSequencer {
       u.uMorphSmear.value = SMEAR_AMOUNT;
 
       if (t >= 1) {
+        if (!this.shapes.handoff) {
+          // Nothing to morph into; hand the formed rocket back to the system.
+          this.phase = 'done';
+          return;
+        }
         this.offsetAtCrossMorphStart.copy(u.uTargetOffset.value);
         this.phase = 'cross-morph';
         this.phaseStart = nowMs;
@@ -143,42 +170,31 @@ export class IntroSequencer {
       return;
     }
 
-    if (this.phase === 'cross-morph') {
-      const dur = this.timings.crossMorph;
-      const t = Math.min(elapsed / dur, 1);
-      const blendEased = easeInOutCubic(t);
-      const offsetEased = easeOutCubic(t);
+    // cross-morph: rocket → first tech logo, position and brand colour together.
+    const dur = this.timings.crossMorph;
+    const t = Math.min(elapsed / dur, 1);
+    const blendEased = easeInOutCubic(t);
+    const offsetEased = easeOutCubic(t);
 
-      u.uTargetBlend.value = blendEased;
-      u.uTargetOffset.value.x =
-        this.offsetAtCrossMorphStart.x * (1 - offsetEased);
-      u.uTargetOffset.value.y =
-        this.offsetAtCrossMorphStart.y * (1 - offsetEased);
-      // Smear decays from SMEAR_AMOUNT to 0 linearly.
-      u.uMorphSmear.value = SMEAR_AMOUNT * (1 - t);
-      u.uMorph.value = 1;
-      u.uTargetScale.value = 1;
+    u.uTargetBlend.value = blendEased;
+    // The logo's own colours fade in on the same curve as its shape, so the
+    // rocket's coral never lingers on a formed logo.
+    u.uBrandColorMix.value = blendEased;
+    u.uTargetOffset.value.x = this.offsetAtCrossMorphStart.x * (1 - offsetEased);
+    u.uTargetOffset.value.y = this.offsetAtCrossMorphStart.y * (1 - offsetEased);
+    // Smear decays from SMEAR_AMOUNT to 0 linearly.
+    u.uMorphSmear.value = SMEAR_AMOUNT * (1 - t);
+    u.uMorph.value = 1;
+    u.uTargetScale.value = 1;
 
-      if (t >= 1) {
-        this.phase = 'text-hold';
-        this.phaseStart = nowMs;
-      }
-      return;
-    }
-
-    if (this.phase === 'text-hold') {
-      u.uMorph.value = 1;
-      u.uTargetBlend.value = 1;
+    if (t >= 1) {
+      // Handoff: fold the logo into the primary slot and reset blend so the
+      // showcase loop can start its own cross-morphs from a clean state.
+      this.adapter.promoteNextIntoPrimary(1);
+      u.uTargetBlend.value = 0;
       u.uTargetOffset.value.set(0, 0);
-      u.uTargetScale.value = 1;
-      u.uMorphSmear.value = 0;
-
-      if (elapsed >= this.timings.textHold) {
-        // Handoff: copy text into primary slot, reset blend.
-        this.adapter.copyNextIntoPrimary();
-        u.uTargetBlend.value = 0;
-        this.phase = 'done';
-      }
+      this.formed = true;
+      this.phase = 'done';
     }
   }
 }
