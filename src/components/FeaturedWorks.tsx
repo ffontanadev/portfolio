@@ -43,9 +43,9 @@ const projectData: ProjectStructural[] = [
     repo: 'elFonTii/efengine',
     demoUrl: 'https://elfontii.github.io/efengine/',
     showcaseVideos: [
-      '/videos/efengine/video_01.mp4',
-      '/videos/efengine/video_02.mp4',
-      '/videos/efengine/video_03.mp4'
+      '/videos/efengine/video_01.webm',
+      '/videos/efengine/video_02.webm',
+      '/videos/efengine/video_03.webm'
     ],
   },
   {
