@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import {
+    ArrowUpRight,
     Binary,
     Boxes,
     CircuitBoard,
@@ -422,39 +423,33 @@ const MigrationDossierView = ({ dossier }: { dossier: MigrationDossier }) => (
     </div>
 );
 
-const DevelopmentRoadmap = ({ project }: { project: Project }) => {
+/**
+ * The demo URL as the reader would say it out loud — no scheme, no trailing
+ * slash — so a GitHub Page keeps the path that identifies it
+ * (`elfontii.github.io/efengine`, not the bare host).
+ */
+const demoLabel = (url: string) => url.replace(/^https?:\/\//, '').replace(/\/+$/, '');
+
+const LiveDemo = ({ url }: { url: string }) => {
     const { t } = useTranslation();
-    if (!project.phases?.length) return null;
     return (
         <div>
-            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-4">
-                {t('work.modal.developmentRoadmap')}
+            <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
+                {t('work.liveDemo')}
             </h3>
-            <div className="rounded-2xl border border-dark-900/10 divide-y divide-dark-900/[0.07] overflow-hidden bg-cream-50/40">
-                {project.phases.map((phase, i) => (
-                    <div key={i} className="flex items-start gap-4 px-5 py-4">
-                        <span
-                            className={`font-mono text-[10px] tracking-[0.2em] uppercase shrink-0 mt-1 ${
-                                phase.current ? 'text-teal-700 font-semibold' : 'text-dark-900/45'
-                            }`}
-                        >
-                            {phase.label}
-                        </span>
-                        <div className="min-w-0">
-                            <p
-                                className={`font-display text-lg md:text-xl tracking-tight ${
-                                    phase.current ? 'text-teal-700 font-semibold' : 'text-dark-900 font-medium'
-                                }`}
-                            >
-                                {phase.title}
-                            </p>
-                            <p className="mt-1 text-sm text-dark-900/55 leading-relaxed">
-                                {phase.desc}
-                            </p>
-                        </div>
-                    </div>
-                ))}
-            </div>
+            <a
+                href={url}
+                target="_blank"
+                rel="noreferrer"
+                className="group/demo inline-flex items-center gap-1.5 text-sm font-medium text-dark-900 hover:text-coral-500 transition-colors"
+            >
+                <span className="font-mono break-all">{demoLabel(url)}</span>
+                <ArrowUpRight
+                    size={14}
+                    className="shrink-0 transition-transform duration-300 group-hover/demo:-translate-y-0.5 group-hover/demo:translate-x-0.5"
+                    aria-hidden="true"
+                />
+            </a>
         </div>
     );
 };
@@ -530,8 +525,7 @@ const TierLink = ({ caption }: { caption?: string }) => (
     </div>
 );
 
-// Sibling of DevelopmentRoadmap. The roadmap says when things happened; this
-// draws how the engine is stacked — the editor drives the runtime, the runtime
+// Draws how the engine is stacked — the editor drives the runtime, the runtime
 // goes through the RHI, and only the RHI reaches the GPU.
 const EngineSystems = ({ project }: { project: Project }) => {
     const { t } = useTranslation();
@@ -748,21 +742,18 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
                                                     <p className="text-sm text-dark-900 font-medium">{project.role}</p>
                                                 </div>
                                             </div>
+
+                                            {project.demoUrl && <LiveDemo url={project.demoUrl} />}
                                         </div>
                                     </div>
 
-                                    {/* Right Column — Migration Brief, Development Roadmap, or Code Blocks */}
+                                    {/* Right Column — Migration Brief, Metric Brief, Latest Commit, or Code Blocks */}
                                     {project.migration ? (
                                         <MigrationDossierView dossier={project.migration} />
                                     ) : project.category === 'professional' && project.metrics?.length ? (
                                         <MetricBrief project={project} />
-                                    ) : project.phases?.length ? (
-                                        <div className="space-y-8">
-                                            <DevelopmentRoadmap project={project} />
-                                            {project.repo && (
-                                                <LatestCommit repo={project.repo} variant="detail" />
-                                            )}
-                                        </div>
+                                    ) : project.repo ? (
+                                        <LatestCommit repo={project.repo} variant="detail" />
                                     ) : (
                                         <div className="space-y-2">
                                             <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-4">

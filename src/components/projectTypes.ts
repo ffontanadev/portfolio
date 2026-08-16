@@ -82,12 +82,13 @@ export interface Project {
     leadMetric?: ProjectLeadMetric;
     metrics?: ProjectMetric[];
     featured?: boolean;
-    phases?: ProjectPhase[];
     /** Architecture breakdown — one row per engine subsystem. */
     systems?: ProjectSystem[];
     migration?: MigrationDossier;
     /** GitHub repo as "owner/name"; enables the latest-commit badge/detail. */
     repo?: string;
+    /** Public URL of a playable/browsable build — a deploy or a GitHub Page. */
+    demoUrl?: string;
     /** Public paths to ambient showcase clips, e.g. '/videos/efengine/clip.mp4'. */
     showcaseVideos?: string[];
 }

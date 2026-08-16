@@ -198,7 +198,9 @@ describe('availability block', () => {
 
 /**
  * Spec §5.4: "Sitting beside a 4,600-class migration and a PBR renderer, it
- * doesn't add range — it subtracts seniority." Six projects, not seven.
+ * doesn't add range — it subtracts seniority." The Twitter Clone went first;
+ * three-voxel-engine followed it out of the featured grid on 2026-08-16, down
+ * into the archive, where its live demo carries it. Five projects.
  */
 describe('project inventory', () => {
   const projectsOf = (locale: Locale) =>
@@ -206,11 +208,21 @@ describe('project inventory', () => {
       work: { featured: { projects: Record<string, unknown> } };
     }).work.featured.projects;
 
+  const archiveOf = (locale: Locale) =>
+    (messages[locale] as unknown as {
+      work: { older: { projects: Record<string, unknown> } };
+    }).work.older.projects;
+
   it.each(SUPPORTED_LOCALES)('%s no longer ships the Twitter Clone', (locale) => {
     expect(projectsOf(locale)).not.toHaveProperty('twitterClone');
   });
 
-  it.each(SUPPORTED_LOCALES)('%s ships exactly six featured projects', (locale) => {
-    expect(Object.keys(projectsOf(locale))).toHaveLength(6);
+  it.each(SUPPORTED_LOCALES)('%s ships exactly five featured projects', (locale) => {
+    expect(Object.keys(projectsOf(locale))).toHaveLength(5);
+  });
+
+  it.each(SUPPORTED_LOCALES)('%s files the voxel engine under its real name in the archive', (locale) => {
+    expect(projectsOf(locale)).not.toHaveProperty('voxel');
+    expect(archiveOf(locale)).toHaveProperty('threeVoxelEngine');
   });
 });

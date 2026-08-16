@@ -113,8 +113,8 @@
   "hero": {
     "eyebrow": "01 — Introducción",
     "headline": {
-      "lead": "Modernizo sistemas bancarios legacy —",
-      "emphasis": "y demuestro que la migración no rompió nada."
+      "lead": "Ingeniero backend para sistemas",
+      "emphasis": "que no pueden caerse"
     },
     "subhead": "Ingeniero de Software, cuatro años en Magenta Innova sobre servicios core de bancos uruguayos y de la región. ~4.600 clases migradas de Axis2/Java 8 a Spring Boot 3. Más de 50 APIs migradas, cobertura de tests del 20% al 85%. También React Native en producción, y un renderer en C++17 como proyecto propio.",
     "availability": "Uruguay · UTC−3 · solapamiento completo con el horario del Este de EE. UU. · contractor o employer-of-record · abierto a relocación",
@@ -182,6 +182,7 @@
     }
   },
   "work": {
+    "liveDemo": "Demo en vivo",
     "featured": {
       "eyebrow": "§ 02 — Trabajo seleccionado",
       "headingBefore": "En lo que he estado",
@@ -207,43 +208,6 @@
           "role": "Autor del Motor",
           "description": "EFENGINE es mi proyecto más ambicioso: un motor 3D escrito desde cero en C++17 sobre OpenGL 4.5 Core. Renderiza materiales PBR iluminados por luces puntuales y direccional con iluminación basada en imagen completa —irradiancia difusa más especular por split-sum, ambas precalculadas por compute shaders— sobre shadow mapping, un skybox y una cadena de post-proceso HDR de bloom, tonemap y FXAA. Las escenas viven en un grafo de nodos direccionado por handles con generación y se persisten en .efe, un formato binario propio, chunkeado y versionado, con un reader hostil a la entrada corrupta. Encima corre un editor ImGui dockeado: jerarquía, inspector, edición de materiales en vivo y guardado/carga de escenas.\n\nLo que lo sostiene es un conjunto de reglas no negociables. Cada llamada gl* está confinada a efecom, la capa RHI — el renderer nunca ve OpenGL. Sin new/delete crudos y sin excepciones: la propiedad es un valor o un unique_ptr, los errores de programación disparan un assert, los fallos recuperables vuelven como valor de retorno, y todo subsistema es RAII — construirlo lo levanta, destruirlo lo baja.",
           "leadSub": "C++17 · OpenGL 4.5 Core",
-          "phases": [
-            {
-              "label": "Fase 0",
-              "title": "Cimientos",
-              "desc": "CMake con FetchContent, GLFW/GLAD/GLM, Log y Assert, Window y Application con RAII de punta a punta, doctest sobre CTest. Cierra con el primer triángulo en pantalla."
-            },
-            {
-              "label": "Fase 1",
-              "title": "Render base",
-              "desc": "Shader, Texture con stb_image, Material, layout de vértices y Mesh; cámara con órbita, pan y zoom. Los shaders pasan a cargarse desde disco."
-            },
-            {
-              "label": "Fase 2",
-              "title": "Escena y luces",
-              "desc": "Time, ResourceManager con caché por clave, Renderer con BeginScene/Submit, luces puntuales, framebuffer y la primera UI de debug en ImGui."
-            },
-            {
-              "label": "Fase 3",
-              "title": "HDR y post-proceso",
-              "desc": "Exposición en la cámara, TonemapPass como primer IPostPass, y bloom y FXAA encadenados por ping-pong entre dos framebuffers scratch."
-            },
-            {
-              "label": "Fase 4",
-              "title": "OpenGL 4.5 y el RHI",
-              "desc": "Salto a 4.5 Core con DSA y shaders a #version 450. Nace efecom: ninguna llamada gl* vive fuera del RHI. Skybox y shadow mapping direccional."
-            },
-            {
-              "label": "Fase 5",
-              "title": "Grafo, .efe y editor",
-              "desc": "SceneGraph por handles con generación, behaviors por nodo, y el formato binario .efe — chunkeado, versionado y con reader hostil a archivos corruptos. El sandbox se vuelve editor dockeado."
-            },
-            {
-              "label": "Fase 6",
-              "title": "IBL completo",
-              "desc": "Irradiancia difusa más especular por split-sum: prefiltrado GGX con un dispatch por mip y BRDF LUT, ambos por compute shader. Se suman mapas de emisión y normal strength."
-            }
-          ],
           "systems": [
             {
               "label": "efecom · RHI",
@@ -351,12 +315,6 @@
             }
           ]
         },
-        "voxel": {
-          "title": "Generación de Terreno estilo Minecraft",
-          "desc": "Generación de un mundo de vóxeles en Three.js usando el algoritmo de ruido de Perlin con un controlador en primera persona 3D",
-          "role": "Desarrollador",
-          "description": "Un sofisticado renderizador de mundos de vóxeles 3D con generación procedural de terreno, streaming de chunks y controles en primera persona. Construido con Three.js y Next.js.\n            Generación procedural de terreno: usa ruido de Perlin para terrenos y sistemas de cuevas realistas\n            Streaming de mundo infinito: carga/descarga dinámica de chunks según la posición de la cámara\n            Controles en primera persona: movimiento WASD con vista libre del ratón y pointer lock\n            Renderizado optimizado: renderizado instanciado para alto rendimiento\n            Mundo configurable: tamaño de chunk, parámetros de terreno y tipos de bloque personalizables\n            Sistema de caché: caché de chunks del lado del servidor con generación determinista"
-        },
         "mhc": {
           "title": "Magenta Hours Collector (MHC-CLI)",
           "desc": "Una aplicación de línea de comandos que se conecta a una bandeja de correo y extrae reportes de horas usando IA, busca correos que coincidan con los criterios configurados y luego entrega el correo a Claude Sonnet 4.5 para recopilar toda la información relevante y alertar al usuario",
@@ -386,9 +344,15 @@
         },
         "truqui": {
           "title": "Truqui",
-          "desc": "Tu librería de confianza",
+          "desc": "Una PWA offline-first para llevar el tanteador del Truco, instalable directo desde el navegador.",
           "role": "Desarrollador",
           "description": "Una Progressive Web App (PWA) especializada en el conteo digital de puntos para el Truco, el juego de cartas tradicional más popular de Uruguay y Argentina. Diseñada para funcionar completamente sin conexión, permite a los jugadores llevar un marcador preciso y eficiente sin depender de internet. La app aprovecha las capacidades modernas de las PWA para ofrecer una experiencia nativa multiplataforma, instalable directamente desde el navegador en móviles, tablets y escritorio. Su arquitectura offline-first garantiza disponibilidad total mediante Service Workers y almacenamiento local, asegurando que las partidas nunca se interrumpan por problemas de conectividad."
+        },
+        "threeVoxelEngine": {
+          "title": "three-voxel-engine",
+          "desc": "Un mundo de vóxeles servido desde el backend: el ruido y los chunks se calculan en el servidor y se envían al navegador en tiempo real.",
+          "role": "Desarrollador",
+          "description": "Un renderizador de mundos de vóxeles en Three.js y Next.js. El terreno no se genera en el navegador: el ruido Perlin y los datos de los chunks se calculan en el backend y se transmiten al cliente en tiempo real, de modo que los chunks llegan a medida que la cámara se mueve y el mundo sigue cargándose sin fin.\n\nCaracterísticas principales:\n\nGeneración de ruido y chunks en el backend, determinista para una semilla dada\nStreaming en tiempo real de los buffers de chunks al navegador\nCarga y descarga infinita de chunks según la posición de la cámara\nControles en primera persona — movimiento WASD con mouse look y pointer lock\nRenderizado instanciado para la geometría de los bloques\nMundo configurable: tamaño de chunk, parámetros del terreno y tipos de bloque"
         }
       }
     },
@@ -430,7 +394,6 @@
       "date": "Fecha",
       "role": "Rol",
       "projectBrief": "Resumen del Proyecto",
-      "developmentRoadmap": "Hoja de Ruta",
       "engineSystems": "Sistemas del Motor | 2026-27-07",
       "gpuBoundary": "la única vía a la GPU",
       "keyImplementation": "Implementación Clave"

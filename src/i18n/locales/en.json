@@ -113,8 +113,8 @@
   "hero": {
     "eyebrow": "01 — Introduction",
     "headline": {
-      "lead": "I modernize legacy banking systems —",
-      "emphasis": "and prove the migration didn't break anything."
+      "lead": "Backend engineer for systems",
+      "emphasis": "that can't go down"
     },
     "subhead": "Software Engineer, four years at Magenta Innova on core services for Uruguayan and regional banks. ~4,600 classes off Axis2/Java 8 onto Spring Boot 3. 50+ APIs migrated, test coverage from 20% to 85%. Also production React Native, and a C++17 renderer on the side.",
     "availability": "Uruguay · UTC−3 · full overlap with US Eastern · contractor or employer-of-record · open to relocation",
@@ -182,6 +182,7 @@
     }
   },
   "work": {
+    "liveDemo": "Live demo",
     "featured": {
       "eyebrow": "§ 02 — Selected Work",
       "headingBefore": "What I've been",
@@ -207,43 +208,6 @@
           "role": "Engine Author",
           "description": "EFENGINE is my most ambitious project: a 3D engine written from scratch in C++17 on OpenGL 4.5 Core. It renders PBR materials lit by point and directional lights with full image-based lighting — diffuse irradiance plus split-sum specular, both precomputed by compute shaders — over shadow mapping, a skybox and an HDR post chain of bloom, tonemap and FXAA. Scenes live in a node graph addressed by generational handles and persist to .efe, a chunked, versioned binary format of my own with a reader hostile to corrupt input. On top sits a docked ImGui editor: hierarchy, inspector, live material editing and scene save/load.\n\nWhat holds it together is a set of non-negotiable rules. Every gl* call is confined to efecom, the RHI layer — the renderer never sees OpenGL. No raw new/delete and no exceptions: ownership is a value or a unique_ptr, programmer errors trip an assert, recoverable failures come back as return values, and every subsystem is RAII — constructing it brings it up, destroying it tears it down.",
           "leadSub": "C++17 · OpenGL 4.5 Core",
-          "phases": [
-            {
-              "label": "Fase 0",
-              "title": "Foundations",
-              "desc": "CMake with FetchContent, GLFW/GLAD/GLM, Log and Assert, Window and Application under end-to-end RAII, doctest on CTest. Closes with the first triangle on screen."
-            },
-            {
-              "label": "Fase 1",
-              "title": "Core rendering",
-              "desc": "Shader, Texture via stb_image, Material, vertex layouts and Mesh; a camera with orbit, pan and zoom. Shaders move to being loaded from disk."
-            },
-            {
-              "label": "Fase 2",
-              "title": "Scene and lights",
-              "desc": "Time, a ResourceManager cached by key, a Renderer with BeginScene/Submit, point lights, framebuffers and the first ImGui debug UI."
-            },
-            {
-              "label": "Fase 3",
-              "title": "HDR and post-processing",
-              "desc": "Exposure on the camera, TonemapPass as the first IPostPass, and bloom and FXAA chained by ping-pong between two scratch framebuffers."
-            },
-            {
-              "label": "Fase 4",
-              "title": "OpenGL 4.5 and the RHI",
-              "desc": "The jump to 4.5 Core with DSA and shaders at #version 450. efecom is born: no gl* call lives outside the RHI. Skybox and directional shadow mapping."
-            },
-            {
-              "label": "Fase 5",
-              "title": "Graph, .efe and editor",
-              "desc": "SceneGraph by generational handles, per-node behaviors, and the .efe binary format — chunked, versioned, with a reader hostile to corrupt files. The sandbox becomes a docked editor."
-            },
-            {
-              "label": "Fase 6",
-              "title": "Full IBL",
-              "desc": "Diffuse irradiance plus split-sum specular: GGX prefiltering at one dispatch per mip and a BRDF LUT, both by compute shader. Emission maps and normal strength land too."
-            }
-          ],
           "systems": [
             {
               "label": "efecom · RHI",
@@ -351,12 +315,6 @@
             }
           ]
         },
-        "voxel": {
-          "title": "Minecraft-like Terrain Generation",
-          "desc": "Three Voxel World Generation using Perlin noise algorithm in Three.js with 3D First Person Controller",
-          "role": "Developer",
-          "description": "A sophisticated 3D voxel world renderer with procedural terrain generation, chunk streaming, and first-person controls. Built with Three.js and Next.js.\n            Procedural Terrain Generation: Uses Perlin noise for realistic terrain and cave systems\n            Infinite World Streaming: Dynamic chunk loading/unloading based on camera position\n            First-Person Controls: WASD movement with mouse look and pointer lock\n            Optimized Rendering: Instanced rendering for high performance\n            Configurable World: Customizable chunk size, terrain parameters, and block types\n            Caching System: Server-side chunk caching with deterministic generation"
-        },
         "mhc": {
           "title": "Magenta Hours Collector (MHC-CLI)",
           "desc": "A command line application that connects to an email inbox and extract hour reports using AI and search for emails matching the configured criteria and then give the email to Claude Sonnet 4.5 to collect all the relevant information and alert from use",
@@ -386,9 +344,15 @@
         },
         "truqui": {
           "title": "Truqui",
-          "desc": "A Progressive Web App (PWA) specializing in digital scorekeeping for Truco, the most popular traditional card game in Uruguay and Argentina. Designed to work completely offline, it allows players to keep accurate and efficient score tracking without relying on an internet connection. The app leverages modern PWA capabilities to deliver a native cross-platform experience, installable directly from the browser on mobile devices, tablets, and desktops. Its offline-first architecture guarantees full availability through Service Workers and local storage, ensuring that games are never interrupted by connectivity issues.",
+          "desc": "An offline-first PWA for keeping score at Truco, installable straight from the browser.",
           "role": "Developer",
           "description": "A Progressive Web App (PWA) specializing in digital scorekeeping for Truco, the most popular traditional card game in Uruguay and Argentina. Designed to work completely offline, it allows players to keep accurate and efficient score tracking without relying on an internet connection. The app leverages modern PWA capabilities to deliver a native cross-platform experience, installable directly from the browser on mobile devices, tablets, and desktops. Its offline-first architecture guarantees full availability through Service Workers and local storage, ensuring that games are never interrupted by connectivity issues."
+        },
+        "threeVoxelEngine": {
+          "title": "three-voxel-engine",
+          "desc": "A voxel world streamed from the backend — noise and chunks are computed server-side and pushed to the browser in real time.",
+          "role": "Developer",
+          "description": "A voxel world renderer in Three.js and Next.js. The terrain is not generated in the browser: the Perlin noise and the chunk data are computed on the backend and streamed to the client in real time, so chunks arrive as the camera moves and the world keeps loading without end.\n\nKey features:\n\nBackend noise and chunk generation, deterministic for a given seed\nReal-time streaming of chunk buffers to the browser\nInfinite chunk loading and unloading driven by camera position\nFirst-person controls — WASD movement with mouse look and pointer lock\nInstanced rendering for block geometry\nConfigurable world: chunk size, terrain parameters and block types"
         }
       }
     },
@@ -430,7 +394,6 @@
       "date": "Date",
       "role": "Role",
       "projectBrief": "Project Brief",
-      "developmentRoadmap": "Development Roadmap",
       "engineSystems": "Engine Systems | 2026-27-07",
       "gpuBoundary": "the only path to the GPU",
       "keyImplementation": "Key Implementation"
