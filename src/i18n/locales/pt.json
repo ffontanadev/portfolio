@@ -348,10 +348,10 @@
           ]
         },
         "mobileBanking": {
-          "title": "App de Banco Móvel (NDA)",
-          "desc": "Um app de banco móvel multiplataforma feito em React Native + Expo a partir de especificações externas de design e backend, em uma equipe de 3 desenvolvedores — com autenticação biométrica nativa pela API do Android e persistência local segura.",
-          "role": "Engenheiro Mobile",
-          "description": "Aplicativo de banco móvel para um cliente de banco privado sob NDA, desenvolvido em React Native + Expo por uma equipe de três. O backend foi entregue por outra empresa, então o trabalho foi guiado inteiramente pelas suas especificações de design e pelos contratos de serviço do backend. Implementei a autenticação biométrica nativa por meio da API do Android, a persistência local segura da sessão e dos dados do usuário, e parte da UI a partir das especificações de design fornecidas.",
+          "title": "Winterbotham — App de Banco Móvel",
+          "desc": "Um app de banco móvel multiplataforma em React Native + Expo, publicado no iOS e no Android por uma equipe de quatro — com autenticação biométrica nativa do Android, gerenciamento de sessões com JWT e persistência local segura.",
+          "role": "Frontend e API de integração",
+          "description": "Aplicativo de banco móvel para o Winterbotham, desenvolvido em React Native + Expo por uma equipe de quatro ao longo de 18 meses. Ficamos responsáveis pelo frontend e por uma API de integração enxuta com a lógica de conexão ao backend core que outra empresa construía em paralelo. Implementei a autenticação biométrica nativa pela API do Android, o gerenciamento de sessões com JWT e a persistência local segura da sessão e dos dados do usuário — as partes em que um erro vira um incidente de segurança, não um bug.",
           "metrics": [
             {
               "label": "Plataforma",
@@ -367,7 +367,7 @@
             },
             {
               "label": "Equipe",
-              "value": "3 desenvolvedores"
+              "value": "4 desenvolvedores"
             },
             {
               "label": "Período",

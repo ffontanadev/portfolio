@@ -348,10 +348,10 @@
           ]
         },
         "mobileBanking": {
-          "title": "App de Banca Móvil (NDA)",
-          "desc": "Una app de banca móvil multiplataforma hecha en React Native + Expo a partir de especificaciones externas de diseño y backend, en un equipo de 3 desarrolladores — con autenticación biométrica nativa por la API de Android y persistencia local segura.",
-          "role": "Desarrollador Mobile",
-          "description": "Aplicación de banca móvil para un cliente de banca privada bajo NDA, desarrollada en React Native + Expo por un equipo de tres. El backend lo entregó otra empresa, así que el trabajo se guió por completo a partir de sus especificaciones de diseño y los contratos de servicios del backend. Implementé la autenticación biométrica nativa mediante la API de Android, la persistencia local segura de la sesión y los datos del usuario, y parte de la UI a partir de las especificaciones de diseño provistas.",
+          "title": "Winterbotham — App de Banca Móvil",
+          "desc": "Una app de banca móvil multiplataforma en React Native + Expo, publicada en iOS y Android por un equipo de cuatro — con autenticación biométrica nativa de Android, manejo de sesiones con JWT y persistencia local segura.",
+          "role": "Frontend y API de integración",
+          "description": "Aplicación de banca móvil para Winterbotham, desarrollada en React Native + Expo por un equipo de cuatro a lo largo de 18 meses. Tuvimos a cargo el frontend y una API de integración acotada con la lógica de conexión al backend core que otra empresa construía en paralelo. Implementé la autenticación biométrica nativa mediante la API de Android, el manejo de sesiones con JWT y la persistencia local segura de la sesión y los datos del usuario — las partes donde un error se convierte en un incidente de seguridad y no en un bug.",
           "metrics": [
             {
               "label": "Plataforma",
@@ -367,7 +367,7 @@
             },
             {
               "label": "Equipo",
-              "value": "3 desarrolladores"
+              "value": "4 desarrolladores"
             },
             {
               "label": "Período",

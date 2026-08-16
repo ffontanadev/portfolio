@@ -70,15 +70,13 @@ const projectData: ProjectStructural[] = [
     leadMetric: { kind: 'scale', superscript: 'API²', value: '50+' },
   },
   {
-    // Client is under NDA — kept anonymous in code and copy. Surfaces as
-    // "Private Bank (NDA)" via the localized company label below.
     id: 'mobileBanking',
     color: "bg-cream-100",
     techStack: ["React Native", "Expo", "Android Biometric API", "Local Persistence"],
     date: "'23 — '24",
     codeBlocks: [],
     category: 'professional',
-    company: 'Private Bank (NDA)',
+    company: 'Winterbotham',
     leadMetric: { kind: 'wordmark', value: 'Native + Expo', sub: 'e-banking application' },
   },
   {

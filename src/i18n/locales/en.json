@@ -348,10 +348,10 @@
           ]
         },
         "mobileBanking": {
-          "title": "Mobile Banking App (NDA)",
-          "desc": "A cross-platform mobile banking app built in React Native + Expo from external design and backend specifications, with a 3-developer team — featuring native Android biometric authentication and secure local persistence.",
-          "role": "Mobile Engineer",
-          "description": "A mobile banking application for a private banking client under NDA, built in React Native + Expo by a team of three. The backend was delivered by a separate firm, so the work was driven entirely from their design specifications and backend service contracts. I implemented native biometric authentication through the Android API, secure local persistence for session and user data, and parts of the UI from the provided design specs.",
+          "title": "Winterbotham — Mobile Banking App",
+          "desc": "A cross-platform mobile banking app in React Native + Expo, shipped to iOS and Android by a team of four — with native Android biometric authentication, JWT session handling and secure local persistence.",
+          "role": "Frontend and integration API",
+          "description": "A mobile banking application for Winterbotham, built in React Native + Expo by a team of four over 18 months. We owned the frontend and a thin integration API carrying the connection logic to the core backend another firm was building in parallel. I built the native Android biometric authentication, JWT session handling, and secure local persistence for session and user data — the parts where a mistake becomes a security incident rather than a bug.",
           "metrics": [
             {
               "label": "Platform",
@@ -367,7 +367,7 @@
             },
             {
               "label": "Team",
-              "value": "3 developers"
+              "value": "4 developers"
             },
             {
               "label": "Period",

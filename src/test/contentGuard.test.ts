@@ -61,13 +61,7 @@ describe('hero copy', () => {
   });
 });
 
-/**
- * TODO[VERIFY spec §13 P0 item 5]: the client name behind `mobileBanking` is
- * still unverified by the owner, so the de-anonymization copy has not shipped
- * and these guards would fail. Un-skip them in the same commit that renames the
- * client — do not fill in a name here.
- */
-describe.skip('Winterbotham card', () => {
+describe('Winterbotham card', () => {
   it.each(SUPPORTED_LOCALES)('%s no longer anonymizes the client', (locale) => {
     const haystack = strings(mobileBankingOf(locale)).join(' ');
     expect(haystack).not.toContain('NDA');
@@ -77,5 +71,17 @@ describe.skip('Winterbotham card', () => {
   it.each(SUPPORTED_LOCALES)('%s no longer volunteers the spec-execution clause', (locale) => {
     const haystack = strings(mobileBankingOf(locale)).join(' ').toLowerCase();
     expect(haystack).not.toMatch(/external design|especificaciones externas|especificações externas|外部的设计/);
+  });
+
+  /**
+   * The résumé says "a team of 4 over 1.5 years" (src/constants/index.ts); the
+   * site shipped "three" until the owner confirmed four on 2026-08-16. Launch
+   * QA §14 requires the two to agree — pin the team size so they cannot drift
+   * apart again.
+   */
+  it.each(SUPPORTED_LOCALES)('%s states a team of four', (locale) => {
+    const team = (mobileBankingOf(locale) as { metrics: { label: string; value: string }[] })
+      .metrics.find((m) => /team|equipo|equipe|团队/i.test(m.label));
+    expect(team?.value).toMatch(/4/);
   });
 });

@@ -348,10 +348,10 @@
           ]
         },
         "mobileBanking": {
-          "title": "手机银行应用（NDA）",
-          "desc": "一款基于 React Native + Expo 的跨平台手机银行应用，依据外部的设计与后端规范开发，团队 3 人——具备通过 Android API 实现的原生生物识别认证与安全的本地持久化。",
-          "role": "移动端工程师",
-          "description": "为一家受保密协议（NDA）约束的私人银行客户开发的手机银行应用，由三人团队使用 React Native + Expo 构建。后端由另一家公司交付，因此整个工作完全依据其设计规范和后端服务契约推进。我通过 Android API 实现了原生生物识别认证、会话与用户数据的安全本地持久化，并根据所提供的设计规范完成了部分 UI。",
+          "title": "Winterbotham — 手机银行应用",
+          "desc": "一款基于 React Native + Expo 的跨平台手机银行应用，由四人团队交付至 iOS 与 Android——具备 Android 原生生物识别认证、JWT 会话管理与安全的本地持久化。",
+          "role": "前端与集成 API",
+          "description": "为 Winterbotham 开发的手机银行应用，由四人团队使用 React Native + Expo 历时 18 个月构建。我们负责前端，以及一层精简的集成 API，承载与另一家公司并行开发的核心后端之间的连接逻辑。我负责通过 Android API 实现原生生物识别认证、JWT 会话管理，以及会话与用户数据的安全本地持久化——这些环节一旦出错就是安全事故，而不只是缺陷。",
           "metrics": [
             {
               "label": "平台",
@@ -367,7 +367,7 @@
             },
             {
               "label": "团队",
-              "value": "3 名开发者"
+              "value": "4 名开发者"
             },
             {
               "label": "周期",
