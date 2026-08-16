@@ -554,6 +554,8 @@
     "needHelpAfter": "para ver as opções de navegação."
   },
   "seo": {
-    "siteSuffix": "Portfolio"
+    "siteSuffix": "Portfolio",
+    "title": "Felipe Fontana — Engenheiro de Software | Java, Spring Boot, Modernização Legada",
+    "description": "Engenheiro de Software com 4 anos modernizando sistemas bancários core — de Axis2/Java 8 para Spring Boot 3 em ~4,600 classes, 50+ APIs migradas, cobertura de testes de 20% para 85%. Baseado no Uruguai, UTC−3, sobreposição total com o Leste dos EUA."
   }
 }

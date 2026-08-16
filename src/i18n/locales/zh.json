@@ -554,6 +554,8 @@
     "needHelpAfter": "以获取导航选项。"
   },
   "seo": {
-    "siteSuffix": "Portfolio"
+    "siteSuffix": "Portfolio",
+    "title": "Felipe Fontana — 软件工程师 | Java、Spring Boot、遗留系统现代化",
+    "description": "软件工程师，4 年核心银行系统现代化经验 —— 将 ~4,600 个类从 Axis2/Java 8 迁移至 Spring Boot 3，迁移 50+ 个 API，测试覆盖率从 20% 提升至 85%。常驻乌拉圭，UTC−3，与美国东部时间完全重叠。"
   }
 }

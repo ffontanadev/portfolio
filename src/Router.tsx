@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import DevZonePage from './pages/DevZonePage';
 import NotFoundPage from './pages/NotFoundPage';
+import LocaleHead from './components/LocaleHead';
 import { AppContextProvider } from './contexts/AppContext';
 import { I18nProvider } from './i18n';
 import { DEFAULT_LOCALE, STORAGE_KEY, type Locale } from './i18n/config';
@@ -75,6 +76,7 @@ function AppShell() {
 
   return (
     <I18nProvider locale={locale ?? DEFAULT_LOCALE} onLocaleChange={onLocaleChange}>
+      <LocaleHead />
       <AppContextProvider>
         <div className="bg-cream-50 min-h-screen text-dark-900 font-sans selection:bg-coral-500 selection:text-white">
           {!isDevZone && <Navigation />}

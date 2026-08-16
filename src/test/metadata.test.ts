@@ -35,17 +35,31 @@ describe('index.html metadata', () => {
 
   it('declares a profile card pointing at the live origin', () => {
     expect(meta('property="og:type"')).toBe('profile');
-    expect(meta('property="og:url"')).toBe('https://ffontana.dev/');
+    expect(meta('property="og:url"')).toBe('https://ffontana.dev/en');
     expect(meta('property="og:title"')).toBe(
       'Felipe Fontana — Software Engineer, Java & Spring Boot',
     );
     expect(meta('property="og:locale"')).toBe('en_US');
   });
 
-  it('declares a canonical that resolves today', () => {
+  it('declares the /en canonical', () => {
     expect(doc.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe(
-      'https://ffontana.dev/',
+      'https://ffontana.dev/en',
     );
+  });
+
+  it('declares an alternate for every locale plus x-default', () => {
+    const alternates = [...doc.querySelectorAll('link[rel="alternate"]')].map((link) => [
+      link.getAttribute('hreflang'),
+      link.getAttribute('href'),
+    ]);
+    expect(alternates).toEqual([
+      ['en', 'https://ffontana.dev/en'],
+      ['es', 'https://ffontana.dev/es'],
+      ['pt', 'https://ffontana.dev/pt'],
+      ['zh', 'https://ffontana.dev/zh'],
+      ['x-default', 'https://ffontana.dev/en'],
+    ]);
   });
 
   it('carries no banned phrase in the head', () => {

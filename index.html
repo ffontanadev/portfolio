@@ -11,12 +11,10 @@
     <meta name="author" content="Felipe Fontana" />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#000000" />
-    <!-- TODO[spec §7.1 canonical]: move canonical and og:url to
-         https://ffontana.dev/en in the same commit as the P1 locale routing (§8). -->
-    <link rel="canonical" href="https://ffontana.dev/" />
+    <link rel="canonical" href="https://ffontana.dev/en" />
 
     <meta property="og:type" content="profile" />
-    <meta property="og:url" content="https://ffontana.dev/" />
+    <meta property="og:url" content="https://ffontana.dev/en" />
     <meta
       property="og:title"
       content="Felipe Fontana — Software Engineer, Java & Spring Boot"
@@ -36,6 +34,8 @@
     />
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="es_UY" />
+    <meta property="og:locale:alternate" content="pt_BR" />
+    <meta property="og:locale:alternate" content="zh_CN" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta
@@ -47,6 +47,14 @@
       content="Legacy banking modernization: Axis2 → Spring Boot 3, contract-verified. Uruguay, UTC−3."
     />
     <meta name="twitter:image" content="https://ffontana.dev/og-image.jpg" />
+
+    <!-- §8: /en is canonical and x-default — the thesis is the US market. -->
+    <link rel="alternate" hreflang="en" href="https://ffontana.dev/en" />
+    <link rel="alternate" hreflang="es" href="https://ffontana.dev/es" />
+    <link rel="alternate" hreflang="pt" href="https://ffontana.dev/pt" />
+    <link rel="alternate" hreflang="zh" href="https://ffontana.dev/zh" />
+    <link rel="alternate" hreflang="x-default" href="https://ffontana.dev/en" />
+
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
