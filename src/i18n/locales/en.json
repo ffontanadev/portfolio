@@ -280,10 +280,10 @@
           ]
         },
         "bancoProvincia": {
-          "title": "Banco Provincia — Core Services Migration",
-          "desc": "Lifting Banco Provincia's legacy Axis2 / Java 8 web services into a modern Spring Boot 3 platform on Java 17 — 7 repositories, ~4,600 classes — with connectivity rewired from JNDI to a managed MSSQL DataSource.",
+          "title": "Provincia Casa Financiera — Core Services Migration",
+          "desc": "Lifting a Uruguayan financial institution's legacy Axis2 / Java 8 web services into a modern Spring Boot 3 platform on Java 17 — 7 repositories, ~4,600 classes — with connectivity rewired from JNDI to a managed MSSQL DataSource.",
           "role": "Backend Engineer",
-          "description": "Long-running modernization of legacy Axis2 SOAP services that power core banking integrations at Banco Provincia. The work covers migrating the runtime from Java 8 to Java 17 + Spring Boot 3, replacing JNDI-bound resources with a managed MSSQL DataSource, and untangling years of tightly-coupled web service contracts — all while preserving downstream consumers.",
+          "description": "Long-running modernization of legacy Axis2 SOAP services that power core banking integrations at Provincia Casa Financiera. The work covers migrating the runtime from Java 8 to Java 17 + Spring Boot 3, replacing JNDI-bound resources with a managed MSSQL DataSource, and untangling years of tightly-coupled web service contracts — all while preserving downstream consumers.",
           "migration": {
             "scope": [
               { "value": "7", "label": "repositories" },

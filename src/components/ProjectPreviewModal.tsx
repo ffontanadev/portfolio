@@ -17,7 +17,6 @@ import { CheckIcon } from '@/components/ui/check';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useState } from 'react';
-import BancoProvinciaLogo from './logos/BancoProvinciaLogo';
 import BBVALogo from './logos/BBVALogo';
 import { accentForCategory } from './projectTypes';
 import type {
@@ -35,8 +34,7 @@ import { useTranslation } from '@/i18n';
 // Re-export the Project type for backwards compatibility with existing importers.
 export type { Project } from './projectTypes';
 
-const LOGO_REGISTRY: Record<ProjectLogo, typeof BancoProvinciaLogo> = {
-    'banco-provincia': BancoProvinciaLogo,
+const LOGO_REGISTRY: Record<ProjectLogo, typeof BBVALogo> = {
     bbva: BBVALogo,
 };
 
@@ -225,14 +223,9 @@ export const HeroOverlayContent = ({
             {project.logo ? (
                 (() => {
                     const Logo = LOGO_REGISTRY[project.logo];
-                    const isWide = project.logo === 'banco-provincia';
-                    const sizeClasses = isWide
-                        ? isModal
-                            ? 'h-4 mb-7 text-dark-900/85'
-                            : 'h-5 mb-5 text-dark-900/85'
-                        : isModal
-                          ? 'h-9 mb-7 text-dark-900/85'
-                          : 'h-6 mb-5 text-dark-900/85';
+                    const sizeClasses = isModal
+                        ? 'h-9 mb-7 text-dark-900/85'
+                        : 'h-6 mb-5 text-dark-900/85';
                     return <Logo className={`${sizeClasses} w-auto`} />;
                 })()
             ) : (

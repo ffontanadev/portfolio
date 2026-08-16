@@ -280,10 +280,10 @@
           ]
         },
         "bancoProvincia": {
-          "title": "Banco Provincia — 核心服务迁移",
-          "desc": "将 Banco Provincia 遗留的 Axis2 / Java 8 Web 服务迁移到基于 Java 17 的现代 Spring Boot 3 平台 —— 7 个代码库、约 4,600 个类 —— 并将数据库连接从 JNDI 改写为托管的 MSSQL DataSource。",
+          "title": "Provincia Casa Financiera —— 核心服务迁移",
+          "desc": "将一家乌拉圭金融机构的遗留 Axis2 / Java 8 web 服务迁移到基于 Java 17 的现代 Spring Boot 3 平台 —— 7 个代码库、约 4,600 个类 —— 并将连接方式从 JNDI 改为受管的 MSSQL DataSource。",
           "role": "后端工程师",
-          "description": "对支撑 Banco Provincia 核心银行集成的遗留 Axis2 SOAP 服务进行长期现代化改造。工作内容包括将运行时从 Java 8 迁移到 Java 17 + Spring Boot 3、以托管的 MSSQL DataSource 替换 JNDI 绑定资源，并理清多年来紧耦合的 Web 服务契约 —— 同时始终保持下游消费方可用。",
+          "description": "对支撑 Provincia Casa Financiera 核心银行集成的遗留 Axis2 SOAP 服务进行的长期现代化改造。工作内容包括将运行时从 Java 8 迁移到 Java 17 + Spring Boot 3、用受管的 MSSQL DataSource 替换绑定在 JNDI 上的资源，并理清多年积累的紧耦合 web 服务契约 —— 同时始终保持下游消费方不受影响。",
           "migration": {
             "scope": [
               { "value": "7", "label": "代码库" },

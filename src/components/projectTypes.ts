@@ -1,4 +1,4 @@
-export type ProjectLogo = 'banco-provincia' | 'bbva';
+export type ProjectLogo = 'bbva';
 
 export interface CodeBlock {
     language: string;

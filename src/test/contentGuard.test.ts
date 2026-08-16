@@ -85,3 +85,21 @@ describe('Winterbotham card', () => {
     expect(team?.value).toMatch(/4/);
   });
 });
+
+describe('Provincia Casa Financiera card', () => {
+  const provinciaOf = (locale: Locale) =>
+    (messages[locale] as unknown as {
+      work: { featured: { projects: { bancoProvincia: Record<string, unknown> } } };
+    }).work.featured.projects.bancoProvincia;
+
+  /**
+   * Spec §12 item 1: "Banco Provincia" reads to anyone who googles it as the
+   * Argentine provincial bank. The owner confirmed on 2026-08-15 that the
+   * client is Provincia Casa Financiera, a Uruguayan institution.
+   */
+  it.each(SUPPORTED_LOCALES)('%s no longer names the Argentine bank', (locale) => {
+    const haystack = strings(provinciaOf(locale)).join(' ');
+    expect(haystack).not.toContain('Banco Provincia');
+    expect(haystack).toContain('Provincia Casa Financiera');
+  });
+});

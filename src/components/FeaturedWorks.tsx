@@ -54,8 +54,7 @@ const projectData: ProjectStructural[] = [
     date: "'25 — NOW",
     codeBlocks: [],
     category: 'professional',
-    company: 'Banco Provincia',
-    logo: 'banco-provincia',
+    company: 'Provincia Casa Financiera',
     leadMetric: { kind: 'migration', from: 'Axis 2', to: 'Boot' },
   },
   {

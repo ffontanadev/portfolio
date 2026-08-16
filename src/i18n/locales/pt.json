@@ -280,10 +280,10 @@
           ]
         },
         "bancoProvincia": {
-          "title": "Banco Provincia — Migração de serviços core",
-          "desc": "Migração dos serviços web legados Axis2 / Java 8 do Banco Provincia para uma plataforma moderna Spring Boot 3 em Java 17 — 7 repositórios, ~4,600 classes — com a conectividade reescrita de JNDI para um MSSQL DataSource gerenciado.",
+          "title": "Provincia Casa Financiera — Migração de Serviços Core",
+          "desc": "Migração dos serviços web legados Axis2 / Java 8 de uma instituição financeira uruguaia para uma plataforma moderna Spring Boot 3 sobre Java 17 — 7 repositórios, ~4.600 classes — com a conectividade refeita de JNDI para um DataSource MSSQL gerenciado.",
           "role": "Backend Engineer",
-          "description": "Modernização de longo prazo de serviços SOAP Axis2 legados que sustentam integrações bancárias core no Banco Provincia. O trabalho cobre migrar o runtime de Java 8 para Java 17 + Spring Boot 3, substituir recursos ligados a JNDI por um MSSQL DataSource gerenciado e desemaranhar anos de contratos de serviços web fortemente acoplados — sempre preservando os consumidores.",
+          "description": "Modernização de longo prazo dos serviços SOAP Axis2 legados que sustentam as integrações bancárias core da Provincia Casa Financiera. O trabalho cobre migrar o runtime de Java 8 para Java 17 + Spring Boot 3, substituir recursos ligados a JNDI por um DataSource MSSQL gerenciado, e desemaranhar anos de contratos de serviços web fortemente acoplados — tudo preservando os consumidores downstream.",
           "migration": {
             "scope": [
               { "value": "7", "label": "repositórios" },
