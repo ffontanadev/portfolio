@@ -1,11 +1,17 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { useTranslation } from '@/i18n';
 import { useTechShowcase } from '@/context/TechShowcaseContext';
 import { techCatalog } from './Hero/techCatalog';
 
+/**
+ * The scroll is a CSS animation rather than a framer-motion one. A `'-50%'`
+ * transform target is percentage-based, so Motion cannot hand it to the Web
+ * Animations API and has to drive it from its JS frameloop instead — and with
+ * `repeat: Infinity` that frameloop then re-schedules itself every frame for
+ * as long as the page is open, which is what kept the document from ever
+ * going idle. In CSS the same motion runs on the compositor, pauses on hover
+ * without a re-render, and switches off under `prefers-reduced-motion`.
+ */
 const BrandMarquee = () => {
-    const [paused, setPaused] = useState(false);
     const { t } = useTranslation();
     const { select } = useTechShowcase();
 
@@ -18,20 +24,8 @@ const BrandMarquee = () => {
                 </div>
             </div>
 
-            <div
-                className="flex w-full mask-image-gradient"
-                onMouseEnter={() => setPaused(true)}
-                onMouseLeave={() => setPaused(false)}
-            >
-                <motion.div
-                    className="flex gap-16 items-center whitespace-nowrap pr-16"
-                    animate={{ x: paused ? undefined : '-50%' }}
-                    transition={{
-                        repeat: Infinity,
-                        duration: 50,
-                        ease: 'linear',
-                    }}
-                >
+            <div className="flex w-full mask-image-gradient marquee-viewport">
+                <div className="flex gap-16 items-center whitespace-nowrap pr-16 marquee-track">
                     {[...techCatalog, ...techCatalog].map((brand, index) => (
                         <button
                             key={`${brand.id}-${index}`}
@@ -68,13 +62,36 @@ const BrandMarquee = () => {
                             )}
                         </button>
                     ))}
-                </motion.div>
+                </div>
             </div>
 
             <style>{`
                 .mask-image-gradient {
                     mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
                     -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+                }
+
+                /* The track holds the catalog twice, so -50% lands exactly on the
+                   start of the second copy and the loop is seamless. */
+                @keyframes brand-marquee {
+                    from { transform: translateX(0); }
+                    to { transform: translateX(-50%); }
+                }
+
+                .marquee-track {
+                    animation: brand-marquee 50s linear infinite;
+                    will-change: transform;
+                }
+
+                .marquee-viewport:hover .marquee-track {
+                    animation-play-state: paused;
+                }
+
+                @media (prefers-reduced-motion: reduce) {
+                    .marquee-track {
+                        animation: none;
+                        will-change: auto;
+                    }
                 }
             `}</style>
         </section>
