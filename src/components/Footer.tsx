@@ -16,7 +16,7 @@ const Footer = () => {
         { name: t('footer.links.work'), href: '#work' },
         { name: t('footer.links.about'), href: '#about' },
         { name: t('footer.links.connect'), href: '#connect' },
-        { name: t('footer.links.resume'), href: '/resume.pdf' },
+        { name: t('footer.links.resume'), href: '/docs/resume.pdf' },
     ];
 
     return (
