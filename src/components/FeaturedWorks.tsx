@@ -60,7 +60,7 @@ const projectData: ProjectStructural[] = [
   {
     id: 'bbva',
     color: "bg-cream-100",
-    techStack: ["Java 17", "Spring Boot", "JUnit 5", "Mockito", "Testcontainers"],
+    techStack: ["Java 17", "Spring Boot", "JUnit 5", "Mockito", "Jenkins", "OpenShift", "SonarQube"],
     date: "'25",
     codeBlocks: [],
     category: 'professional',

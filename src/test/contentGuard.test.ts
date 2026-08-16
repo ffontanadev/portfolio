@@ -103,3 +103,27 @@ describe('Provincia Casa Financiera card', () => {
     expect(haystack).toContain('Provincia Casa Financiera');
   });
 });
+
+describe('BBVA card', () => {
+  const bbvaOf = (locale: Locale) =>
+    (messages[locale] as unknown as {
+      work: { featured: { projects: { bbva: Record<string, unknown> } } };
+    }).work.featured.projects.bbva;
+
+  /**
+   * Spec §5.4 supplies every one of these from the résumé. `~48` (the APIs
+   * that got the coverage work) and `50+` (the service surface) are not in
+   * conflict and both ship, each attached to the noun the spec attaches it to.
+   */
+  it.each(SUPPORTED_LOCALES)('%s carries the sourced coverage figures', (locale) => {
+    const haystack = strings(bbvaOf(locale)).join(' ');
+    expect(haystack).toContain('20%');
+    expect(haystack).toContain('85%');
+    expect(haystack).toContain('~48');
+    expect(haystack).toContain('10');
+  });
+
+  it.each(SUPPORTED_LOCALES)('%s no longer claims Testcontainers', (locale) => {
+    expect(strings(bbvaOf(locale)).join(' ')).not.toContain('Testcontainers');
+  });
+});

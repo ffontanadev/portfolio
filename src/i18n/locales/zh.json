@@ -319,31 +319,16 @@
           }
         },
         "bbva": {
-          "title": "BBVA — API 迁移与测试覆盖",
-          "desc": "将 BBVA 的内部 API 体系迁移到 Spring Boot，并为 50 多个服务构建高覆盖率的测试套件——把脆弱的内部实现变成可以放心重构的平台。",
-          "role": "后端工程师",
-          "description": "参与 BBVA 的内部平台，将数十个 API 服务迁移到 Spring Boot，并在整个体系中建立严谨的测试覆盖。为 50 多个内部 API 编写了单元测试和集成测试，提升了基线覆盖率，并保护未来的重构免受回归噪声的影响。",
+          "title": "BBVA —— API 迁移与测试覆盖率",
+          "desc": "在一个 10 人团队中，将约 48 个 API 上新端点的测试覆盖率从 20% 提升到 85%+，每次部署都经由 Jenkins、OpenShift 与 SonarQube 把关。",
+          "role": "测试工程与迁移前置工作，10 人团队",
+          "description": "在 BBVA 的内部平台上将 API 服务迁移至 Spring Boot，并在整个服务面上建立严格的测试覆盖。我使用 JUnit 5 与 Mockito，在 10 人团队中把约 48 个 API 上新端点的覆盖率从 20% 提升到 85%+，部署由 Jenkins、OpenShift 与 SonarQube 把关。重点从来不是覆盖率这个数字 —— 而是让一份没人敢碰的代码变得可以安全修改。",
           "metrics": [
-            {
-              "label": "范围",
-              "value": "50 多个内部 API"
-            },
-            {
-              "label": "技术栈",
-              "value": "Spring Boot · Java 17"
-            },
-            {
-              "label": "测试",
-              "value": "JUnit 5 · Mockito · Testcontainers"
-            },
-            {
-              "label": "成果",
-              "value": "高覆盖率 · 可安全重构"
-            },
-            {
-              "label": "年份",
-              "value": "2025"
-            }
+            { "label": "覆盖率", "value": "20% → 85%+" },
+            { "label": "范围", "value": "~48 APIs · 50+ 内部服务" },
+            { "label": "测试", "value": "JUnit 5 · Mockito" },
+            { "label": "流水线", "value": "Jenkins · OpenShift · SonarQube" },
+            { "label": "团队", "value": "10 名工程师" }
           ]
         },
         "mobileBanking": {

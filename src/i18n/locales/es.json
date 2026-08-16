@@ -320,30 +320,15 @@
         },
         "bbva": {
           "title": "BBVA — Migración de APIs y Cobertura de Tests",
-          "desc": "Migración de la superficie de APIs internas de BBVA a Spring Boot y desarrollo de suites de tests con alta cobertura en más de 50 servicios — convirtiendo internos frágiles en una plataforma que se puede refactorizar sin miedo.",
-          "role": "Ingeniero Backend",
-          "description": "Participé en la plataforma interna de BBVA ayudando en  tareas pre-migratorias en aproximadamente 50 servicios Spring Boot y agregué una cobertura de tests disciplinada en toda la superficie. Escribí tests unitarios para más de 50 APIs internas, elevando la cobertura base y protegiendo futuras refactorizaciones de posibles regresiones.",
+          "desc": "Llevé la cobertura de tests de los endpoints nuevos del 20% al 85%+ sobre ~48 APIs, dentro de un equipo de 10 personas, con cada despliegue controlado por Jenkins, OpenShift y SonarQube.",
+          "role": "Ingeniería de tests y trabajo previo a la migración, equipo de 10",
+          "description": "Trabajo sobre la plataforma interna de BBVA migrando servicios de API a Spring Boot y estableciendo cobertura de tests disciplinada en toda la superficie. Llevé la cobertura de los endpoints nuevos del 20% al 85%+ sobre ~48 APIs usando JUnit 5 y Mockito, en un equipo de 10, con los despliegues controlados por Jenkins, OpenShift y SonarQube. El punto no era el número de cobertura — era volver modificable con seguridad un código en el que nadie confiaba.",
           "metrics": [
-            {
-              "label": "Alcance",
-              "value": "Más de 50 APIs internas"
-            },
-            {
-              "label": "Stack",
-              "value": "Spring Boot · Java 17"
-            },
-            {
-              "label": "Testing",
-              "value": "JUnit 5 · Mockito · Testcontainers"
-            },
-            {
-              "label": "Resultado",
-              "value": "Alta cobertura · Refactor seguro"
-            },
-            {
-              "label": "Año",
-              "value": "2025"
-            }
+            { "label": "Cobertura", "value": "20% → 85%+" },
+            { "label": "Alcance", "value": "~48 APIs · 50+ servicios internos" },
+            { "label": "Testing", "value": "JUnit 5 · Mockito" },
+            { "label": "Pipeline", "value": "Jenkins · OpenShift · SonarQube" },
+            { "label": "Equipo", "value": "10 ingenieros" }
           ]
         },
         "mobileBanking": {
