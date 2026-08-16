@@ -55,7 +55,7 @@ const LanguageSwitcher = ({ variant = 'compact' }: LanguageSwitcherProps) => {
         aria-label={t('language.select')}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className={`group flex items-center gap-2 rounded-full border border-dark-900/10 bg-cream-50/70 backdrop-blur-sm transition-all duration-300 hover:border-coral-500/40 cursor-pointer ${
+        className={`group flex items-center gap-2 rounded-full bg-cream-50/70 backdrop-blur-sm transition-all duration-300 hover:border-coral-500/40 cursor-pointer ${
           variant === 'full' ? 'px-4 py-2.5' : 'px-2.5 py-1.5'
         }`}
       >
