@@ -12,7 +12,11 @@
 // hydrating. That is fine — the point is that the localized prose, <title> and
 // <html lang> are in the bytes a crawler receives without running any script.
 //
-// Requires playwright, already a devDependency (added for pnpm og).
+// Requires playwright, already a devDependency (added for pnpm og), *and* its
+// Chromium binary. A CI image has the package but not the browser, so the
+// deploy build runs through the `vercel-build` script, which installs the
+// headless shell into node_modules (PLAYWRIGHT_BROWSERS_PATH=0) so Vercel's
+// dependency cache keeps it between builds.
 import { chromium } from 'playwright';
 import { preview } from 'vite';
 import { mkdir, rm, writeFile } from 'node:fs/promises';
@@ -29,7 +33,20 @@ for (const locale of LOCALES) {
 const server = await preview({ preview: { port: PORT, strictPort: true } });
 const origin = `http://localhost:${PORT}`;
 
-const browser = await chromium.launch();
+let browser;
+try {
+  browser = await chromium.launch();
+} catch (cause) {
+  await server.close();
+  // The build must fail here rather than ship a deploy whose four locales are
+  // invisible to crawlers again — that is the whole point of §8.
+  throw new Error(
+    "prerender: could not launch Chromium. Locally, run 'pnpm exec playwright install chromium " +
+      "--only-shell'. On Vercel, the build must run through the 'vercel-build' script, which " +
+      'installs it with PLAYWRIGHT_BROWSERS_PATH=0.',
+    { cause },
+  );
+}
 const page = await browser.newPage();
 
 try {
