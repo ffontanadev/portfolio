@@ -138,8 +138,25 @@ const Contact = () => {
                         ))}
                     </ul>
 
+                    {/* Availability — spec §5.8. Literal, not editorial. */}
+                    <div className="mt-6 pt-5 border-t border-dark-900/8">
+                        <span className="text-eyebrow text-dark-900/45">
+                            {t('contact.availabilityHeading')}
+                        </span>
+                        <ul className="mt-3 flex flex-col gap-1.5">
+                            {messages.contact.availability.map((line) => (
+                                <li
+                                    key={line}
+                                    className="font-mono text-[11px] leading-relaxed tracking-wide text-dark-900/60"
+                                >
+                                    {line}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
                     {/* Footer — waveform + response time */}
-                    <footer className="mt-6 pt-5 border-t border-dark-900/8 flex items-center gap-3">
+                    <footer className="mt-5 pt-5 border-t border-dark-900/8 flex items-center gap-3">
                         <div className="flex-1 flex items-center gap-[3px] h-3" aria-hidden="true">
                             {Array.from({ length: 32 }).map((_, i) => {
                                 const h = 18 + Math.round(Math.sin(i * 0.7) * 8 + Math.cos(i * 0.3) * 6);

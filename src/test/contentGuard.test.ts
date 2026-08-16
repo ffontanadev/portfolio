@@ -127,3 +127,46 @@ describe('BBVA card', () => {
     expect(strings(bbvaOf(locale)).join(' ')).not.toContain('Testcontainers');
   });
 });
+
+/**
+ * P0 scoped the ban to the subtrees it rewrote because contact.services[2]
+ * still shipped "Digital solutions". §5.8 replaced that block, so the ban now
+ * applies to everything.
+ *
+ * The list is English; es/pt/zh shipped *translations* of the banned phrase
+ * ("Soluciones digitales", "Soluções digitais", "数字化解决方案") which this
+ * scan cannot catch. They were removed by hand alongside the English one —
+ * the suite below pins the replacement copy so they cannot come back.
+ */
+describe('the whole message tree', () => {
+  it.each(SUPPORTED_LOCALES)('%s carries no banned phrase anywhere', (locale) => {
+    const haystack = strings(messages[locale]).join(' ').toLowerCase();
+    for (const phrase of BANNED) {
+      expect(haystack).not.toContain(phrase);
+    }
+  });
+});
+
+describe('availability block', () => {
+  const contactOf = (locale: Locale) =>
+    (messages[locale] as unknown as {
+      contact: { availability: string[]; services: { title: string }[] };
+    }).contact;
+
+  it.each(SUPPORTED_LOCALES)('%s ships four literal availability lines', (locale) => {
+    expect(contactOf(locale).availability).toHaveLength(4);
+    for (const line of contactOf(locale).availability) {
+      expect(line.trim()).not.toBe('');
+    }
+  });
+
+  it.each(SUPPORTED_LOCALES)('%s states the location and the timezone', (locale) => {
+    const haystack = contactOf(locale).availability.join(' ');
+    expect(haystack).toContain('UTC−3');
+    expect(haystack).toContain('Young');
+  });
+
+  it.each(SUPPORTED_LOCALES)('%s still offers exactly three engagement types', (locale) => {
+    expect(contactOf(locale).services).toHaveLength(3);
+  });
+});

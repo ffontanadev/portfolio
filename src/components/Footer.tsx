@@ -53,8 +53,10 @@ const Footer = () => {
 
                 {/* Bottom row */}
                 <div className="flex flex-col md:flex-row items-center justify-between gap-3">
-                    <span className="font-mono text-[10px] uppercase tracking-widest text-dark-900/45">
+                    <span className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-widest text-dark-900/45">
                         {t('footer.copyright', { year })}
+                        <span aria-hidden="true" className="h-3 w-px bg-dark-900/15" />
+                        {t('footer.location')}
                     </span>
                     <button
                         type="button"

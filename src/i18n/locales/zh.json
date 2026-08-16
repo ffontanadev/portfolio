@@ -496,22 +496,29 @@
     "availableFor": "歌单 · 可接",
     "services": [
       {
-        "tag": "全 · 职",
-        "title": "开发者职位",
-        "note": "接受远程或搬迁。可立即到岗。"
+        "tag": "全职",
+        "title": "后端 / 平台工程",
+        "note": "远程。"
       },
       {
-        "tag": "自由职业",
+        "tag": "合同",
         "title": "按项目合作",
-        "note": "从产品 MVP 到专注的系统工程。"
+        "note": "迁移、API 平台、测试基础设施。"
       },
       {
         "tag": "咨询",
-        "title": "数字化解决方案",
-        "note": "架构、范围界定、技术审计与策略。"
+        "title": "架构评审",
+        "note": "迁移范围界定、技术审计。"
       }
     ],
     "replyTime": "在线 · 约 24 小时回复",
+    "availabilityHeading": "可用性",
+    "availability": [
+      "常驻乌拉圭 Young · UTC−3 · 与美国东部工作时间完全重叠",
+      "可作为承包商或通过 employer-of-record 合作",
+      "为合适的岗位接受搬迁",
+      "通常在 24 小时内回复"
+    ],
     "closing": "……我也随时乐意聊聊音乐，或者一起试试新游戏。",
     "viewResume": "查看简历",
     "linkedin": "LinkedIn",
@@ -540,6 +547,7 @@
       "resume": "简历"
     },
     "copyright": "© {year} · Felipe Fontana · 保留所有权利",
+    "location": "Uruguay · UTC−3",
     "craftedWith": "用",
     "andReact": "和 React 精心打造"
   },

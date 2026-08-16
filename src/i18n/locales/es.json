@@ -496,22 +496,29 @@
     "availableFor": "Setlist · Disponible para",
     "services": [
       {
-        "tag": "TIEMPO · COMPLETO",
-        "title": "Rol de desarrollador",
-        "note": "Abierto a trabajo remoto o reubicación. Disponible de inmediato."
+        "tag": "FULL · TIME",
+        "title": "Ingeniería backend / plataforma",
+        "note": "Remoto."
       },
       {
-        "tag": "FREELANCE",
-        "title": "Trabajo por proyecto",
-        "note": "Desde MVPs de producto hasta ingeniería de sistemas enfocada."
+        "tag": "CONTRATO",
+        "title": "Por proyecto",
+        "note": "Migraciones, plataforma de APIs, infraestructura de tests."
       },
       {
         "tag": "CONSULTORÍA",
-        "title": "Soluciones digitales",
-        "note": "Arquitectura, alcance, auditorías técnicas y estrategia."
+        "title": "Revisión de arquitectura",
+        "note": "Alcance de migraciones, auditorías técnicas."
       }
     ],
     "replyTime": "En vivo · respuesta ~24h",
+    "availabilityHeading": "Disponibilidad",
+    "availability": [
+      "Radicado en Young, Uruguay · UTC−3 · solapamiento completo con el horario del Este de EE. UU.",
+      "Contratable como contractor o a través de un employer-of-record",
+      "Abierto a relocación para el rol adecuado",
+      "Respuesta habitual dentro de las 24 horas"
+    ],
     "closing": "…y siempre estoy dispuesto a hablar de música o a probar un juego nuevo juntos.",
     "viewResume": "Ver CV",
     "linkedin": "LinkedIn",
@@ -540,6 +547,7 @@
       "resume": "CV"
     },
     "copyright": "© {year} · Felipe Fontana · Todos los derechos reservados",
+    "location": "Uruguay · UTC−3",
     "craftedWith": "Hecho con",
     "andReact": "y React"
   },

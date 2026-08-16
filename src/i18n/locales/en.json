@@ -497,21 +497,28 @@
     "services": [
       {
         "tag": "FULL · TIME",
-        "title": "Developer role",
-        "note": "Open to remote or relocation. Available immediately."
+        "title": "Backend / platform engineering",
+        "note": "Remote."
       },
       {
-        "tag": "FREELANCE",
-        "title": "Project-based work",
-        "note": "From product MVPs to focused systems engineering."
+        "tag": "CONTRACT",
+        "title": "Project-based",
+        "note": "Migration, API platform, test infrastructure."
       },
       {
         "tag": "CONSULT",
-        "title": "Digital solutions",
-        "note": "Architecture, scoping, technical audits & strategy."
+        "title": "Architecture review",
+        "note": "Migration scoping, technical audits."
       }
     ],
     "replyTime": "Live · ~24h reply",
+    "availabilityHeading": "Availability",
+    "availability": [
+      "Based in Young, Uruguay · UTC−3 · full overlap with US Eastern hours",
+      "Engageable as a contractor or through an employer-of-record",
+      "Open to relocation for the right role",
+      "Typical reply within 24 hours"
+    ],
     "closing": "…and I'm always up for talking about music, or trying a new game together.",
     "viewResume": "View Resume",
     "linkedin": "LinkedIn",
@@ -540,6 +547,7 @@
       "resume": "Resume"
     },
     "copyright": "© {year} · Felipe Fontana · All rights reserved",
+    "location": "Uruguay · UTC−3",
     "craftedWith": "Crafted with",
     "andReact": "and React"
   },
