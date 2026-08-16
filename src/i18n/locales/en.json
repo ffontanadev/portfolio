@@ -1,14 +1,4 @@
 {
-  "tour": {
-    "skip": "Skip tour",
-    "replay": "Replay guided tour",
-    "stops": {
-      "techStack": "Click any logo to watch it form in the hero, with a short note on how I use it.",
-      "featuredWorks": "Open a project for the full case study and migration dossier.",
-      "agents": "How I actually build with AI agents — end to end.",
-      "devZone": "Step into the Dev Zone — a hidden, draggable desk of my daily tools."
-    }
-  },
   "common": {
     "pagination": {
       "previous": "Previous",
@@ -30,7 +20,9 @@
     "resume": "Resume",
     "viewResume": "View Resume",
     "toggleMenu": "Toggle menu",
-    "devZone": "Dev Zone"
+    "devZone": "Dev Zone",
+    "githubPrimary": "GitHub — ffontanadev",
+    "githubEngine": "GitHub — elFonTii, where efengine lives"
   },
   "devZone": {
     "back": "Back to portfolio",
@@ -120,11 +112,16 @@
   },
   "hero": {
     "eyebrow": "01 — Introduction",
-    "subheading": {
-      "lead": "A",
-      "role": "developer",
-      "middle": "crafting digital solutions at",
-      "company": "Magenta Innova"
+    "headline": {
+      "lead": "Backend engineer for systems",
+      "emphasis": "that can't go down"
+    },
+    "subhead": "Software Engineer, four years at Magenta Innova on core services for Uruguayan and regional banks. ~4,600 classes off Axis2/Java 8 onto Spring Boot 3. 50+ APIs migrated, test coverage from 20% to 85%. Also production React Native, and a C++17 renderer on the side.",
+    "availability": "Uruguay · UTC−3 · full overlap with US Eastern · contractor or employer-of-record · open to relocation",
+    "ctas": {
+      "work": "See the work",
+      "contact": "Get in touch",
+      "github": "GitHub"
     },
     "statusBadge": {
       "available": "Available to work"
@@ -153,39 +150,39 @@
     "curvedText": "✱  CRAFTING  ·  CODING  ·  CONNECTING  ·  "
   },
   "brandMarquee": {
-    "eyebrow": "Stack · in rotation",
+    "eyebrow": "Stack · in production",
     "logoAlt": "{name} logo"
+  },
+  "proof": {
+    "eyebrow": "In production",
+    "figures": [
+      { "value": "~4,600", "label": "classes migrated" },
+      { "value": "50+", "label": "APIs to Spring Boot" },
+      { "value": "20% → 85%", "label": "test coverage" },
+      { "value": "4", "label": "years in banking" }
+    ]
   },
   "techShowcase": {
     "back": "Back",
     "eyebrow": "Stack · focus",
     "brief": {
-      "supabase": "Open-source Postgres backend with auth, storage, and realtime APIs.",
-      "nextjs": "React framework for production apps with hybrid server and client rendering.",
-      "aws": "Amazon's cloud platform for compute, storage, and managed infrastructure at scale.",
-      "threejs": "WebGL library for rendering 3D graphics and animation in the browser.",
-      "drizzle": "Lightweight, type-safe TypeScript ORM with a SQL-like query builder.",
-      "sqlite": "Self-contained, serverless SQL database engine embedded directly in the app.",
-      "mongodb": "Document database storing flexible, JSON-like records for fast iteration.",
-      "postgresql": "Powerful open-source relational database known for reliability and rich features.",
+      "java": "The language the core banking work runs on — Java 17 LTS, migrated up from Java 8.",
       "springboot": "Java framework for building production-ready services with minimal configuration.",
-      "sequelize": "Promise-based Node.js ORM for SQL databases with model definitions and migrations.",
-      "express": "Minimal, unopinionated Node.js framework for building web servers and APIs.",
-      "tailwind": "Utility-first CSS framework for building custom designs without leaving your markup.",
-      "astro": "Content-focused web framework that ships zero JavaScript by default for speed.",
-      "bootstrap": "Popular CSS framework with ready-made responsive components and a grid system.",
-      "vercel": "Cloud platform for deploying and scaling frontend apps with zero configuration.",
-      "godaddy": "Domain registrar and hosting provider for getting projects online quickly.",
-      "googlecloud": "Google's cloud platform for compute, data, and machine-learning services.",
-      "csharp": "Modern, type-safe language from Microsoft for backend, desktop, and game development.",
-      "lit": "Lightweight library for building fast, reusable web components on web standards.",
-      "redux": "Predictable state container for JavaScript apps with a single source of truth.",
-      "auth0": "Identity platform handling authentication and authorization as a managed service.",
-      "jwt": "Compact, signed tokens for securely transmitting claims between parties.",
-      "vite": "Fast build tool and dev server with instant hot-module replacement."
+      "junit": "The test framework behind the coverage work — unit and integration suites on banking APIs.",
+      "openapi": "Machine-readable API contracts. Every migrated endpoint gets one before cutover.",
+      "schemathesis": "Generates property and fuzz tests from an OpenAPI schema, so drift surfaces in CI.",
+      "postgresql": "Powerful open-source relational database known for reliability and rich features.",
+      "mssql": "Microsoft SQL Server — the datastore behind the core banking platform.",
+      "docker": "Containers for reproducible builds and local parity with the deployment target.",
+      "jenkins": "The pipeline that gates every deployment through build, test and quality checks.",
+      "typescript": "Typed JavaScript. What this site, the tooling and the front-end work are written in.",
+      "react": "The UI library behind this portfolio and the front-end side of the work.",
+      "reactnative": "Cross-platform mobile, shipped to iOS and Android on a production banking app.",
+      "cpp": "Modern C++ — the language efengine is written in, renderer to asset pipeline."
     }
   },
   "work": {
+    "liveDemo": "Live demo",
     "featured": {
       "eyebrow": "§ 02 — Selected Work",
       "headingBefore": "What I've been",
@@ -211,43 +208,6 @@
           "role": "Engine Author",
           "description": "EFENGINE is my most ambitious project: a 3D engine written from scratch in C++17 on OpenGL 4.5 Core. It renders PBR materials lit by point and directional lights with full image-based lighting — diffuse irradiance plus split-sum specular, both precomputed by compute shaders — over shadow mapping, a skybox and an HDR post chain of bloom, tonemap and FXAA. Scenes live in a node graph addressed by generational handles and persist to .efe, a chunked, versioned binary format of my own with a reader hostile to corrupt input. On top sits a docked ImGui editor: hierarchy, inspector, live material editing and scene save/load.\n\nWhat holds it together is a set of non-negotiable rules. Every gl* call is confined to efecom, the RHI layer — the renderer never sees OpenGL. No raw new/delete and no exceptions: ownership is a value or a unique_ptr, programmer errors trip an assert, recoverable failures come back as return values, and every subsystem is RAII — constructing it brings it up, destroying it tears it down.",
           "leadSub": "C++17 · OpenGL 4.5 Core",
-          "phases": [
-            {
-              "label": "Fase 0",
-              "title": "Foundations",
-              "desc": "CMake with FetchContent, GLFW/GLAD/GLM, Log and Assert, Window and Application under end-to-end RAII, doctest on CTest. Closes with the first triangle on screen."
-            },
-            {
-              "label": "Fase 1",
-              "title": "Core rendering",
-              "desc": "Shader, Texture via stb_image, Material, vertex layouts and Mesh; a camera with orbit, pan and zoom. Shaders move to being loaded from disk."
-            },
-            {
-              "label": "Fase 2",
-              "title": "Scene and lights",
-              "desc": "Time, a ResourceManager cached by key, a Renderer with BeginScene/Submit, point lights, framebuffers and the first ImGui debug UI."
-            },
-            {
-              "label": "Fase 3",
-              "title": "HDR and post-processing",
-              "desc": "Exposure on the camera, TonemapPass as the first IPostPass, and bloom and FXAA chained by ping-pong between two scratch framebuffers."
-            },
-            {
-              "label": "Fase 4",
-              "title": "OpenGL 4.5 and the RHI",
-              "desc": "The jump to 4.5 Core with DSA and shaders at #version 450. efecom is born: no gl* call lives outside the RHI. Skybox and directional shadow mapping."
-            },
-            {
-              "label": "Fase 5",
-              "title": "Graph, .efe and editor",
-              "desc": "SceneGraph by generational handles, per-node behaviors, and the .efe binary format — chunked, versioned, with a reader hostile to corrupt files. The sandbox becomes a docked editor."
-            },
-            {
-              "label": "Fase 6",
-              "title": "Full IBL",
-              "desc": "Diffuse irradiance plus split-sum specular: GGX prefiltering at one dispatch per mip and a BRDF LUT, both by compute shader. Emission maps and normal strength land too."
-            }
-          ],
           "systems": [
             {
               "label": "efecom · RHI",
@@ -276,10 +236,10 @@
           ]
         },
         "bancoProvincia": {
-          "title": "Banco Provincia — Core Services Migration",
-          "desc": "Lifting Banco Provincia's legacy Axis2 / Java 8 web services into a modern Spring Boot 3 platform on Java 17 — 7 repositories, ~4,600 classes — with connectivity rewired from JNDI to a managed MSSQL DataSource.",
-          "role": "Backend Engineer",
-          "description": "Long-running modernization of legacy Axis2 SOAP services that power core banking integrations at Banco Provincia. The work covers migrating the runtime from Java 8 to Java 17 + Spring Boot 3, replacing JNDI-bound resources with a managed MSSQL DataSource, and untangling years of tightly-coupled web service contracts — all while preserving downstream consumers.",
+          "title": "Provincia Casa Financiera — Core Services Migration",
+          "desc": "Lifting the legacy Axis2 / Java 8 web services of Banco de la Provincia de Buenos Aires' Uruguayan branch onto Spring Boot 3 and Java 17 — 7 repositories, ~4,600 classes — with connectivity rewired from JNDI to a managed MSSQL DataSource.",
+          "role": "Backend — legacy SOAP/WSDL services onto Spring Boot, team of 3",
+          "description": "Long-running modernization of the legacy Axis2 SOAP services behind core banking at Provincia Casa Financiera, the Uruguayan branch of Banco de la Provincia de Buenos Aires. I own the backend: taking the legacy SOAP/WSDL services onto Java 17 + Spring Boot 3, replacing JNDI-bound resources with a managed MSSQL DataSource, and untangling years of tightly-coupled service contracts without breaking downstream consumers. In parallel a colleague split the Struts frontend and its consumer layer into two applications — a new Angular frontend and a backend-for-frontend that reaches the migrated services over either SOAP or REST, switchable at runtime if one path degrades.",
           "migration": {
             "scope": [
               { "value": "7", "label": "repositories" },
@@ -316,37 +276,22 @@
         },
         "bbva": {
           "title": "BBVA — API Migration & Test Coverage",
-          "desc": "Migrating BBVA's internal API surface to Spring Boot and engineering high-coverage test suites across more than 50 services — turning fragile internals into a platform that can be refactored without fear.",
-          "role": "Backend Engineer",
-          "description": "Engaged on BBVA's internal platform to migrate dozens of API services to Spring Boot and stand up disciplined test coverage across the entire surface. Authored unit and integration tests for 50+ internal APIs, raising baseline coverage and protecting future refactors from regression noise.",
+          "desc": "Took test coverage on new endpoints from 20% to 85%+ across ~48 APIs, inside a 10-engineer team, with every deployment gated through Jenkins, OpenShift and SonarQube.",
+          "role": "Test engineering and pre-migration work, team of 10",
+          "description": "Engaged on BBVA's internal platform to migrate API services to Spring Boot and stand up disciplined test coverage across the surface. I took coverage on new endpoints from 20% to 85%+ across ~48 APIs using JUnit 5 and Mockito, in a team of 10, with deployments gated through Jenkins, OpenShift and SonarQube. The point wasn't the coverage number — it was making a codebase nobody trusted safe to change.",
           "metrics": [
-            {
-              "label": "Scope",
-              "value": "50+ internal APIs"
-            },
-            {
-              "label": "Stack",
-              "value": "Spring Boot · Java 17"
-            },
-            {
-              "label": "Testing",
-              "value": "JUnit 5 · Mockito · Testcontainers"
-            },
-            {
-              "label": "Outcome",
-              "value": "High coverage · Refactor-safe"
-            },
-            {
-              "label": "Year",
-              "value": "2025"
-            }
+            { "label": "Coverage", "value": "20% → 85%+" },
+            { "label": "Scope", "value": "~48 APIs · 50+ internal services" },
+            { "label": "Testing", "value": "JUnit 5 · Mockito" },
+            { "label": "Pipeline", "value": "Jenkins · OpenShift · SonarQube" },
+            { "label": "Team", "value": "10 engineers" }
           ]
         },
         "mobileBanking": {
-          "title": "Mobile Banking App (NDA)",
-          "desc": "A cross-platform mobile banking app built in React Native + Expo from external design and backend specifications, with a 3-developer team — featuring native Android biometric authentication and secure local persistence.",
-          "role": "Mobile Engineer",
-          "description": "A mobile banking application for a private banking client under NDA, built in React Native + Expo by a team of three. The backend was delivered by a separate firm, so the work was driven entirely from their design specifications and backend service contracts. I implemented native biometric authentication through the Android API, secure local persistence for session and user data, and parts of the UI from the provided design specs.",
+          "title": "Winterbotham — Mobile Banking App",
+          "desc": "A cross-platform mobile banking app in React Native + Expo, shipped to iOS and Android by a team of four — with WebAuthn authentication and a backend-for-frontend carrying the integration logic.",
+          "role": "Frontend, plus the backend-for-frontend and WebAuthn integration",
+          "description": "A mobile banking application for Winterbotham, built in React Native + Expo by a team of four over 18 months. My main surface was the frontend, and it extended into a backend-for-frontend carrying the connection logic to the core backend another firm was building in parallel. I also integrated WebAuthn while it was still an emerging standard with thin documentation — the part where a mistake becomes a security incident rather than a bug.",
           "metrics": [
             {
               "label": "Platform",
@@ -354,7 +299,7 @@
             },
             {
               "label": "Auth",
-              "value": "Android Biometric API"
+              "value": "WebAuthn"
             },
             {
               "label": "Persistence",
@@ -362,25 +307,13 @@
             },
             {
               "label": "Team",
-              "value": "3 developers"
+              "value": "4 developers"
             },
             {
               "label": "Period",
               "value": "2023 → 2024"
             }
           ]
-        },
-        "voxel": {
-          "title": "Minecraft-like Terrain Generation",
-          "desc": "Three Voxel World Generation using Perlin noise algorithm in Three.js with 3D First Person Controller",
-          "role": "Developer",
-          "description": "A sophisticated 3D voxel world renderer with procedural terrain generation, chunk streaming, and first-person controls. Built with Three.js and Next.js.\n            Procedural Terrain Generation: Uses Perlin noise for realistic terrain and cave systems\n            Infinite World Streaming: Dynamic chunk loading/unloading based on camera position\n            First-Person Controls: WASD movement with mouse look and pointer lock\n            Optimized Rendering: Instanced rendering for high performance\n            Configurable World: Customizable chunk size, terrain parameters, and block types\n            Caching System: Server-side chunk caching with deterministic generation"
-        },
-        "twitterClone": {
-          "title": "Twitter Clone",
-          "desc": "A functional clone of the old app Twitter with authentication, feed, following and likes!",
-          "role": "Backend Developer",
-          "description": "A Twitter Clone, one of my first collaborative projects!"
         },
         "mhc": {
           "title": "Magenta Hours Collector (MHC-CLI)",
@@ -411,9 +344,15 @@
         },
         "truqui": {
           "title": "Truqui",
-          "desc": "A Progressive Web App (PWA) specializing in digital scorekeeping for Truco, the most popular traditional card game in Uruguay and Argentina. Designed to work completely offline, it allows players to keep accurate and efficient score tracking without relying on an internet connection. The app leverages modern PWA capabilities to deliver a native cross-platform experience, installable directly from the browser on mobile devices, tablets, and desktops. Its offline-first architecture guarantees full availability through Service Workers and local storage, ensuring that games are never interrupted by connectivity issues.",
+          "desc": "An offline-first PWA for keeping score at Truco, installable straight from the browser.",
           "role": "Developer",
           "description": "A Progressive Web App (PWA) specializing in digital scorekeeping for Truco, the most popular traditional card game in Uruguay and Argentina. Designed to work completely offline, it allows players to keep accurate and efficient score tracking without relying on an internet connection. The app leverages modern PWA capabilities to deliver a native cross-platform experience, installable directly from the browser on mobile devices, tablets, and desktops. Its offline-first architecture guarantees full availability through Service Workers and local storage, ensuring that games are never interrupted by connectivity issues."
+        },
+        "threeVoxelEngine": {
+          "title": "three-voxel-engine",
+          "desc": "A voxel world streamed from the backend — noise and chunks are computed server-side and pushed to the browser in real time.",
+          "role": "Developer",
+          "description": "A voxel world renderer in Three.js and Next.js. The terrain is not generated in the browser: the Perlin noise and the chunk data are computed on the backend and streamed to the client in real time, so chunks arrive as the camera moves and the world keeps loading without end.\n\nKey features:\n\nBackend noise and chunk generation, deterministic for a given seed\nReal-time streaming of chunk buffers to the browser\nInfinite chunk loading and unloading driven by camera position\nFirst-person controls — WASD movement with mouse look and pointer lock\nInstanced rendering for block geometry\nConfigurable world: chunk size, terrain parameters and block types"
         }
       }
     },
@@ -455,7 +394,6 @@
       "date": "Date",
       "role": "Role",
       "projectBrief": "Project Brief",
-      "developmentRoadmap": "Development Roadmap",
       "engineSystems": "Engine Systems | 2026-27-07",
       "gpuBoundary": "the only path to the GPU",
       "keyImplementation": "Key Implementation"
@@ -506,24 +444,34 @@
     "services": [
       {
         "tag": "FULL · TIME",
-        "title": "Developer role",
-        "note": "Open to remote or relocation. Available immediately."
+        "title": "Backend / platform engineering",
+        "note": "Remote."
       },
       {
-        "tag": "FREELANCE",
-        "title": "Project-based work",
-        "note": "From product MVPs to focused systems engineering."
+        "tag": "CONTRACT",
+        "title": "Project-based",
+        "note": "Migration, API platform, test infrastructure."
       },
       {
         "tag": "CONSULT",
-        "title": "Digital solutions",
-        "note": "Architecture, scoping, technical audits & strategy."
+        "title": "Architecture review",
+        "note": "Migration scoping, technical audits."
       }
     ],
     "replyTime": "Live · ~24h reply",
+    "availabilityHeading": "Availability",
+    "availability": [
+      "Based in Young, Uruguay · UTC−3 · full overlap with US Eastern hours",
+      "Engageable as a contractor or through an employer-of-record",
+      "Open to relocation for the right role",
+      "Typical reply within 24 hours"
+    ],
     "closing": "…and I'm always up for talking about music, or trying a new game together.",
     "viewResume": "View Resume",
     "linkedin": "LinkedIn",
+    "scheduling": "Book a 30-minute call",
+    "githubPrimary": "GitHub — ffontanadev",
+    "githubEngine": "GitHub — elFonTii, where efengine lives",
     "twitter": "Twitter"
   },
   "playlists": {
@@ -544,9 +492,11 @@
       "work": "Work",
       "about": "About",
       "connect": "Connect",
-      "resume": "Resume"
+      "resume": "Resume",
+      "devZone": "Dev Zone"
     },
     "copyright": "© {year} · Felipe Fontana · All rights reserved",
+    "location": "Uruguay · UTC−3",
     "craftedWith": "Crafted with",
     "andReact": "and React"
   },
@@ -567,6 +517,8 @@
     "needHelpAfter": "for navigation options."
   },
   "seo": {
-    "siteSuffix": "Portfolio"
+    "siteSuffix": "Portfolio",
+    "title": "Felipe Fontana — Software Engineer | Java, Spring Boot, Legacy Modernization",
+    "description": "Software Engineer with 4 years modernizing core banking systems — Axis2/Java 8 to Spring Boot 3 across ~4,600 classes, 50+ APIs migrated, test coverage from 20% to 85%. Based in Uruguay, UTC−3, full US Eastern overlap."
   }
 }

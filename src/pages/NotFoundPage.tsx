@@ -1,10 +1,12 @@
 import { Link, useLocation } from 'react-router-dom';
 import { SearchX, Home, ArrowUp } from 'lucide-react';
 import { useTranslation } from '@/i18n';
+import { buildLocalePath } from '@/i18n/routing';
 
 export default function NotFoundPage() {
   const location = useLocation();
-  const { t } = useTranslation();
+  const { locale, t } = useTranslation();
+  const home = buildLocalePath(locale);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -53,7 +55,7 @@ export default function NotFoundPage() {
           {/* Navigation options */}
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link
-              to="/"
+              to={home}
               className="inline-flex items-center gap-2 px-6 py-3 bg-coral-500 text-white font-medium rounded-lg hover:bg-coral-600 transition-colors focus:outline-none focus:ring-2 focus:ring-coral-500 focus:ring-offset-2"
             >
               <Home className="w-5 h-5" />
@@ -74,7 +76,7 @@ export default function NotFoundPage() {
           <p className="text-sm text-dark-500 mt-12">
             {t('notFound.needHelpBefore')}{' '}
             <Link
-              to="/"
+              to={home}
               className="text-coral-500 hover:text-coral-600 underline focus:outline-none focus:ring-2 focus:ring-coral-500 rounded"
             >
               {t('notFound.needHelpLink')}

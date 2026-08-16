@@ -4,7 +4,7 @@ import { messages, SUPPORTED_LOCALES, type Locale } from '@/i18n/config';
 /**
  * `satisfies Record<string, Messages>` in config.ts makes tsc enforce key
  * parity across locales, but it cannot enforce array *length* — a locale can
- * ship 6 roadmap phases where `en` has 7 and still compile. These tests close
+ * ship 5 engine systems where `en` has 6 and still compile. These tests close
  * that gap and pin the EFENGINE card to the current state of the engine.
  */
 
@@ -27,7 +27,6 @@ type EfengineCard = {
   role: string;
   description: string;
   leadSub: string;
-  phases: { label: string; title: string; desc: string }[];
   systems: { label: string; role: string }[];
 };
 
@@ -58,10 +57,6 @@ describe('locale array parity', () => {
 });
 
 describe('EFENGINE card is current', () => {
-  it.each(SUPPORTED_LOCALES)('%s lists the 7 roadmap phases', (locale) => {
-    expect(cardOf(locale).phases).toHaveLength(7);
-  });
-
   it.each(SUPPORTED_LOCALES)('%s lists the 6 engine systems', (locale) => {
     expect(cardOf(locale).systems).toHaveLength(6);
   });

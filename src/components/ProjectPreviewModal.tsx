@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import {
+    ArrowUpRight,
     Binary,
     Boxes,
     CircuitBoard,
@@ -17,8 +18,8 @@ import { CheckIcon } from '@/components/ui/check';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useState } from 'react';
-import BancoProvinciaLogo from './logos/BancoProvinciaLogo';
 import BBVALogo from './logos/BBVALogo';
+import BancoProvinciaLogo from './logos/BancoProvinciaLogo';
 import { accentForCategory } from './projectTypes';
 import type {
     Project,
@@ -35,7 +36,7 @@ import { useTranslation } from '@/i18n';
 // Re-export the Project type for backwards compatibility with existing importers.
 export type { Project } from './projectTypes';
 
-const LOGO_REGISTRY: Record<ProjectLogo, typeof BancoProvinciaLogo> = {
+const LOGO_REGISTRY: Record<ProjectLogo, typeof BBVALogo> = {
     'banco-provincia': BancoProvinciaLogo,
     bbva: BBVALogo,
 };
@@ -100,6 +101,31 @@ const CodeBlockComponent = ({ block }: { block: CodeBlock }) => {
     );
 };
 
+/**
+ * Lead-metric type scale (spec §5.1: "the h1 is the largest text at every
+ * breakpoint").
+ *
+ * The h1 steps 36 / 56 / 72px at the 768 and 1024 breakpoints, so the binding
+ * width is 767px — the last pixel before it jumps to 56. A `clamp(min, Nvw,
+ * max)` stays under the h1 everywhere as long as N ≤ 4.5vw (767 × 0.045 = 34.5)
+ * and the max is under 4.5rem. Both the floor and the ceiling matter: the old
+ * floors alone (48px) already out-sized the h1 on every phone.
+ *
+ * Raise nothing here without re-checking 767px and 1023px.
+ */
+const LEAD_METRIC_SIZE = {
+    modal: {
+        migration: 'text-[clamp(1.5rem,3.5vw,3rem)]',
+        wordmark: 'text-[clamp(1.75rem,4vw,3.5rem)]',
+        scale: 'text-[clamp(2rem,4.5vw,4rem)]',
+    },
+    card: {
+        migration: 'text-[clamp(1.25rem,2.5vw,2.25rem)]',
+        wordmark: 'text-[clamp(1.5rem,3vw,2.75rem)]',
+        scale: 'text-[clamp(1.75rem,3.5vw,3.25rem)]',
+    },
+} as const;
+
 export const LeadMetricDisplay = ({
     metric,
     size = 'card',
@@ -113,7 +139,7 @@ export const LeadMetricDisplay = ({
         return (
             <div
                 className={`flex items-baseline justify-center gap-3 font-display font-bold tracking-[-0.04em] leading-none text-dark-900 ${
-                    isModal ? 'text-[clamp(2.75rem,6vw,5rem)]' : 'text-[clamp(1.75rem,4.5vw,3rem)]'
+                    LEAD_METRIC_SIZE[isModal ? 'modal' : 'card'].migration
                 }`}
             >
                 <span>{metric.from}</span>
@@ -134,7 +160,7 @@ export const LeadMetricDisplay = ({
             <div className="flex flex-col items-center">
                 <span
                     className={`font-display font-bold tracking-[-0.04em] leading-none text-dark-900 ${
-                        isModal ? 'text-[clamp(3rem,8vw,6rem)]' : 'text-[clamp(2.25rem,6vw,3.75rem)]'
+                        LEAD_METRIC_SIZE[isModal ? 'modal' : 'card'].wordmark
                     }`}
                 >
                     {metric.value}
@@ -167,7 +193,7 @@ export const LeadMetricDisplay = ({
             )}
             <span
                 className={`font-display font-bold tracking-[-0.04em] leading-none text-dark-900 ${
-                    isModal ? 'text-[clamp(4rem,10vw,7rem)]' : 'text-[clamp(3rem,7vw,4.5rem)]'
+                    LEAD_METRIC_SIZE[isModal ? 'modal' : 'card'].scale
                 }`}
             >
                 {metric.value}
@@ -200,6 +226,8 @@ export const HeroOverlayContent = ({
             {project.logo ? (
                 (() => {
                     const Logo = LOGO_REGISTRY[project.logo];
+                    // The Banco Provincia mark is a wide wordmark; height is the
+                    // binding constraint, so it needs its own smaller ramp.
                     const isWide = project.logo === 'banco-provincia';
                     const sizeClasses = isWide
                         ? isModal
@@ -395,39 +423,33 @@ const MigrationDossierView = ({ dossier }: { dossier: MigrationDossier }) => (
     </div>
 );
 
-const DevelopmentRoadmap = ({ project }: { project: Project }) => {
+/**
+ * The demo URL as the reader would say it out loud — no scheme, no trailing
+ * slash — so a GitHub Page keeps the path that identifies it
+ * (`elfontii.github.io/efengine`, not the bare host).
+ */
+const demoLabel = (url: string) => url.replace(/^https?:\/\//, '').replace(/\/+$/, '');
+
+const LiveDemo = ({ url }: { url: string }) => {
     const { t } = useTranslation();
-    if (!project.phases?.length) return null;
     return (
         <div>
-            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-4">
-                {t('work.modal.developmentRoadmap')}
+            <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
+                {t('work.liveDemo')}
             </h3>
-            <div className="rounded-2xl border border-dark-900/10 divide-y divide-dark-900/[0.07] overflow-hidden bg-cream-50/40">
-                {project.phases.map((phase, i) => (
-                    <div key={i} className="flex items-start gap-4 px-5 py-4">
-                        <span
-                            className={`font-mono text-[10px] tracking-[0.2em] uppercase shrink-0 mt-1 ${
-                                phase.current ? 'text-teal-700 font-semibold' : 'text-dark-900/45'
-                            }`}
-                        >
-                            {phase.label}
-                        </span>
-                        <div className="min-w-0">
-                            <p
-                                className={`font-display text-lg md:text-xl tracking-tight ${
-                                    phase.current ? 'text-teal-700 font-semibold' : 'text-dark-900 font-medium'
-                                }`}
-                            >
-                                {phase.title}
-                            </p>
-                            <p className="mt-1 text-sm text-dark-900/55 leading-relaxed">
-                                {phase.desc}
-                            </p>
-                        </div>
-                    </div>
-                ))}
-            </div>
+            <a
+                href={url}
+                target="_blank"
+                rel="noreferrer"
+                className="group/demo inline-flex items-center gap-1.5 text-sm font-medium text-dark-900 hover:text-coral-500 transition-colors"
+            >
+                <span className="font-mono break-all">{demoLabel(url)}</span>
+                <ArrowUpRight
+                    size={14}
+                    className="shrink-0 transition-transform duration-300 group-hover/demo:-translate-y-0.5 group-hover/demo:translate-x-0.5"
+                    aria-hidden="true"
+                />
+            </a>
         </div>
     );
 };
@@ -503,8 +525,7 @@ const TierLink = ({ caption }: { caption?: string }) => (
     </div>
 );
 
-// Sibling of DevelopmentRoadmap. The roadmap says when things happened; this
-// draws how the engine is stacked — the editor drives the runtime, the runtime
+// Draws how the engine is stacked — the editor drives the runtime, the runtime
 // goes through the RHI, and only the RHI reaches the GPU.
 const EngineSystems = ({ project }: { project: Project }) => {
     const { t } = useTranslation();
@@ -721,21 +742,18 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
                                                     <p className="text-sm text-dark-900 font-medium">{project.role}</p>
                                                 </div>
                                             </div>
+
+                                            {project.demoUrl && <LiveDemo url={project.demoUrl} />}
                                         </div>
                                     </div>
 
-                                    {/* Right Column — Migration Brief, Development Roadmap, or Code Blocks */}
+                                    {/* Right Column — Migration Brief, Metric Brief, Latest Commit, or Code Blocks */}
                                     {project.migration ? (
                                         <MigrationDossierView dossier={project.migration} />
                                     ) : project.category === 'professional' && project.metrics?.length ? (
                                         <MetricBrief project={project} />
-                                    ) : project.phases?.length ? (
-                                        <div className="space-y-8">
-                                            <DevelopmentRoadmap project={project} />
-                                            {project.repo && (
-                                                <LatestCommit repo={project.repo} variant="detail" />
-                                            )}
-                                        </div>
+                                    ) : project.repo ? (
+                                        <LatestCommit repo={project.repo} variant="detail" />
                                     ) : (
                                         <div className="space-y-2">
                                             <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-4">

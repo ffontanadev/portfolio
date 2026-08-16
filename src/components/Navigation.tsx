@@ -1,18 +1,20 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
-import { Terminal } from 'lucide-react';
+import { Github } from 'lucide-react';
 import { MenuIcon } from '@/components/ui/menu';
 import { XIcon } from '@/components/ui/x';
 import { useAppContext } from '@/contexts/AppContext';
 import { useTranslation } from '@/i18n';
+import { buildLocalePath } from '@/i18n/routing';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 const Navigation = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const { openResume } = useAppContext();
-    const { t } = useTranslation();
+    const { locale, t } = useTranslation();
+    const home = buildLocalePath(locale);
 
     const { scrollYProgress } = useScroll();
     const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.4 });
@@ -24,7 +26,7 @@ const Navigation = () => {
     }, []);
 
     const navLinks = [
-        { name: t('nav.links.home'), href: '#hero', route: '/' },
+        { name: t('nav.links.home'), href: '#hero', route: home },
         { name: t('nav.links.work'), href: '#work' },
         { name: t('nav.links.about'), href: '#about' },
         { name: t('nav.links.connect'), href: '#connect' },
@@ -42,7 +44,7 @@ const Navigation = () => {
                 <div className="max-w-[1440px] mx-auto px-6 md:px-20 flex justify-between items-center">
                     {/* Logo */}
                     <motion.a
-                        href="/"
+                        href={home}
                         className="group flex items-baseline gap-1 select-none"
                         whileHover={{ scale: 1.02 }}
                         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
@@ -77,15 +79,35 @@ const Navigation = () => {
                                 )}
                             </div>
                         ))}
+                        {/*
+                          * Spec §4.2 Option B — both accounts, side by side. The
+                          * second renders as a mono wordmark rather than a second
+                          * identical octocat: two of the same glyph reads as a
+                          * rendering bug, and telling them apart is the point.
+                          */}
+                        <div className="flex items-center gap-3">
+                            <a
+                                href="https://github.com/ffontanadev"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={t('nav.githubPrimary')}
+                                title={t('nav.githubPrimary')}
+                                className="text-dark-900/70 transition-colors duration-300 hover:text-coral-500"
+                            >
+                                <Github size={18} />
+                            </a>
+                            <a
+                                href="https://github.com/elFonTii"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={t('nav.githubEngine')}
+                                title={t('nav.githubEngine')}
+                                className="font-mono text-[11px] tracking-tight text-dark-900/55 transition-colors duration-300 hover:text-coral-500"
+                            >
+                                elFonTii
+                            </a>
+                        </div>
                         <LanguageSwitcher />
-                        <Link
-                            to="/dev-zone"
-                            data-tour-id="dev-zone"
-                            className="group flex items-center gap-2 rounded-full border border-dark-900/15 px-4 py-2.5 text-sm font-medium text-dark-900 transition-colors duration-300 hover:border-coral-500 hover:text-coral-500"
-                        >
-                            <Terminal size={15} />
-                            {t('nav.devZone')}
-                        </Link>
                         <button
                             onClick={openResume}
                             className="group relative overflow-hidden px-6 py-2.5 rounded-full font-medium text-sm bg-dark-900 text-cream-50 cursor-pointer"
@@ -153,16 +175,31 @@ const Navigation = () => {
                             <motion.div
                                 initial={{ opacity: 0, y: 12 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.3, duration: 0.5 }}
+                                transition={{ delay: 0.26, duration: 0.5 }}
+                                className="flex items-center gap-6"
                             >
-                                <Link
-                                    to="/dev-zone"
+                                <a
+                                    href="https://github.com/ffontanadev"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={t('nav.githubPrimary')}
                                     onClick={() => setIsMobileMenuOpen(false)}
-                                    className="mt-6 flex items-center gap-2 rounded-full border border-dark-900/15 px-8 py-3 text-lg font-medium text-dark-900"
+                                    className="flex items-center gap-2 font-mono text-sm text-dark-900/70"
                                 >
-                                    <Terminal size={18} />
-                                    {t('nav.devZone')}
-                                </Link>
+                                    <Github size={18} />
+                                    ffontanadev
+                                </a>
+                                <a
+                                    href="https://github.com/elFonTii"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={t('nav.githubEngine')}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="flex items-center gap-2 font-mono text-sm text-dark-900/70"
+                                >
+                                    <Github size={18} />
+                                    elFonTii
+                                </a>
                             </motion.div>
                             <motion.button
                                 initial={{ opacity: 0, y: 12 }}

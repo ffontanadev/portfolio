@@ -9,8 +9,13 @@ export interface TechItem {
    * SVG used both in the marquee and as the particle-logo source. These are
    * the dark/colored variants that read on the cream hero background (svgl's
    * `-dark` variants are light-on-dark and sample to nothing, so avoid them).
+   *
+   * Optional: svgl carries no mark for JUnit, OpenAPI, Schemathesis, Jenkins,
+   * React Native or C++17. Those render as typographic wordmarks instead —
+   * see `BrandMarquee`. Standing a Swagger logo in for OpenAPI would be a
+   * brand inaccuracy, so we don't.
    */
-  marqueeUrl: string;
+  marqueeUrl?: string;
   /**
    * Optional per-logo size multiplier on the showcase base size ratio.
    * <1 shrinks an oversized mark, >1 grows a small one. Defaults to 1.
@@ -18,28 +23,23 @@ export interface TechItem {
   logoScale?: number;
 }
 
+/**
+ * Spec §5.2. Ordered by what the owner wants to be hired for, not
+ * alphabetically or by recency. A technology appears only if a project on
+ * this page or the résumé demonstrates it.
+ */
 export const techCatalog: TechItem[] = [
-  { id: 'supabase',    name: 'Supabase',     marqueeUrl: `${SVGL}/supabase.svg` },
-  { id: 'nextjs',      name: 'Next.js',      marqueeUrl: `${SVGL}/nextjs_icon_dark.svg` },
-  { id: 'aws',         name: 'AWS',          marqueeUrl: `${SVGL}/aws_light.svg` },
-  { id: 'threejs',     name: 'Three.js',     marqueeUrl: `${SVGL}/threejs-light.svg` },
-  { id: 'drizzle',     name: 'Drizzle',      marqueeUrl: `${SVGL}/drizzle-orm_light.svg` },
-  { id: 'sqlite',      name: 'SQLite',       marqueeUrl: `${SVGL}/sqlite.svg` },
-  { id: 'mongodb',     name: 'MongoDB',      marqueeUrl: `${SVGL}/mongodb-icon-light.svg` },
-  { id: 'postgresql',  name: 'PostgreSQL',   marqueeUrl: `${SVGL}/postgresql.svg` },
-  { id: 'springboot',  name: 'Spring Boot',  marqueeUrl: `${SVGL}/spring.svg` },
-  { id: 'sequelize',   name: 'Sequelize',    marqueeUrl: `${SVGL}/sequelize.svg` },
-  { id: 'express',     name: 'Express.js',   marqueeUrl: `${SVGL}/expressjs.svg` },
-  { id: 'tailwind',    name: 'Tailwind CSS', marqueeUrl: `${SVGL}/tailwindcss.svg` },
-  { id: 'astro',       name: 'Astro',        marqueeUrl: `${SVGL}/astro-icon-light.svg` },
-  { id: 'bootstrap',   name: 'Bootstrap',    marqueeUrl: `${SVGL}/bootstrap.svg` },
-  { id: 'vercel',      name: 'Vercel',       marqueeUrl: `${SVGL}/vercel.svg` },
-  { id: 'godaddy',     name: 'GoDaddy',      marqueeUrl: `${SVGL}/godaddy.svg` },
-  { id: 'googlecloud', name: 'Google Cloud', marqueeUrl: `${SVGL}/google-cloud.svg` },
-  { id: 'csharp',      name: 'C#',           marqueeUrl: `${SVGL}/csharp.svg` },
-  { id: 'lit',         name: 'Lit',          marqueeUrl: `${SVGL}/lit.svg` },
-  { id: 'redux',       name: 'Redux',        marqueeUrl: `${SVGL}/redux.svg` },
-  { id: 'auth0',       name: 'Auth0',        marqueeUrl: `${SVGL}/auth0.svg` },
-  { id: 'jwt',         name: 'JWT',          marqueeUrl: `${SVGL}/jwt.svg` },
-  { id: 'vite',        name: 'Vite',         marqueeUrl: `${SVGL}/vitejs.svg` },
+  { id: 'java',         name: 'Java 17',       marqueeUrl: `${SVGL}/java.svg` },
+  { id: 'springboot',   name: 'Spring Boot 3', marqueeUrl: `${SVGL}/spring.svg` },
+  { id: 'junit',        name: 'JUnit 5' },
+  { id: 'openapi',      name: 'OpenAPI' },
+  { id: 'schemathesis', name: 'Schemathesis' },
+  { id: 'postgresql',   name: 'PostgreSQL',    marqueeUrl: `${SVGL}/postgresql.svg` },
+  { id: 'mssql',        name: 'MSSQL',         marqueeUrl: `${SVGL}/sql-server.svg` },
+  { id: 'docker',       name: 'Docker',        marqueeUrl: `${SVGL}/docker.svg` },
+  { id: 'jenkins',      name: 'Jenkins' },
+  { id: 'typescript',   name: 'TypeScript',    marqueeUrl: `${SVGL}/typescript.svg` },
+  { id: 'react',        name: 'React',         marqueeUrl: `${SVGL}/react_light.svg` },
+  { id: 'reactnative',  name: 'React Native' },
+  { id: 'cpp',          name: 'C++17' },
 ];

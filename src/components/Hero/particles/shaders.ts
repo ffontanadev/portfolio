@@ -12,6 +12,7 @@ export const vertexShader = /* glsl */ `
   attribute float aSize;
   attribute vec3  aColor;
   attribute vec2  aTargetNext;
+  attribute vec3  aColorNext;
 
   uniform float uTime;
   uniform float uMorph;        // 0 = drift, 1 = shape
@@ -118,8 +119,11 @@ export const vertexShader = /* glsl */ `
     gl_PointSize = baseSize * aSize * uDpr;
 
     // Color: drift -> shape blend, with small per-particle palette tint.
+    // The brand colours ride the same blend as the positions, so a logo→logo
+    // cross-morph changes hue and shape as one motion instead of two.
     vec3 base = mix(uDriftColor, uShapeColor, pMorph);
-    vColor = mix(base, aColor, max(0.22, uBrandColorMix));
+    vec3 brand = mix(aColor, aColorNext, uTargetBlend);
+    vColor = mix(base, brand, max(0.22, uBrandColorMix));
 
     // Alpha: low in drift, higher in shape. Per-particle seed gives a subtle haze.
     float alpha = mix(uDriftAlpha, uShapeAlpha, pMorph);

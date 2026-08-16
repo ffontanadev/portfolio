@@ -1,10 +1,13 @@
 import { motion } from 'framer-motion';
+import { Github, Calendar as CalendarIcon } from 'lucide-react';
 import { LinkedinIcon } from '@/components/ui/linkedin';
 import { DownloadIcon } from '@/components/ui/download';
 import { useAppContext } from '@/contexts/AppContext';
 import { useTranslation } from '@/i18n';
 
 const ease = [0.22, 1, 0.36, 1] as const;
+
+const SCHEDULING_URL = 'https://cal.com/felipe-fontana-botta-26vtyb/30min';
 
 const Contact = () => {
     const { openResume } = useAppContext();
@@ -50,7 +53,7 @@ const Contact = () => {
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
-                    className="font-display font-display-xl font-bold text-5xl md:text-7xl tracking-[-0.02em] leading-[1.02] mb-14"
+                    className="font-display font-display-xl font-bold text-[1.75rem] md:text-[2.25rem] lg:text-[2.75rem] tracking-[-0.02em] leading-[1.02] mb-14"
                 >
                     {headline.split('').map((char, i) => (
                         <motion.span
@@ -137,8 +140,25 @@ const Contact = () => {
                         ))}
                     </ul>
 
+                    {/* Availability — spec §5.8. Literal, not editorial. */}
+                    <div className="mt-6 pt-5 border-t border-dark-900/8">
+                        <span className="text-eyebrow text-dark-900/45">
+                            {t('contact.availabilityHeading')}
+                        </span>
+                        <ul className="mt-3 flex flex-col gap-1.5">
+                            {messages.contact.availability.map((line) => (
+                                <li
+                                    key={line}
+                                    className="font-mono text-[11px] leading-relaxed tracking-wide text-dark-900/60"
+                                >
+                                    {line}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
                     {/* Footer — waveform + response time */}
-                    <footer className="mt-6 pt-5 border-t border-dark-900/8 flex items-center gap-3">
+                    <footer className="mt-5 pt-5 border-t border-dark-900/8 flex items-center gap-3">
                         <div className="flex-1 flex items-center gap-[3px] h-3" aria-hidden="true">
                             {Array.from({ length: 32 }).map((_, i) => {
                                 const h = 18 + Math.round(Math.sin(i * 0.7) * 8 + Math.cos(i * 0.3) * 6);
@@ -183,6 +203,21 @@ const Contact = () => {
                         <span className="absolute inset-0 bg-coral-500 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]" />
                     </button>
 
+                    {/*
+                      * Spec §5.8: for a candidate five timezones from the hiring
+                      * manager, removing the back-and-forth of finding a slot
+                      * measurably increases the chance of a first call.
+                      */}
+                    <a
+                        href={SCHEDULING_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group inline-flex items-center gap-2.5 rounded-full border border-dark-900/15 px-7 py-3.5 text-sm font-medium text-dark-900 transition-colors duration-300 hover:border-coral-500 hover:text-coral-500"
+                    >
+                        <CalendarIcon size={17} />
+                        {t('contact.scheduling')}
+                    </a>
+
                     <a
                         href={`mailto:${email}`}
                         className="group text-xl md:text-2xl font-display font-medium tracking-tight"
@@ -207,6 +242,26 @@ const Contact = () => {
                             className="p-3.5 bg-cream-50/80 backdrop-blur-sm rounded-full border border-dark-900/8 text-dark-900/70 hover:text-coral-500 hover:border-coral-500/30 hover:-translate-y-1 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                         >
                             <LinkedinIcon size={20} />
+                        </a>
+                        <a
+                            href="https://github.com/ffontanadev"
+                            aria-label={t('contact.githubPrimary')}
+                            title={t('contact.githubPrimary')}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-3.5 bg-cream-50/80 backdrop-blur-sm rounded-full border border-dark-900/8 text-dark-900/70 hover:text-coral-500 hover:border-coral-500/30 hover:-translate-y-1 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                        >
+                            <Github size={20} />
+                        </a>
+                        <a
+                            href="https://github.com/elFonTii"
+                            aria-label={t('contact.githubEngine')}
+                            title={t('contact.githubEngine')}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center px-4 bg-cream-50/80 backdrop-blur-sm rounded-full border border-dark-900/8 font-mono text-xs text-dark-900/70 hover:text-coral-500 hover:border-coral-500/30 hover:-translate-y-1 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                        >
+                            elFonTii
                         </a>
                     </div>
                 </motion.div>

@@ -14,8 +14,7 @@ const HowIWorkWithAgents = () => {
 
   return (
     <section
-      data-tour-id="agents"
-      id="agents"
+      id="about"
       className="relative py-32 md:py-40 px-6 md:px-20 max-w-[1440px] mx-auto"
     >
       {/* Header */}
@@ -24,7 +23,7 @@ const HowIWorkWithAgents = () => {
           <span className="text-eyebrow text-coral-500">{t('agents.eyebrow')}</span>
           <span className="h-px flex-1 max-w-[140px] bg-dark-900/15" />
         </div>
-        <h2 className="font-display font-display-md font-bold tracking-[-0.02em] text-4xl md:text-6xl leading-[1.05] max-w-3xl text-dark-900">
+        <h2 className="font-display font-display-md font-bold tracking-[-0.02em] text-[1.75rem] md:text-[2.25rem] lg:text-[2.75rem] leading-[1.05] max-w-3xl text-dark-900">
           {t('agents.headingBefore')}{' '}
           <span className="font-display-italic text-coral-500" style={{ fontStyle: 'italic' }}>
             {t('agents.headingEmphasis')}

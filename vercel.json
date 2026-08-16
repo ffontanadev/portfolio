@@ -1,5 +1,11 @@
 {
+  "installCommand": "sh scripts/vercel-install.sh",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/:locale(en|es|pt|zh)", "destination": "/:locale/index.html" },
+    { "source": "/:locale(en|es|pt|zh)/:path*", "destination": "/:locale/index.html" },
+    { "source": "/dev-zone", "destination": "/index.html" },
+    { "source": "/", "destination": "/index.html" }
   ]
 }

@@ -2,9 +2,10 @@ import { useEffect, useRef } from 'react';
 import { useReducedMotion } from 'framer-motion';
 import * as THREE from 'three';
 import { ParticleSystem } from './particles/ParticleSystem';
-import { sampleShapeWithColor, type ShapeSpec } from './particles/shapeSampler';
+import type { ShapeSpec } from './particles/shapeSampler';
 import type { IntroShapes } from './particles/IntroSequencer';
 import { loadSilhouette } from './particles/silhouetteSampler';
+import { SHOWCASE_LOGOS, showcaseSpecFor, showcaseFitsIn } from './particles/showcaseSpec';
 import { useTechShowcase } from '@/context/TechShowcaseContext';
 import type { TechItem } from './techCatalog';
 import { PARTICLES_ENABLED } from '@/config/particles';
@@ -22,10 +23,7 @@ const PALETTE = {
 
 const SHAPE_SEPARATOR = '|';
 
-const INTRO_SHAPES: IntroShapes = {
-  rocket: { kind: 'rocket', sizeRatio: 0.28 },
-  text: { kind: 'text', text: "Hi, I'm Felipe", heightRatio: 0.32 },
-};
+const ROCKET_SHAPE: ShapeSpec = { kind: 'rocket', sizeRatio: 0.28 };
 
 const DEFAULT_SHAPES: ShapeSpec[] = [
   { kind: 'text', text: 'Felipe', heightRatio: 0.5 },
@@ -59,8 +57,11 @@ function textHeightRatio(text: string): number {
 
 // Parse VITE_PARTICLE_SHAPES into the ShapeSpec[] the engine consumes.
 // Format: pipe-separated. `heart` (case-insensitive) → heart icon;
-// `guy` (case-insensitive) → /guy.svg silhouette;
 // anything else is rendered as Fraunces text. Empty / missing → defaults.
+//
+// This shape loop is the offline fallback only: the hero normally runs the
+// tech-logo showcase, which takes over as soon as the first logo decodes and
+// never hands back.
 function parseShapesFromEnv(raw: string | undefined): ShapeSpec[] {
   if (!raw) return DEFAULT_SHAPES;
   const parts = raw
@@ -72,9 +73,6 @@ function parseShapesFromEnv(raw: string | undefined): ShapeSpec[] {
     const lower = part.toLowerCase();
     if (lower === 'heart') {
       return { kind: 'heart', sizeRatio: 0.38 };
-    }
-    if (lower === 'guy') {
-      return { kind: 'silhouette', src: '/guy.svg', sizeRatio: 1.5 };
     }
     if (ANIMATIONS[lower]) {
       return ANIMATIONS[lower];
@@ -102,30 +100,52 @@ const getParticleCount = (w: number): number => {
 
 // --- Tech showcase helpers (module-scope, stable across renders) -----------
 
-// Base height fraction for a showcase logo. Square icons would otherwise
-// dwarf wide wordmarks (height is the binding constraint in a tall hero), so
-// keep this modest; per-tech `logoScale` trims outliers further.
-const SHOWCASE_BASE_SIZE = 0.36;
-// Shift the logo up so it clears the bottom-left brief text in the hero.
-const SHOWCASE_Y_OFFSET = -0.1;
+/**
+ * How long to wait for the very first logo before starting the rocket without
+ * it. The marks come off a CDN; a slow response must not stall the hero, so
+ * past this point the intro ends on the rocket and the loop forms the logo
+ * whenever it arrives.
+ */
+const FIRST_LOGO_BUDGET_MS = 2500;
 
-const showcaseSpecFor = (tech: TechItem): ShapeSpec => ({
-  kind: 'silhouette',
-  src: tech.marqueeUrl,
-  sizeRatio: SHOWCASE_BASE_SIZE * (tech.logoScale ?? 1),
-  yOffsetRatio: SHOWCASE_Y_OFFSET,
-});
+/** Resolve once `src` has decoded, or once the budget runs out — whichever first. */
+function loadWithin(src: string, budgetMs: number): Promise<boolean> {
+  return Promise.race([
+    loadSilhouette(src).then(
+      () => true,
+      (err) => {
+        console.warn('[ParticleField] logo load failed', err);
+        return false;
+      },
+    ),
+    new Promise<boolean>((resolve) => setTimeout(() => resolve(false), budgetMs)),
+  ]);
+}
 
-async function applyShowcase(system: ParticleSystem, tech: TechItem): Promise<void> {
+/**
+ * Show `tech`'s logo, cross-morphing from whatever is on screen. `auto` keeps
+ * the loop cycling afterwards; a click passes false to park on one logo.
+ * Technologies without an SVG mark (six of the thirteen) have nothing to
+ * sample, so the field simply keeps showing whatever it already had.
+ */
+async function applyShowcase(
+  system: ParticleSystem,
+  tech: TechItem,
+  auto: boolean,
+): Promise<void> {
+  const src = tech.marqueeUrl;
+  if (!src) return;
+  if (!showcaseFitsIn(system.boundsPublic)) return;
   try {
-    await loadSilhouette(tech.marqueeUrl);
+    await loadSilhouette(src);
   } catch (err) {
     console.warn('[ParticleField] logo load failed', err);
-    return; // keep the ambient loop running
+    return;
   }
-  const spec = showcaseSpecFor(tech);
-  const { colors } = sampleShapeWithColor(spec, system.particleCountPublic, system.boundsPublic);
-  system.showShape(spec, colors);
+  // The canvas may have been resized past the breakpoint while the SVG
+  // decoded, so re-check before committing to a logo.
+  if (!showcaseFitsIn(system.boundsPublic)) return;
+  system.showShape(showcaseSpecFor(tech), auto);
 }
 
 interface ParticleFieldProps {
@@ -143,6 +163,8 @@ const ParticleField = ({ className = '', shapes }: ParticleFieldProps) => {
   const { selected } = useTechShowcase();
   const systemRef = useRef<ParticleSystem | null>(null);
   const pendingSelectRef = useRef<TechItem | null>(null);
+  /** The logo on screen — drives both the auto cycle and resize re-sampling. */
+  const cycleIdxRef = useRef(0);
 
   useEffect(() => {
     if (!ENABLED) return;
@@ -175,7 +197,17 @@ const ParticleField = ({ className = '', shapes }: ParticleFieldProps) => {
       ),
     );
 
-    const ready = Promise.all([fontsReady, silhouettesReady]);
+    // Warm the whole logo cycle so later cross-morphs sample instantly, but
+    // only gate the intro on the first one — and only briefly.
+    const firstLogo = SHOWCASE_LOGOS[0];
+    for (const tech of SHOWCASE_LOGOS.slice(1)) {
+      if (tech.marqueeUrl) void loadWithin(tech.marqueeUrl, FIRST_LOGO_BUDGET_MS);
+    }
+    const firstLogoReady = firstLogo?.marqueeUrl
+      ? loadWithin(firstLogo.marqueeUrl, FIRST_LOGO_BUDGET_MS)
+      : Promise.resolve(false);
+
+    const ready = Promise.all([fontsReady, silhouettesReady, firstLogoReady]);
 
     let system: ParticleSystem | null = null;
     let resizeObs: ResizeObserver | null = null;
@@ -183,21 +215,43 @@ const ParticleField = ({ className = '', shapes }: ParticleFieldProps) => {
     let onMove: ((e: PointerEvent) => void) | null = null;
     let onVisibility: (() => void) | null = null;
 
-    ready.then(() => {
+    ready.then(([, , firstLogoLoaded]) => {
       if (cancelled) return;
 
       const count = getParticleCount(container.clientWidth);
+      // The intro is built on the first resize, so decide the handoff against
+      // the size the canvas is about to take.
+      const initialBounds = {
+        width: container.clientWidth,
+        height: container.clientHeight,
+      };
+      const wideEnough = showcaseFitsIn(initialBounds);
+      const intro: IntroShapes = {
+        rocket: ROCKET_SHAPE,
+        handoff:
+          wideEnough && firstLogoLoaded && firstLogo
+            ? showcaseSpecFor(firstLogo)
+            : null,
+      };
 
       system = new ParticleSystem({
         canvas,
         particleCount: count,
-        shapes: activeShapes,
+        // Below the breakpoint nothing forms at all: no logos, and no ambient
+        // fallback shapes either — they are just as wide and just as centred.
+        shapes: wideEnough ? activeShapes : [],
         driftColor: PALETTE.drift,
         shapeColor: PALETTE.shape,
         accentColors: PALETTE.accents,
         driftAlpha: 0.16,
         shapeAlpha: 0.78,
-        intro: INTRO_SHAPES,
+        intro,
+        onShowcaseAdvance: () => {
+          const active = systemRef.current;
+          if (!active || SHOWCASE_LOGOS.length === 0) return;
+          cycleIdxRef.current = (cycleIdxRef.current + 1) % SHOWCASE_LOGOS.length;
+          void applyShowcase(active, SHOWCASE_LOGOS[cycleIdxRef.current], true);
+        },
       });
 
       const sizeNow = () => {
@@ -213,10 +267,32 @@ const ParticleField = ({ className = '', shapes }: ParticleFieldProps) => {
       if (pendingSelectRef.current) {
         const pending = pendingSelectRef.current;
         pendingSelectRef.current = null;
-        void applyShowcase(system, pending);
+        void applyShowcase(system, pending, false);
+      } else if (wideEnough && !intro.handoff) {
+        // The rocket has nothing to morph into; start the loop as soon as the
+        // first logo turns up, so a slow CDN only delays it rather than
+        // stranding the hero in the fallback shape loop.
+        void applyShowcase(system, firstLogo, true);
       }
 
-      resizeObs = new ResizeObserver(() => sizeNow());
+      // Crossing the breakpoint changes what the field is allowed to show, so
+      // the observer does more than resize the canvas.
+      let wasWide = wideEnough;
+      resizeObs = new ResizeObserver(() => {
+        sizeNow();
+        const active = systemRef.current;
+        if (!active) return;
+        const isWide = showcaseFitsIn(active.boundsPublic);
+        if (isWide === wasWide) return;
+        wasWide = isWide;
+        if (isWide) {
+          active.setShapes(activeShapes);
+          void applyShowcase(active, SHOWCASE_LOGOS[cycleIdxRef.current], true);
+        } else {
+          active.hideShowcase();
+          active.setShapes([]);
+        }
+      });
       resizeObs.observe(container);
 
       onMove = (e: PointerEvent) => {
@@ -262,12 +338,19 @@ const ParticleField = ({ className = '', shapes }: ParticleFieldProps) => {
   useEffect(() => {
     const system = systemRef.current;
     if (!selected) {
-      if (system) system.releaseShape();
+      // Dismissing the brief resumes the cycle from whichever logo is showing
+      // rather than dissolving the field back to drift.
+      system?.setShowcaseAuto(true);
       pendingSelectRef.current = null;
       return;
     }
+    // Keep the cycle in step with the click, so resuming carries on from here
+    // instead of jumping back to wherever the loop had got to.
+    const idx = SHOWCASE_LOGOS.findIndex((t) => t.id === selected.id);
+    if (idx !== -1) cycleIdxRef.current = idx;
+
     if (system) {
-      void applyShowcase(system, selected);
+      void applyShowcase(system, selected, false);
     } else {
       pendingSelectRef.current = selected; // applied once the system is built
     }

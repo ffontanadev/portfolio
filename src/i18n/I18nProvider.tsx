@@ -1,33 +1,35 @@
 import type { ReactNode } from 'react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import {
-  DEFAULT_LOCALE,
-  messages,
-  STORAGE_KEY,
-  SUPPORTED_LOCALES,
-  type Locale,
-} from './config';
+import { useCallback, useEffect, useMemo } from 'react';
+import { messages, STORAGE_KEY, SUPPORTED_LOCALES, type Locale } from './config';
 import { translate } from './translate';
 import { I18nContext, type I18nContextValue } from './context';
 
-const isLocale = (value: string | null): value is Locale =>
-  value !== null && (SUPPORTED_LOCALES as string[]).includes(value);
+interface I18nProviderProps {
+  /** The active locale, owned by the router and read from the URL (§8). */
+  locale: Locale;
+  /** Called when something asks to switch language; the router navigates. */
+  onLocaleChange: (locale: Locale) => void;
+  children: ReactNode;
+}
 
-const readInitialLocale = (): Locale => {
-  if (typeof window === 'undefined') return DEFAULT_LOCALE;
-  const stored = window.localStorage.getItem(STORAGE_KEY);
-  return isLocale(stored) ? stored : DEFAULT_LOCALE;
-};
-
-export const I18nProvider = ({ children }: { children: ReactNode }) => {
-  const [locale, setLocaleState] = useState<Locale>(readInitialLocale);
-
-  const setLocale = useCallback((next: Locale) => {
-    setLocaleState(next);
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem(STORAGE_KEY, next);
-    }
-  }, []);
+/**
+ * The locale is a URL segment, not component state — see `src/i18n/routing.ts`.
+ * This provider therefore owns no locale state at all: it receives the active
+ * locale from the router and forwards change requests back to it.
+ *
+ * `localStorage` is written but never read here. It is a hint for the bare-`/`
+ * redirect only; a stored value must never override the URL.
+ */
+export const I18nProvider = ({ locale, onLocaleChange, children }: I18nProviderProps) => {
+  const setLocale = useCallback(
+    (next: Locale) => {
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(STORAGE_KEY, next);
+      }
+      onLocaleChange(next);
+    },
+    [onLocaleChange],
+  );
 
   useEffect(() => {
     if (typeof document !== 'undefined') {

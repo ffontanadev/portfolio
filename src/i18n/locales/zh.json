@@ -1,14 +1,4 @@
 {
-  "tour": {
-    "skip": "跳过导览",
-    "replay": "重新播放导览",
-    "stops": {
-      "techStack": "点击任意徽标，即可看到它在主视觉中生成，并附上我如何使用它的说明。",
-      "featuredWorks": "打开项目查看完整案例研究与迁移档案。",
-      "agents": "我如何真正地用 AI 智能体从头到尾进行构建。",
-      "devZone": "进入 Dev Zone —— 一张隐藏的、可拖拽的日常工具桌面。"
-    }
-  },
   "common": {
     "pagination": {
       "previous": "上一页",
@@ -30,7 +20,9 @@
     "resume": "简历",
     "viewResume": "查看简历",
     "toggleMenu": "打开菜单",
-    "devZone": "开发专区"
+    "devZone": "开发专区",
+    "githubPrimary": "GitHub —— ffontanadev",
+    "githubEngine": "GitHub —— elFonTii，efengine 所在账号"
   },
   "devZone": {
     "back": "返回作品集",
@@ -120,11 +112,16 @@
   },
   "hero": {
     "eyebrow": "01 — 简介",
-    "subheading": {
-      "lead": "一名",
-      "role": "开发者",
-      "middle": "在",
-      "company": "Magenta Innova"
+    "headline": {
+      "lead": "后端工程师，服务于",
+      "emphasis": "不能宕机的系统"
+    },
+    "subhead": "软件工程师，在 Magenta Innova 从事乌拉圭及周边地区银行核心服务工作四年。将约 4,600 个类从 Axis2/Java 8 迁移至 Spring Boot 3，迁移 50 多个 API，测试覆盖率从 20% 提升至 85%。同时具备生产级 React Native 经验，并独立开发了一个 C++17 渲染器。",
+    "availability": "乌拉圭 · UTC−3 · 与美国东部时间完全重叠 · 可作为承包商或通过 employer-of-record 合作 · 接受搬迁",
+    "ctas": {
+      "work": "查看作品",
+      "contact": "联系我",
+      "github": "GitHub"
     },
     "statusBadge": {
       "available": "可接受工作"
@@ -153,39 +150,39 @@
     "curvedText": "✱  创造  ·  编程  ·  连接  ·  "
   },
   "brandMarquee": {
-    "eyebrow": "技术栈 · 轮播中",
+    "eyebrow": "技术栈 · 生产环境",
     "logoAlt": "{name} 标志"
+  },
+  "proof": {
+    "eyebrow": "生产环境",
+    "figures": [
+      { "value": "~4,600", "label": "个类完成迁移" },
+      { "value": "50+", "label": "个 API 迁移至 Spring Boot" },
+      { "value": "20% → 85%", "label": "测试覆盖率" },
+      { "value": "4", "label": "年银行业经验" }
+    ]
   },
   "techShowcase": {
     "back": "返回",
     "eyebrow": "技术栈 · 聚焦",
     "brief": {
-      "supabase": "开源的 Postgres 后端，内置身份验证、存储和实时 API。",
-      "nextjs": "用于生产应用的 React 框架，支持服务端与客户端混合渲染。",
-      "aws": "亚马逊的云平台，提供大规模的计算、存储和托管基础设施。",
-      "threejs": "用于在浏览器中渲染 3D 图形与动画的 WebGL 库。",
-      "drizzle": "轻量、类型安全的 TypeScript ORM，提供类 SQL 的查询构建器。",
-      "sqlite": "无需服务器、直接嵌入应用的自包含 SQL 数据库引擎。",
-      "mongodb": "文档数据库，存储灵活的类 JSON 记录，便于快速迭代。",
-      "postgresql": "强大的开源关系型数据库，以可靠性和丰富功能著称。",
+      "java": "核心银行系统运行的语言 —— Java 17 LTS，由 Java 8 迁移而来。",
       "springboot": "用于以最少配置构建生产级服务的 Java 框架。",
-      "sequelize": "基于 Promise 的 Node.js ORM，支持模型定义与数据库迁移。",
-      "express": "极简、无约束的 Node.js 框架，用于构建 Web 服务器和 API。",
-      "tailwind": "实用优先的 CSS 框架，无需离开标记即可构建自定义设计。",
-      "astro": "以内容为中心的 Web 框架，默认零 JavaScript，追求极速加载。",
-      "bootstrap": "流行的 CSS 框架，提供现成的响应式组件和栅格系统。",
-      "vercel": "用于零配置部署和扩展前端应用的云平台。",
-      "godaddy": "域名注册商与托管服务商，帮助项目快速上线。",
-      "googlecloud": "谷歌的云平台，提供计算、数据和机器学习服务。",
-      "csharp": "微软推出的现代、类型安全语言，适用于后端、桌面和游戏开发。",
-      "lit": "基于 Web 标准、用于构建快速可复用 Web 组件的轻量库。",
-      "redux": "用于 JavaScript 应用的可预测状态容器，提供单一数据源。",
-      "auth0": "以托管服务方式处理身份验证与授权的身份平台。",
-      "jwt": "用于在各方之间安全传递声明的紧凑签名令牌。",
-      "vite": "快速的构建工具和开发服务器，支持即时模块热替换。"
+      "junit": "覆盖率工作背后的测试框架 —— 银行 API 的单元与集成测试套件。",
+      "openapi": "机器可读的 API 契约。每个迁移的端点在切换前都要有一份。",
+      "schemathesis": "从 OpenAPI schema 生成属性测试与模糊测试，让契约偏移在 CI 中暴露。",
+      "postgresql": "强大的开源关系型数据库，以可靠性和丰富功能著称。",
+      "mssql": "Microsoft SQL Server —— 核心银行平台背后的数据存储。",
+      "docker": "容器化，用于可复现的构建以及与部署环境的本地一致性。",
+      "jenkins": "把每次部署都经过构建、测试与质量检查的流水线。",
+      "typescript": "带类型的 JavaScript。本站、工具链与前端工作都用它编写。",
+      "react": "这个作品集以及前端工作背后的 UI 库。",
+      "reactnative": "跨平台移动开发，在一款生产级银行应用中交付至 iOS 与 Android。",
+      "cpp": "现代 C++ —— efengine 的实现语言，从渲染器到资源管线。"
     }
   },
   "work": {
+    "liveDemo": "在线演示",
     "featured": {
       "eyebrow": "§ 02 — 精选作品",
       "headingBefore": "我一直在",
@@ -211,43 +208,6 @@
           "role": "引擎作者",
           "description": "EFENGINE 是我最有野心的项目：一个用 C++17 从零编写、基于 OpenGL 4.5 Core 的 3D 引擎。它渲染由点光源与平行光照亮的 PBR 材质，配合完整的基于图像的光照——漫反射辐照度加 split-sum 镜面反射，两者均由 compute shader 预计算——之上还有阴影映射、天空盒，以及由 bloom、tonemap 和 FXAA 组成的 HDR 后处理链。场景存放在以带世代句柄寻址的节点图中，并持久化为 .efe：我自己设计的分块、带版本号的二进制格式，其读取器对损坏输入极为苛刻。最上层是一个停靠式 ImGui 编辑器：层级、检视器、材质实时编辑与场景的保存/加载。\n\n把这一切串起来的是一组不可妥协的规则。每一次 gl* 调用都被限制在 RHI 层 efecom 之内——渲染器永远看不到 OpenGL。没有裸 new/delete，也没有异常：所有权是值或 unique_ptr，编程错误触发断言，可恢复的失败以返回值传出，每个子系统都遵循 RAII——构造即启动，析构即关闭。",
           "leadSub": "C++17 · OpenGL 4.5 Core",
-          "phases": [
-            {
-              "label": "阶段 0",
-              "title": "奠基",
-              "desc": "CMake 配合 FetchContent、GLFW/GLAD/GLM、Log 与 Assert、全程 RAII 的 Window 与 Application，以及跑在 CTest 上的 doctest。以屏幕上的第一个三角形收尾。"
-            },
-            {
-              "label": "阶段 1",
-              "title": "渲染基础",
-              "desc": "Shader、基于 stb_image 的 Texture、Material、顶点布局与 Mesh；支持环绕、平移与缩放的相机。着色器改为从磁盘加载。"
-            },
-            {
-              "label": "阶段 2",
-              "title": "场景与光照",
-              "desc": "Time、按键缓存的 ResourceManager、带 BeginScene/Submit 的 Renderer、点光源、帧缓冲，以及第一版 ImGui 调试界面。"
-            },
-            {
-              "label": "阶段 3",
-              "title": "HDR 与后处理",
-              "desc": "相机上的曝光、作为首个 IPostPass 的 TonemapPass，以及在两个临时帧缓冲之间乒乓串联的 bloom 与 FXAA。"
-            },
-            {
-              "label": "阶段 4",
-              "title": "OpenGL 4.5 与 RHI",
-              "desc": "升级到 4.5 Core 并启用 DSA，着色器改为 #version 450。efecom 诞生：任何 gl* 调用都不得存在于 RHI 之外。天空盒与平行光阴影映射。"
-            },
-            {
-              "label": "阶段 5",
-              "title": "场景图、.efe 与编辑器",
-              "desc": "带世代句柄的 SceneGraph、按节点的 behaviors，以及 .efe 二进制格式——分块、带版本号，读取器对损坏文件极为苛刻。sandbox 演进为停靠式编辑器。"
-            },
-            {
-              "label": "阶段 6",
-              "title": "完整 IBL",
-              "desc": "漫反射辐照度加 split-sum 镜面反射：每个 mip 一次 dispatch 的 GGX 预过滤与 BRDF LUT，均由 compute shader 完成。同时加入自发光贴图与 normal strength。"
-            }
-          ],
           "systems": [
             {
               "label": "efecom · RHI",
@@ -276,10 +236,10 @@
           ]
         },
         "bancoProvincia": {
-          "title": "Banco Provincia — 核心服务迁移",
-          "desc": "将 Banco Provincia 遗留的 Axis2 / Java 8 Web 服务迁移到基于 Java 17 的现代 Spring Boot 3 平台 —— 7 个代码库、约 4,600 个类 —— 并将数据库连接从 JNDI 改写为托管的 MSSQL DataSource。",
-          "role": "后端工程师",
-          "description": "对支撑 Banco Provincia 核心银行集成的遗留 Axis2 SOAP 服务进行长期现代化改造。工作内容包括将运行时从 Java 8 迁移到 Java 17 + Spring Boot 3、以托管的 MSSQL DataSource 替换 JNDI 绑定资源，并理清多年来紧耦合的 Web 服务契约 —— 同时始终保持下游消费方可用。",
+          "title": "Provincia Casa Financiera —— 核心服务迁移",
+          "desc": "将 Banco de la Provincia de Buenos Aires 乌拉圭分行的遗留 Axis2 / Java 8 web 服务迁移到基于 Java 17 的 Spring Boot 3 —— 7 个代码库、约 4,600 个类 —— 并将连接方式从 JNDI 改为受管的 MSSQL DataSource。",
+          "role": "Backend —— 将遗留 SOAP/WSDL 服务迁移至 Spring Boot，3 人团队",
+          "description": "对 Provincia Casa Financiera（Banco de la Provincia de Buenos Aires 的乌拉圭分行）核心银行业务背后的遗留 Axis2 SOAP 服务进行的长期现代化改造。我负责后端：将遗留的 SOAP/WSDL 服务迁移到 Java 17 + Spring Boot 3、用受管的 MSSQL DataSource 替换绑定在 JNDI 上的资源，并在不破坏下游消费方的前提下理清多年积累的紧耦合服务契约。与此同时，一位同事将 Struts 前端及其消费层拆分为两个应用 —— 全新的 Angular 前端，以及一个可通过 SOAP 或 REST 访问已迁移服务的 backend-for-frontend，两条通路可在运行时切换，以应对其中一条降级。",
           "migration": {
             "scope": [
               { "value": "7", "label": "代码库" },
@@ -315,38 +275,23 @@
           }
         },
         "bbva": {
-          "title": "BBVA — API 迁移与测试覆盖",
-          "desc": "将 BBVA 的内部 API 体系迁移到 Spring Boot，并为 50 多个服务构建高覆盖率的测试套件——把脆弱的内部实现变成可以放心重构的平台。",
-          "role": "后端工程师",
-          "description": "参与 BBVA 的内部平台，将数十个 API 服务迁移到 Spring Boot，并在整个体系中建立严谨的测试覆盖。为 50 多个内部 API 编写了单元测试和集成测试，提升了基线覆盖率，并保护未来的重构免受回归噪声的影响。",
+          "title": "BBVA —— API 迁移与测试覆盖率",
+          "desc": "在一个 10 人团队中，将约 48 个 API 上新端点的测试覆盖率从 20% 提升到 85%+，每次部署都经由 Jenkins、OpenShift 与 SonarQube 把关。",
+          "role": "测试工程与迁移前置工作，10 人团队",
+          "description": "在 BBVA 的内部平台上将 API 服务迁移至 Spring Boot，并在整个服务面上建立严格的测试覆盖。我使用 JUnit 5 与 Mockito，在 10 人团队中把约 48 个 API 上新端点的覆盖率从 20% 提升到 85%+，部署由 Jenkins、OpenShift 与 SonarQube 把关。重点从来不是覆盖率这个数字 —— 而是让一份没人敢碰的代码变得可以安全修改。",
           "metrics": [
-            {
-              "label": "范围",
-              "value": "50 多个内部 API"
-            },
-            {
-              "label": "技术栈",
-              "value": "Spring Boot · Java 17"
-            },
-            {
-              "label": "测试",
-              "value": "JUnit 5 · Mockito · Testcontainers"
-            },
-            {
-              "label": "成果",
-              "value": "高覆盖率 · 可安全重构"
-            },
-            {
-              "label": "年份",
-              "value": "2025"
-            }
+            { "label": "覆盖率", "value": "20% → 85%+" },
+            { "label": "范围", "value": "~48 APIs · 50+ 内部服务" },
+            { "label": "测试", "value": "JUnit 5 · Mockito" },
+            { "label": "流水线", "value": "Jenkins · OpenShift · SonarQube" },
+            { "label": "团队", "value": "10 名工程师" }
           ]
         },
         "mobileBanking": {
-          "title": "手机银行应用（NDA）",
-          "desc": "一款基于 React Native + Expo 的跨平台手机银行应用，依据外部的设计与后端规范开发，团队 3 人——具备通过 Android API 实现的原生生物识别认证与安全的本地持久化。",
-          "role": "移动端工程师",
-          "description": "为一家受保密协议（NDA）约束的私人银行客户开发的手机银行应用，由三人团队使用 React Native + Expo 构建。后端由另一家公司交付，因此整个工作完全依据其设计规范和后端服务契约推进。我通过 Android API 实现了原生生物识别认证、会话与用户数据的安全本地持久化，并根据所提供的设计规范完成了部分 UI。",
+          "title": "Winterbotham — 手机银行应用",
+          "desc": "一款基于 React Native + Expo 的跨平台手机银行应用，由四人团队交付至 iOS 与 Android —— 采用 WebAuthn 认证，并有一个承载集成逻辑的 backend-for-frontend。",
+          "role": "前端，以及 backend-for-frontend 与 WebAuthn 集成",
+          "description": "为 Winterbotham 开发的手机银行应用，由四人团队使用 React Native + Expo 历时 18 个月构建。我的主要工作面是前端，并延伸到一个 backend-for-frontend，承载与另一家公司并行搭建的核心后端之间的连接逻辑。我还在 WebAuthn 尚属新兴标准、文档稀少时完成了它的集成 —— 这个环节一旦出错就是安全事故，而不只是缺陷。",
           "metrics": [
             {
               "label": "平台",
@@ -354,7 +299,7 @@
             },
             {
               "label": "认证",
-              "value": "Android 生物识别 API"
+              "value": "WebAuthn"
             },
             {
               "label": "持久化",
@@ -362,25 +307,13 @@
             },
             {
               "label": "团队",
-              "value": "3 名开发者"
+              "value": "4 名开发者"
             },
             {
               "label": "周期",
               "value": "2023 → 2024"
             }
           ]
-        },
-        "voxel": {
-          "title": "类 Minecraft 地形生成",
-          "desc": "在 Three.js 中使用柏林噪声算法生成体素世界，并配有 3D 第一人称控制器",
-          "role": "开发者",
-          "description": "一个精巧的 3D 体素世界渲染器，具备程序化地形生成、区块流式加载和第一人称控制。使用 Three.js 和 Next.js 构建。\n            程序化地形生成：使用柏林噪声生成逼真的地形与洞穴系统\n            无限世界流式加载：根据相机位置动态加载/卸载区块\n            第一人称控制：WASD 移动，鼠标视角与指针锁定\n            优化渲染：实例化渲染以获得高性能\n            可配置世界：可自定义区块大小、地形参数和方块类型\n            缓存系统：服务端区块缓存，具有确定性生成"
-        },
-        "twitterClone": {
-          "title": "Twitter 克隆",
-          "desc": "旧版 Twitter 应用的功能性克隆，包含认证、信息流、关注和点赞！",
-          "role": "后端开发者",
-          "description": "一个 Twitter 克隆，是我最早的协作项目之一！"
         },
         "mhc": {
           "title": "Magenta Hours Collector (MHC-CLI)",
@@ -411,9 +344,15 @@
         },
         "truqui": {
           "title": "Truqui",
-          "desc": "你的一站式图书店",
+          "desc": "离线优先的 Truco 计分 PWA，可直接从浏览器安装。",
           "role": "开发者",
           "description": "一个专注于 Truco（乌拉圭和阿根廷最受欢迎的传统纸牌游戏）数字记分的渐进式 Web 应用（PWA）。它被设计为可完全离线运行，让玩家无需依赖网络连接即可进行精确高效的记分。该应用利用现代 PWA 能力，提供原生般的跨平台体验，可直接从浏览器安装到手机、平板和桌面设备上。其离线优先架构通过 Service Worker 和本地存储保证完整可用性，确保游戏不会因连接问题而中断。"
+        },
+        "threeVoxelEngine": {
+          "title": "three-voxel-engine",
+          "desc": "由后端驱动的体素世界：噪声与区块在服务端计算，并实时推送到浏览器。",
+          "role": "开发者",
+          "description": "基于 Three.js 与 Next.js 的体素世界渲染器。地形并非在浏览器中生成：Perlin 噪声与区块数据在后端计算，并实时流式传输到客户端，因此区块随相机移动不断抵达，世界得以无限加载。\n\n核心特性：\n\n后端噪声与区块生成，对给定种子保持确定性\n区块缓冲区实时流式传输到浏览器\n依据相机位置的无限区块加载与卸载\n第一人称控制——WASD 移动，配合鼠标视角与指针锁定\n方块几何体的实例化渲染\n可配置世界：区块大小、地形参数与方块类型"
         }
       }
     },
@@ -455,7 +394,6 @@
       "date": "日期",
       "role": "角色",
       "projectBrief": "项目概要",
-      "developmentRoadmap": "开发路线图",
       "engineSystems": "引擎系统 | 2026-27-07",
       "gpuBoundary": "通往 GPU 的唯一路径",
       "keyImplementation": "关键实现"
@@ -505,25 +443,35 @@
     "availableFor": "歌单 · 可接",
     "services": [
       {
-        "tag": "全 · 职",
-        "title": "开发者职位",
-        "note": "接受远程或搬迁。可立即到岗。"
+        "tag": "全职",
+        "title": "后端 / 平台工程",
+        "note": "远程。"
       },
       {
-        "tag": "自由职业",
+        "tag": "合同",
         "title": "按项目合作",
-        "note": "从产品 MVP 到专注的系统工程。"
+        "note": "迁移、API 平台、测试基础设施。"
       },
       {
         "tag": "咨询",
-        "title": "数字化解决方案",
-        "note": "架构、范围界定、技术审计与策略。"
+        "title": "架构评审",
+        "note": "迁移范围界定、技术审计。"
       }
     ],
     "replyTime": "在线 · 约 24 小时回复",
+    "availabilityHeading": "可用性",
+    "availability": [
+      "常驻乌拉圭 Young · UTC−3 · 与美国东部工作时间完全重叠",
+      "可作为承包商或通过 employer-of-record 合作",
+      "为合适的岗位接受搬迁",
+      "通常在 24 小时内回复"
+    ],
     "closing": "……我也随时乐意聊聊音乐，或者一起试试新游戏。",
     "viewResume": "查看简历",
     "linkedin": "LinkedIn",
+    "scheduling": "预约 30 分钟通话",
+    "githubPrimary": "GitHub —— ffontanadev",
+    "githubEngine": "GitHub —— elFonTii，efengine 所在账号",
     "twitter": "Twitter"
   },
   "playlists": {
@@ -544,9 +492,11 @@
       "work": "作品",
       "about": "关于",
       "connect": "联系",
-      "resume": "简历"
+      "resume": "简历",
+      "devZone": "开发专区"
     },
     "copyright": "© {year} · Felipe Fontana · 保留所有权利",
+    "location": "Uruguay · UTC−3",
     "craftedWith": "用",
     "andReact": "和 React 精心打造"
   },
@@ -567,6 +517,8 @@
     "needHelpAfter": "以获取导航选项。"
   },
   "seo": {
-    "siteSuffix": "Portfolio"
+    "siteSuffix": "Portfolio",
+    "title": "Felipe Fontana — 软件工程师 | Java、Spring Boot、遗留系统现代化",
+    "description": "软件工程师，4 年核心银行系统现代化经验 —— 将 ~4,600 个类从 Axis2/Java 8 迁移至 Spring Boot 3，迁移 50+ 个 API，测试覆盖率从 20% 提升至 85%。常驻乌拉圭，UTC−3，与美国东部时间完全重叠。"
   }
 }

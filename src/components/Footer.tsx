@@ -1,22 +1,20 @@
 import { HeartIcon } from '@/components/ui/heart';
 import { useTranslation } from '@/i18n';
-import { TOUR_REPLAY_EVENT, clearTourSeen } from './PageTour/useFirstVisit';
+import { buildLocalePath } from '@/i18n/routing';
 
 const Footer = () => {
     const year = new Date().getFullYear();
-    const { t } = useTranslation();
-
-    const replayTour = () => {
-        clearTourSeen();
-        window.dispatchEvent(new CustomEvent(TOUR_REPLAY_EVENT));
-    };
+    const { locale, t } = useTranslation();
 
     const links = [
         { name: t('footer.links.home'), href: '#hero' },
         { name: t('footer.links.work'), href: '#work' },
         { name: t('footer.links.about'), href: '#about' },
         { name: t('footer.links.connect'), href: '#connect' },
-        { name: t('footer.links.resume'), href: '/resume.pdf' },
+        { name: t('footer.links.resume'), href: '/docs/resume.pdf' },
+        // Demoted from the header (§4.1): a recruiter with fifteen seconds
+        // should not reach a pomodoro timer from the primary nav.
+        { name: t('footer.links.devZone'), href: buildLocalePath(locale, '/dev-zone') },
     ];
 
     return (
@@ -26,8 +24,8 @@ const Footer = () => {
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 mb-16">
                     <div>
                         <div className="flex items-baseline gap-1 mb-4">
-                            <span className="text-5xl md:text-6xl font-display font-bold tracking-tighter">FF</span>
-                            <span className="text-5xl md:text-6xl font-display italic font-light text-coral-500">.</span>
+                            <span className="text-3xl md:text-5xl font-display font-bold tracking-tighter">FF</span>
+                            <span className="text-3xl md:text-5xl font-display italic font-light text-coral-500">.</span>
                         </div>
                         <p className="font-display italic text-dark-900/55 max-w-xs leading-relaxed">
                             {t('footer.tagline')}
@@ -53,16 +51,11 @@ const Footer = () => {
 
                 {/* Bottom row */}
                 <div className="flex flex-col md:flex-row items-center justify-between gap-3">
-                    <span className="font-mono text-[10px] uppercase tracking-widest text-dark-900/45">
+                    <span className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-widest text-dark-900/45">
                         {t('footer.copyright', { year })}
+                        <span aria-hidden="true" className="h-3 w-px bg-dark-900/15" />
+                        {t('footer.location')}
                     </span>
-                    <button
-                        type="button"
-                        onClick={replayTour}
-                        className="text-xs font-medium text-dark-900/50 underline-offset-4 transition-colors hover:text-coral-500 hover:underline"
-                    >
-                        {t('tour.replay')}
-                    </button>
                     <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-dark-900/45">
                         {t('footer.craftedWith')}
                         <HeartIcon size={12} className="fill-coral-500 text-coral-500" />
