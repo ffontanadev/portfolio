@@ -158,36 +158,26 @@
     "curvedText": "✱  CREANDO  ·  PROGRAMANDO  ·  CONECTANDO  ·  "
   },
   "brandMarquee": {
-    "eyebrow": "Stack · en rotación",
+    "eyebrow": "Stack · en producción",
     "logoAlt": "logo de {name}"
   },
   "techShowcase": {
     "back": "Volver",
     "eyebrow": "Stack · enfoque",
     "brief": {
-      "supabase": "Backend Postgres open-source con autenticación, almacenamiento y APIs en tiempo real.",
-      "nextjs": "Framework de React para apps en producción con renderizado híbrido servidor-cliente.",
-      "aws": "Plataforma cloud de Amazon para cómputo, almacenamiento e infraestructura gestionada a escala.",
-      "threejs": "Librería WebGL para renderizar gráficos 3D y animación en el navegador.",
-      "drizzle": "ORM de TypeScript liviano y con tipos seguros, con un constructor de consultas tipo SQL.",
-      "sqlite": "Motor de base de datos SQL sin servidor, embebido directamente en la aplicación.",
-      "mongodb": "Base de datos de documentos que guarda registros flexibles tipo JSON para iterar rápido.",
-      "postgresql": "Potente base de datos relacional open-source, conocida por su fiabilidad y funciones.",
+      "java": "El lenguaje sobre el que corre el core bancario — Java 17 LTS, migrado desde Java 8.",
       "springboot": "Framework de Java para construir servicios listos para producción con mínima configuración.",
-      "sequelize": "ORM de Node.js basado en promesas para bases SQL, con modelos y migraciones.",
-      "express": "Framework minimalista y sin opiniones de Node.js para crear servidores web y APIs.",
-      "tailwind": "Framework CSS utility-first para crear diseños a medida sin salir del marcado.",
-      "astro": "Framework web enfocado en contenido que envía cero JavaScript por defecto para más velocidad.",
-      "bootstrap": "Popular framework CSS con componentes responsivos listos y un sistema de grilla.",
-      "vercel": "Plataforma cloud para desplegar y escalar apps frontend sin configuración.",
-      "godaddy": "Registrador de dominios y proveedor de hosting para publicar proyectos rápidamente.",
-      "googlecloud": "Plataforma cloud de Google para cómputo, datos y servicios de machine learning.",
-      "csharp": "Lenguaje moderno y con tipos seguros de Microsoft para backend, escritorio y videojuegos.",
-      "lit": "Librería liviana para construir web components rápidos y reutilizables sobre estándares web.",
-      "redux": "Contenedor de estado predecible para apps JavaScript con una única fuente de verdad.",
-      "auth0": "Plataforma de identidad que gestiona autenticación y autorización como servicio.",
-      "jwt": "Tokens compactos y firmados para transmitir información de forma segura entre partes.",
-      "vite": "Herramienta de build y servidor de desarrollo veloz con recarga instantánea de módulos."
+      "junit": "El framework de tests detrás del trabajo de cobertura — suites unitarias y de integración sobre APIs bancarias.",
+      "openapi": "Contratos de API legibles por máquina. Cada endpoint migrado tiene uno antes del cutover.",
+      "schemathesis": "Genera tests de propiedades y fuzzing a partir de un esquema OpenAPI, para que las desviaciones aparezcan en CI.",
+      "postgresql": "Potente base de datos relacional open-source, conocida por su fiabilidad y funciones.",
+      "mssql": "Microsoft SQL Server — el almacén de datos detrás de la plataforma bancaria core.",
+      "docker": "Contenedores para builds reproducibles y paridad local con el entorno de despliegue.",
+      "jenkins": "El pipeline que controla cada despliegue a través de build, tests y checks de calidad.",
+      "typescript": "JavaScript tipado. En esto están escritos este sitio, el tooling y el trabajo de front-end.",
+      "react": "La librería de UI detrás de este portfolio y del lado front-end del trabajo.",
+      "reactnative": "Mobile multiplataforma, publicado en iOS y Android en una app bancaria en producción.",
+      "cpp": "C++ moderno — el lenguaje en el que está escrito efengine, del renderer al pipeline de assets."
     }
   },
   "work": {

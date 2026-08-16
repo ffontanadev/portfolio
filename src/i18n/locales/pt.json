@@ -158,36 +158,26 @@
     "curvedText": "✱  CRIANDO  ·  PROGRAMANDO  ·  CONECTANDO  ·  "
   },
   "brandMarquee": {
-    "eyebrow": "Stack · em rotação",
+    "eyebrow": "Stack · em produção",
     "logoAlt": "logo de {name}"
   },
   "techShowcase": {
     "back": "Voltar",
     "eyebrow": "Stack · foco",
     "brief": {
-      "supabase": "Backend Postgres open-source com autenticação, armazenamento e APIs em tempo real.",
-      "nextjs": "Framework React para apps em produção com renderização híbrida servidor-cliente.",
-      "aws": "Plataforma cloud da Amazon para computação, armazenamento e infraestrutura gerenciada em escala.",
-      "threejs": "Biblioteca WebGL para renderizar gráficos 3D e animação no navegador.",
-      "drizzle": "ORM TypeScript leve e type-safe, com um construtor de consultas no estilo SQL.",
-      "sqlite": "Motor de banco de dados SQL sem servidor, embutido diretamente no aplicativo.",
-      "mongodb": "Banco de dados de documentos que guarda registros flexíveis tipo JSON para iterar rápido.",
-      "postgresql": "Poderoso banco de dados relacional open-source, conhecido pela confiabilidade e recursos.",
+      "java": "A linguagem em que o core bancário roda — Java 17 LTS, migrado a partir do Java 8.",
       "springboot": "Framework Java para criar serviços prontos para produção com configuração mínima.",
-      "sequelize": "ORM Node.js baseado em promises para bancos SQL, com modelos e migrações.",
-      "express": "Framework minimalista e sem opiniões do Node.js para criar servidores web e APIs.",
-      "tailwind": "Framework CSS utility-first para criar designs sob medida sem sair da marcação.",
-      "astro": "Framework web focado em conteúdo que entrega zero JavaScript por padrão para mais velocidade.",
-      "bootstrap": "Popular framework CSS com componentes responsivos prontos e um sistema de grid.",
-      "vercel": "Plataforma cloud para implantar e escalar apps frontend sem configuração.",
-      "godaddy": "Registrador de domínios e provedor de hospedagem para publicar projetos rapidamente.",
-      "googlecloud": "Plataforma cloud do Google para computação, dados e serviços de machine learning.",
-      "csharp": "Linguagem moderna e type-safe da Microsoft para backend, desktop e jogos.",
-      "lit": "Biblioteca leve para construir web components rápidos e reutilizáveis sobre padrões web.",
-      "redux": "Contêiner de estado previsível para apps JavaScript com uma única fonte de verdade.",
-      "auth0": "Plataforma de identidade que gerencia autenticação e autorização como serviço.",
-      "jwt": "Tokens compactos e assinados para transmitir informações com segurança entre partes.",
-      "vite": "Ferramenta de build e servidor de desenvolvimento rápido com hot-reload instantâneo."
+      "junit": "O framework de testes por trás do trabalho de cobertura — suítes unitárias e de integração sobre APIs bancárias.",
+      "openapi": "Contratos de API legíveis por máquina. Todo endpoint migrado ganha um antes do cutover.",
+      "schemathesis": "Gera testes de propriedade e fuzzing a partir de um schema OpenAPI, para que desvios apareçam no CI.",
+      "postgresql": "Poderoso banco de dados relacional open-source, conhecido pela confiabilidade e recursos.",
+      "mssql": "Microsoft SQL Server — o armazenamento por trás da plataforma bancária core.",
+      "docker": "Contêineres para builds reproduzíveis e paridade local com o ambiente de deploy.",
+      "jenkins": "O pipeline que controla cada deploy através de build, testes e checagens de qualidade.",
+      "typescript": "JavaScript tipado. É nisso que este site, o tooling e o trabalho de front-end são escritos.",
+      "react": "A biblioteca de UI por trás deste portfólio e do lado front-end do trabalho.",
+      "reactnative": "Mobile multiplataforma, publicado no iOS e no Android em um app bancário em produção.",
+      "cpp": "C++ moderno — a linguagem em que a efengine é escrita, do renderizador ao pipeline de assets."
     }
   },
   "work": {

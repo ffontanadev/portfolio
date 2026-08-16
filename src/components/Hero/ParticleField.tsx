@@ -109,21 +109,28 @@ const SHOWCASE_BASE_SIZE = 0.36;
 // Shift the logo up so it clears the bottom-left brief text in the hero.
 const SHOWCASE_Y_OFFSET = -0.1;
 
-const showcaseSpecFor = (tech: TechItem): ShapeSpec => ({
+const showcaseSpecFor = (tech: TechItem, src: string): ShapeSpec => ({
   kind: 'silhouette',
-  src: tech.marqueeUrl,
+  src,
   sizeRatio: SHOWCASE_BASE_SIZE * (tech.logoScale ?? 1),
   yOffsetRatio: SHOWCASE_Y_OFFSET,
 });
 
 async function applyShowcase(system: ParticleSystem, tech: TechItem): Promise<void> {
+  // Not every technology in the catalog has an SVG mark — spec §5.2 lists six
+  // that svgl doesn't carry, and they render as typographic wordmarks in the
+  // marquee instead. There is nothing to sample into particles for those, so
+  // leave the ambient loop running; the hero brief text still swaps.
+  const src = tech.marqueeUrl;
+  if (!src) return;
+
   try {
-    await loadSilhouette(tech.marqueeUrl);
+    await loadSilhouette(src);
   } catch (err) {
     console.warn('[ParticleField] logo load failed', err);
     return; // keep the ambient loop running
   }
-  const spec = showcaseSpecFor(tech);
+  const spec = showcaseSpecFor(tech, src);
   const { colors } = sampleShapeWithColor(spec, system.particleCountPublic, system.boundsPublic);
   system.showShape(spec, colors);
 }

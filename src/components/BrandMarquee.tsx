@@ -41,16 +41,32 @@ const BrandMarquee = () => {
                             className="group relative flex flex-col items-center justify-center min-w-[56px] cursor-pointer bg-transparent border-0 p-0 focus-visible:outline-2 focus-visible:outline-coral-500 focus-visible:outline-offset-4 rounded"
                             aria-label={t('brandMarquee.logoAlt', { name: brand.name })}
                         >
-                            <img
-                                src={brand.marqueeUrl}
-                                alt={brand.name}
-                                crossOrigin="anonymous"
-                                className="h-12 w-auto object-contain grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                                loading="lazy"
-                            />
-                            <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] tracking-widest uppercase text-dark-900/0 group-hover:text-dark-900/65 transition-all duration-500 translate-y-1 group-hover:translate-y-0">
-                                {brand.name}
-                            </span>
+                            {brand.marqueeUrl ? (
+                                <img
+                                    src={brand.marqueeUrl}
+                                    alt={brand.name}
+                                    crossOrigin="anonymous"
+                                    className="h-12 w-auto object-contain grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                                    loading="lazy"
+                                />
+                            ) : (
+                                <span
+                                    aria-hidden="true"
+                                    className="flex h-12 items-center font-mono text-lg tracking-tight text-dark-900/45 opacity-70 group-hover:text-dark-900/85 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                                >
+                                    {brand.name}
+                                </span>
+                            )}
+                            {/*
+                              * The hover label names the logo above it. A wordmark
+                              * entry already *is* its name, so showing the label too
+                              * would print it twice.
+                              */}
+                            {brand.marqueeUrl && (
+                                <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] tracking-widest uppercase text-dark-900/0 group-hover:text-dark-900/65 transition-all duration-500 translate-y-1 group-hover:translate-y-0">
+                                    {brand.name}
+                                </span>
+                            )}
                         </button>
                     ))}
                 </motion.div>
