@@ -17,6 +17,9 @@ const Footer = () => {
         { name: t('footer.links.about'), href: '#about' },
         { name: t('footer.links.connect'), href: '#connect' },
         { name: t('footer.links.resume'), href: '/docs/resume.pdf' },
+        // Demoted from the header (§4.1): a recruiter with fifteen seconds
+        // should not reach a pomodoro timer from the primary nav.
+        { name: t('footer.links.devZone'), href: '/dev-zone', tourId: 'dev-zone' },
     ];
 
     return (
@@ -39,6 +42,7 @@ const Footer = () => {
                             <a
                                 key={link.name}
                                 href={link.href}
+                                data-tour-id={link.tourId}
                                 className="reveal-underline text-sm font-medium text-dark-900/80 hover:text-coral-500 transition-colors duration-500 flex items-baseline gap-2"
                             >
                                 <span className="font-mono text-[10px] text-dark-900/30">0{idx + 1}</span>

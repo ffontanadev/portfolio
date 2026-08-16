@@ -367,12 +367,6 @@
           "role": "开发者",
           "description": "一个精巧的 3D 体素世界渲染器，具备程序化地形生成、区块流式加载和第一人称控制。使用 Three.js 和 Next.js 构建。\n            程序化地形生成：使用柏林噪声生成逼真的地形与洞穴系统\n            无限世界流式加载：根据相机位置动态加载/卸载区块\n            第一人称控制：WASD 移动，鼠标视角与指针锁定\n            优化渲染：实例化渲染以获得高性能\n            可配置世界：可自定义区块大小、地形参数和方块类型\n            缓存系统：服务端区块缓存，具有确定性生成"
         },
-        "twitterClone": {
-          "title": "Twitter 克隆",
-          "desc": "旧版 Twitter 应用的功能性克隆，包含认证、信息流、关注和点赞！",
-          "role": "后端开发者",
-          "description": "一个 Twitter 克隆，是我最早的协作项目之一！"
-        },
         "mhc": {
           "title": "Magenta Hours Collector (MHC-CLI)",
           "desc": "一个命令行应用程序，连接到邮箱并使用 AI 提取工时报告，搜索符合所配置条件的邮件，然后将邮件交给 Claude Sonnet 4.5 收集所有相关信息并提醒用户",
@@ -544,7 +538,8 @@
       "work": "作品",
       "about": "关于",
       "connect": "联系",
-      "resume": "简历"
+      "resume": "简历",
+      "devZone": "开发专区"
     },
     "copyright": "© {year} · Felipe Fontana · 保留所有权利",
     "location": "Uruguay · UTC−3",

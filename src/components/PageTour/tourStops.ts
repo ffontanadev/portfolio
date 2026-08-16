@@ -39,10 +39,13 @@ export const TOUR_STOPS: TourStop[] = [
   {
     id: 'devZone',
     selector: '[data-tour-id="dev-zone"]',
+    // The target moved from the header to the footer (§4.1), so it now sits
+    // near the bottom of the document: centre it, and put the caption above
+    // it — below would render off-screen.
     captionKey: 'tour.stops.devZone',
     orbit: { radius: 46, revolutions: 2 },
-    captionPlacement: 'bottom',
-    scrollAlign: 'start',
+    captionPlacement: 'top',
+    scrollAlign: 'center',
   },
 ];
 

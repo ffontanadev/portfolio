@@ -367,12 +367,6 @@
           "role": "Developer",
           "description": "A sophisticated 3D voxel world renderer with procedural terrain generation, chunk streaming, and first-person controls. Built with Three.js and Next.js.\n            Procedural Terrain Generation: Uses Perlin noise for realistic terrain and cave systems\n            Infinite World Streaming: Dynamic chunk loading/unloading based on camera position\n            First-Person Controls: WASD movement with mouse look and pointer lock\n            Optimized Rendering: Instanced rendering for high performance\n            Configurable World: Customizable chunk size, terrain parameters, and block types\n            Caching System: Server-side chunk caching with deterministic generation"
         },
-        "twitterClone": {
-          "title": "Twitter Clone",
-          "desc": "A functional clone of the old app Twitter with authentication, feed, following and likes!",
-          "role": "Backend Developer",
-          "description": "A Twitter Clone, one of my first collaborative projects!"
-        },
         "mhc": {
           "title": "Magenta Hours Collector (MHC-CLI)",
           "desc": "A command line application that connects to an email inbox and extract hour reports using AI and search for emails matching the configured criteria and then give the email to Claude Sonnet 4.5 to collect all the relevant information and alert from use",
@@ -544,7 +538,8 @@
       "work": "Work",
       "about": "About",
       "connect": "Connect",
-      "resume": "Resume"
+      "resume": "Resume",
+      "devZone": "Dev Zone"
     },
     "copyright": "© {year} · Felipe Fontana · All rights reserved",
     "location": "Uruguay · UTC−3",

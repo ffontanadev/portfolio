@@ -170,3 +170,22 @@ describe('availability block', () => {
     expect(contactOf(locale).services).toHaveLength(3);
   });
 });
+
+/**
+ * Spec §5.4: "Sitting beside a 4,600-class migration and a PBR renderer, it
+ * doesn't add range — it subtracts seniority." Six projects, not seven.
+ */
+describe('project inventory', () => {
+  const projectsOf = (locale: Locale) =>
+    (messages[locale] as unknown as {
+      work: { featured: { projects: Record<string, unknown> } };
+    }).work.featured.projects;
+
+  it.each(SUPPORTED_LOCALES)('%s no longer ships the Twitter Clone', (locale) => {
+    expect(projectsOf(locale)).not.toHaveProperty('twitterClone');
+  });
+
+  it.each(SUPPORTED_LOCALES)('%s ships exactly six featured projects', (locale) => {
+    expect(Object.keys(projectsOf(locale))).toHaveLength(6);
+  });
+});
