@@ -96,47 +96,57 @@ const Hero = () => {
         <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] gap-14 lg:gap-24 items-center">
 
           {/* Left Column - Content */}
-          <div className="flex flex-col space-y-10">
-            {/* Status Badge <StatusBadge /> */}
-            <div>
-              
-            </div>
-
-            {/* Hero Heading — word-by-word reveal
-            <h1 className="font-display font-display-xl font-bold leading-[1.02] text-5xl md:text-6xl lg:text-7xl tracking-[-0.02em]">
-              <span className="block overflow-hidden pb-1">
-                {headlineWords.map((word, i) => (
-                  <motion.span
-                    key={word}
-                    initial={{ y: '110%', opacity: 0 }}
-                    animate={{ y: '0%', opacity: 1 }}
-                    transition={{ delay: 0.25 + i * 0.08, duration: 0.85, ease }}
-                    className="inline-block mr-4"
-                  >
-                    {word}
-                  </motion.span>
-                ))}
-              </span>
-              <span className="block overflow-hidden pb-2">
-                <motion.span
-                  initial={{ y: '110%', opacity: 0 }}
-                  animate={{ y: '0%', opacity: 1 }}
-                  transition={{ delay: 0.45, duration: 0.95, ease }}
-                  className="inline-block font-display-italic text-coral-500"
-                  style={{ fontStyle: 'italic' }}
-                >
-                  Felipe.
-                </motion.span>
-              </span>
-            </h1>
-            */}
-            {/* Activity Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
+          <div className="flex flex-col space-y-8">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9, duration: 0.9, ease }}
+              transition={{ delay: introOffset, duration: 0.9, ease }}
+              className="font-display font-display-xl font-bold leading-[1.05] tracking-[-0.02em] text-[2.25rem] md:text-[3.5rem] lg:text-[4.5rem] text-dark-900"
             >
-            </motion.div>
+              {t('hero.headline.lead')}{' '}
+              <span className="font-display-italic text-coral-500" style={{ fontStyle: 'italic' }}>
+                {t('hero.headline.emphasis')}
+              </span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: introOffset + 0.15, duration: 0.8, ease }}
+              className="font-mono text-[11px] md:text-xs leading-relaxed tracking-wide text-dark-900/60"
+            >
+              {t('hero.availability')}
+            </motion.p>
+
+            <motion.nav
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: introOffset + 0.25, duration: 0.8, ease }}
+              aria-label={t('hero.ctas.work')}
+              className="flex flex-wrap items-center gap-4"
+            >
+              <a
+                href="#work"
+                className="group relative overflow-hidden rounded-full bg-dark-900 px-7 py-3.5 text-sm font-medium text-cream-50"
+              >
+                <span className="relative z-10">{t('hero.ctas.work')}</span>
+                <span className="absolute inset-0 translate-y-full bg-coral-500 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0" />
+              </a>
+              <a
+                href="mailto:contacto@ffontana.dev"
+                className="rounded-full border border-dark-900/15 px-7 py-3.5 text-sm font-medium text-dark-900 transition-colors duration-300 hover:border-coral-500 hover:text-coral-500"
+              >
+                {t('hero.ctas.contact')}
+              </a>
+              <a
+                href="https://github.com/ffontanadev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="reveal-underline text-sm font-medium text-dark-900/70 transition-colors duration-300 hover:text-coral-500"
+              >
+                {t('hero.ctas.github')}
+              </a>
+            </motion.nav>
           </div>
 
           {/* Right Column - Portrait with cursor parallax */}
@@ -184,11 +194,7 @@ const Hero = () => {
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.4, ease }}
               >
-                {t('hero.subheading.lead')}{' '}
-                <span className="font-medium text-dark-900 reveal-underline cursor-default">{t('hero.subheading.role')}</span>{' '}
-                {t('hero.subheading.middle')}{' '}
-                <span className="font-medium text-dark-900">{t('hero.subheading.company')}</span>{' '}
-                <span className="text-coral-500">.</span>
+                {t('hero.subhead')}
               </motion.p>
             )}
           </AnimatePresence>

@@ -383,7 +383,7 @@ const OlderWorks = () => {
                             <span className="text-eyebrow text-dark-900/55">{t('work.older.eyebrow')}</span>
                             <span className="h-px flex-1 max-w-[120px] bg-dark-900/15" />
                         </div>
-                        <h2 className="font-display font-bold text-3xl md:text-4xl tracking-[-0.02em] text-dark-900 leading-tight">
+                        <h2 className="font-display font-bold text-[1.75rem] md:text-[2.25rem] lg:text-[2.75rem] tracking-[-0.02em] text-dark-900 leading-tight">
                             {t('work.older.headingBefore')}{' '}
                             <span className="font-display-italic text-dark-900/55" style={{ fontStyle: 'italic' }}>
                                 {t('work.older.headingEmphasis')}

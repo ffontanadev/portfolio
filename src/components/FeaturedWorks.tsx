@@ -650,7 +650,7 @@ const FeaturedWorks = () => {
             <span className="text-eyebrow text-coral-500">{t('work.featured.eyebrow')}</span>
             <span className="h-px flex-1 max-w-[140px] bg-dark-900/15" />
           </div>
-          <h2 className="font-display font-display-md font-bold tracking-[-0.02em] text-4xl md:text-6xl leading-[1.05] max-w-3xl text-dark-900">
+          <h2 className="font-display font-display-md font-bold tracking-[-0.02em] text-[1.75rem] md:text-[2.25rem] lg:text-[2.75rem] leading-[1.05] max-w-3xl text-dark-900">
             {t('work.featured.headingBefore')}{' '}
             <span className="font-display-italic text-coral-500" style={{ fontStyle: 'italic' }}>
               {t('work.featured.headingEmphasis')}

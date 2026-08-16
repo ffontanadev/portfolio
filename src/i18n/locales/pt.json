@@ -120,11 +120,16 @@
   },
   "hero": {
     "eyebrow": "01 — Introdução",
-    "subheading": {
-      "lead": "Um",
-      "role": "desenvolvedor",
-      "middle": "criando soluções digitais na",
-      "company": "Magenta Innova"
+    "headline": {
+      "lead": "Eu modernizo sistemas bancários legados —",
+      "emphasis": "e provo que a migração não quebrou nada."
+    },
+    "subhead": "Engenheiro de Software, quatro anos na Magenta Innova em serviços core de bancos uruguaios e da região. ~4.600 classes migradas de Axis2/Java 8 para Spring Boot 3. Mais de 50 APIs migradas, cobertura de testes de 20% para 85%. Também React Native em produção, e um renderizador em C++17 como projeto pessoal.",
+    "availability": "Uruguai · UTC−3 · sobreposição total com o horário do Leste dos EUA · contractor ou employer-of-record · aberto a realocação",
+    "ctas": {
+      "work": "Ver o trabalho",
+      "contact": "Fale comigo",
+      "github": "GitHub"
     },
     "statusBadge": {
       "available": "Disponível para trabalhar"

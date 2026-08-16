@@ -120,11 +120,16 @@
   },
   "hero": {
     "eyebrow": "01 — 简介",
-    "subheading": {
-      "lead": "一名",
-      "role": "开发者",
-      "middle": "在",
-      "company": "Magenta Innova"
+    "headline": {
+      "lead": "我负责银行遗留系统的现代化改造 —",
+      "emphasis": "并证明迁移没有破坏任何契约。"
+    },
+    "subhead": "软件工程师，在 Magenta Innova 从事乌拉圭及周边地区银行核心服务工作四年。将约 4,600 个类从 Axis2/Java 8 迁移至 Spring Boot 3，迁移 50 多个 API，测试覆盖率从 20% 提升至 85%。同时具备生产级 React Native 经验，并独立开发了一个 C++17 渲染器。",
+    "availability": "乌拉圭 · UTC−3 · 与美国东部时间完全重叠 · 可作为承包商或通过 employer-of-record 合作 · 接受搬迁",
+    "ctas": {
+      "work": "查看作品",
+      "contact": "联系我",
+      "github": "GitHub"
     },
     "statusBadge": {
       "available": "可接受工作"

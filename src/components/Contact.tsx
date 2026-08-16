@@ -50,7 +50,7 @@ const Contact = () => {
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
-                    className="font-display font-display-xl font-bold text-5xl md:text-7xl tracking-[-0.02em] leading-[1.02] mb-14"
+                    className="font-display font-display-xl font-bold text-[1.75rem] md:text-[2.25rem] lg:text-[2.75rem] tracking-[-0.02em] leading-[1.02] mb-14"
                 >
                     {headline.split('').map((char, i) => (
                         <motion.span
