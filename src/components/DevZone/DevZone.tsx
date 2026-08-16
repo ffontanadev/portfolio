@@ -4,6 +4,7 @@ import { MotionConfig } from 'framer-motion';
 import { ArrowLeft, MousePointer2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useTranslation } from '@/i18n';
+import { buildLocalePath } from '@/i18n/routing';
 import { useDevZoneLayout } from './useDevZoneLayout';
 import { clampZoom, strokeToPath, useWhiteboardCanvas } from './useWhiteboardCanvas';
 import { useHistory, type Snapshot } from './useHistory';
@@ -43,7 +44,7 @@ function isEditableTarget(el: Element | null): boolean {
  * (Cmd/Ctrl+Z, Shift+Z, Ctrl+Y) and pasting text/images onto the board.
  */
 export default function DevZone() {
-  const { t } = useTranslation();
+  const { locale, t } = useTranslation();
   const viewportRef = useRef<HTMLDivElement | null>(null);
 
   const {
@@ -423,7 +424,7 @@ export default function DevZone() {
       {/* Floating header. */}
       <div className="pointer-events-none fixed top-5 left-5 z-40 flex flex-col gap-1">
         <Link
-          to="/"
+          to={buildLocalePath(locale)}
           className="reveal-underline pointer-events-auto inline-flex w-fit items-center gap-1.5 font-mono text-xs text-dark-900/50 transition-colors hover:text-coral-500"
         >
           <ArrowLeft size={14} />

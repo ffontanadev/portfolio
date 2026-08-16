@@ -32,5 +32,9 @@ export const LOCALE_LABELS: Record<Locale, string> = {
   zh: '中文',
 };
 
+/**
+ * Remembers the visitor's last explicit choice. Read **only** by the bare-`/`
+ * redirect; the URL is the source of truth everywhere else.
+ */
 export const STORAGE_KEY = 'portfolio.locale';
 

@@ -1,9 +1,10 @@
 import { HeartIcon } from '@/components/ui/heart';
 import { useTranslation } from '@/i18n';
+import { buildLocalePath } from '@/i18n/routing';
 
 const Footer = () => {
     const year = new Date().getFullYear();
-    const { t } = useTranslation();
+    const { locale, t } = useTranslation();
 
     const links = [
         { name: t('footer.links.home'), href: '#hero' },
@@ -13,7 +14,7 @@ const Footer = () => {
         { name: t('footer.links.resume'), href: '/docs/resume.pdf' },
         // Demoted from the header (§4.1): a recruiter with fifteen seconds
         // should not reach a pomodoro timer from the primary nav.
-        { name: t('footer.links.devZone'), href: '/dev-zone' },
+        { name: t('footer.links.devZone'), href: buildLocalePath(locale, '/dev-zone') },
     ];
 
     return (

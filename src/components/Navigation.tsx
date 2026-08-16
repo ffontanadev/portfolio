@@ -6,13 +6,15 @@ import { MenuIcon } from '@/components/ui/menu';
 import { XIcon } from '@/components/ui/x';
 import { useAppContext } from '@/contexts/AppContext';
 import { useTranslation } from '@/i18n';
+import { buildLocalePath } from '@/i18n/routing';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 const Navigation = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const { openResume } = useAppContext();
-    const { t } = useTranslation();
+    const { locale, t } = useTranslation();
+    const home = buildLocalePath(locale);
 
     const { scrollYProgress } = useScroll();
     const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.4 });
@@ -24,7 +26,7 @@ const Navigation = () => {
     }, []);
 
     const navLinks = [
-        { name: t('nav.links.home'), href: '#hero', route: '/' },
+        { name: t('nav.links.home'), href: '#hero', route: home },
         { name: t('nav.links.work'), href: '#work' },
         { name: t('nav.links.about'), href: '#about' },
         { name: t('nav.links.connect'), href: '#connect' },
@@ -42,7 +44,7 @@ const Navigation = () => {
                 <div className="max-w-[1440px] mx-auto px-6 md:px-20 flex justify-between items-center">
                     {/* Logo */}
                     <motion.a
-                        href="/"
+                        href={home}
                         className="group flex items-baseline gap-1 select-none"
                         whileHover={{ scale: 1.02 }}
                         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
