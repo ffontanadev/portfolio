@@ -1,5 +1,6 @@
 import { TechShowcaseProvider } from '../context/TechShowcaseContext';
 import Hero from '../components/Hero';
+import ProofStrip from '../components/ProofStrip';
 import BrandMarquee from '../components/BrandMarquee';
 import FeaturedWorks from '../components/FeaturedWorks';
 import HowIWorkWithAgents from '../components/HowIWorkWithAgents';
@@ -12,6 +13,7 @@ export default function HomePage() {
     <TechShowcaseProvider>
       <main>
         <Hero />
+        <ProofStrip />
         <BrandMarquee />
         <FeaturedWorks />
         <HowIWorkWithAgents />

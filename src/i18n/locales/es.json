@@ -161,6 +161,15 @@
     "eyebrow": "Stack · en producción",
     "logoAlt": "logo de {name}"
   },
+  "proof": {
+    "eyebrow": "En producción",
+    "figures": [
+      { "value": "~4,600", "label": "clases migradas" },
+      { "value": "50+", "label": "APIs a Spring Boot" },
+      { "value": "20% → 85%", "label": "cobertura de tests" },
+      { "value": "4", "label": "años en banca" }
+    ]
+  },
   "techShowcase": {
     "back": "Volver",
     "eyebrow": "Stack · enfoque",

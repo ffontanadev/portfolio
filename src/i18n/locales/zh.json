@@ -161,6 +161,15 @@
     "eyebrow": "技术栈 · 生产环境",
     "logoAlt": "{name} 标志"
   },
+  "proof": {
+    "eyebrow": "生产环境",
+    "figures": [
+      { "value": "~4,600", "label": "个类完成迁移" },
+      { "value": "50+", "label": "个 API 迁移至 Spring Boot" },
+      { "value": "20% → 85%", "label": "测试覆盖率" },
+      { "value": "4", "label": "年银行业经验" }
+    ]
+  },
   "techShowcase": {
     "back": "返回",
     "eyebrow": "技术栈 · 聚焦",
