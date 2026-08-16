@@ -84,6 +84,19 @@ describe('Winterbotham card', () => {
       .metrics.find((m) => /team|equipo|equipe|团队/i.test(m.label));
     expect(team?.value).toMatch(/4/);
   });
+
+  /**
+   * Spec §12 item 5 — the owner supplied the surfaces on 2026-08-16: frontend
+   * first, extending into a backend-for-frontend, plus the WebAuthn
+   * integration. WebAuthn replaces the earlier "Android Biometric API"
+   * framing, which named the platform API rather than the standard.
+   */
+  it.each(SUPPORTED_LOCALES)('%s names the surfaces the owner actually held', (locale) => {
+    const haystack = strings(mobileBankingOf(locale)).join(' ');
+    expect(haystack).toContain('WebAuthn');
+    expect(haystack).toMatch(/backend-for-frontend|backend for frontend/i);
+    expect(haystack).not.toMatch(/Biometric API|Biométrica|生物识别 API/);
+  });
 });
 
 describe('Provincia Casa Financiera card', () => {
@@ -93,14 +106,26 @@ describe('Provincia Casa Financiera card', () => {
     }).work.featured.projects.bancoProvincia;
 
   /**
-   * Spec §12 item 1: "Banco Provincia" reads to anyone who googles it as the
-   * Argentine provincial bank. The owner confirmed on 2026-08-15 that the
-   * client is Provincia Casa Financiera, a Uruguayan institution.
+   * Spec §12 item 1 flagged that "Banco Provincia" reads to anyone who googles
+   * it as the Argentine provincial bank. The owner resolved it on 2026-08-16:
+   * the client is Provincia Casa Financiera, the Uruguayan branch of Banco de
+   * la Provincia de Buenos Aires — so the connection is real and stating it is
+   * the fix. What must not happen is the card naming the parent bank *as the
+   * client*, which is the ambiguity the spec objected to.
    */
-  it.each(SUPPORTED_LOCALES)('%s no longer names the Argentine bank', (locale) => {
+  it.each(SUPPORTED_LOCALES)('%s names the local entity, not the parent, as the client', (locale) => {
     const haystack = strings(provinciaOf(locale)).join(' ');
-    expect(haystack).not.toContain('Banco Provincia');
     expect(haystack).toContain('Provincia Casa Financiera');
+    expect(haystack).toMatch(/Banco de la Provincia de Buenos Aires/);
+    // The bare parent name never stands alone as the client.
+    expect(haystack).not.toMatch(/Banco Provincia(?! Casa)/);
+  });
+
+  /** Spec §12 item 4 — the owner supplied role and team size on 2026-08-16. */
+  it.each(SUPPORTED_LOCALES)('%s states the role and the team size', (locale) => {
+    const role = (provinciaOf(locale) as { role: string }).role;
+    expect(role).not.toMatch(/^Backend Engineer$/);
+    expect(role).toMatch(/3|三/);
   });
 });
 

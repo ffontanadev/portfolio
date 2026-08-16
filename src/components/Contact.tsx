@@ -1,11 +1,13 @@
 import { motion } from 'framer-motion';
-import { Github } from 'lucide-react';
+import { Github, Calendar as CalendarIcon } from 'lucide-react';
 import { LinkedinIcon } from '@/components/ui/linkedin';
 import { DownloadIcon } from '@/components/ui/download';
 import { useAppContext } from '@/contexts/AppContext';
 import { useTranslation } from '@/i18n';
 
 const ease = [0.22, 1, 0.36, 1] as const;
+
+const SCHEDULING_URL = 'https://cal.com/felipe-fontana-botta-26vtyb/30min';
 
 const Contact = () => {
     const { openResume } = useAppContext();
@@ -200,6 +202,21 @@ const Contact = () => {
                         <span className="relative z-10">{t('contact.viewResume')}</span>
                         <span className="absolute inset-0 bg-coral-500 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]" />
                     </button>
+
+                    {/*
+                      * Spec §5.8: for a candidate five timezones from the hiring
+                      * manager, removing the back-and-forth of finding a slot
+                      * measurably increases the chance of a first call.
+                      */}
+                    <a
+                        href={SCHEDULING_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group inline-flex items-center gap-2.5 rounded-full border border-dark-900/15 px-7 py-3.5 text-sm font-medium text-dark-900 transition-colors duration-300 hover:border-coral-500 hover:text-coral-500"
+                    >
+                        <CalendarIcon size={17} />
+                        {t('contact.scheduling')}
+                    </a>
 
                     <a
                         href={`mailto:${email}`}

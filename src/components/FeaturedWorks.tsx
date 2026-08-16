@@ -55,6 +55,9 @@ const projectData: ProjectStructural[] = [
     codeBlocks: [],
     category: 'professional',
     company: 'Provincia Casa Financiera',
+    // The Uruguayan branch of Banco de la Provincia de Buenos Aires — hence the
+    // parent bank's wordmark on a card titled with the local entity's name.
+    logo: 'banco-provincia',
     leadMetric: { kind: 'migration', from: 'Axis 2', to: 'Boot' },
   },
   {
@@ -71,7 +74,7 @@ const projectData: ProjectStructural[] = [
   {
     id: 'mobileBanking',
     color: "bg-cream-100",
-    techStack: ["React Native", "Expo", "Android Biometric API", "Local Persistence"],
+    techStack: ["React Native", "Expo", "WebAuthn", "Backend for Frontend", "Local Persistence"],
     date: "'23 — '24",
     codeBlocks: [],
     category: 'professional',

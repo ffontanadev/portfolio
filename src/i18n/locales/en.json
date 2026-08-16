@@ -273,9 +273,9 @@
         },
         "bancoProvincia": {
           "title": "Provincia Casa Financiera — Core Services Migration",
-          "desc": "Lifting a Uruguayan financial institution's legacy Axis2 / Java 8 web services into a modern Spring Boot 3 platform on Java 17 — 7 repositories, ~4,600 classes — with connectivity rewired from JNDI to a managed MSSQL DataSource.",
-          "role": "Backend Engineer",
-          "description": "Long-running modernization of legacy Axis2 SOAP services that power core banking integrations at Provincia Casa Financiera. The work covers migrating the runtime from Java 8 to Java 17 + Spring Boot 3, replacing JNDI-bound resources with a managed MSSQL DataSource, and untangling years of tightly-coupled web service contracts — all while preserving downstream consumers.",
+          "desc": "Lifting the legacy Axis2 / Java 8 web services of Banco de la Provincia de Buenos Aires' Uruguayan branch onto Spring Boot 3 and Java 17 — 7 repositories, ~4,600 classes — with connectivity rewired from JNDI to a managed MSSQL DataSource.",
+          "role": "Backend — legacy SOAP/WSDL services onto Spring Boot, team of 3",
+          "description": "Long-running modernization of the legacy Axis2 SOAP services behind core banking at Provincia Casa Financiera, the Uruguayan branch of Banco de la Provincia de Buenos Aires. I own the backend: taking the legacy SOAP/WSDL services onto Java 17 + Spring Boot 3, replacing JNDI-bound resources with a managed MSSQL DataSource, and untangling years of tightly-coupled service contracts without breaking downstream consumers. In parallel a colleague split the Struts frontend and its consumer layer into two applications — a new Angular frontend and a backend-for-frontend that reaches the migrated services over either SOAP or REST, switchable at runtime if one path degrades.",
           "migration": {
             "scope": [
               { "value": "7", "label": "repositories" },
@@ -325,9 +325,9 @@
         },
         "mobileBanking": {
           "title": "Winterbotham — Mobile Banking App",
-          "desc": "A cross-platform mobile banking app in React Native + Expo, shipped to iOS and Android by a team of four — with native Android biometric authentication, JWT session handling and secure local persistence.",
-          "role": "Frontend and integration API",
-          "description": "A mobile banking application for Winterbotham, built in React Native + Expo by a team of four over 18 months. We owned the frontend and a thin integration API carrying the connection logic to the core backend another firm was building in parallel. I built the native Android biometric authentication, JWT session handling, and secure local persistence for session and user data — the parts where a mistake becomes a security incident rather than a bug.",
+          "desc": "A cross-platform mobile banking app in React Native + Expo, shipped to iOS and Android by a team of four — with WebAuthn authentication and a backend-for-frontend carrying the integration logic.",
+          "role": "Frontend, plus the backend-for-frontend and WebAuthn integration",
+          "description": "A mobile banking application for Winterbotham, built in React Native + Expo by a team of four over 18 months. My main surface was the frontend, and it extended into a backend-for-frontend carrying the connection logic to the core backend another firm was building in parallel. I also integrated WebAuthn while it was still an emerging standard with thin documentation — the part where a mistake becomes a security incident rather than a bug.",
           "metrics": [
             {
               "label": "Platform",
@@ -335,7 +335,7 @@
             },
             {
               "label": "Auth",
-              "value": "Android Biometric API"
+              "value": "WebAuthn"
             },
             {
               "label": "Persistence",
@@ -506,6 +506,7 @@
     "closing": "…and I'm always up for talking about music, or trying a new game together.",
     "viewResume": "View Resume",
     "linkedin": "LinkedIn",
+    "scheduling": "Book a 30-minute call",
     "githubPrimary": "GitHub — ffontanadev",
     "githubEngine": "GitHub — elFonTii, where efengine lives",
     "twitter": "Twitter"

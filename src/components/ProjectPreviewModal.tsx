@@ -18,6 +18,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useState } from 'react';
 import BBVALogo from './logos/BBVALogo';
+import BancoProvinciaLogo from './logos/BancoProvinciaLogo';
 import { accentForCategory } from './projectTypes';
 import type {
     Project,
@@ -35,6 +36,7 @@ import { useTranslation } from '@/i18n';
 export type { Project } from './projectTypes';
 
 const LOGO_REGISTRY: Record<ProjectLogo, typeof BBVALogo> = {
+    'banco-provincia': BancoProvinciaLogo,
     bbva: BBVALogo,
 };
 
@@ -223,9 +225,16 @@ export const HeroOverlayContent = ({
             {project.logo ? (
                 (() => {
                     const Logo = LOGO_REGISTRY[project.logo];
-                    const sizeClasses = isModal
-                        ? 'h-9 mb-7 text-dark-900/85'
-                        : 'h-6 mb-5 text-dark-900/85';
+                    // The Banco Provincia mark is a wide wordmark; height is the
+                    // binding constraint, so it needs its own smaller ramp.
+                    const isWide = project.logo === 'banco-provincia';
+                    const sizeClasses = isWide
+                        ? isModal
+                            ? 'h-4 mb-7 text-dark-900/85'
+                            : 'h-5 mb-5 text-dark-900/85'
+                        : isModal
+                          ? 'h-9 mb-7 text-dark-900/85'
+                          : 'h-6 mb-5 text-dark-900/85';
                     return <Logo className={`${sizeClasses} w-auto`} />;
                 })()
             ) : (

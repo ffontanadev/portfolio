@@ -273,9 +273,9 @@
         },
         "bancoProvincia": {
           "title": "Provincia Casa Financiera — Migración de Servicios Core",
-          "desc": "Migración de los servicios web legacy Axis2 / Java 8 de una casa financiera uruguaya a una plataforma moderna Spring Boot 3 sobre Java 17 — 7 repositorios, ~4.600 clases — con la conectividad reconfigurada de JNDI a un DataSource MSSQL gestionado.",
-          "role": "Backend Engineer",
-          "description": "Modernización de largo aliento de los servicios SOAP Axis2 legacy que sostienen las integraciones bancarias core de Provincia Casa Financiera. El trabajo abarca migrar el runtime de Java 8 a Java 17 + Spring Boot 3, reemplazar los recursos ligados a JNDI por un DataSource MSSQL gestionado, y desenredar años de contratos de servicios web fuertemente acoplados — todo preservando a los consumidores downstream.",
+          "desc": "Migración de los servicios web legacy Axis2 / Java 8 de la sucursal uruguaya del Banco de la Provincia de Buenos Aires a Spring Boot 3 sobre Java 17 — 7 repositorios, ~4.600 clases — con la conectividad reconfigurada de JNDI a un DataSource MSSQL gestionado.",
+          "role": "Backend — servicios SOAP/WSDL legacy a Spring Boot, equipo de 3",
+          "description": "Modernización de largo aliento de los servicios SOAP Axis2 legacy detrás del core bancario de Provincia Casa Financiera, la sucursal uruguaya del Banco de la Provincia de Buenos Aires. Tomé el backend: llevar los servicios SOAP/WSDL legacy a Java 17 + Spring Boot 3, reemplazar los recursos ligados a JNDI por un DataSource MSSQL gestionado, y desenredar años de contratos de servicio fuertemente acoplados sin romper a los consumidores downstream. En paralelo, un colega separó el frontend Struts y su capa consumidora en dos aplicaciones — un frontend nuevo en Angular y un backend-for-frontend que alcanza los servicios migrados por SOAP o por REST, conmutables en runtime si una de las vías se degrada.",
           "migration": {
             "scope": [
               { "value": "7", "label": "repositorios" },
@@ -325,9 +325,9 @@
         },
         "mobileBanking": {
           "title": "Winterbotham — App de Banca Móvil",
-          "desc": "Una app de banca móvil multiplataforma en React Native + Expo, publicada en iOS y Android por un equipo de cuatro — con autenticación biométrica nativa de Android, manejo de sesiones con JWT y persistencia local segura.",
-          "role": "Frontend y API de integración",
-          "description": "Aplicación de banca móvil para Winterbotham, desarrollada en React Native + Expo por un equipo de cuatro a lo largo de 18 meses. Tuvimos a cargo el frontend y una API de integración acotada con la lógica de conexión al backend core que otra empresa construía en paralelo. Implementé la autenticación biométrica nativa mediante la API de Android, el manejo de sesiones con JWT y la persistencia local segura de la sesión y los datos del usuario — las partes donde un error se convierte en un incidente de seguridad y no en un bug.",
+          "desc": "Una app de banca móvil multiplataforma en React Native + Expo, publicada en iOS y Android por un equipo de cuatro — con autenticación WebAuthn y un backend-for-frontend que carga la lógica de integración.",
+          "role": "Frontend, más el backend-for-frontend y la integración de WebAuthn",
+          "description": "Aplicación de banca móvil para Winterbotham, desarrollada en React Native + Expo por un equipo de cuatro a lo largo de 18 meses. Mi superficie principal fue el frontend, y se extendió a un backend-for-frontend que cargaba la lógica de conexión con el core que otra firma construía en paralelo. También integré WebAuthn cuando todavía era un estándar incipiente y con poca documentación — la parte donde un error se convierte en un incidente de seguridad y no en un bug.",
           "metrics": [
             {
               "label": "Plataforma",
@@ -335,7 +335,7 @@
             },
             {
               "label": "Auth",
-              "value": "API Biométrica de Android"
+              "value": "WebAuthn"
             },
             {
               "label": "Persistencia",
@@ -506,6 +506,7 @@
     "closing": "…y siempre estoy dispuesto a hablar de música o a probar un juego nuevo juntos.",
     "viewResume": "Ver CV",
     "linkedin": "LinkedIn",
+    "scheduling": "Agendá una llamada de 30 minutos",
     "githubPrimary": "GitHub — ffontanadev",
     "githubEngine": "GitHub — elFonTii, donde vive efengine",
     "twitter": "Twitter"

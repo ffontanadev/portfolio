@@ -273,9 +273,9 @@
         },
         "bancoProvincia": {
           "title": "Provincia Casa Financiera —— 核心服务迁移",
-          "desc": "将一家乌拉圭金融机构的遗留 Axis2 / Java 8 web 服务迁移到基于 Java 17 的现代 Spring Boot 3 平台 —— 7 个代码库、约 4,600 个类 —— 并将连接方式从 JNDI 改为受管的 MSSQL DataSource。",
-          "role": "后端工程师",
-          "description": "对支撑 Provincia Casa Financiera 核心银行集成的遗留 Axis2 SOAP 服务进行的长期现代化改造。工作内容包括将运行时从 Java 8 迁移到 Java 17 + Spring Boot 3、用受管的 MSSQL DataSource 替换绑定在 JNDI 上的资源，并理清多年积累的紧耦合 web 服务契约 —— 同时始终保持下游消费方不受影响。",
+          "desc": "将 Banco de la Provincia de Buenos Aires 乌拉圭分行的遗留 Axis2 / Java 8 web 服务迁移到基于 Java 17 的 Spring Boot 3 —— 7 个代码库、约 4,600 个类 —— 并将连接方式从 JNDI 改为受管的 MSSQL DataSource。",
+          "role": "Backend —— 将遗留 SOAP/WSDL 服务迁移至 Spring Boot，3 人团队",
+          "description": "对 Provincia Casa Financiera（Banco de la Provincia de Buenos Aires 的乌拉圭分行）核心银行业务背后的遗留 Axis2 SOAP 服务进行的长期现代化改造。我负责后端：将遗留的 SOAP/WSDL 服务迁移到 Java 17 + Spring Boot 3、用受管的 MSSQL DataSource 替换绑定在 JNDI 上的资源，并在不破坏下游消费方的前提下理清多年积累的紧耦合服务契约。与此同时，一位同事将 Struts 前端及其消费层拆分为两个应用 —— 全新的 Angular 前端，以及一个可通过 SOAP 或 REST 访问已迁移服务的 backend-for-frontend，两条通路可在运行时切换，以应对其中一条降级。",
           "migration": {
             "scope": [
               { "value": "7", "label": "代码库" },
@@ -325,9 +325,9 @@
         },
         "mobileBanking": {
           "title": "Winterbotham — 手机银行应用",
-          "desc": "一款基于 React Native + Expo 的跨平台手机银行应用，由四人团队交付至 iOS 与 Android——具备 Android 原生生物识别认证、JWT 会话管理与安全的本地持久化。",
-          "role": "前端与集成 API",
-          "description": "为 Winterbotham 开发的手机银行应用，由四人团队使用 React Native + Expo 历时 18 个月构建。我们负责前端，以及一层精简的集成 API，承载与另一家公司并行开发的核心后端之间的连接逻辑。我负责通过 Android API 实现原生生物识别认证、JWT 会话管理，以及会话与用户数据的安全本地持久化——这些环节一旦出错就是安全事故，而不只是缺陷。",
+          "desc": "一款基于 React Native + Expo 的跨平台手机银行应用，由四人团队交付至 iOS 与 Android —— 采用 WebAuthn 认证，并有一个承载集成逻辑的 backend-for-frontend。",
+          "role": "前端，以及 backend-for-frontend 与 WebAuthn 集成",
+          "description": "为 Winterbotham 开发的手机银行应用，由四人团队使用 React Native + Expo 历时 18 个月构建。我的主要工作面是前端，并延伸到一个 backend-for-frontend，承载与另一家公司并行搭建的核心后端之间的连接逻辑。我还在 WebAuthn 尚属新兴标准、文档稀少时完成了它的集成 —— 这个环节一旦出错就是安全事故，而不只是缺陷。",
           "metrics": [
             {
               "label": "平台",
@@ -335,7 +335,7 @@
             },
             {
               "label": "认证",
-              "value": "Android 生物识别 API"
+              "value": "WebAuthn"
             },
             {
               "label": "持久化",
@@ -506,6 +506,7 @@
     "closing": "……我也随时乐意聊聊音乐，或者一起试试新游戏。",
     "viewResume": "查看简历",
     "linkedin": "LinkedIn",
+    "scheduling": "预约 30 分钟通话",
     "githubPrimary": "GitHub —— ffontanadev",
     "githubEngine": "GitHub —— elFonTii，efengine 所在账号",
     "twitter": "Twitter"
