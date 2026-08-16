@@ -30,7 +30,9 @@
     "resume": "简历",
     "viewResume": "查看简历",
     "toggleMenu": "打开菜单",
-    "devZone": "开发专区"
+    "devZone": "开发专区",
+    "githubPrimary": "GitHub —— ffontanadev",
+    "githubEngine": "GitHub —— elFonTii，efengine 所在账号"
   },
   "devZone": {
     "back": "返回作品集",
@@ -513,6 +515,8 @@
     "closing": "……我也随时乐意聊聊音乐，或者一起试试新游戏。",
     "viewResume": "查看简历",
     "linkedin": "LinkedIn",
+    "githubPrimary": "GitHub —— ffontanadev",
+    "githubEngine": "GitHub —— elFonTii，efengine 所在账号",
     "twitter": "Twitter"
   },
   "playlists": {

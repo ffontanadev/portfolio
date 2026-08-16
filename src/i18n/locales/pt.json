@@ -30,7 +30,9 @@
     "resume": "Currículo",
     "viewResume": "Ver currículo",
     "toggleMenu": "Abrir menu",
-    "devZone": "Dev Zone"
+    "devZone": "Dev Zone",
+    "githubPrimary": "GitHub — ffontanadev",
+    "githubEngine": "GitHub — elFonTii, onde a efengine vive"
   },
   "devZone": {
     "back": "Voltar ao portfólio",
@@ -513,6 +515,8 @@
     "closing": "…e estou sempre a fim de conversar sobre música ou experimentar um jogo novo juntos.",
     "viewResume": "Ver currículo",
     "linkedin": "LinkedIn",
+    "githubPrimary": "GitHub — ffontanadev",
+    "githubEngine": "GitHub — elFonTii, onde a efengine vive",
     "twitter": "Twitter"
   },
   "playlists": {

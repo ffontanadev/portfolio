@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Github } from 'lucide-react';
 import { LinkedinIcon } from '@/components/ui/linkedin';
 import { DownloadIcon } from '@/components/ui/download';
 import { useAppContext } from '@/contexts/AppContext';
@@ -207,6 +208,26 @@ const Contact = () => {
                             className="p-3.5 bg-cream-50/80 backdrop-blur-sm rounded-full border border-dark-900/8 text-dark-900/70 hover:text-coral-500 hover:border-coral-500/30 hover:-translate-y-1 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                         >
                             <LinkedinIcon size={20} />
+                        </a>
+                        <a
+                            href="https://github.com/ffontanadev"
+                            aria-label={t('contact.githubPrimary')}
+                            title={t('contact.githubPrimary')}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-3.5 bg-cream-50/80 backdrop-blur-sm rounded-full border border-dark-900/8 text-dark-900/70 hover:text-coral-500 hover:border-coral-500/30 hover:-translate-y-1 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                        >
+                            <Github size={20} />
+                        </a>
+                        <a
+                            href="https://github.com/elFonTii"
+                            aria-label={t('contact.githubEngine')}
+                            title={t('contact.githubEngine')}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center px-4 bg-cream-50/80 backdrop-blur-sm rounded-full border border-dark-900/8 font-mono text-xs text-dark-900/70 hover:text-coral-500 hover:border-coral-500/30 hover:-translate-y-1 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                        >
+                            elFonTii
                         </a>
                     </div>
                 </motion.div>

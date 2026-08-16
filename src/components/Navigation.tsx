@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
-import { Terminal } from 'lucide-react';
+import { Terminal, Github } from 'lucide-react';
 import { MenuIcon } from '@/components/ui/menu';
 import { XIcon } from '@/components/ui/x';
 import { useAppContext } from '@/contexts/AppContext';
@@ -77,6 +77,34 @@ const Navigation = () => {
                                 )}
                             </div>
                         ))}
+                        {/*
+                          * Spec §4.2 Option B — both accounts, side by side. The
+                          * second renders as a mono wordmark rather than a second
+                          * identical octocat: two of the same glyph reads as a
+                          * rendering bug, and telling them apart is the point.
+                          */}
+                        <div className="flex items-center gap-3">
+                            <a
+                                href="https://github.com/ffontanadev"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={t('nav.githubPrimary')}
+                                title={t('nav.githubPrimary')}
+                                className="text-dark-900/70 transition-colors duration-300 hover:text-coral-500"
+                            >
+                                <Github size={18} />
+                            </a>
+                            <a
+                                href="https://github.com/elFonTii"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={t('nav.githubEngine')}
+                                title={t('nav.githubEngine')}
+                                className="font-mono text-[11px] tracking-tight text-dark-900/55 transition-colors duration-300 hover:text-coral-500"
+                            >
+                                elFonTii
+                            </a>
+                        </div>
                         <LanguageSwitcher />
                         <Link
                             to="/dev-zone"
@@ -150,6 +178,35 @@ const Navigation = () => {
                                     )}
                                 </motion.div>
                             ))}
+                            <motion.div
+                                initial={{ opacity: 0, y: 12 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.26, duration: 0.5 }}
+                                className="flex items-center gap-6"
+                            >
+                                <a
+                                    href="https://github.com/ffontanadev"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={t('nav.githubPrimary')}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="flex items-center gap-2 font-mono text-sm text-dark-900/70"
+                                >
+                                    <Github size={18} />
+                                    ffontanadev
+                                </a>
+                                <a
+                                    href="https://github.com/elFonTii"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={t('nav.githubEngine')}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="flex items-center gap-2 font-mono text-sm text-dark-900/70"
+                                >
+                                    <Github size={18} />
+                                    elFonTii
+                                </a>
+                            </motion.div>
                             <motion.div
                                 initial={{ opacity: 0, y: 12 }}
                                 animate={{ opacity: 1, y: 0 }}
