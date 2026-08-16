@@ -1,4 +1,5 @@
 {
+  "installCommand": "{ dnf install -y nss nss-util nspr atk at-spi2-atk at-spi2-core cups-libs dbus-libs expat libdrm libX11 libXcomposite libXdamage libXext libXfixes libXrandr libxcb libxkbcommon mesa-libgbm alsa-lib pango cairo || yum install -y nss nss-util nspr atk at-spi2-atk at-spi2-core cups-libs dbus-libs expat libdrm libX11 libXcomposite libXdamage libXext libXfixes libXrandr libxcb libxkbcommon mesa-libgbm alsa-lib pango cairo || true; } && pnpm install",
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [

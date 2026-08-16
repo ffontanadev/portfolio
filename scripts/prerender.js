@@ -38,14 +38,17 @@ try {
   browser = await chromium.launch();
 } catch (cause) {
   await server.close();
+  // Two distinct failures, two distinct fixes — say which one this is.
+  const missingLibrary = /shared libraries: (\S+?):/.exec(String(cause?.message ?? ''));
+  const remedy = missingLibrary
+    ? `the build image is missing ${missingLibrary[1]}. Chromium is installed but cannot run: ` +
+      "install its system libraries in vercel.json's installCommand."
+    : "the browser binary is absent. Locally, run 'pnpm exec playwright install chromium " +
+      "--only-shell'. On Vercel, the build must run through the 'vercel-build' script, which " +
+      'installs it with PLAYWRIGHT_BROWSERS_PATH=0.';
   // The build must fail here rather than ship a deploy whose four locales are
   // invisible to crawlers again — that is the whole point of §8.
-  throw new Error(
-    "prerender: could not launch Chromium. Locally, run 'pnpm exec playwright install chromium " +
-      "--only-shell'. On Vercel, the build must run through the 'vercel-build' script, which " +
-      'installs it with PLAYWRIGHT_BROWSERS_PATH=0.',
-    { cause },
-  );
+  throw new Error(`prerender: could not launch Chromium — ${remedy}`, { cause });
 }
 const page = await browser.newPage();
 
