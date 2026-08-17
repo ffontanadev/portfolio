@@ -1,10 +1,13 @@
-/* Fraunces + JetBrains Mono are requested from index.html, not with an @import
-   here. An @import inside the bundled stylesheet serializes the whole thing:
-   the browser has to download and parse 86KB of CSS before it even learns the
-   font host exists, then open a connection to fonts.googleapis.com, fetch a
-   second stylesheet, and only then discover fonts.gstatic.com. Declaring the
-   link in the head lets that happen in parallel, off a preconnected socket. */
 @import "tailwindcss";
+
+/* Fraunces + JetBrains Mono are self-hosted; see scripts/fetch-fonts.js for
+   why and how to regenerate. The old remote <link> serialized first paint
+   behind a third-party handshake, which measured as the gate on FCP over a
+   phone connection. This @import costs nothing extra: it resolves to a local
+   file, so Vite inlines it into the one bundled stylesheet at build time
+   rather than leaving a second request for the browser to discover. The two
+   faces the hero needs above the fold are preloaded from index.html. */
+@import "./fonts.css";
 
 @theme {
   --color-cream-50: #FFF8F3;

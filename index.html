@@ -2,8 +2,20 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Fonts are same-origin (see scripts/fetch-fonts.js), so there is no
+         third-party handshake left to preconnect and no <link> here at all:
+         @font-face lives in the bundled stylesheet.
+
+         Deliberately *not* preloaded. Preloading the two hero faces was
+         measured on an emulated Slow 4G phone and made things worse — 146KB of
+         font pulled bandwidth away from the render-blocking stylesheet, which
+         went 528ms -> 713ms and pushed FCP from ~1200ms to ~1306ms, while LCP
+         did not move at all. `font-display: swap` already paints the text in a
+         fallback face immediately, so the fonts are not on the critical path
+         and should not be promoted onto it. -->
+
     <meta
       name="description"
       content="Software Engineer with 4 years modernizing core banking systems — Axis2/Java 8 to Spring Boot 3 across ~4,600 classes, 50+ APIs migrated, test coverage from 20% to 85%. Based in Uruguay, UTC−3, full US Eastern overlap."

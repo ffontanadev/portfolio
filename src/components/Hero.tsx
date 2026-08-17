@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform, use
 import { useTranslation } from '@/i18n';
 import { useTechShowcase } from '@/context/TechShowcaseContext';
 import { PARTICLES_ENABLED } from '@/config/particles';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 // three.js is ~600KB of the bundle and the field is decorative, so it loads as
 // its own chunk after the hero's markup is on screen rather than blocking it.
@@ -23,10 +24,17 @@ const Hero = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const { t } = useTranslation();
   const { selected, clear } = useTechShowcase();
+  const isMobile = useIsMobile();
+
+  // Below `sm` the field is skipped outright: it is a decorative WebGL layer
+  // that costs a ~132KB three.js chunk on a phone's connection plus GPU work a
+  // low-end device pays for while the page is still painting. Gating the mount
+  // (rather than the animation) also keeps the lazy chunk from being requested.
+  const particlesActive = PARTICLES_ENABLED && !isMobile;
 
   // The tech showcase is a progressive enhancement: inert when particles are
   // disabled or reduced-motion is on. When inert, ignore any selection.
-  const inert = !PARTICLES_ENABLED || shouldReduceMotion;
+  const inert = !particlesActive || shouldReduceMotion;
   const showingBrief = selected !== null && !inert;
 
   useEffect(() => {
@@ -64,9 +72,21 @@ const Hero = () => {
     mouseY.set(((e.clientY - rect.top) / rect.height) * 2 - 1);
   };
 
-  // Reduced-motion users see no particle intro, so the surrounding text appears
-  // immediately rather than stalling for an animation that never runs.
-  const introOffset = shouldReduceMotion ? 0 : INTRO_TOTAL_S;
+  // The text only waits when the rocket actually flies. Reduced-motion users
+  // and phones get no particle intro, so stalling them for four seconds hides
+  // the headline behind an animation that never runs — and, because the client
+  // re-renders over the prerendered markup instead of hydrating it, that stall
+  // blanks a hero the browser had already painted (spec §10: LCP ≤ 2.0s).
+  const introOffset = inert ? 0 : INTRO_TOTAL_S;
+
+  // …and when no intro runs, the entry animation itself has to go, not just its
+  // delay. main.tsx mounts with createRoot, so the client re-renders over the
+  // prerendered markup instead of hydrating it (see scripts/prerender.js): an
+  // `initial` of opacity 0 therefore re-hides a hero the browser had already
+  // painted, and the fade back in is what the phone records as LCP. `false`
+  // tells framer-motion to start at the animate state, so the text the snapshot
+  // put on screen simply stays there. Desktop still gets the full entrance.
+  const entryInitial = <T,>(from: T) => (inert ? (false as const) : from);
 
   return (
     <section
@@ -78,7 +98,7 @@ const Hero = () => {
       {/* Particle field — fills the entire hero. The rocket flies in, morphs
           into the first tech logo, and the field then cycles the stack's logos
           on the right-hand side. Cursor pushes particles aside. */}
-      {PARTICLES_ENABLED && (
+      {particlesActive && (
         <Suspense fallback={null}>
           <ParticleField className="z-0" />
         </Suspense>
@@ -91,7 +111,7 @@ const Hero = () => {
       >
         {/* Eyebrow */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={entryInitial({ opacity: 0, y: 12 })}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: introOffset, duration: 0.8, ease }}
           className={`relative flex items-center gap-4 mb-12 transition-[top] duration-500 ${
@@ -108,7 +128,7 @@ const Hero = () => {
           {/* Left Column - Content */}
           <div className="flex flex-col space-y-8">
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
+              initial={entryInitial({ opacity: 0, y: 20 })}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: introOffset, duration: 0.9, ease }}
               className="font-display font-display-xl font-bold leading-[1.05] tracking-[-0.02em] text-[2.25rem] md:text-[3.5rem] lg:text-[4.5rem] text-dark-900"
@@ -120,7 +140,7 @@ const Hero = () => {
             </motion.h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 16 }}
+              initial={entryInitial({ opacity: 0, y: 16 })}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: introOffset + 0.15, duration: 0.8, ease }}
               className="font-mono text-[11px] md:text-xs leading-relaxed tracking-wide text-dark-900/60"
@@ -129,7 +149,7 @@ const Hero = () => {
             </motion.p>
 
             <motion.nav
-              initial={{ opacity: 0, y: 16 }}
+              initial={entryInitial({ opacity: 0, y: 16 })}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: introOffset + 0.25, duration: 0.8, ease }}
               aria-label={t('hero.ctas.work')}
@@ -170,7 +190,7 @@ const Hero = () => {
 
         {/* Subheading — at the bottom of the entire hero */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={entryInitial({ opacity: 0, y: 20 })}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: introOffset + 0.1, duration: 0.9, ease }}
           className="max-w-xl text-lg md:text-xl text-dark-900/70 leading-relaxed font-light mt-16"

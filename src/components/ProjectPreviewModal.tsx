@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, lazy, Suspense } from 'react';
 import {
     ArrowUpRight,
     Binary,
@@ -16,20 +16,14 @@ import { XIcon } from '@/components/ui/x';
 import { CopyIcon } from '@/components/ui/copy';
 import { CheckIcon } from '@/components/ui/check';
 // `Prism` bundles refractor's entire grammar set — 594KB raw / 214KB gzipped,
-// every language it supports. This module is reachable from FeaturedWorks, so
-// all of it was landing in the home page's critical path for a modal that only
-// opens on click. `PrismLight` ships the highlighter with no grammars and takes
-// only the three the code blocks in projectData actually declare.
-import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import typescript from 'react-syntax-highlighter/dist/esm/languages/prism/typescript';
-import javascript from 'react-syntax-highlighter/dist/esm/languages/prism/javascript';
-import csharp from 'react-syntax-highlighter/dist/esm/languages/prism/csharp';
+// every language it supports. `PrismLight` cut that to the three grammars the
+// code blocks in projectData actually declare, but even those were still
+// reaching the entry chunk: this module is imported statically by FeaturedWorks
+// for its hero exports, so a highlighter that only ever runs behind a click was
+// downloaded by every visitor before React could mount. It now loads on demand.
 import { useState } from 'react';
 
-SyntaxHighlighter.registerLanguage('typescript', typescript);
-SyntaxHighlighter.registerLanguage('javascript', javascript);
-SyntaxHighlighter.registerLanguage('csharp', csharp);
+const CodeHighlighter = lazy(() => import('./CodeHighlighter'));
 
 import BBVALogo from './logos/BBVALogo';
 import BancoProvinciaLogo from './logos/BancoProvinciaLogo';
@@ -95,20 +89,17 @@ const CodeBlockComponent = ({ block }: { block: CodeBlock }) => {
                 </button>
             </div>
             <div className="rounded-lg overflow-hidden border border-gray-200 shadow-sm">
-                <SyntaxHighlighter
-                    language={block.language}
-                    style={vscDarkPlus}
-                    customStyle={{
-                        margin: 0,
-                        padding: '1.5rem',
-                        fontSize: '0.875rem',
-                        lineHeight: '1.6',
-                        backgroundColor: '#1e1e1e',
-                    }}
-                    showLineNumbers={true}
+                {/* The fallback keeps the code readable (and the block the same
+                    height, so nothing shifts) while the highlighter arrives. */}
+                <Suspense
+                    fallback={
+                        <pre className="m-0 overflow-x-auto bg-[#1e1e1e] p-6 text-sm leading-[1.6] text-gray-200">
+                            {block.code}
+                        </pre>
+                    }
                 >
-                    {block.code}
-                </SyntaxHighlighter>
+                    <CodeHighlighter language={block.language} code={block.code} />
+                </Suspense>
             </div>
         </div>
     );

@@ -7,5 +7,14 @@
     { "source": "/:locale(en|es|pt|zh)/:path*", "destination": "/:locale/index.html" },
     { "source": "/dev-zone", "destination": "/index.html" },
     { "source": "/", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "comment": "Font filenames encode family/style/weight/subset, and scripts/fetch-fonts.js writes a new name when any of those change, so the bytes behind a given URL are immutable. Without this they are served must-revalidate, costing a round trip per face on every repeat visit.",
+      "source": "/fonts/(.*).woff2",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
   ]
 }
