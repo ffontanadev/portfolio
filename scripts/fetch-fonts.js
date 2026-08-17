@@ -16,6 +16,13 @@
 // CJK face either way, because neither of these families ships Han glyphs.
 // Keeping latin-ext costs nothing at runtime: unicode-range makes the browser
 // fetch a subset only when the page actually uses a character from it.
+//
+// The filenames below encode family/style/weight/subset, and this script writes
+// a new name whenever any of those change, so the bytes behind a given URL never
+// change. That is what makes the `immutable` Cache-Control on /fonts/*.woff2 in
+// vercel.json safe — without it Vercel serves them must-revalidate and every
+// repeat visit pays a round trip per face. vercel.json is plain JSON with no
+// room for a comment, so the reasoning lives here.
 import { mkdir, writeFile } from 'node:fs/promises';
 
 const CSS_URL =
