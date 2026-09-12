@@ -14,7 +14,6 @@
     "links": {
       "home": "Início",
       "work": "Trabalho",
-      "about": "Sobre",
       "connect": "Contato"
     },
     "resume": "Currículo",
@@ -274,6 +273,18 @@
             ]
           }
         },
+        "bbvaApp": {
+          "title": "BBVA - App Bancário Multiplataforma",
+          "desc": "O app de banco para pessoas que o BBVA entrega em iOS, Android e web, construído sobre o framework de frontend próprio do banco, orientado a eventos: componentes isolados que nunca se referenciam e apenas publicam e assinam.",
+          "role": "Frontend, na camada de componentes compartilhada pelas três plataformas",
+          "description": "Trabalho na equipe de desenvolvimento do aplicativo bancário do BBVA para pessoas - aquele que os clientes têm na mão - entregue em iOS, Android e web a partir de um frontend compartilhado. Esse frontend roda sobre um framework interno do banco, que posso descrever mas não nomear: os componentes são unidades isoladas que não guardam referências entre si e se comunicam apenas publicando eventos em um barramento compartilhado e assinando os que lhes interessam. Uma tela é uma composição desses componentes mais a ligação entre seus eventos.\n\nA restrição que torna isso interessante é que o mesmo componente precisa se comportar de forma idêntica dentro de um contêiner nativo no iOS, um nativo no Android e uma aba do navegador. O desacoplamento por eventos é o que permite isso: um componente sabe o que emite e o que escuta, e nada sobre onde está rodando ou o que está ao seu lado.",
+          "metrics": [
+            { "label": "Plataformas", "value": "iOS · Android · Web" },
+            { "label": "Arquitetura", "value": "Publicação / assinatura de eventos" },
+            { "label": "Componentes", "value": "Isolados, sem referências diretas" },
+            { "label": "Frontend", "value": "Uma camada compartilhada, três plataformas" }
+          ]
+        },
         "bbva": {
           "title": "BBVA - Migração de APIs e Cobertura de Testes",
           "desc": "Levei a cobertura de testes dos novos endpoints de 20% para 85%+ em ~48 APIs, dentro de uma equipe de 10 pessoas, com cada deploy controlado por Jenkins, OpenShift e SonarQube.",
@@ -324,7 +335,7 @@
       }
     },
     "older": {
-      "eyebrow": "§ 04 - Arquivo",
+      "eyebrow": "§ 03 - Arquivo",
       "headingBefore": "Trabalhos",
       "headingEmphasis": "antigos",
       "description": "Relíquias da minha jornada como desenvolvedor - ainda queridas, mas não mais o prato principal.",
@@ -399,44 +410,8 @@
       "keyImplementation": "Implementação Principal"
     }
   },
-  "agents": {
-    "eyebrow": "§ 03 - Método",
-    "headingBefore": "Como eu trabalho",
-    "headingEmphasis": "com agentes",
-    "headingAfter": "",
-    "intro": "Em bases de código grandes demais para caber na cabeça, um agente é tão bom quanto a verdade de base que você dá a ele. Meu método mantém a IA ancorada em estrutura real e contratos demonstráveis - cada resposta traçada por um grafo, cada endpoint conferido contra o seu spec.",
-    "pillars": [
-      {
-        "index": "01",
-        "principle": "Percorra o grafo, não faça grep",
-        "title": "Indexação do projeto",
-        "body": "Indexo cada código em um grafo de conhecimento de funções, rotas, cadeias de chamadas e contratos de serviço. Os agentes percorrem como o código realmente se conecta, em vez de fazer grep ou adivinhar com busca semântica - assim uma superfície de migração enorme responde a uma consulta, não a uma varredura de texto completo."
-      },
-      {
-        "index": "02",
-        "principle": "O spec é a suíte de testes",
-        "title": "Schemathesis + OpenAPI",
-        "body": "O Schemathesis lê o esquema OpenAPI de um serviço e gera testes baseados em propriedades - centenas de casos-limite, malformados e com estado que o contrato implica mas ninguém escreve à mão. Ele expõe o desvio de esquema e os 500 inesperados antes de um cliente vê-los - exatamente o que um endpoint migrado precisa provar."
-      },
-      {
-        "index": "03",
-        "principle": "Um harness, qualquer OpenAPI",
-        "title": "Harness de testes de API",
-        "body": "Envolvi esse fluxo em um app pequeno: aponte-o para qualquer serviço que exponha um esquema OpenAPI e ele roda a suíte completa do Schemathesis, mostra as falhas e reporta a cobertura do contrato. Testar um novo microsserviço vira configuração, não um projeto de testes do zero."
-      }
-    ],
-    "toolkit": {
-      "label": "Ferramentas",
-      "items": [
-        { "name": "Playwright", "note": "E2E de navegador · visual" },
-        { "name": "Superpowers", "note": "skills e comandos" },
-        { "name": "MCP memory", "note": "grafo para agentes" },
-        { "name": "Spec + plan", "note": "brainstorm → plano → verificar" }
-      ]
-    }
-  },
   "contact": {
-    "eyebrow": "§ 05 - Fale comigo",
+    "eyebrow": "§ 04 - Fale comigo",
     "intro": "você chegou até aqui - ",
     "headline": "Diga oi.",
     "side": "LADO · B",
@@ -490,7 +465,6 @@
     "links": {
       "home": "Início",
       "work": "Trabalho",
-      "about": "Sobre",
       "connect": "Contato",
       "resume": "Currículo",
       "devZone": "Dev Zone"

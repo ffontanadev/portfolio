@@ -4,7 +4,13 @@ import { ArrowUpRight } from 'lucide-react';
 import ProjectPreviewModal, { EnterpriseHero } from './ProjectPreviewModal';
 import LatestCommit from './LatestCommit';
 import VideoShowcaseHero from './VideoShowcaseHero';
-import { accentForCategory, categoryLabelKey, type Project, type ProjectSystemTier } from './projectTypes';
+import {
+  accentForCategory,
+  blockTokens,
+  categoryLabelKey,
+  type Project,
+  type ProjectSystemTier,
+} from './projectTypes';
 import { useTranslation } from '@/i18n';
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -34,6 +40,7 @@ const projectData: ProjectStructural[] = [
   {
     id: 'efengine',
     color: "bg-cream-100",
+    brandColor: '#f5a623',
     techStack: ["C++17", "OpenGL 4.5 Core", "PBR + IBL", "Dear ImGui", "Assimp", "GLFW", "GLM", "doctest", "CMake"],
     date: "'26 - NOW",
     codeBlocks: [],
@@ -50,6 +57,7 @@ const projectData: ProjectStructural[] = [
   {
     id: 'bancoProvincia',
     color: "bg-cream-100",
+    brandColor: '#00703C',
     techStack: ["Java 17", "Spring Boot 3", "Axis2 (legacy)", "MSSQL", "JNDI → DataSource"],
     date: "'25 - NOW",
     codeBlocks: [],
@@ -61,8 +69,31 @@ const projectData: ProjectStructural[] = [
     leadMetric: { kind: 'migration', from: 'Axis 2', to: 'Boot' },
   },
   {
+    id: 'bbvaApp',
+    color: "bg-cream-100",
+    brandColor: '#001391',
+    // TODO[DECIDE]: this card and the `bbva` card below share one hex, and the
+    // brand block has no halo to offset - the off-centre `brandHaloAt: '20% 24%'`
+    // that used to separate them is gone with the cream field. Right now only the
+    // index digit and the lead metric tell the two engagements apart. A second
+    // BBVA tone would fix it, but that is a brand decision; do not invent one.
+    // The frontend runs on a framework internal to the bank; the copy describes
+    // its event model but never names it. Keep the stack list to open
+    // technologies and to the architecture, never to the product name.
+    techStack: ["JavaScript", "Event-driven architecture", "Internal component framework", "iOS", "Android", "Web"],
+    // TODO[SUPPLY]: start date of the engagement, e.g. "'26 - NOW". Owner has
+    // not supplied it; do not guess one.
+    date: "TODO",
+    codeBlocks: [],
+    category: 'professional',
+    company: 'BBVA',
+    logo: 'bbva',
+    leadMetric: { kind: 'wordmark', value: 'Multiplatform', sub: 'iOS · Android · Web' },
+  },
+  {
     id: 'bbva',
     color: "bg-cream-100",
+    brandColor: '#001391',
     techStack: ["Java 17", "Spring Boot", "JUnit 5", "Mockito", "Jenkins", "OpenShift", "SonarQube"],
     date: "'25",
     codeBlocks: [],
@@ -74,6 +105,7 @@ const projectData: ProjectStructural[] = [
   {
     id: 'mobileBanking',
     color: "bg-cream-100",
+    brandColor: '#1d418f',
     techStack: ["React Native", "Expo", "WebAuthn", "Backend for Frontend", "Local Persistence"],
     date: "'23 - '24",
     codeBlocks: [],
@@ -84,6 +116,7 @@ const projectData: ProjectStructural[] = [
   {
     id: 'mhc',
     color: "bg-blue-50",
+    brandColor: '#F82790',
     category: 'personal',
     leadMetric: { kind: 'wordmark', value: 'MHC', sub: 'cli' },
     techStack: ["Commander.js", "Google Cloud Platform", "SQLite"],
@@ -319,6 +352,14 @@ const FeaturedWorks = () => {
         },
       },
       {
+        ...byId.bbvaApp,
+        title: fp.bbvaApp.title,
+        desc: fp.bbvaApp.desc,
+        role: fp.bbvaApp.role,
+        description: fp.bbvaApp.description,
+        metrics: fp.bbvaApp.metrics.map((m, i) => ({ ...m, accent: i === 0 })),
+      },
+      {
         ...byId.bbva,
         title: fp.bbva.title,
         desc: fp.bbva.desc,
@@ -469,7 +510,10 @@ const FeaturedWorks = () => {
               </span>
             </div>
 
-            <div className="relative w-full aspect-[21/9] md:aspect-[3/1] bg-cream-100 border border-teal-700/20 rounded-2xl overflow-hidden soft-lift">
+            <div
+              className="relative w-full aspect-[21/9] md:aspect-[3/1] bg-cream-100 border rounded-2xl overflow-hidden soft-lift"
+              style={{ ...blockTokens(featuredProject.brandColor), borderColor: 'var(--block-brand)' }}
+            >
               {featuredProject.showcaseVideos?.length ? (
                 <VideoShowcaseHero
                   project={featuredProject}
@@ -479,8 +523,10 @@ const FeaturedWorks = () => {
               ) : (
                 <EnterpriseHero project={featuredProject} size="modal" />
               )}
-              <div className="absolute inset-0 transition-colors duration-700 mix-blend-multiply bg-teal-700/0 group-hover:bg-teal-700/[0.05]" />
-              <div className="absolute top-5 right-5 bg-cream-50/90 backdrop-blur-sm p-3 rounded-full opacity-0 translate-y-3 -translate-x-3 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
+              {/* Ink multiply rather than a brand tint: the field is already the
+                  brand, so darkening is what reads as hover in both polarities. */}
+              <div className="absolute inset-0 transition-opacity duration-700 mix-blend-multiply opacity-0 group-hover:opacity-100 bg-dark-900/[0.12]" />
+              <div className="absolute top-5 right-5 bg-cream-50/90 backdrop-blur-sm p-3 rounded-full opacity-0 translate-y-3 -translate-x-3 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
                 <ArrowUpRight size={18} className="text-dark-900" />
               </div>
             </div>
@@ -548,14 +594,18 @@ const FeaturedWorks = () => {
                 </div>
 
                 {/* Card visual - typographic composition for every project */}
-                <div className="relative w-full aspect-[4/3] bg-cream-100 border border-dark-900/[0.08] rounded-2xl overflow-hidden soft-lift">
-                  <EnterpriseHero project={project} size="card" />
+                <div
+                  className="relative w-full aspect-[4/3] bg-cream-100 border rounded-2xl overflow-hidden soft-lift"
+                  style={{ ...blockTokens(project.brandColor), borderColor: 'var(--block-brand)' }}
+                >
+                  <EnterpriseHero project={project} size="card" index={num} />
 
-                  {/* Warm hover wash, tinted by category accent */}
-                  <div className={`absolute inset-0 transition-colors duration-700 mix-blend-multiply ${accent.washIdle} ${accent.washHover}`} />
+                  {/* Ink multiply: the field is the brand, so darkening is what
+                      reads as hover whichever way the type polarity fell. */}
+                  <div className="absolute inset-0 transition-opacity duration-700 mix-blend-multiply opacity-0 group-hover:opacity-100 bg-dark-900/[0.12]" />
 
                   {/* Arrow chip */}
-                  <div className="absolute top-5 right-5 bg-cream-50/90 backdrop-blur-sm p-3 rounded-full opacity-0 translate-y-3 -translate-x-3 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
+                  <div className="absolute top-5 right-5 bg-cream-50/90 backdrop-blur-sm p-3 rounded-full opacity-0 translate-y-3 -translate-x-3 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
                     <ArrowUpRight size={18} className="text-dark-900" />
                   </div>
                 </div>

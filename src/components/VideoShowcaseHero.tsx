@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'framer-motion';
 import type { Project } from './projectTypes';
 import { TypographicHero, HeroOverlayContent, HERO_RADIAL_BG } from './ProjectPreviewModal';
+import { heroBrandBackground } from './projectTypes';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
 interface VideoShowcaseHeroProps {
@@ -60,6 +61,8 @@ const VideoShowcaseHero = ({ project, videos, size = 'modal' }: VideoShowcaseHer
         return <TypographicHero project={project} size={size} />;
     }
 
+    const brandBackground = heroBrandBackground(project.brandColor, project.brandHaloAt);
+
     const handleEnded = () => {
         setReady(false); // brief fade-out before the next clip fades in
         setIndex((current) => (current + 1) % videos.length);
@@ -76,6 +79,9 @@ const VideoShowcaseHero = ({ project, videos, size = 'modal' }: VideoShowcaseHer
                 style={{ background: HERO_RADIAL_BG }}
                 aria-hidden="true"
             />
+            {brandBackground && (
+                <div className="absolute inset-0" style={{ background: brandBackground }} aria-hidden="true" />
+            )}
 
             {/* Ambient clip. An index-based `key` remounts the element on every advance
                 so the new src plays; a lone clip uses native `loop` instead.

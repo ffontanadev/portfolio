@@ -28,7 +28,6 @@ const Navigation = () => {
     const navLinks = [
         { name: t('nav.links.home'), href: '#hero', route: home },
         { name: t('nav.links.work'), href: '#work' },
-        { name: t('nav.links.about'), href: '#about' },
         { name: t('nav.links.connect'), href: '#connect' },
     ];
 

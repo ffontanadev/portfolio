@@ -9,7 +9,6 @@ const Footer = () => {
     const links = [
         { name: t('footer.links.home'), href: '#hero' },
         { name: t('footer.links.work'), href: '#work' },
-        { name: t('footer.links.about'), href: '#about' },
         { name: t('footer.links.connect'), href: '#connect' },
         { name: t('footer.links.resume'), href: '/docs/resume.pdf' },
         // Demoted from the header (§4.1): a recruiter with fifteen seconds

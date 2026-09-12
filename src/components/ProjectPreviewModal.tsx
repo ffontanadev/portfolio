@@ -27,7 +27,7 @@ const CodeHighlighter = lazy(() => import('./CodeHighlighter'));
 
 import BBVALogo from './logos/BBVALogo';
 import BancoProvinciaLogo from './logos/BancoProvinciaLogo';
-import { accentForCategory } from './projectTypes';
+import { accentForCategory, blockTokens, BLOCK_LIFT_BG } from './projectTypes';
 import type {
     Project,
     CodeBlock,
@@ -117,38 +117,79 @@ const CodeBlockComponent = ({ block }: { block: CodeBlock }) => {
  *
  * Raise nothing here without re-checking 767px and 1023px.
  */
+/**
+ * Two ramps, because the two compositions ask different things of the figure.
+ * `ink` is the centred lockup over the video scrim, where the figure shares the
+ * frame with a logo and a stack line. `block` is the brand block, where the
+ * figure carries the composition on its own and roughly doubles.
+ */
 const LEAD_METRIC_SIZE = {
-    modal: {
-        migration: 'text-[clamp(1.5rem,3.5vw,3rem)]',
-        wordmark: 'text-[clamp(1.75rem,4vw,3.5rem)]',
-        scale: 'text-[clamp(2rem,4.5vw,4rem)]',
+    ink: {
+        modal: {
+            migration: 'text-[clamp(1.5rem,3.5vw,3rem)]',
+            wordmark: 'text-[clamp(1.75rem,4vw,3.5rem)]',
+            scale: 'text-[clamp(2rem,4.5vw,4rem)]',
+        },
+        card: {
+            migration: 'text-[clamp(1.25rem,2.5vw,2.25rem)]',
+            wordmark: 'text-[clamp(1.5rem,3vw,2.75rem)]',
+            scale: 'text-[clamp(1.75rem,3.5vw,3.25rem)]',
+        },
     },
-    card: {
-        migration: 'text-[clamp(1.25rem,2.5vw,2.25rem)]',
-        wordmark: 'text-[clamp(1.5rem,3vw,2.75rem)]',
-        scale: 'text-[clamp(1.75rem,3.5vw,3.25rem)]',
+    block: {
+        modal: {
+            migration: 'text-[clamp(2rem,4vw,3.5rem)]',
+            wordmark: 'text-[clamp(2.25rem,4.5vw,4rem)]',
+            scale: 'text-[clamp(3rem,6vw,5.5rem)]',
+        },
+        card: {
+            migration: 'text-[clamp(1.5rem,3vw,2.5rem)]',
+            wordmark: 'text-[clamp(1.75rem,3vw,2.6rem)]',
+            scale: 'text-[clamp(2.75rem,5vw,4.5rem)]',
+        },
     },
 } as const;
 
+/**
+ * `ink` is the historic treatment: dark-900 on a light field, centred, with the
+ * secondary line at 55% and the migration arrow in coral.
+ *
+ * `block` is the brand block: everything inherits `--block-type` and nothing
+ * softens, because on #00703C and #F82790 a faded secondary drops under AA. The
+ * coral arrow goes with it - coral measures 2.24 : 1 on the green, under the
+ * 3 : 1 floor for a graphical mark.
+ */
 export const LeadMetricDisplay = ({
     metric,
     size = 'card',
+    tone = 'ink',
 }: {
     metric: ProjectLeadMetric;
     size?: 'card' | 'modal';
+    tone?: 'ink' | 'block';
 }) => {
     const isModal = size === 'modal';
+    const isBlock = tone === 'block';
+    const ramp = LEAD_METRIC_SIZE[tone][isModal ? 'modal' : 'card'];
+
+    const figure = `font-display font-bold tracking-[-0.04em] leading-none ${
+        isBlock ? 'text-current' : 'text-dark-900'
+    }`;
+    const secondary = `font-display font-display-italic font-light tracking-tight ${
+        isBlock ? 'text-current' : 'text-dark-900/55'
+    }`;
+    const stack = `flex flex-col ${isBlock ? 'items-start' : 'items-center'}`;
 
     if (metric.kind === 'migration') {
         return (
             <div
-                className={`flex items-baseline justify-center gap-3 font-display font-bold tracking-[-0.04em] leading-none text-dark-900 ${
-                    LEAD_METRIC_SIZE[isModal ? 'modal' : 'card'].migration
-                }`}
+                className={`flex items-baseline gap-3 ${
+                    isBlock ? '' : 'justify-center'
+                } ${figure} ${ramp.migration}`}
             >
                 <span>{metric.from}</span>
                 <span
-                    className="text-coral-500 font-display-italic font-light"
+                    className={`font-display-italic font-light ${isBlock ? 'text-current' : 'text-coral-500'}`}
                     style={{ fontStyle: 'italic' }}
                     aria-hidden="true"
                 >
@@ -161,19 +202,11 @@ export const LeadMetricDisplay = ({
 
     if (metric.kind === 'wordmark') {
         return (
-            <div className="flex flex-col items-center">
-                <span
-                    className={`font-display font-bold tracking-[-0.04em] leading-none text-dark-900 ${
-                        LEAD_METRIC_SIZE[isModal ? 'modal' : 'card'].wordmark
-                    }`}
-                >
-                    {metric.value}
-                </span>
+            <div className={stack}>
+                <span className={`${figure} ${ramp.wordmark}`}>{metric.value}</span>
                 {metric.sub && (
                     <span
-                        className={`font-display font-display-italic font-light tracking-tight text-dark-900/55 mt-2 ${
-                            isModal ? 'text-2xl' : 'text-lg'
-                        }`}
+                        className={`${secondary} mt-2 ${isModal ? 'text-2xl' : 'text-lg'}`}
                         style={{ fontStyle: 'italic' }}
                     >
                         {metric.sub}
@@ -184,24 +217,16 @@ export const LeadMetricDisplay = ({
     }
 
     return (
-        <div className="flex flex-col items-center">
+        <div className={stack}>
             {metric.superscript && (
                 <span
-                    className={`font-display font-display-italic font-light tracking-tight text-dark-900/55 mb-1 ${
-                        isModal ? 'text-3xl' : 'text-xl'
-                    }`}
+                    className={`${secondary} mb-1 ${isModal ? 'text-3xl' : 'text-xl'}`}
                     style={{ fontStyle: 'italic' }}
                 >
                     {metric.superscript}
                 </span>
             )}
-            <span
-                className={`font-display font-bold tracking-[-0.04em] leading-none text-dark-900 ${
-                    LEAD_METRIC_SIZE[isModal ? 'modal' : 'card'].scale
-                }`}
-            >
-                {metric.value}
-            </span>
+            <span className={`${figure} ${ramp.scale}`}>{metric.value}</span>
         </div>
     );
 };
@@ -263,30 +288,114 @@ export const HeroOverlayContent = ({
     );
 };
 
-export const TypographicHero = ({ project, size = 'modal' }: { project: Project; size?: 'card' | 'modal' }) => {
+/**
+ * The identity block as it sits on a brand block: left-aligned rather than
+ * centred, and every colour inherited from `--block-type` so the polarity
+ * decision lives in one place (`blockTokens`). Nothing here fades - see the
+ * note on `blockTokens` for why.
+ */
+const BrandBlockContent = ({ project, size }: { project: Project; size: 'card' | 'modal' }) => {
     const isModal = size === 'modal';
 
     return (
         <div
-            className={`relative w-full overflow-hidden ${
-                isModal ? 'aspect-[21/9] bg-cream-100' : 'h-full bg-cream-100'
-            }`}
+            className={`relative h-full flex flex-col ${isModal ? 'px-12 py-10' : 'px-9 py-8'}`}
+            style={{ color: 'var(--block-type)' }}
         >
-            <div
-                className="absolute inset-0 opacity-60"
-                style={{ background: HERO_RADIAL_BG }}
-                aria-hidden="true"
-            />
-            <div
-                className="absolute inset-x-5 top-5 flex items-center justify-between text-dark-900/45"
-                aria-hidden="true"
-            >
-                <span className="font-display italic text-sm" style={{ fontStyle: 'italic' }}>
-                    §
-                </span>
+            <div className="flex items-start min-h-5">
+                {project.logo ? (
+                    (() => {
+                        const Logo = LOGO_REGISTRY[project.logo];
+                        // Same constraint as the centred lockup: the Banco Provincia
+                        // mark is a wide wordmark, so height is what binds it.
+                        const isWide = project.logo === 'banco-provincia';
+                        const height = isWide ? (isModal ? 'h-4' : 'h-3') : isModal ? 'h-7' : 'h-5';
+                        return <Logo className={`${height} w-auto`} />;
+                    })()
+                ) : (
+                    project.company && (
+                        <span
+                            className={`font-display font-display-italic tracking-tight ${
+                                isModal ? 'text-2xl' : 'text-lg'
+                            }`}
+                            style={{ fontStyle: 'italic' }}
+                            translate="no"
+                        >
+                            {project.company}
+                        </span>
+                    )
+                )}
             </div>
 
-            <HeroOverlayContent project={project} size={size} />
+            <div className="flex-1 flex flex-col justify-center min-w-0">
+                {project.leadMetric && (
+                    <LeadMetricDisplay metric={project.leadMetric} size={size} tone="block" />
+                )}
+            </div>
+
+            <div className="flex flex-col items-start">
+                <div className="h-px w-12 bg-current opacity-[0.35]" aria-hidden="true" />
+                <p
+                    className={`mt-3 font-mono tracking-[0.22em] uppercase ${
+                        isModal ? 'text-[11px]' : 'text-[9px]'
+                    }`}
+                    translate="no"
+                >
+                    {project.techStack.slice(0, isModal ? 5 : 3).join(' · ')}
+                </p>
+            </div>
+        </div>
+    );
+};
+
+/**
+ * The brand block: the hex is the field at full strength and the type knocks out
+ * of it. `blockTokens` resolves the polarity from the hex by contrast, so a new
+ * `brandColor` needs no entry anywhere.
+ *
+ * `index` is the project's position in the filtered grid, set oversized and
+ * faint behind the composition. It is aria-hidden and only the grid passes one -
+ * the flagship band and the modal have no position to state.
+ */
+export const TypographicHero = ({
+    project,
+    size = 'modal',
+    index,
+}: {
+    project: Project;
+    size?: 'card' | 'modal';
+    index?: string;
+}) => {
+    const isModal = size === 'modal';
+
+    return (
+        <div
+            className={`relative w-full overflow-hidden ${isModal ? 'aspect-[21/9]' : 'h-full'}`}
+            style={{ ...blockTokens(project.brandColor), backgroundColor: 'var(--block-brand)' }}
+        >
+            <div className="absolute inset-0" style={{ background: BLOCK_LIFT_BG }} aria-hidden="true" />
+
+            {index && (
+                <span
+                    className={`absolute -right-3 -bottom-14 font-display font-bold leading-none tracking-[-0.06em] tabular-nums select-none ${
+                        isModal ? 'text-[210px]' : 'text-[130px] md:text-[210px]'
+                    }`}
+                    style={{ color: 'var(--block-type-faint)' }}
+                    aria-hidden="true"
+                >
+                    {index}
+                </span>
+            )}
+
+            <span
+                className="absolute left-5 top-5 font-display italic text-sm"
+                style={{ fontStyle: 'italic', color: 'var(--block-type-quiet)' }}
+                aria-hidden="true"
+            >
+                §
+            </span>
+
+            <BrandBlockContent project={project} size={size} />
         </div>
     );
 };

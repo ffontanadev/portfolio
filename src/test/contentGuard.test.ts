@@ -216,8 +216,33 @@ describe('project inventory', () => {
     expect(projectsOf(locale)).not.toHaveProperty('twitterClone');
   });
 
-  it.each(SUPPORTED_LOCALES)('%s ships exactly five featured projects', (locale) => {
-    expect(Object.keys(projectsOf(locale))).toHaveLength(5);
+  it.each(SUPPORTED_LOCALES)('%s ships exactly six featured projects', (locale) => {
+    expect(Object.keys(projectsOf(locale))).toHaveLength(6);
+  });
+
+  /**
+   * The BBVA engagement is two distinct pieces of work and ships as two cards:
+   * `bbva` is the finished API migration and coverage work ('25); `bbvaApp` is
+   * the current frontend position on the multiplatform banking app. Neither
+   * subsumes the other - the migration card carries the 20% -> 85% figures the
+   * hero is anchored to, and the app card carries the current role.
+   */
+  it.each(SUPPORTED_LOCALES)('%s keeps both BBVA cards distinct', (locale) => {
+    const projects = projectsOf(locale);
+    expect(projects).toHaveProperty('bbva');
+    expect(projects).toHaveProperty('bbvaApp');
+  });
+
+  /**
+   * The frontend framework behind the app is internal to the bank. The copy
+   * describes its event model; naming the product is out of bounds. Pin that
+   * so a later copy pass cannot reintroduce the name.
+   */
+  it.each(SUPPORTED_LOCALES)('%s describes the internal framework without naming it', (locale) => {
+    const card = (projectsOf(locale) as { bbvaApp: Record<string, unknown> }).bbvaApp;
+    const haystack = strings(card).join(' ');
+    expect(haystack).not.toMatch(/\bcells?\b/i);
+    expect(haystack.toLowerCase()).toMatch(/event|evento|事件/);
   });
 
   it.each(SUPPORTED_LOCALES)('%s files the voxel engine under its real name in the archive', (locale) => {

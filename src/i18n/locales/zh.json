@@ -14,7 +14,6 @@
     "links": {
       "home": "首页",
       "work": "作品",
-      "about": "关于",
       "connect": "联系"
     },
     "resume": "简历",
@@ -274,6 +273,18 @@
             ]
           }
         },
+        "bbvaApp": {
+          "title": "BBVA - 多平台银行应用",
+          "desc": "BBVA 面向个人客户的银行应用，交付于 iOS、Android 与 Web，构建在银行自有的事件驱动前端框架之上：彼此隔离的组件从不互相引用，只通过发布与订阅通信。",
+          "role": "前端，负责支撑三个平台的共享组件层",
+          "description": "我在 BBVA 面向个人客户的银行应用开发团队工作 - 就是客户每天拿在手里的那个 - 它从一套共享前端交付到 iOS、Android 和 Web。该前端运行在银行内部的一套框架上，我可以描述它但不能指名：组件是彼此隔离的单元，互相不持有引用，只通过向共享总线发布事件、并订阅自己关心的事件来通信。一个页面就是这些组件的组合，加上它们事件之间的连接。\n\n真正有意思的约束在于：同一个组件必须在 iOS 的原生容器、Android 的原生容器和浏览器标签页中表现完全一致。以事件解耦正是达成这一点的手段：组件只知道自己发出什么、监听什么，而对自己运行在哪里、旁边是什么一无所知。",
+          "metrics": [
+            { "label": "平台", "value": "iOS · Android · Web" },
+            { "label": "架构", "value": "事件发布 / 订阅" },
+            { "label": "组件", "value": "彼此隔离，无直接引用" },
+            { "label": "前端", "value": "一套共享层，三个平台" }
+          ]
+        },
         "bbva": {
           "title": "BBVA -  - API 迁移与测试覆盖率",
           "desc": "在一个 10 人团队中，将约 48 个 API 上新端点的测试覆盖率从 20% 提升到 85%+，每次部署都经由 Jenkins、OpenShift 与 SonarQube 把关。",
@@ -324,7 +335,7 @@
       }
     },
     "older": {
-      "eyebrow": "§ 04 - 存档",
+      "eyebrow": "§ 03 - 存档",
       "headingBefore": "早期",
       "headingEmphasis": "作品",
       "description": "我开发旅程中的遗珍 -  - 依然珍视，但已不再是主角。",
@@ -399,44 +410,8 @@
       "keyImplementation": "关键实现"
     }
   },
-  "agents": {
-    "eyebrow": "§ 03 - 方法",
-    "headingBefore": "我如何",
-    "headingEmphasis": "与智能体协作",
-    "headingAfter": "",
-    "intro": "面对大到无法全部装进脑子的代码库，智能体的水平取决于你交给它的事实依据。我的方法让 AI 始终锚定在真实结构与可证明的契约上 -  - 每个答案都经由图谱追溯，每个接口都对照其规格校验。",
-    "pillars": [
-      {
-        "index": "01",
-        "principle": "遍历图谱，而非 grep",
-        "title": "项目索引",
-        "body": "我把每个代码库索引成由函数、路由、调用链与服务契约构成的知识图谱。智能体沿着代码真实的连接方式去遍历，而不是用 grep 或语义搜索去猜 -  - 于是庞大的迁移代码面只需一次查询即可回答，而非全文扫描。"
-      },
-      {
-        "index": "02",
-        "principle": "规格即测试套件",
-        "title": "Schemathesis + OpenAPI",
-        "body": "Schemathesis 读取服务的 OpenAPI 规格，生成基于属性的测试 -  - 数百个边界、畸形与有状态的用例，都是契约所隐含、却没人会手写的。它在客户端看到之前就暴露出规格漂移与意外的 500 -  - 这正是一个迁移后的接口必须证明的。"
-      },
-      {
-        "index": "03",
-        "principle": "一套装置，任意 OpenAPI",
-        "title": "API 测试装置",
-        "body": "我把这套流程封装成一个小应用：把它指向任意暴露 OpenAPI 规格的服务，它就会运行完整的 Schemathesis 套件、列出失败并报告契约覆盖率。测试一个新的微服务因此变成配置，而不是从零搭建的测试项目。"
-      }
-    ],
-    "toolkit": {
-      "label": "工具箱",
-      "items": [
-        { "name": "Playwright", "note": "浏览器 E2E 与视觉" },
-        { "name": "Superpowers", "note": "技能与斜杠命令" },
-        { "name": "MCP memory", "note": "面向智能体的图谱工具" },
-        { "name": "Spec + plan", "note": "头脑风暴 → 计划 → 验证" }
-      ]
-    }
-  },
   "contact": {
-    "eyebrow": "§ 05 - 取得联系",
+    "eyebrow": "§ 04 - 取得联系",
     "intro": "你都看到这里了 -  - ",
     "headline": "来打个招呼。",
     "side": "B 面",
@@ -490,7 +465,6 @@
     "links": {
       "home": "首页",
       "work": "作品",
-      "about": "关于",
       "connect": "联系",
       "resume": "简历",
       "devZone": "开发专区"
