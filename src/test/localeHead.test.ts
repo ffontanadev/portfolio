@@ -3,7 +3,7 @@ import { messages, SUPPORTED_LOCALES, type Locale } from '@/i18n/config';
 
 /**
  * Spec §7.1 ships the English head verbatim. The other three locales get the
- * same *claims* in their own language — the numerals stay identical, because
+ * same *claims* in their own language - the numerals stay identical, because
  * §11 forbids a figure that does not trace to the résumé, in any language.
  */
 const seoOf = (locale: Locale) =>
@@ -12,13 +12,13 @@ const seoOf = (locale: Locale) =>
 describe('per-locale metadata', () => {
   it('ships the spec title verbatim for en', () => {
     expect(seoOf('en').title).toBe(
-      'Felipe Fontana — Software Engineer | Java, Spring Boot, Legacy Modernization',
+      'Felipe Fontana - Software Engineer | Java, Spring Boot, Legacy Modernization',
     );
   });
 
   it('ships the spec description verbatim for en', () => {
     expect(seoOf('en').description).toBe(
-      'Software Engineer with 4 years modernizing core banking systems — Axis2/Java 8 to Spring Boot 3 across ~4,600 classes, 50+ APIs migrated, test coverage from 20% to 85%. Based in Uruguay, UTC−3, full US Eastern overlap.',
+      'Software Engineer with 4 years modernizing core banking systems - Axis2/Java 8 to Spring Boot 3 across ~4,600 classes, 50+ APIs migrated, test coverage from 20% to 85%. Based in Uruguay, UTC−3, full US Eastern overlap.',
     );
   });
 
@@ -39,7 +39,7 @@ describe('per-locale metadata', () => {
   /**
    * 80, not 75: §7.1 fixes the English title verbatim at 76 characters, so a
    * 75-char cap would forbid the very string the spec mandates. The bound is
-   * here to catch unbounded drift, not to second-guess the spec — Google
+   * here to catch unbounded drift, not to second-guess the spec - Google
    * truncates around 600px regardless.
    */
   it.each(SUPPORTED_LOCALES)('%s stays inside the length search engines render', (locale) => {

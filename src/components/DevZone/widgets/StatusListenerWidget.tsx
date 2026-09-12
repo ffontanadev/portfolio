@@ -28,7 +28,7 @@ export default function StatusListenerWidget(props: StatusWidgetProps) {
   const { t } = useTranslation();
   const service = props.instance.serviceId ? getStatusService(props.instance.serviceId) : undefined;
 
-  // A status widget without a valid service reference is unrenderable — show a
+  // A status widget without a valid service reference is unrenderable - show a
   // minimal frame so the user can still remove it.
   if (!service) {
     return (
@@ -59,7 +59,7 @@ function StatusBody({
   const updatedLabel =
     dataUpdatedAt && !isError
       ? new Date(dataUpdatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      : '—';
+      : ' - ';
 
   return (
     <Widget

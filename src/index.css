@@ -82,7 +82,7 @@ body {
   position: relative;
 }
 
-/* Paper grain — fixed, body-wide, blend-multiplied to feel like printed warmth, never washing out colors. */
+/* Paper grain - fixed, body-wide, blend-multiplied to feel like printed warmth, never washing out colors. */
 body::before {
   content: "";
   position: fixed;

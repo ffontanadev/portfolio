@@ -47,7 +47,7 @@ function readState(): WhiteboardState {
     ) {
       return createDefaultState();
     }
-    // `zoom` was added after v1 shipped — default missing/invalid values to 100%.
+    // `zoom` was added after v1 shipped - default missing/invalid values to 100%.
     const zoom = typeof parsed.zoom === 'number' ? clampZoom(parsed.zoom) : 1;
     return { version: WHITEBOARD_VERSION, pan: parsed.pan, zoom, strokes: parsed.strokes };
   } catch {
@@ -78,8 +78,8 @@ export interface WhiteboardApi {
 }
 
 /**
- * Owns the infinite whiteboard surface — its pan offset and the freehand strokes
- * drawn on it — mirroring every change to localStorage so a developer's sketches
+ * Owns the infinite whiteboard surface - its pan offset and the freehand strokes
+ * drawn on it - mirroring every change to localStorage so a developer's sketches
  * and viewport survive reloads. Coordinates are stored in world space (canvas
  * coordinates independent of the current pan).
  */
@@ -91,7 +91,7 @@ export function useWhiteboardCanvas(): WhiteboardApi {
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     } catch {
-      /* storage may be unavailable (private mode / quota) — ignore. */
+      /* storage may be unavailable (private mode / quota) - ignore. */
     }
   }, [state]);
 

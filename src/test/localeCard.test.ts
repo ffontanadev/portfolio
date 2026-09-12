@@ -3,7 +3,7 @@ import { messages, SUPPORTED_LOCALES, type Locale } from '@/i18n/config';
 
 /**
  * `satisfies Record<string, Messages>` in config.ts makes tsc enforce key
- * parity across locales, but it cannot enforce array *length* — a locale can
+ * parity across locales, but it cannot enforce array *length* - a locale can
  * ship 5 engine systems where `en` has 6 and still compile. These tests close
  * that gap and pin the EFENGINE card to the current state of the engine.
  */

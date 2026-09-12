@@ -8,13 +8,13 @@
 
 Replace the **static** background of the efengine flagship banner in **FeaturedWorks**
 with an **ambient, auto-cycling playlist of local video clips**, to make the banner feel
-alive and showcase the engine in motion — while keeping the existing "EFENGINE" identity
+alive and showcase the engine in motion - while keeping the existing "EFENGINE" identity
 and the rest of the section's editorial design intact.
 
 Today the flagship band ([`FeaturedWorks.tsx`](../../../src/components/FeaturedWorks.tsx),
 the flagship `<article>`) renders its background via `EnterpriseHero` (aliased to
 `TypographicHero` in [`ProjectPreviewModal.tsx`](../../../src/components/ProjectPreviewModal.tsx)):
-a radial cream gradient + the "EFENGINE" wordmark + a hairline + a tech-stack line — fully
+a radial cream gradient + the "EFENGINE" wordmark + a hairline + a tech-stack line - fully
 static.
 
 ## Decisions taken during brainstorming
@@ -31,8 +31,8 @@ static.
 
 A new isolated component, **`VideoShowcaseHero`**, owns all video and playlist logic. It is
 rendered **in place of** the static hero in the flagship band, but **only** when the project
-declares showcase clips. Everything else — the five other project cards, the modal, and the
-static hero used everywhere else — is untouched.
+declares showcase clips. Everything else - the five other project cards, the modal, and the
+static hero used everywhere else - is untouched.
 
 ```
 flagship <article> (FeaturedWorks.tsx)
@@ -49,13 +49,13 @@ flagship <article> (FeaturedWorks.tsx)
 To keep the typography identical between the static and video heroes, the centered content
 of `TypographicHero` is extracted into a shared piece:
 
-- **`HeroOverlayContent`** — the centered wordmark / logo / lead-metric + hairline + tech-stack
+- **`HeroOverlayContent`** - the centered wordmark / logo / lead-metric + hairline + tech-stack
   line (the existing inner block of `TypographicHero`).
 - `TypographicHero` keeps rendering **exactly as today**: radial cream gradient background +
   `HeroOverlayContent`. Its public API (`{ project, size }`) and the `EnterpriseHero` alias
   are unchanged.
 
-This is a pure extraction — the static hero renders byte-for-byte the same output; it just
+This is a pure extraction - the static hero renders byte-for-byte the same output; it just
 now composes a named sub-component that `VideoShowcaseHero` can reuse.
 
 ## New / changed files
@@ -73,20 +73,20 @@ Behavior:
 - Otherwise renders, inside a `relative w-full h-full overflow-hidden bg-cream-100` container:
   1. a **cream radial-gradient underlay** identical to the static hero's, so there is never a
      flash/black box before the first frame loads;
-  2. one **`<video>`** element — `muted autoPlay playsInline loop={false} preload="metadata"`,
-     `object-cover absolute inset-0`, `aria-hidden` (decorative — identity comes from the
+  2. one **`<video>`** element - `muted autoPlay playsInline loop={false} preload="metadata"`,
+     `object-cover absolute inset-0`, `aria-hidden` (decorative - identity comes from the
      overlay, and there is no audio, so no captions are needed). It starts at clip index `0`.
   3. a **scrim** (subtle gradient) between video and overlay for text legibility;
-  4. **`HeroOverlayContent`** on top — identical "EFENGINE" typography to the static version.
+  4. **`HeroOverlayContent`** on top - identical "EFENGINE" typography to the static version.
 - **Auto-advance:** on the `<video>`'s `onEnded`, advance the clip index, wrapping endlessly
   (`(i + 1) % videos.length`). A single `<video>` element is reused; its `src` changes by index.
 - **Fade:** the video fades in (opacity 0 → 1) once it can play (`onCanPlay`); on clip change a
   short opacity dip provides a simple cross-fade. (Single-element fade is v1; a two-element
   true cross-fade is out of scope.)
 - **Offscreen pause:** uses framer-motion `useInView` (already a dependency) to `pause()` the
-  video when the banner is scrolled out of view and resume when it returns — saves CPU/battery.
+  video when the banner is scrolled out of view and resume when it returns - saves CPU/battery.
 - **Error fallback:** on the video's `onError`, set a `failed` flag and render
-  `<TypographicHero project size />` instead — the banner silently degrades to the static hero.
+  `<TypographicHero project size />` instead - the banner silently degrades to the static hero.
 
 ### Changed: `src/components/ProjectPreviewModal.tsx`
 
@@ -127,7 +127,7 @@ so it is inherited automatically.
 
 The author supplies the actual web-optimized clip files (`.mp4`, H.264 / AAC or no audio,
 short loops). The component handles 0…n clips gracefully (0 → static fallback via the band
-conditional). **No clip files are created by this plan** — only the wiring and the paths.
+conditional). **No clip files are created by this plan** - only the wiring and the paths.
 
 ## Data flow
 
@@ -150,7 +150,7 @@ projectData.efengine.showcaseVideos  (structural, non-translatable)
 - `prefers-reduced-motion: reduce` fully disables autoplay and renders the static hero.
 - Autoplay is reliable because the video is **muted** + `playsInline` (browser autoplay policy).
 
-## Error handling (all paths resolve to the static hero — never a broken banner)
+## Error handling (all paths resolve to the static hero - never a broken banner)
 
 - **Reduced motion** → static `TypographicHero`, no video element mounted.
 - **No clips configured** → band renders `EnterpriseHero` as today.
@@ -159,11 +159,11 @@ projectData.efengine.showcaseVideos  (structural, non-translatable)
 
 ## Verification
 
-This repo has **no test runner** (no vitest/jest in `package.json`), and — consistent with the
-prior efengine spec — adding one is out of scope. So verification is **not** TDD:
+This repo has **no test runner** (no vitest/jest in `package.json`), and - consistent with the
+prior efengine spec - adding one is out of scope. So verification is **not** TDD:
 
-1. `npm run build` (`tsc -b` + `vite build`) — no type errors, builds clean.
-2. `npm run lint` — no errors.
+1. `npm run build` (`tsc -b` + `vite build`) - no type errors, builds clean.
+2. `npm run lint` - no errors.
 3. Manual browser pass (`npm run dev`):
    - clips present + motion allowed → video autoplays muted, loops, auto-advances; overlay
      wordmark + tech line readable over the scrim;

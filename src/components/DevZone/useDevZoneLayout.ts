@@ -115,7 +115,7 @@ export function useDevZoneLayout(): DevZoneLayoutApi {
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(layout));
     } catch {
-      /* storage may be unavailable (private mode / quota) — ignore. */
+      /* storage may be unavailable (private mode / quota) - ignore. */
     }
   }, [layout]);
 

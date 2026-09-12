@@ -29,7 +29,7 @@ describe('showcase logo list', () => {
 
 /**
  * Below the hero's split-column breakpoint there is no empty right column to
- * put a logo in, and a centred one would sit on top of the headline — so the
+ * put a logo in, and a centred one would sit on top of the headline - so the
  * showcase simply doesn't run there.
  */
 describe('showcaseFitsIn', () => {

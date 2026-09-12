@@ -74,7 +74,7 @@ const Hero = () => {
 
   // The text only waits when the rocket actually flies. Reduced-motion users
   // and phones get no particle intro, so stalling them for four seconds hides
-  // the headline behind an animation that never runs — and, because the client
+  // the headline behind an animation that never runs - and, because the client
   // re-renders over the prerendered markup instead of hydrating it, that stall
   // blanks a hero the browser had already painted (spec §10: LCP ≤ 2.0s).
   const introOffset = inert ? 0 : INTRO_TOTAL_S;
@@ -95,7 +95,7 @@ const Hero = () => {
       onMouseMove={handleMouseMove}
       className="relative select-none min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-cream-50 to-cream-100"
     >
-      {/* Particle field — fills the entire hero. The rocket flies in, morphs
+      {/* Particle field - fills the entire hero. The rocket flies in, morphs
           into the first tech logo, and the field then cycles the stack's logos
           on the right-hand side. Cursor pushes particles aside. */}
       {particlesActive && (
@@ -188,7 +188,7 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        {/* Subheading — at the bottom of the entire hero */}
+        {/* Subheading - at the bottom of the entire hero */}
         <motion.div
           initial={entryInitial({ opacity: 0, y: 20 })}
           animate={{ opacity: 1, y: 0 }}
@@ -205,7 +205,7 @@ const Hero = () => {
                 transition={{ duration: 0.4, ease }}
               >
                 <span className="font-medium text-dark-900">{selected.name}</span>
-                <span className="text-dark-900/40">{' — '}</span>
+                <span className="text-dark-900/40">{' - '}</span>
                 {t('techShowcase.brief.' + selected.id)}{' '}
                 <button
                   type="button"
@@ -231,7 +231,7 @@ const Hero = () => {
         </motion.div>
       </motion.div>
 
-      {/* Drifting background blobs — dimmed so they read as deep atmosphere
+      {/* Drifting background blobs - dimmed so they read as deep atmosphere
           underneath the particle field, not competing with it. */}
       <motion.div
         style={{ y: bgY1 }}

@@ -11,7 +11,7 @@ interface DockProps {
   onReset: () => void;
   /** Service ids already on the board, shown as active in the picker. */
   activeServiceIds: string[];
-  /** Singleton widgets already present — their dock buttons are disabled. */
+  /** Singleton widgets already present - their dock buttons are disabled. */
   hasMusic: boolean;
   hasPomodoro: boolean;
 }

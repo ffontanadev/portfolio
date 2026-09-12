@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 /**
- * There is no framework metadata layer in this Vite SPA — `index.html` is the
+ * There is no framework metadata layer in this Vite SPA - `index.html` is the
  * only `<head>` that ships. These tests pin what a crawler and LinkedIn's post
  * inspector actually receive.
  */
@@ -22,7 +22,7 @@ describe('index.html metadata', () => {
 
   it('ships the positioning title', () => {
     expect(doc.querySelector('title')?.textContent).toBe(
-      'Felipe Fontana — Software Engineer | Java, Spring Boot, Legacy Modernization',
+      'Felipe Fontana - Software Engineer | Java, Spring Boot, Legacy Modernization',
     );
   });
 
@@ -37,7 +37,7 @@ describe('index.html metadata', () => {
     expect(meta('property="og:type"')).toBe('profile');
     expect(meta('property="og:url"')).toBe('https://ffontana.dev/en');
     expect(meta('property="og:title"')).toBe(
-      'Felipe Fontana — Software Engineer, Java & Spring Boot',
+      'Felipe Fontana - Software Engineer, Java & Spring Boot',
     );
     expect(meta('property="og:locale"')).toBe('en_US');
   });

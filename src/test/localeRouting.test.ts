@@ -70,7 +70,7 @@ describe('negotiateLocale', () => {
 });
 
 /**
- * `/` and `/dev-zone` must both survive as entry points — the first is what
+ * `/` and `/dev-zone` must both survive as entry points - the first is what
  * people type, the second is what the old header link pointed at. Both land on
  * a locale-prefixed path, preserving whatever came after the locale slot.
  */

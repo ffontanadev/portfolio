@@ -29,7 +29,7 @@
         - button "Resume" [ref=e36] [cursor=pointer]
   - main [ref=e38]:
     - generic [ref=e40]:
-      - generic [ref=e41]: 01 — Introduction
+      - generic [ref=e41]: 01 - Introduction
       - paragraph [ref=e48]: A developer crafting digital solutions at Magenta Innova .
     - generic [ref=e49]:
       - generic [ref=e50]: Stack · in rotation
@@ -174,7 +174,7 @@
           - generic [ref=e179]: Vite
     - generic [ref=e180]:
       - generic [ref=e181]:
-        - generic [ref=e182]: § 02 — Selected Work
+        - generic [ref=e182]: § 02 - Selected Work
         - heading "What I've been pouring my soul into." [level=2] [ref=e185]
         - paragraph [ref=e186]: A small collection of recent experiments, enterprise migrations, and side-quests.
       - tablist "Filter projects by category" [ref=e187]:
@@ -184,7 +184,7 @@
       - article [ref=e192] [cursor=pointer]:
         - generic [ref=e193]:
           - generic [ref=e194]: § Flagship · C++ Engine
-          - generic [ref=e196]: "'26 — NOW"
+          - generic [ref=e196]: "'26 - NOW"
         - generic [ref=e198]:
           - generic [ref=e202]: §
           - generic [ref=e204]:
@@ -193,8 +193,8 @@
               - generic [ref=e207]: my most ambitious project
             - paragraph [ref=e209]: C++17 · OpenGL 3.3 Core · GLFW · GLAD · GLM
         - generic [ref=e215]:
-          - heading "EFENGINE — C++ Game Framework" [level=3] [ref=e216]
-          - paragraph [ref=e217]: A from-scratch 3D game framework in C++17 on OpenGL 3.3 Core — a library you compile your games against, built to master memory management and the game lifecycle.
+          - heading "EFENGINE - C++ Game Framework" [level=3] [ref=e216]
+          - paragraph [ref=e217]: A from-scratch 3D game framework in C++17 on OpenGL 3.3 Core - a library you compile your games against, built to master memory management and the game lifecycle.
           - generic [ref=e218]:
             - generic [ref=e219]: C++17
             - generic [ref=e220]: OpenGL 3.3 Core
@@ -210,7 +210,7 @@
               - text: "01"
               - generic [ref=e230]: / 06
             - generic [ref=e231]: Enterprise
-            - generic [ref=e233]: "'25 — NOW"
+            - generic [ref=e233]: "'25 - NOW"
           - generic [ref=e235]:
             - generic [ref=e237]: §
             - generic [ref=e239]:
@@ -221,8 +221,8 @@
                 - generic [ref=e262]: Boot
               - paragraph [ref=e264]: Java 17 · Spring Boot 3 · Axis2 (legacy)
           - generic [ref=e270]:
-            - heading "Banco Provincia — Core Services Migration" [level=3] [ref=e271]
-            - paragraph [ref=e272]: Lifting Banco Provincia's legacy Axis2 / Java 8 web services into a modern Spring Boot 3 platform on Java 17 — 7 repositories, ~4,600 classes — with connectivity rewired from JNDI to a managed MSSQL DataSource.
+            - heading "Banco Provincia - Core Services Migration" [level=3] [ref=e271]
+            - paragraph [ref=e272]: Lifting Banco Provincia's legacy Axis2 / Java 8 web services into a modern Spring Boot 3 platform on Java 17 - 7 repositories, ~4,600 classes - with connectivity rewired from JNDI to a managed MSSQL DataSource.
             - generic [ref=e273]:
               - generic [ref=e274]: Java 17
               - generic [ref=e275]: Spring Boot 3
@@ -244,8 +244,8 @@
                 - generic [ref=e295]: 50+
               - paragraph [ref=e297]: Java 17 · Spring Boot · JUnit 5
           - generic [ref=e303]:
-            - heading "BBVA — API Migration & Test Coverage" [level=3] [ref=e304]
-            - paragraph [ref=e305]: Migrating BBVA's internal API surface to Spring Boot and engineering high-coverage test suites across more than 50 services — turning fragile internals into a platform that can be refactored without fear.
+            - heading "BBVA - API Migration & Test Coverage" [level=3] [ref=e304]
+            - paragraph [ref=e305]: Migrating BBVA's internal API surface to Spring Boot and engineering high-coverage test suites across more than 50 services - turning fragile internals into a platform that can be refactored without fear.
             - generic [ref=e306]:
               - generic [ref=e307]: Java 17
               - generic [ref=e308]: Spring Boot
@@ -257,7 +257,7 @@
               - text: "03"
               - generic [ref=e314]: / 06
             - generic [ref=e315]: Enterprise
-            - generic [ref=e317]: "'23 — '24"
+            - generic [ref=e317]: "'23 - '24"
           - generic [ref=e319]:
             - generic [ref=e321]: §
             - generic [ref=e323]:
@@ -268,7 +268,7 @@
               - paragraph [ref=e329]: React Native · Expo · Android Biometric API
           - generic [ref=e335]:
             - heading "Mobile Banking App (NDA)" [level=3] [ref=e336]
-            - paragraph [ref=e337]: A cross-platform mobile banking app built in React Native + Expo from external design and backend specifications, with a 3-developer team — featuring native Android biometric authentication and secure local persistence.
+            - paragraph [ref=e337]: A cross-platform mobile banking app built in React Native + Expo from external design and backend specifications, with a 3-developer team - featuring native Android biometric authentication and secure local persistence.
             - generic [ref=e338]:
               - generic [ref=e339]: React Native
               - generic [ref=e340]: Expo
@@ -341,9 +341,9 @@
               - generic [ref=e434]: SQLite
     - generic [ref=e435]:
       - generic [ref=e436]:
-        - generic [ref=e437]: § 03 — Method
+        - generic [ref=e437]: § 03 - Method
         - heading "How I work with agents" [level=2] [ref=e440]
-        - paragraph [ref=e441]: On codebases too large to hold in one head, an agent is only as sharp as the ground truth you give it. My method keeps AI anchored to real structure and provable contracts — every answer traced through a graph, every endpoint checked against its spec.
+        - paragraph [ref=e441]: On codebases too large to hold in one head, an agent is only as sharp as the ground truth you give it. My method keeps AI anchored to real structure and provable contracts - every answer traced through a graph, every endpoint checked against its spec.
       - generic [ref=e442]:
         - article [ref=e443]:
           - generic [ref=e444]:
@@ -351,9 +351,9 @@
             - img [ref=e447]:
               - generic [ref=e465]: trace_path()
           - generic [ref=e466]:
-            - paragraph [ref=e467]: // Traverse the graph — don't grep it
+            - paragraph [ref=e467]: // Traverse the graph - don't grep it
             - heading "Project indexing" [level=3] [ref=e468]
-            - paragraph [ref=e469]: I index each codebase into a knowledge graph of functions, routes, call chains and service contracts. Agents traverse how the code actually connects instead of grepping or guessing through semantic search — so a sprawling migration surface answers to a query, not a full-text scan.
+            - paragraph [ref=e469]: I index each codebase into a knowledge graph of functions, routes, call chains and service contracts. Agents traverse how the code actually connects instead of grepping or guessing through semantic search - so a sprawling migration surface answers to a query, not a full-text scan.
         - article [ref=e470]:
           - generic [ref=e471]:
             - generic [ref=e472]: "02"
@@ -371,7 +371,7 @@
           - generic [ref=e498]:
             - paragraph [ref=e499]: // The spec is the test suite
             - heading "Schemathesis + OpenAPI" [level=3] [ref=e500]
-            - paragraph [ref=e501]: Schemathesis reads a service's OpenAPI schema and generates property-based tests — hundreds of boundary, malformed and stateful cases the contract implies but nobody writes by hand. It surfaces schema drift and unexpected 500s before a client ever sees them — exactly what a migrated endpoint has to prove.
+            - paragraph [ref=e501]: Schemathesis reads a service's OpenAPI schema and generates property-based tests - hundreds of boundary, malformed and stateful cases the contract implies but nobody writes by hand. It surfaces schema drift and unexpected 500s before a client ever sees them - exactly what a migrated endpoint has to prove.
         - article [ref=e502]:
           - generic [ref=e503]:
             - generic [ref=e504]: "03"
@@ -413,9 +413,9 @@
             - generic [ref=e553]: brainstorm → plan → verify
     - generic [ref=e555]:
       - generic [ref=e556]:
-        - generic [ref=e557]: § 04 — Archive
+        - generic [ref=e557]: § 04 - Archive
         - heading "Older works" [level=2] [ref=e560]
-        - paragraph [ref=e561]: Relics of my developing journey — still dear to me, but no longer the main event.
+        - paragraph [ref=e561]: Relics of my developing journey - still dear to me, but no longer the main event.
       - generic [ref=e562]:
         - generic [ref=e564] [cursor=pointer]:
           - generic [ref=e565]:
@@ -442,9 +442,8 @@
             - paragraph [ref=e592]: A Progressive Web App (PWA) specializing in digital scorekeeping for Truco, the most popular traditional card game in Uruguay and Argentina. Designed to work completely offline, it allows players to keep accurate and efficient score tracking without relying on an internet connection. The app leverages modern PWA capabilities to deliver a native cross-platform experience, installable directly from the browser on mobile devices, tablets, and desktops. Its offline-first architecture guarantees full availability through Service Workers and local storage, ensuring that games are never interrupted by connectivity issues.
             - generic [ref=e593]: View
     - generic [ref=e597]:
-      - generic [ref=e598]: § 05 — Get in touch
-      - paragraph [ref=e602]: you made it this far—
-      - heading "C o m e s a y h i ." [level=2] [ref=e603]:
+      - generic [ref=e598]: § 05 - Get in touch
+      - paragraph [ref=e602]: you made it this far - - heading "C o m e s a y h i ." [level=2] [ref=e603]:
         - generic [ref=e604]: C
         - generic [ref=e605]: o
         - generic [ref=e606]: m

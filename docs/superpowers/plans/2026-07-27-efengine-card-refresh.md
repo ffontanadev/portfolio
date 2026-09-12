@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Bring the EFENGINE flagship card in line with the engine as of 2026-07-26 — rewritten copy, a 7-phase roadmap rebuilt from the gitlog, and a new engine-systems block in the detail modal.
+**Goal:** Bring the EFENGINE flagship card in line with the engine as of 2026-07-26 - rewritten copy, a 7-phase roadmap rebuilt from the gitlog, and a new engine-systems block in the detail modal.
 
-**Architecture:** The card is assembled at runtime from two halves — structural data in `FeaturedWorks.tsx` and localized copy in four JSON locale files — merged by `id` in a `useMemo`. This plan rewrites the copy, adds one optional field (`systems`) to the `Project` type, and renders it with a new `EngineSystems` component that mirrors the existing `DevelopmentRoadmap`. No new dependencies, no new routes, no changes to any other card.
+**Architecture:** The card is assembled at runtime from two halves - structural data in `FeaturedWorks.tsx` and localized copy in four JSON locale files - merged by `id` in a `useMemo`. This plan rewrites the copy, adds one optional field (`systems`) to the `Project` type, and renders it with a new `EngineSystems` component that mirrors the existing `DevelopmentRoadmap`. No new dependencies, no new routes, no changes to any other card.
 
 **Tech Stack:** React 19, TypeScript 5.9, Tailwind 4, Vite 7, Vitest 3 (jsdom), custom JSON-based i18n.
 
@@ -12,12 +12,12 @@
 
 ## Global Constraints
 
-- **Four locales, always in lockstep.** `src/i18n/config.ts:21` declares `satisfies Record<string, Messages>` with `Messages = typeof en`. Any key added to `en.json` must be added to `es.json`, `pt.json` and `zh.json` or `tsc -b` fails. Array *lengths* are not compiler-checked — Task 1's test covers that gap.
+- **Four locales, always in lockstep.** `src/i18n/config.ts:21` declares `satisfies Record<string, Messages>` with `Messages = typeof en`. Any key added to `en.json` must be added to `es.json`, `pt.json` and `zh.json` or `tsc -b` fails. Array *lengths* are not compiler-checked - Task 1's test covers that gap.
 - **`en.json` is the source of truth for shape.** Add keys there first.
 - **No new runtime or dev dependencies.** There is no `@testing-library/react` in this repo; do not add one. Component behavior is verified by `pnpm build` plus the visual pass in Task 5.
-- **Locale copy is plain text, not markdown.** Nothing renders markdown in these fields — write `gl*`, `.efe`, `unique_ptr` without backticks.
+- **Locale copy is plain text, not markdown.** Nothing renders markdown in these fields - write `gl*`, `.efe`, `unique_ptr` without backticks.
 - **Module names stay untranslated.** `efecom`, `renderer`, `scene`, `resources`, `serialization`, `sandbox` are repo identifiers; only the `role` sentence beside them is translated.
-- **Phase labels follow each locale's existing convention:** `Fase 0`–`Fase 6` in `en`, `es` and `pt` (the English locale already ships the Spanish word — keep it); `阶段 0`–`阶段 6` in `zh`.
+- **Phase labels follow each locale's existing convention:** `Fase 0`–`Fase 6` in `en`, `es` and `pt` (the English locale already ships the Spanish word - keep it); `阶段 0`–`阶段 6` in `zh`.
 - **Indentation in locale JSON is 2 spaces**, matching the surrounding file. Files are UTF-8; do not let an editor rewrite the CJK or accented characters.
 - **Commands:** `pnpm build` (runs `tsc -b` then `vite build`), `pnpm lint`, `pnpm test`.
 
@@ -48,7 +48,7 @@
 
 **Interfaces:**
 - Consumes: `messages` and `SUPPORTED_LOCALES` from `src/i18n/config.ts` (both already exported).
-- Produces: `work.featured.projects.efengine.systems` — an array of `{ label: string; role: string }`, 6 entries, which Task 2 reads as `fp.efengine.systems`. Also `work.modal.engineSystems` — a string heading, which Task 3 reads via `t('work.modal.engineSystems')`. Also `work.featured.projects.efengine.phases` grown from 3 to 7 entries of the unchanged `{ label, title, desc }` shape.
+- Produces: `work.featured.projects.efengine.systems` - an array of `{ label: string; role: string }`, 6 entries, which Task 2 reads as `fp.efengine.systems`. Also `work.modal.engineSystems` - a string heading, which Task 3 reads via `t('work.modal.engineSystems')`. Also `work.featured.projects.efengine.phases` grown from 3 to 7 entries of the unchanged `{ label, title, desc }` shape.
 
 - [ ] **Step 1: Write the failing test**
 
@@ -60,7 +60,7 @@ import { messages, SUPPORTED_LOCALES, type Locale } from '@/i18n/config';
 
 /**
  * `satisfies Record<string, Messages>` in config.ts makes tsc enforce key
- * parity across locales, but it cannot enforce array *length* — a locale can
+ * parity across locales, but it cannot enforce array *length* - a locale can
  * ship 6 roadmap phases where `en` has 7 and still compile. These tests close
  * that gap and pin the EFENGINE card to the current state of the engine.
  */
@@ -146,7 +146,7 @@ describe('EFENGINE card is current', () => {
 - [ ] **Step 2: Run the test to verify it fails**
 
 Run: `pnpm test`
-Expected: FAIL. `phases` has 3 entries not 7; `systems` is `undefined` so `toHaveLength` throws; `3.3` is present in every locale; `engineSystems` is undefined. The `locale array parity` block passes today (all four locales still agree at 3 phases) — that is fine, it is a regression guard.
+Expected: FAIL. `phases` has 3 entries not 7; `systems` is `undefined` so `toHaveLength` throws; `3.3` is present in every locale; `engineSystems` is undefined. The `locale array parity` block passes today (all four locales still agree at 3 phases) - that is fine, it is a regression guard.
 
 - [ ] **Step 3: Rewrite the `en.json` EFENGINE block**
 
@@ -154,10 +154,10 @@ Replace `src/i18n/locales/en.json:208-231` (the whole `"efengine": { … },` obj
 
 ```json
         "efengine": {
-          "title": "EFENGINE — C++ Game Engine",
-          "desc": "A from-scratch 3D engine in C++17 on OpenGL 4.5 Core — PBR with split-sum IBL, shadow mapping, an HDR post chain, a versioned binary scene format and a docked ImGui editor, all under RAII rules with no exceptions.",
+          "title": "EFENGINE - C++ Game Engine",
+          "desc": "A from-scratch 3D engine in C++17 on OpenGL 4.5 Core - PBR with split-sum IBL, shadow mapping, an HDR post chain, a versioned binary scene format and a docked ImGui editor, all under RAII rules with no exceptions.",
           "role": "Engine Author",
-          "description": "EFENGINE is my most ambitious project: a 3D engine written from scratch in C++17 on OpenGL 4.5 Core. It renders PBR materials lit by point and directional lights with full image-based lighting — diffuse irradiance plus split-sum specular, both precomputed by compute shaders — over shadow mapping, a skybox and an HDR post chain of bloom, tonemap and FXAA. Scenes live in a node graph addressed by generational handles and persist to .efe, a chunked, versioned binary format of my own with a reader hostile to corrupt input. On top sits a docked ImGui editor: hierarchy, inspector, live material editing and scene save/load.\n\nWhat holds it together is a set of non-negotiable rules. Every gl* call is confined to efecom, the RHI layer — the renderer never sees OpenGL. No raw new/delete and no exceptions: ownership is a value or a unique_ptr, programmer errors trip an assert, recoverable failures come back as return values, and every subsystem is RAII — constructing it brings it up, destroying it tears it down.",
+          "description": "EFENGINE is my most ambitious project: a 3D engine written from scratch in C++17 on OpenGL 4.5 Core. It renders PBR materials lit by point and directional lights with full image-based lighting - diffuse irradiance plus split-sum specular, both precomputed by compute shaders - over shadow mapping, a skybox and an HDR post chain of bloom, tonemap and FXAA. Scenes live in a node graph addressed by generational handles and persist to .efe, a chunked, versioned binary format of my own with a reader hostile to corrupt input. On top sits a docked ImGui editor: hierarchy, inspector, live material editing and scene save/load.\n\nWhat holds it together is a set of non-negotiable rules. Every gl* call is confined to efecom, the RHI layer - the renderer never sees OpenGL. No raw new/delete and no exceptions: ownership is a value or a unique_ptr, programmer errors trip an assert, recoverable failures come back as return values, and every subsystem is RAII - constructing it brings it up, destroying it tears it down.",
           "leadSub": "C++17 · OpenGL 4.5 Core",
           "phases": [
             {
@@ -188,7 +188,7 @@ Replace `src/i18n/locales/en.json:208-231` (the whole `"efengine": { … },` obj
             {
               "label": "Fase 5",
               "title": "Graph, .efe and editor",
-              "desc": "SceneGraph by generational handles, per-node behaviors, and the .efe binary format — chunked, versioned, with a reader hostile to corrupt files. The sandbox becomes a docked editor."
+              "desc": "SceneGraph by generational handles, per-node behaviors, and the .efe binary format - chunked, versioned, with a reader hostile to corrupt files. The sandbox becomes a docked editor."
             },
             {
               "label": "Fase 6",
@@ -239,10 +239,10 @@ Replace `src/i18n/locales/es.json:208-231`:
 
 ```json
         "efengine": {
-          "title": "EFENGINE — Motor de Juegos en C++",
-          "desc": "Motor 3D hecho desde cero en C++17 sobre OpenGL 4.5 Core — PBR con IBL split-sum, shadow mapping, cadena de post-proceso HDR, formato binario propio de escenas y un editor ImGui dockeado, todo bajo reglas RAII y sin excepciones.",
+          "title": "EFENGINE - Motor de Juegos en C++",
+          "desc": "Motor 3D hecho desde cero en C++17 sobre OpenGL 4.5 Core - PBR con IBL split-sum, shadow mapping, cadena de post-proceso HDR, formato binario propio de escenas y un editor ImGui dockeado, todo bajo reglas RAII y sin excepciones.",
           "role": "Autor del Motor",
-          "description": "EFENGINE es mi proyecto más ambicioso: un motor 3D escrito desde cero en C++17 sobre OpenGL 4.5 Core. Renderiza materiales PBR iluminados por luces puntuales y direccional con iluminación basada en imagen completa —irradiancia difusa más especular por split-sum, ambas precalculadas por compute shaders— sobre shadow mapping, un skybox y una cadena de post-proceso HDR de bloom, tonemap y FXAA. Las escenas viven en un grafo de nodos direccionado por handles con generación y se persisten en .efe, un formato binario propio, chunkeado y versionado, con un reader hostil a la entrada corrupta. Encima corre un editor ImGui dockeado: jerarquía, inspector, edición de materiales en vivo y guardado/carga de escenas.\n\nLo que lo sostiene es un conjunto de reglas no negociables. Cada llamada gl* está confinada a efecom, la capa RHI — el renderer nunca ve OpenGL. Sin new/delete crudos y sin excepciones: la propiedad es un valor o un unique_ptr, los errores de programación disparan un assert, los fallos recuperables vuelven como valor de retorno, y todo subsistema es RAII — construirlo lo levanta, destruirlo lo baja.",
+          "description": "EFENGINE es mi proyecto más ambicioso: un motor 3D escrito desde cero en C++17 sobre OpenGL 4.5 Core. Renderiza materiales PBR iluminados por luces puntuales y direccional con iluminación basada en imagen completa - irradiancia difusa más especular por split-sum, ambas precalculadas por compute shaders - sobre shadow mapping, un skybox y una cadena de post-proceso HDR de bloom, tonemap y FXAA. Las escenas viven en un grafo de nodos direccionado por handles con generación y se persisten en .efe, un formato binario propio, chunkeado y versionado, con un reader hostil a la entrada corrupta. Encima corre un editor ImGui dockeado: jerarquía, inspector, edición de materiales en vivo y guardado/carga de escenas.\n\nLo que lo sostiene es un conjunto de reglas no negociables. Cada llamada gl* está confinada a efecom, la capa RHI - el renderer nunca ve OpenGL. Sin new/delete crudos y sin excepciones: la propiedad es un valor o un unique_ptr, los errores de programación disparan un assert, los fallos recuperables vuelven como valor de retorno, y todo subsistema es RAII - construirlo lo levanta, destruirlo lo baja.",
           "leadSub": "C++17 · OpenGL 4.5 Core",
           "phases": [
             {
@@ -273,7 +273,7 @@ Replace `src/i18n/locales/es.json:208-231`:
             {
               "label": "Fase 5",
               "title": "Grafo, .efe y editor",
-              "desc": "SceneGraph por handles con generación, behaviors por nodo, y el formato binario .efe — chunkeado, versionado y con reader hostil a archivos corruptos. El sandbox se vuelve editor dockeado."
+              "desc": "SceneGraph por handles con generación, behaviors por nodo, y el formato binario .efe - chunkeado, versionado y con reader hostil a archivos corruptos. El sandbox se vuelve editor dockeado."
             },
             {
               "label": "Fase 6",
@@ -324,10 +324,10 @@ Replace `src/i18n/locales/pt.json:208-231`:
 
 ```json
         "efengine": {
-          "title": "EFENGINE — Motor de Jogos em C++",
-          "desc": "Motor 3D feito do zero em C++17 sobre OpenGL 4.5 Core — PBR com IBL split-sum, shadow mapping, cadeia de pós-processamento HDR, formato binário próprio de cenas e um editor ImGui dockado, tudo sob regras RAII e sem exceções.",
+          "title": "EFENGINE - Motor de Jogos em C++",
+          "desc": "Motor 3D feito do zero em C++17 sobre OpenGL 4.5 Core - PBR com IBL split-sum, shadow mapping, cadeia de pós-processamento HDR, formato binário próprio de cenas e um editor ImGui dockado, tudo sob regras RAII e sem exceções.",
           "role": "Autor do Motor",
-          "description": "EFENGINE é meu projeto mais ambicioso: um motor 3D escrito do zero em C++17 sobre OpenGL 4.5 Core. Ele renderiza materiais PBR iluminados por luzes pontuais e direcional com iluminação baseada em imagem completa —irradiância difusa mais especular por split-sum, ambas pré-computadas por compute shaders— sobre shadow mapping, um skybox e uma cadeia de pós-processamento HDR de bloom, tonemap e FXAA. As cenas vivem em um grafo de nós endereçado por handles com geração e são persistidas em .efe, um formato binário próprio, em chunks e versionado, com um reader hostil a entradas corrompidas. Por cima roda um editor ImGui dockado: hierarquia, inspetor, edição de materiais ao vivo e salvar/carregar cenas.\n\nO que sustenta tudo é um conjunto de regras inegociáveis. Cada chamada gl* está confinada ao efecom, a camada RHI — o renderer nunca vê OpenGL. Sem new/delete crus e sem exceções: a propriedade é um valor ou um unique_ptr, erros de programação disparam um assert, falhas recuperáveis voltam como valor de retorno, e todo subsistema é RAII — construí-lo o levanta, destruí-lo o desliga.",
+          "description": "EFENGINE é meu projeto mais ambicioso: um motor 3D escrito do zero em C++17 sobre OpenGL 4.5 Core. Ele renderiza materiais PBR iluminados por luzes pontuais e direcional com iluminação baseada em imagem completa - irradiância difusa mais especular por split-sum, ambas pré-computadas por compute shaders - sobre shadow mapping, um skybox e uma cadeia de pós-processamento HDR de bloom, tonemap e FXAA. As cenas vivem em um grafo de nós endereçado por handles com geração e são persistidas em .efe, um formato binário próprio, em chunks e versionado, com um reader hostil a entradas corrompidas. Por cima roda um editor ImGui dockado: hierarquia, inspetor, edição de materiais ao vivo e salvar/carregar cenas.\n\nO que sustenta tudo é um conjunto de regras inegociáveis. Cada chamada gl* está confinada ao efecom, a camada RHI - o renderer nunca vê OpenGL. Sem new/delete crus e sem exceções: a propriedade é um valor ou um unique_ptr, erros de programação disparam um assert, falhas recuperáveis voltam como valor de retorno, e todo subsistema é RAII - construí-lo o levanta, destruí-lo o desliga.",
           "leadSub": "C++17 · OpenGL 4.5 Core",
           "phases": [
             {
@@ -358,7 +358,7 @@ Replace `src/i18n/locales/pt.json:208-231`:
             {
               "label": "Fase 5",
               "title": "Grafo, .efe e editor",
-              "desc": "SceneGraph por handles com geração, behaviors por nó, e o formato binário .efe — em chunks, versionado e com reader hostil a arquivos corrompidos. O sandbox vira um editor dockado."
+              "desc": "SceneGraph por handles com geração, behaviors por nó, e o formato binário .efe - em chunks, versionado e com reader hostil a arquivos corrompidos. O sandbox vira um editor dockado."
             },
             {
               "label": "Fase 6",
@@ -409,10 +409,10 @@ Replace `src/i18n/locales/zh.json:208-231`. Note the phase labels use `阶段 N`
 
 ```json
         "efengine": {
-          "title": "EFENGINE — C++ 游戏引擎",
-          "desc": "用 C++17 从零打造、基于 OpenGL 4.5 Core 的 3D 引擎——PBR 与 split-sum IBL、阴影映射、HDR 后处理链、自研的带版本二进制场景格式，以及一个停靠式 ImGui 编辑器，全部遵循 RAII 规则且不使用异常。",
+          "title": "EFENGINE - C++ 游戏引擎",
+          "desc": "用 C++17 从零打造、基于 OpenGL 4.5 Core 的 3D 引擎 -  - PBR 与 split-sum IBL、阴影映射、HDR 后处理链、自研的带版本二进制场景格式，以及一个停靠式 ImGui 编辑器，全部遵循 RAII 规则且不使用异常。",
           "role": "引擎作者",
-          "description": "EFENGINE 是我最有野心的项目：一个用 C++17 从零编写、基于 OpenGL 4.5 Core 的 3D 引擎。它渲染由点光源与平行光照亮的 PBR 材质，配合完整的基于图像的光照——漫反射辐照度加 split-sum 镜面反射，两者均由 compute shader 预计算——之上还有阴影映射、天空盒，以及由 bloom、tonemap 和 FXAA 组成的 HDR 后处理链。场景存放在以带世代句柄寻址的节点图中，并持久化为 .efe：我自己设计的分块、带版本号的二进制格式，其读取器对损坏输入极为苛刻。最上层是一个停靠式 ImGui 编辑器：层级、检视器、材质实时编辑与场景的保存/加载。\n\n把这一切串起来的是一组不可妥协的规则。每一次 gl* 调用都被限制在 RHI 层 efecom 之内——渲染器永远看不到 OpenGL。没有裸 new/delete，也没有异常：所有权是值或 unique_ptr，编程错误触发断言，可恢复的失败以返回值传出，每个子系统都遵循 RAII——构造即启动，析构即关闭。",
+          "description": "EFENGINE 是我最有野心的项目：一个用 C++17 从零编写、基于 OpenGL 4.5 Core 的 3D 引擎。它渲染由点光源与平行光照亮的 PBR 材质，配合完整的基于图像的光照 -  - 漫反射辐照度加 split-sum 镜面反射，两者均由 compute shader 预计算 -  - 之上还有阴影映射、天空盒，以及由 bloom、tonemap 和 FXAA 组成的 HDR 后处理链。场景存放在以带世代句柄寻址的节点图中，并持久化为 .efe：我自己设计的分块、带版本号的二进制格式，其读取器对损坏输入极为苛刻。最上层是一个停靠式 ImGui 编辑器：层级、检视器、材质实时编辑与场景的保存/加载。\n\n把这一切串起来的是一组不可妥协的规则。每一次 gl* 调用都被限制在 RHI 层 efecom 之内 -  - 渲染器永远看不到 OpenGL。没有裸 new/delete，也没有异常：所有权是值或 unique_ptr，编程错误触发断言，可恢复的失败以返回值传出，每个子系统都遵循 RAII -  - 构造即启动，析构即关闭。",
           "leadSub": "C++17 · OpenGL 4.5 Core",
           "phases": [
             {
@@ -443,7 +443,7 @@ Replace `src/i18n/locales/zh.json:208-231`. Note the phase labels use `阶段 N`
             {
               "label": "阶段 5",
               "title": "场景图、.efe 与编辑器",
-              "desc": "带世代句柄的 SceneGraph、按节点的 behaviors，以及 .efe 二进制格式——分块、带版本号，读取器对损坏文件极为苛刻。sandbox 演进为停靠式编辑器。"
+              "desc": "带世代句柄的 SceneGraph、按节点的 behaviors，以及 .efe 二进制格式 -  - 分块、带版本号，读取器对损坏文件极为苛刻。sandbox 演进为停靠式编辑器。"
             },
             {
               "label": "阶段 6",
@@ -493,7 +493,7 @@ And at `src/i18n/locales/zh.json:412`:
 Run: `pnpm test`
 Expected: PASS, all 24 cases (6 assertions × 4 locales) plus the 4 parity cases.
 
-If `%s no longer advertises the retired OpenGL 3.3 target` fails, search the block for a stray `3.3` — it should appear nowhere, including inside `description`.
+If `%s no longer advertises the retired OpenGL 3.3 target` fails, search the block for a stray `3.3` - it should appear nowhere, including inside `description`.
 
 - [ ] **Step 8: Verify the build still typechecks**
 
@@ -524,7 +524,7 @@ config.ts cannot enforce on its own."
 
 **Interfaces:**
 - Consumes: `work.featured.projects.efengine.systems` from Task 1, reached as `fp.efengine.systems` where `fp = messages.work.featured.projects`.
-- Produces: `ProjectSystem { label: string; role: string }` exported from `projectTypes.ts`, and `Project.systems?: ProjectSystem[]` — both read by Task 3's `EngineSystems` component.
+- Produces: `ProjectSystem { label: string; role: string }` exported from `projectTypes.ts`, and `Project.systems?: ProjectSystem[]` - both read by Task 3's `EngineSystems` component.
 
 - [ ] **Step 1: Add the `ProjectSystem` interface**
 
@@ -543,7 +543,7 @@ export interface ProjectSystem {
 In the same file, inside `export interface Project`, immediately after the `phases?: ProjectPhase[];` line:
 
 ```ts
-    /** Architecture breakdown — one row per engine subsystem. */
+    /** Architecture breakdown - one row per engine subsystem. */
     systems?: ProjectSystem[];
 ```
 
@@ -561,7 +561,7 @@ with:
     techStack: ["C++17", "OpenGL 4.5 Core", "PBR + IBL", "Dear ImGui", "Assimp", "GLFW", "GLM", "doctest", "CMake"],
 ```
 
-EFENGINE is the flagship and flagships are filtered out of the grid (`FeaturedWorks.tsx:605`), so all nine chips render — the 3-chip truncation at line 819 never applies to this card.
+EFENGINE is the flagship and flagships are filtered out of the grid (`FeaturedWorks.tsx:605`), so all nine chips render - the 3-chip truncation at line 819 never applies to this card.
 
 - [ ] **Step 4: Wire `systems` and fix the current-phase index**
 
@@ -583,7 +583,7 @@ The fixed index would have highlighted Fase 2 out of seven. Deriving it from the
 - [ ] **Step 5: Verify the build typechecks**
 
 Run: `pnpm build`
-Expected: PASS. If `Property 'systems' does not exist` appears, Task 1's `en.json` edit did not land — `Messages` is `typeof en`, so the field only exists once it is in the English locale.
+Expected: PASS. If `Property 'systems' does not exist` appears, Task 1's `en.json` edit did not land - `Messages` is `typeof en`, so the field only exists once it is in the English locale.
 
 - [ ] **Step 6: Run lint and tests**
 
@@ -704,7 +704,7 @@ Expected: PASS.
 - [ ] **Step 5: Run lint and tests**
 
 Run: `pnpm lint && pnpm test`
-Expected: PASS. `EngineSystems` must be referenced by Step 2 — an unused component would trip `no-unused-vars`.
+Expected: PASS. `EngineSystems` must be referenced by Step 2 - an unused component would trip `no-unused-vars`.
 
 - [ ] **Step 6: Commit**
 
@@ -730,9 +730,9 @@ what the engine does from the rules it is built under."
 
 - [ ] **Step 1: Confirm it is still unimported**
 
-Search `src/` for `content/projects|featuredProjects` — with the Grep tool, or `grep -rn "content/projects\|featuredProjects" src/`.
+Search `src/` for `content/projects|featuredProjects` - with the Grep tool, or `grep -rn "content/projects\|featuredProjects" src/`.
 
-Expected: exactly one hit — `src/content/projects.ts:4:export const featuredProjects: Project[] = [`, its own declaration. If anything else appears, **stop** and report it; the deletion is not safe.
+Expected: exactly one hit - `src/content/projects.ts:4:export const featuredProjects: Project[] = [`, its own declaration. If anything else appears, **stop** and report it; the deletion is not safe.
 
 - [ ] **Step 2: Delete the file**
 
@@ -740,7 +740,7 @@ Expected: exactly one hit — `src/content/projects.ts:4:export const featuredPr
 git rm src/content/projects.ts
 ```
 
-Leave `src/components/projectTypes.ts` alone — that one is imported by `FeaturedWorks.tsx` and `ProjectPreviewModal.tsx`.
+Leave `src/components/projectTypes.ts` alone - that one is imported by `FeaturedWorks.tsx` and `ProjectPreviewModal.tsx`.
 
 - [ ] **Step 3: Check whether `src/content/` is now empty**
 
@@ -750,7 +750,7 @@ If the directory is empty, `git rm` has already removed it from the index; nothi
 - [ ] **Step 4: Verify the build**
 
 Run: `pnpm build && pnpm lint && pnpm test`
-Expected: PASS. A failure here means the file was reachable after all — restore it with `git checkout HEAD -- src/content/projects.ts` and report.
+Expected: PASS. A failure here means the file was reachable after all - restore it with `git checkout HEAD -- src/content/projects.ts` and report.
 
 - [ ] **Step 5: Commit**
 
@@ -789,7 +789,7 @@ Expected: Vite serves on `http://localhost:5173`.
 Open `http://localhost:5173`, scroll to the "Selected Work" section.
 
 Confirm:
-- Title reads **EFENGINE — C++ Game Engine**
+- Title reads **EFENGINE - C++ Game Engine**
 - The summary mentions OpenGL 4.5 Core, and **not** 3.3
 - Nine tech-stack chips render, wrapping cleanly
 - The Latest Commit badge still loads
@@ -807,7 +807,7 @@ Confirm:
 
 - [ ] **Step 5: Repeat in Spanish**
 
-Switch the language to Español and reopen the modal. Confirm the title reads **EFENGINE — Motor de Juegos en C++**, the roadmap heading reads **Hoja de Ruta**, and the systems heading reads **Sistemas del Motor**, still 7 and 6 rows.
+Switch the language to Español and reopen the modal. Confirm the title reads **EFENGINE - Motor de Juegos en C++**, the roadmap heading reads **Hoja de Ruta**, and the systems heading reads **Sistemas del Motor**, still 7 and 6 rows.
 
 - [ ] **Step 6: Narrow viewport check**
 
@@ -826,5 +826,5 @@ Summarize what passed and what did not, quoting the actual command output. If an
 ## Notes for the reviewer
 
 - **Do not** add `@testing-library/react` to make Task 3 testable. The spec forbids new dependencies; the visual pass in Task 5 is the agreed verification for rendering.
-- **Do not** translate the module labels in `systems` — `efecom`, `renderer`, `scene`, `resources`, `serialization`, `sandbox` are repo identifiers.
+- **Do not** translate the module labels in `systems` - `efecom`, `renderer`, `scene`, `resources`, `serialization`, `sandbox` are repo identifiers.
 - The phase list remains a manual snapshot. Fixing the hardcoded `current` index removes the worst failure mode, but the card will still need a human pass as the engine moves. That is known and out of scope here.

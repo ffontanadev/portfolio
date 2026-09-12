@@ -70,7 +70,7 @@ const VideoShowcaseHero = ({ project, videos, size = 'modal' }: VideoShowcaseHer
             ref={containerRef}
             className={`relative w-full overflow-hidden bg-cream-100 ${isModal ? 'aspect-[21/9]' : 'h-full'}`}
         >
-            {/* Cream wash underlay — prevents any flash before the first frame loads. */}
+            {/* Cream wash underlay - prevents any flash before the first frame loads. */}
             <div
                 className="absolute inset-0 opacity-60"
                 style={{ background: HERO_RADIAL_BG }}
@@ -85,7 +85,7 @@ const VideoShowcaseHero = ({ project, videos, size = 'modal' }: VideoShowcaseHer
                 `autoPlay` overrides `preload`, so the browser buffers the whole
                 clip regardless; and this banner sits ~2000px down the page, so
                 that download would otherwise start during the prerendered
-                snapshot — before any script runs — and saturate the connection
+                snapshot - before any script runs - and saturate the connection
                 while the hero is still trying to paint. Playback is driven from
                 the effect above instead, once the element is actually near the
                 viewport. */}
@@ -119,7 +119,7 @@ const VideoShowcaseHero = ({ project, videos, size = 'modal' }: VideoShowcaseHer
                 </span>
             </div>
 
-            {/* Shared identity overlay — identical typography to the static hero. */}
+            {/* Shared identity overlay - identical typography to the static hero. */}
             <HeroOverlayContent project={project} size={size} />
         </div>
     );

@@ -1,10 +1,10 @@
-# Tech Showcase — Particle Logo Mode Implementation Plan
+# Tech Showcase - Particle Logo Mode Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Make each technology in the stack marquee selectable; clicking one scrolls to the hero, reforms the particle field into that technology's logo in its real brand colors, and shows a one-sentence localized brief, dismissible via click-outside or `Esc`.
 
-**Architecture:** A React Context (`TechShowcaseProvider`) carries the selected technology from `BrandMarquee` to the hero. `ParticleField` reacts by commanding the existing `ParticleSystem` into a new locked `'showcase'` state that samples a logo SVG with per-particle brand colors. A `BriefPanel` overlays the hero with the localized brief. The mode is a progressive enhancement — inert when particles are disabled or reduced-motion is on.
+**Architecture:** A React Context (`TechShowcaseProvider`) carries the selected technology from `BrandMarquee` to the hero. `ParticleField` reacts by commanding the existing `ParticleSystem` into a new locked `'showcase'` state that samples a logo SVG with per-particle brand colors. A `BriefPanel` overlays the hero with the localized brief. The mode is a progressive enhancement - inert when particles are disabled or reduced-motion is on.
 
 **Tech Stack:** React 19, TypeScript, three.js (raw WebGL shaders), framer-motion, Tailwind v4, custom i18n (`@/i18n`).
 
@@ -282,7 +282,7 @@ import type { TechItem } from '@/components/Hero/techCatalog';
 interface TechShowcaseValue {
   /** The technology whose logo is currently shown, or null. */
   selected: TechItem | null;
-  /** Select a technology — triggers the hero particle-logo mode. */
+  /** Select a technology - triggers the hero particle-logo mode. */
   select: (tech: TechItem) => void;
   /** Dismiss the showcase and resume the ambient particle loop. */
   clear: () => void;
@@ -317,7 +317,7 @@ export function useTechShowcase(): TechShowcaseValue {
 }
 ```
 
-> Note: confirm `@/` resolves to `src/` — it is already used in `BrandMarquee.tsx`
+> Note: confirm `@/` resolves to `src/` - it is already used in `BrandMarquee.tsx`
 > (`import { useTranslation } from '@/i18n'`), so the alias is configured.
 
 - [ ] **Step 2: Wrap HomePage's `<main>` in the provider**
@@ -370,10 +370,9 @@ git commit -m "feat: add TechShowcaseContext to carry selected tech to the hero"
 
 Replace the inline `brands` array with the catalog, and make each item a `<button>`
 that calls `select(tech)`. Keep the existing visual styling, infinite scroll, and
-hover-pause behavior. Items remain inert when particles are off / reduced-motion —
-handled in `ParticleField`/`Hero`; the marquee always calls `select`, and the
+hover-pause behavior. Items remain inert when particles are off / reduced-motion - handled in `ParticleField`/`Hero`; the marquee always calls `select`, and the
 particle side decides whether to react. (The brief panel itself only renders when
-the particle system is active — see Task 9.)
+the particle system is active - see Task 9.)
 
 - [ ] **Step 1: Rewrite `BrandMarquee.tsx`**
 
@@ -480,8 +479,8 @@ Append to `src/components/Hero/particles/shapeSampler.ts` (after `sampleShape`):
 
 ```ts
 export interface ColoredSample {
-  positions: Float32Array; // length count*2 — (x,y) in CSS px
-  colors: Float32Array;    // length count*3 — (r,g,b) 0..1
+  positions: Float32Array; // length count*2 - (x,y) in CSS px
+  colors: Float32Array;    // length count*3 - (r,g,b) 0..1
 }
 
 // Like sampleShape, but also returns the source pixel color at each sampled point.
@@ -592,7 +591,7 @@ function filledColors(count: number): Float32Array {
 
 > `drawSilhouette`, `scatterFallback`, `collectDarkPixels`, and `distributeToCount`
 > already exist in this file / are imported; reuse them as shown. Do not duplicate
-> `drawSilhouette` — it is imported at the top (`import { drawSilhouette } from './silhouetteSampler'`).
+> `drawSilhouette` - it is imported at the top (`import { drawSilhouette } from './silhouetteSampler'`).
 
 - [ ] **Step 2: Confirm `drawSilhouette` masks near-white (no change needed)**
 
@@ -806,7 +805,7 @@ In `resize()`, in the `else` branch (after `this.resampleHomes();`), add a guard
 ```
 
 > Note: re-sampling with `applyTargetTo` re-runs `sampleShape` (monochrome positions),
-> which is correct — positions must match new bounds. Colors are index-aligned to the
+> which is correct - positions must match new bounds. Colors are index-aligned to the
 > particle, not the position, so re-uploading `showcaseColors` keeps each particle's
 > hue stable. Minor hue/position drift on resize is acceptable.
 
@@ -831,7 +830,7 @@ git commit -m "feat: add locked showcase state with brand colors to ParticleSyst
 
 `ParticleField` builds its `ParticleSystem` asynchronously inside `ready.then(...)`.
 We need to (a) read `selected` from context, (b) keep a ref to the live `system`,
-(c) apply showcase commands when `selected` changes — queuing if the system is not
+(c) apply showcase commands when `selected` changes - queuing if the system is not
 yet built, and (d) skip entirely under reduced-motion / disabled particles (the
 effect simply never runs because the system is never created in those cases).
 
@@ -853,7 +852,7 @@ Inside the component, add refs and read the context (near the existing refs):
 ```
 
 > `selected` typed via the hook; `pendingSelectRef` holds a selection made before
-> the system exists. Import the `ParticleSystem` type — it is already imported at the
+> the system exists. Import the `ParticleSystem` type - it is already imported at the
 > top of the file (`import { ParticleSystem } from './particles/ParticleSystem'`).
 
 - [ ] **Step 2: Expose the built system via the ref**
@@ -1065,7 +1064,7 @@ export default BriefPanel;
 ```
 
 > The design said dismissal is click-outside + `Esc`. A small ✕ is included for
-> affordance/accessibility but is optional; keep it — it also satisfies the
+> affordance/accessibility but is optional; keep it - it also satisfies the
 > `techShowcase.close` label added in Task 2. Confirm `cream-50` / `dark-900` color
 > tokens exist (they are used across `Hero.tsx` and `BrandMarquee.tsx`).
 
@@ -1130,7 +1129,7 @@ Run `npm run dev` and verify:
 - [ ] Clicking each marquee technology scrolls to the hero and forms its logo.
 - [ ] Each logo is recognizable and shows real brand colors (pay special attention
       to the `logoUrl`-substituted entries flagged in Task 1: aws, threejs, drizzle,
-      mongodb, express, astro — swap the URL if a mark is invisible/washed out).
+      mongodb, express, astro - swap the URL if a mark is invisible/washed out).
 - [ ] The brief panel shows the correct localized text; switch language (en/es/pt/zh)
       and spot-check a few.
 - [ ] `Esc` dismisses; clicking outside the panel dismisses; the loop resumes.
@@ -1157,7 +1156,7 @@ git commit -m "fix: finalize tech logo URLs after visual verification"
   inert behavior (T10). All spec sections map to a task.
 - **Reduced-motion/disabled:** handled in two layers. (1) `ParticleField`'s
   construction effect early-returns under `reduced`/`!ENABLED`, so `systemRef.current`
-  stays null and `applyShowcase` never runs — the particle side is inert. (2) `BriefPanel`
+  stays null and `applyShowcase` never runs - the particle side is inert. (2) `BriefPanel`
   (T9) mirrors the same `PARTICLES_ENABLED` + `useReducedMotion()` rules: when inert it
   renders `null` and defensively calls `clear()`, so a `select()` from the marquee
   produces no panel and no lingering selection. This satisfies the spec's "tech is NOT

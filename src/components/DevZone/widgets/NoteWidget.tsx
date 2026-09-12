@@ -13,7 +13,7 @@ interface NoteWidgetProps {
   onUpdate: (id: string, text: string) => void;
 }
 
-/** A pasted text note — an editable sticky living on the whiteboard. */
+/** A pasted text note - an editable sticky living on the whiteboard. */
 export default function NoteWidget({ onUpdate, ...props }: NoteWidgetProps) {
   const { t } = useTranslation();
   const { instance } = props;

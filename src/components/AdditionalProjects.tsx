@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { motion, useScroll } from 'framer-motion';
 import { useTranslation } from '@/i18n';
 
-// Structural data — non-translatable. Display text comes from the locale, keyed by `id`.
+// Structural data - non-translatable. Display text comes from the locale, keyed by `id`.
 const sideProjectStyles = [
     { id: 'birla', color: 'bg-indigo-100' },
     { id: 'icamps', color: 'bg-rose-100' },

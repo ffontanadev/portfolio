@@ -29,7 +29,7 @@ export interface ProjectSystem {
     /** Module name as it appears in the repo, e.g. "efecom · RHI". */
     label: string;
     role: string;
-    /** Architecture, not copy — assigned where the card data is assembled. */
+    /** Architecture, not copy - assigned where the card data is assembled. */
     tier?: ProjectSystemTier;
 }
 
@@ -82,18 +82,18 @@ export interface Project {
     leadMetric?: ProjectLeadMetric;
     metrics?: ProjectMetric[];
     featured?: boolean;
-    /** Architecture breakdown — one row per engine subsystem. */
+    /** Architecture breakdown - one row per engine subsystem. */
     systems?: ProjectSystem[];
     migration?: MigrationDossier;
     /** GitHub repo as "owner/name"; enables the latest-commit badge/detail. */
     repo?: string;
-    /** Public URL of a playable/browsable build — a deploy or a GitHub Page. */
+    /** Public URL of a playable/browsable build - a deploy or a GitHub Page. */
     demoUrl?: string;
     /** Public paths to ambient showcase clips, e.g. '/videos/efengine/clip.mp4'. */
     showcaseVideos?: string[];
 }
 
-// Accent color is derived from category — coral for professional work, teal for personal.
+// Accent color is derived from category - coral for professional work, teal for personal.
 // The human-readable category label lives in the i18n locale files (`work.categories.*`),
 // keyed by category; use `categoryLabelKey` to resolve it via `t()`.
 export const categoryLabelKey = (category?: ProjectCategory): string =>

@@ -5,7 +5,7 @@ import zh from './locales/zh.json';
 
 /**
  * The English locale is the source of truth: every other locale must mirror
- * its shape. Adding a new language is a two-step change — drop a `<lang>.json`
+ * its shape. Adding a new language is a two-step change - drop a `<lang>.json`
  * next to `en.json`, then register it in the `messages` map below. The
  * `satisfies` check fails the build if a locale drifts from the `en` shape.
  */
@@ -24,7 +24,7 @@ export type Locale = keyof typeof messages;
 
 export const SUPPORTED_LOCALES = Object.keys(messages) as Locale[];
 
-/** Endonym shown in the language switcher — intentionally not translated per-locale. */
+/** Endonym shown in the language switcher - intentionally not translated per-locale. */
 export const LOCALE_LABELS: Record<Locale, string> = {
   en: 'English',
   es: 'Español',

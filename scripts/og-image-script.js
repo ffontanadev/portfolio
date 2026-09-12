@@ -1,10 +1,10 @@
-// scripts/og-image-script.js  —  pnpm og  (or: node scripts/og-image-script.js)
+// scripts/og-image-script.js - pnpm og  (or: node scripts/og-image-script.js)
 //
 // Renders scripts/og-template.html into public/og-image.jpg, the card that
 // LinkedIn, Slack and X show when the site is shared. index.html points
 // og:image and twitter:image at it.
 //
-// Requires playwright, which is NOT a project dependency — install it before
+// Requires playwright, which is NOT a project dependency - install it before
 // running: pnpm add -D playwright && pnpm exec playwright install chromium
 import { chromium } from 'playwright';
 import { readFileSync } from 'fs';
@@ -26,7 +26,7 @@ await page.screenshot({
   type: 'jpeg',
   quality: 90,
   // Downsample the 2× raster back to the 1200×630 the OG spec asks for.
-  // Without this the file ships at 2400×1260 — deviceScaleFactor alone does
+  // Without this the file ships at 2400×1260 - deviceScaleFactor alone does
   // not scale the output down.
   scale: 'css',
 });

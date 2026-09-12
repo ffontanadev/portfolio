@@ -29,7 +29,7 @@
         - button "Resume" [ref=e25] [cursor=pointer]: Resume
   - main [ref=e27]:
     - generic [ref=e29]:
-      - generic [ref=e31]: 01 — Introduction
+      - generic [ref=e31]: 01 - Introduction
       - generic [ref=e36]: A developer crafting digital solutions at Magenta Innova .
     - generic [ref=e37]:
       - generic [ref=e40]: Stack · in rotation
@@ -174,7 +174,7 @@
           - generic [ref=e167]: Vite
     - generic [ref=e168]:
       - generic [ref=e169]:
-        - generic [ref=e171]: § 02 — Selected Work
+        - generic [ref=e171]: § 02 - Selected Work
         - heading "What I've been pouring my soul into." [level=2] [ref=e173]
         - paragraph [ref=e174]: A small collection of recent experiments, enterprise migrations, and side-quests.
       - tablist "Filter projects by category" [ref=e175]:
@@ -188,7 +188,7 @@
               - text: "01"
               - generic [ref=e184]: / 05
             - generic [ref=e185]: Enterprise
-            - generic [ref=e187]: "'25 — NOW"
+            - generic [ref=e187]: "'25 - NOW"
           - generic [ref=e188]:
             - generic [ref=e189]:
               - generic [ref=e191]:
@@ -203,7 +203,7 @@
                 - paragraph [ref=e219]: Java 17 · Spring Boot 3 · Axis2 (legacy)
             - img [ref=e222]
           - generic [ref=e225]:
-            - heading "Banco Provincia — Core Services Migration" [level=3] [ref=e226]
+            - heading "Banco Provincia - Core Services Migration" [level=3] [ref=e226]
             - paragraph [ref=e227]: Lifting Banco Provincia's legacy Axis2 / Java 8 web services into a modern Spring Boot 3 platform on Java 17, with database connectivity rewired from JNDI to a managed MSSQL DataSource.
             - generic [ref=e228]:
               - generic [ref=e229]: Java 17
@@ -230,8 +230,8 @@
                 - paragraph [ref=e253]: Java 17 · Spring Boot · JUnit 5
             - img [ref=e256]
           - generic [ref=e259]:
-            - heading "BBVA — API Migration & Test Coverage" [level=3] [ref=e260]
-            - paragraph [ref=e261]: Migrating BBVA's internal API surface to Spring Boot and engineering high-coverage test suites across more than 50 services — turning fragile internals into a platform that can be refactored without fear.
+            - heading "BBVA - API Migration & Test Coverage" [level=3] [ref=e260]
+            - paragraph [ref=e261]: Migrating BBVA's internal API surface to Spring Boot and engineering high-coverage test suites across more than 50 services - turning fragile internals into a platform that can be refactored without fear.
             - generic [ref=e262]:
               - generic [ref=e263]: Java 17
               - generic [ref=e264]: Spring Boot
@@ -289,9 +289,9 @@
               - generic [ref=e328]: SQLite
     - generic [ref=e330]:
       - generic [ref=e331]:
-        - generic [ref=e333]: § 03 — Archive
+        - generic [ref=e333]: § 03 - Archive
         - heading "Older works" [level=2] [ref=e335]
-        - paragraph [ref=e336]: Relics of my developing journey — still dear to me, but no longer the main event.
+        - paragraph [ref=e336]: Relics of my developing journey - still dear to me, but no longer the main event.
       - generic [ref=e337]:
         - generic [ref=e339] [cursor=pointer]:
           - generic [ref=e340]:
@@ -318,7 +318,7 @@
             - paragraph [ref=e367]: Your one stop book shop
             - generic [ref=e369]: View
     - generic [ref=e372]:
-      - generic [ref=e374]: § 04 — Field Notes
+      - generic [ref=e374]: § 04 - Field Notes
       - generic [ref=e383]:
         - heading "More insights on the blog." [level=2] [ref=e384]:
           - text: More insights
@@ -329,9 +329,8 @@
           - generic [ref=e388]: Visit the journal
           - img [ref=e389]
     - generic [ref=e393]:
-      - generic [ref=e396]: § 05 — Get in touch
-      - paragraph [ref=e398]: you made it this far—
-      - heading "C o m e s a y h i ." [level=2] [ref=e399]:
+      - generic [ref=e396]: § 05 - Get in touch
+      - paragraph [ref=e398]: you made it this far - - heading "C o m e s a y h i ." [level=2] [ref=e399]:
         - generic [ref=e400]: C
         - generic [ref=e401]: o
         - generic [ref=e402]: m

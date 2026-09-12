@@ -76,7 +76,7 @@ const Contact = () => {
                     transition={{ duration: 0.8, ease, delay: 0.3 }}
                     className="glass-card rounded-3xl p-7 md:p-9 mb-12 text-left overflow-hidden"
                 >
-                    {/* Header — B side, mirror of the Hero "A side" card */}
+                    {/* Header - B side, mirror of the Hero "A side" card */}
                     <header className="flex items-center justify-between mb-6">
                         <div className="flex items-center gap-2.5">
                             <span
@@ -140,7 +140,7 @@ const Contact = () => {
                         ))}
                     </ul>
 
-                    {/* Availability — spec §5.8. Literal, not editorial. */}
+                    {/* Availability - spec §5.8. Literal, not editorial. */}
                     <div className="mt-6 pt-5 border-t border-dark-900/8">
                         <span className="text-eyebrow text-dark-900/45">
                             {t('contact.availabilityHeading')}
@@ -157,7 +157,7 @@ const Contact = () => {
                         </ul>
                     </div>
 
-                    {/* Footer — waveform + response time */}
+                    {/* Footer - waveform + response time */}
                     <footer className="mt-5 pt-5 border-t border-dark-900/8 flex items-center gap-3">
                         <div className="flex-1 flex items-center gap-[3px] h-3" aria-hidden="true">
                             {Array.from({ length: 32 }).map((_, i) => {

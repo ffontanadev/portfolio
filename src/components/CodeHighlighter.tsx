@@ -1,7 +1,7 @@
 // react-syntax-highlighter, its Prism core and three language grammars are
 // only ever needed once someone opens a project modal and scrolls to a code
 // block. Imported statically they rode into the entry chunk, which every
-// visitor downloads before React can mount — and on a phone that download is
+// visitor downloads before React can mount - and on a phone that download is
 // what gates the moment the hero finishes rendering. Isolated here, the
 // bundler gives them their own chunk that a first paint never asks for.
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';

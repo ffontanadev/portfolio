@@ -27,7 +27,7 @@ function readCache(repo: string): CacheEntry | null {
     if (!parsed?.data || typeof parsed.fetchedAt !== 'number') return null;
     return parsed;
   } catch {
-    return null; // Corrupt/unavailable storage — treat as a miss.
+    return null; // Corrupt/unavailable storage - treat as a miss.
   }
 }
 
@@ -35,7 +35,7 @@ function writeCache(repo: string, data: LatestCommit): void {
   try {
     localStorage.setItem(cacheKey(repo), JSON.stringify({ data, fetchedAt: Date.now() }));
   } catch {
-    // Quota exceeded or storage disabled — caching is best-effort.
+    // Quota exceeded or storage disabled - caching is best-effort.
   }
 }
 

@@ -4,7 +4,7 @@ import { useTranslation } from '@/i18n';
 const ease = [0.22, 1, 0.36, 1] as const;
 
 /**
- * Spec §5.3 — a single band of four figures between the hero and the stack
+ * Spec §5.3 - a single band of four figures between the hero and the stack
  * strip. No decoration: a skimmer who reads nothing else should still leave
  * with a number. Every figure repeats in context on a project card below.
  */

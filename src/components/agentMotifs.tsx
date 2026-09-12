@@ -4,9 +4,9 @@ import { motion, useReducedMotion, type Variants } from 'framer-motion';
  * Instrument-panel motifs for the "How I work with agents" section. Each is a
  * small, self-contained SVG diagram that illustrates one pillar of the workflow:
  *
- *   GraphMotif    — a knowledge graph with one call chain traced in coral
- *   ContractMotif — an OpenAPI request fanning into property-based response cases
- *   HarnessMotif  — any schema plugged into one reusable Schemathesis runner
+ *   GraphMotif - a knowledge graph with one call chain traced in coral
+ *   ContractMotif - an OpenAPI request fanning into property-based response cases
+ *   HarnessMotif - any schema plugged into one reusable Schemathesis runner
  *
  * Motifs are decorative (the copy carries the meaning), so the section marks
  * them `aria-hidden`. On-view reveals stagger via framer-motion variants and
@@ -17,7 +17,7 @@ import { motion, useReducedMotion, type Variants } from 'framer-motion';
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-// Palette — mirrors the @theme tokens in index.css.
+// Palette - mirrors the @theme tokens in index.css.
 const INK = '#1A1A1A';
 const CORAL = '#FF6B6B';
 const TEAL = '#0F766E';
@@ -60,7 +60,7 @@ const useInitial = () => (useReducedMotion() ? 'show' : 'hidden');
 
 const mono = { fontFamily: 'var(--font-mono)' } as const;
 
-/** 01 — Project indexing: a graph whose one lit path is a traced call chain. */
+/** 01 - Project indexing: a graph whose one lit path is a traced call chain. */
 export const GraphMotif = () => {
   const initial = useInitial();
   const N: Record<string, Pt> = {
@@ -93,7 +93,7 @@ export const GraphMotif = () => {
   );
 };
 
-/** 02 — Schemathesis: one request fanning into generated response cases, one 500 caught. */
+/** 02 - Schemathesis: one request fanning into generated response cases, one 500 caught. */
 type Row = {
   y: number;
   code: string;
@@ -141,7 +141,7 @@ export const ContractMotif = () => {
   );
 };
 
-/** 03 — Harness: any OpenAPI schema plugged into one reusable runner. */
+/** 03 - Harness: any OpenAPI schema plugged into one reusable runner. */
 export const HarnessMotif = () => {
   const initial = useInitial();
   const results = [

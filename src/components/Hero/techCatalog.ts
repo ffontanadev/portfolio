@@ -17,8 +17,7 @@ export interface TechItem {
    * `-dark` variants are light-on-dark and sample to nothing, so avoid them).
    *
    * Optional: svgl carries no mark for JUnit, OpenAPI, Schemathesis, Jenkins,
-   * React Native or C++17. Those render as typographic wordmarks instead —
-   * see `BrandMarquee`. Standing a Swagger logo in for OpenAPI would be a
+   * React Native or C++17. Those render as typographic wordmarks instead - * see `BrandMarquee`. Standing a Swagger logo in for OpenAPI would be a
    * brand inaccuracy, so we don't.
    */
   marqueeUrl?: string;

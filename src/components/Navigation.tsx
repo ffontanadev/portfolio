@@ -80,7 +80,7 @@ const Navigation = () => {
                             </div>
                         ))}
                         {/*
-                          * Spec §4.2 Option B — both accounts, side by side. The
+                          * Spec §4.2 Option B - both accounts, side by side. The
                           * second renders as a mono wordmark rather than a second
                           * identical octocat: two of the same glyph reads as a
                           * rendering bug, and telling them apart is the point.

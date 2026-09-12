@@ -175,8 +175,8 @@ function scatterFallback(count: number, bounds: SampleBounds): Float32Array {
 }
 
 export interface ColoredSample {
-  positions: Float32Array; // length count*2 — (x,y) in CSS px
-  colors: Float32Array;    // length count*3 — (r,g,b) 0..1
+  positions: Float32Array; // length count*2 - (x,y) in CSS px
+  colors: Float32Array;    // length count*3 - (r,g,b) 0..1
 }
 
 // Like sampleShape, but also returns the source pixel color at each sampled point.

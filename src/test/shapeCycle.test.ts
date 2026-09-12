@@ -3,7 +3,7 @@ import { nextShapeIndex } from '@/components/Hero/particles/ParticleSystem';
 
 /**
  * The ambient shape loop is the offline fallback, and on narrow canvases it is
- * switched off entirely — there is nowhere to put a shape. An empty cycle has
+ * switched off entirely - there is nowhere to put a shape. An empty cycle has
  * to read as "stay in drift", not wrap around to a nonexistent index.
  */
 describe('nextShapeIndex', () => {

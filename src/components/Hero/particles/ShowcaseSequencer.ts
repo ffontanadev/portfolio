@@ -34,7 +34,7 @@ export interface ShowcaseSequencerOptions {
   timings: ShowcaseTimings;
   nowMs: number;
   /**
-   * True when the primary slot already holds this logo — the intro's
+   * True when the primary slot already holds this logo - the intro's
    * cross-morph lands the rocket directly on it, so re-sampling and re-forming
    * would throw away the transition that just played.
    */
@@ -52,7 +52,7 @@ function easeInOutCubic(t: number): number {
  * across to it without ever dissolving back to drift. Pure aside from the
  * adapter, so the whole cycle is testable without a WebGL context.
  *
- * The same object serves the click path — `setAuto(false)` parks it on one
+ * The same object serves the click path - `setAuto(false)` parks it on one
  * logo, `advanceTo` switches logos on demand.
  */
 export class ShowcaseSequencer {

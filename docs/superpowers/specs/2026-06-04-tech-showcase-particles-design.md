@@ -1,4 +1,4 @@
-# Tech Showcase — Particle Logo Mode
+# Tech Showcase - Particle Logo Mode
 
 **Date:** 2026-06-04
 **Status:** Design approved (pending written-spec review)
@@ -35,12 +35,12 @@ technologies are simply **not interactive** (no fallback panel).
 
 | Question | Decision |
 | --- | --- |
-| Interaction flow | **A** — scroll to hero, particles reform there |
-| Brief depth | **A** — short, one sentence (~10–15 words) per tech, all 4 languages |
-| Dismiss | **B** — click outside panel or `Esc` |
-| Particle color | **B** — respect real brand colors (per-particle sampled RGB) |
-| Reduced-motion / disabled | **B** — technology is not clickable |
-| Cross-component wiring | **Option 1** — React Context (`TechShowcaseProvider`) |
+| Interaction flow | **A** - scroll to hero, particles reform there |
+| Brief depth | **A** - short, one sentence (~10–15 words) per tech, all 4 languages |
+| Dismiss | **B** - click outside panel or `Esc` |
+| Particle color | **B** - respect real brand colors (per-particle sampled RGB) |
+| Reduced-motion / disabled | **B** - technology is not clickable |
+| Cross-component wiring | **Option 1** - React Context (`TechShowcaseProvider`) |
 
 ## Architecture
 

@@ -1,4 +1,4 @@
-# Particle Walkthrough Tour — Design
+# Particle Walkthrough Tour - Design
 
 **Date:** 2026-07-12
 **Status:** Approved (pending spec review)
@@ -9,7 +9,7 @@
 Add a one-time, first-visit **guided walkthrough** to the homepage: a small "comet"
 of particles that travels a path down the page and orbits key interactive features
 to make them discoverable. The flagship target is the tech-stack selector in the
-brand marquee — clicking a rotating logo forms it in the hero with a brief, a
+brand marquee - clicking a rotating logo forms it in the hero with a brief, a
 feature that is currently invisible unless you already know it exists.
 
 The existing hero particle field (a GPU/Three.js system bound to the hero section)
@@ -35,7 +35,7 @@ Canvas 2D overlay that spans the whole viewport.
 | Question | Decision |
 |---|---|
 | Lifecycle | One-time on first visit, remembered via `localStorage`, replayable |
-| Scroll control | Cinematic — the tour drives scroll; aborts on any manual input |
+| Scroll control | Cinematic - the tour drives scroll; aborts on any manual input |
 | Stops | Tech-stack selector → Featured project cards → How-I-Work-With-Agents → Dev-Zone nav link (top-to-bottom order) |
 | At each stop | Orbit the feature + show a small i18n caption naming the action (no auto-demo) |
 | Guide form | A comet: bright head + fading trail, reusing the hero palette |
@@ -93,19 +93,19 @@ The controller walks the ordered stops. Per stop, the sub-states are:
 scroll → approach → orbit → hold → depart
 ```
 
-- **scroll** — a self-driven scroll tween (`window.scrollTo` per frame,
+- **scroll** - a self-driven scroll tween (`window.scrollTo` per frame,
   easeInOutCubic, ~1.0s) rather than native `scroll-behavior: smooth`, so the tour
   knows exactly when the scroll settles and can let the comet lead while the page
   catches up. Target Y = element top − desired viewport offset (per `scrollAlign`).
-- **approach** — the comet head flies along an eased quadratic/cubic bezier arc from
+- **approach** - the comet head flies along an eased quadratic/cubic bezier arc from
   its current position to the target's on-screen point (rect center + placement
   offset). The control point offsets the arc so the path curves gracefully.
-- **orbit** — the head revolves ~`revolutions` times around the target point
+- **orbit** - the head revolves ~`revolutions` times around the target point
   (`center + radius·(cosθ, sinθ)`, θ advancing); the trail forms a glowing ring; the
   caption fades in. The target rect is re-sampled each frame so the orbit stays
   centered if layout nudges.
-- **hold** — a readable beat with the ring + caption held.
-- **depart** — caption fades out; the comet peels off in the direction of the next
+- **hold** - a readable beat with the ring + caption held.
+- **depart** - caption fades out; the comet peels off in the direction of the next
   target.
 
 Overall lifecycle:
@@ -145,12 +145,12 @@ a soft card with a coral left-accent and a small arrow pointing at the target,
 fading/sliding in. Copy is added under a new `tour` namespace in all four locales
 (`en`, `es`, `pt`, `zh`):
 
-- `tour.skip` — the skip pill label
-- `tour.replay` — the footer replay label
-- `tour.stops.techStack` — e.g. "Click a logo to watch it form in the hero."
-- `tour.stops.featuredWorks` — e.g. "Open a project for the full case study."
-- `tour.stops.agents` — e.g. "How I build with AI agents, end to end."
-- `tour.stops.devZone` — e.g. "Step into the Dev Zone — a hidden interactive desk."
+- `tour.skip` - the skip pill label
+- `tour.replay` - the footer replay label
+- `tour.stops.techStack` - e.g. "Click a logo to watch it form in the hero."
+- `tour.stops.featuredWorks` - e.g. "Open a project for the full case study."
+- `tour.stops.agents` - e.g. "How I build with AI agents, end to end."
+- `tour.stops.devZone` - e.g. "Step into the Dev Zone - a hidden interactive desk."
 
 English copy is authored here; the other three locales are translated and can be
 refined by the author.
@@ -164,8 +164,8 @@ All must be true:
 - `prefers-reduced-motion` is not set.
 - Desktop: pointer is fine and viewport width ≥ 1024px.
 
-Start timing: the tour begins after the hero intro settles — a fixed delay of
-`INTRO_TOTAL_S` (≈4.8s, per `Hero.tsx` / `IntroSequencer`) plus a short beat — so it
+Start timing: the tour begins after the hero intro settles - a fixed delay of
+`INTRO_TOTAL_S` (≈4.8s, per `Hero.tsx` / `IntroSequencer`) plus a short beat - so it
 never collides with the rocket intro.
 
 ## Edge Cases
@@ -186,11 +186,11 @@ restarts the tour from the top. (Chosen default; footer keeps it out of the way.
 
 ## Testing
 
-- **Unit** — `tourMotion` math (easings, bezier point, orbit position, ring-buffer),
+- **Unit** - `tourMotion` math (easings, bezier point, orbit position, ring-buffer),
   `useFirstVisit` (localStorage set/get/clear), `tourStops` integrity (all selectors
   resolve against a rendered homepage).
-- **Controller** — state transitions with mocked time and mocked `getBoundingClientRect`.
-- **Manual / E2E** — via the existing Playwright tooling: fresh load with cleared
+- **Controller** - state transitions with mocked time and mocked `getBoundingClientRect`.
+- **Manual / E2E** - via the existing Playwright tooling: fresh load with cleared
   storage → assert the page scrolls and captions appear in order; dispatch a `wheel`
   event → assert the tour aborts and the seen flag is set; reload → assert the tour
   does not run.
@@ -206,13 +206,13 @@ New:
 - `src/components/PageTour/useFirstVisit.ts`
 
 Existing (small edits):
-- `src/pages/HomePage.tsx` — mount `<PageTour />`
-- `src/components/BrandMarquee.tsx` — add `data-tour-id="tech-stack"`
-- `src/components/FeaturedWorks.tsx` — add `data-tour-id="featured-works"`
-- `src/components/HowIWorkWithAgents.tsx` — add `data-tour-id="agents"`
-- `src/components/Navigation.tsx` — add `data-tour-id="dev-zone"`
-- `src/components/Footer.tsx` — add "Replay guided tour" trigger
-- `src/i18n/locales/{en,es,pt,zh}.json` — add the `tour` namespace
+- `src/pages/HomePage.tsx` - mount `<PageTour />`
+- `src/components/BrandMarquee.tsx` - add `data-tour-id="tech-stack"`
+- `src/components/FeaturedWorks.tsx` - add `data-tour-id="featured-works"`
+- `src/components/HowIWorkWithAgents.tsx` - add `data-tour-id="agents"`
+- `src/components/Navigation.tsx` - add `data-tour-id="dev-zone"`
+- `src/components/Footer.tsx` - add "Replay guided tour" trigger
+- `src/i18n/locales/{en,es,pt,zh}.json` - add the `tour` namespace
 
 ## Risks & Mitigations
 

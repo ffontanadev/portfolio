@@ -29,7 +29,7 @@
         - button "Resume" [ref=e36] [cursor=pointer]
   - main [ref=e38]:
     - generic [ref=e40]:
-      - generic [ref=e41]: 01 — Introduction
+      - generic [ref=e41]: 01 - Introduction
       - paragraph [ref=e47]: A developer crafting digital solutions at Magenta Innova .
     - generic [ref=e48]:
       - generic [ref=e49]: Stack · in rotation
@@ -174,7 +174,7 @@
           - generic [ref=e162]: Vite
     - generic [ref=e163]:
       - generic [ref=e164]:
-        - generic [ref=e165]: § 02 — Selected Work
+        - generic [ref=e165]: § 02 - Selected Work
         - heading "What I've been pouring my soul into." [level=2] [ref=e168]
         - paragraph [ref=e169]: A small collection of recent experiments, enterprise migrations, and side-quests.
       - tablist "Filter projects by category" [ref=e170]:
@@ -184,7 +184,7 @@
       - article [ref=e175] [cursor=pointer]:
         - generic [ref=e176]:
           - generic [ref=e177]: § Flagship · C++ Engine
-          - generic [ref=e179]: "'26 — NOW"
+          - generic [ref=e179]: "'26 - NOW"
         - generic [ref=e181]:
           - generic [ref=e185]: §
           - generic [ref=e187]:
@@ -193,8 +193,8 @@
               - generic [ref=e190]: my most ambitious project
             - paragraph [ref=e192]: C++17 · OpenGL 3.3 Core · GLFW · GLAD · GLM
         - generic [ref=e198]:
-          - heading "EFENGINE — C++ Game Framework" [level=3] [ref=e199]
-          - paragraph [ref=e200]: A from-scratch 3D game framework in C++17 on OpenGL 3.3 Core — a library you compile your games against, built to master memory management and the game lifecycle.
+          - heading "EFENGINE - C++ Game Framework" [level=3] [ref=e199]
+          - paragraph [ref=e200]: A from-scratch 3D game framework in C++17 on OpenGL 3.3 Core - a library you compile your games against, built to master memory management and the game lifecycle.
           - generic [ref=e201]:
             - generic [ref=e202]: C++17
             - generic [ref=e203]: OpenGL 3.3 Core
@@ -215,7 +215,7 @@
               - text: "01"
               - generic [ref=e220]: / 06
             - generic [ref=e221]: Enterprise
-            - generic [ref=e223]: "'25 — NOW"
+            - generic [ref=e223]: "'25 - NOW"
           - generic [ref=e225]:
             - generic [ref=e227]: §
             - generic [ref=e229]:
@@ -226,8 +226,8 @@
                 - generic [ref=e252]: Boot
               - paragraph [ref=e254]: Java 17 · Spring Boot 3 · Axis2 (legacy)
           - generic [ref=e260]:
-            - heading "Banco Provincia — Core Services Migration" [level=3] [ref=e261]
-            - paragraph [ref=e262]: Lifting Banco Provincia's legacy Axis2 / Java 8 web services into a modern Spring Boot 3 platform on Java 17 — 7 repositories, ~4,600 classes — with connectivity rewired from JNDI to a managed MSSQL DataSource.
+            - heading "Banco Provincia - Core Services Migration" [level=3] [ref=e261]
+            - paragraph [ref=e262]: Lifting Banco Provincia's legacy Axis2 / Java 8 web services into a modern Spring Boot 3 platform on Java 17 - 7 repositories, ~4,600 classes - with connectivity rewired from JNDI to a managed MSSQL DataSource.
             - generic [ref=e263]:
               - generic [ref=e264]: Java 17
               - generic [ref=e265]: Spring Boot 3
@@ -249,8 +249,8 @@
                 - generic [ref=e285]: 50+
               - paragraph [ref=e287]: Java 17 · Spring Boot · JUnit 5
           - generic [ref=e293]:
-            - heading "BBVA — API Migration & Test Coverage" [level=3] [ref=e294]
-            - paragraph [ref=e295]: Migrating BBVA's internal API surface to Spring Boot and engineering high-coverage test suites across more than 50 services — turning fragile internals into a platform that can be refactored without fear.
+            - heading "BBVA - API Migration & Test Coverage" [level=3] [ref=e294]
+            - paragraph [ref=e295]: Migrating BBVA's internal API surface to Spring Boot and engineering high-coverage test suites across more than 50 services - turning fragile internals into a platform that can be refactored without fear.
             - generic [ref=e296]:
               - generic [ref=e297]: Java 17
               - generic [ref=e298]: Spring Boot
@@ -262,7 +262,7 @@
               - text: "03"
               - generic [ref=e304]: / 06
             - generic [ref=e305]: Enterprise
-            - generic [ref=e307]: "'23 — '24"
+            - generic [ref=e307]: "'23 - '24"
           - generic [ref=e309]:
             - generic [ref=e311]: §
             - generic [ref=e313]:
@@ -273,7 +273,7 @@
               - paragraph [ref=e318]: React Native · Expo · Android Biometric API
           - generic [ref=e324]:
             - heading "Mobile Banking App (NDA)" [level=3] [ref=e325]
-            - paragraph [ref=e326]: A cross-platform mobile banking app built in React Native + Expo from external design and backend specifications, with a 3-developer team — featuring native Android biometric authentication and secure local persistence.
+            - paragraph [ref=e326]: A cross-platform mobile banking app built in React Native + Expo from external design and backend specifications, with a 3-developer team - featuring native Android biometric authentication and secure local persistence.
             - generic [ref=e327]:
               - generic [ref=e328]: React Native
               - generic [ref=e329]: Expo
@@ -346,9 +346,9 @@
               - generic [ref=e422]: SQLite
     - generic [ref=e423]:
       - generic [ref=e424]:
-        - generic [ref=e425]: § 03 — Method
+        - generic [ref=e425]: § 03 - Method
         - heading "How I work with agents" [level=2] [ref=e428]
-        - paragraph [ref=e429]: AI isn't a magic wand here — it's a disciplined force-multiplier under tight human direction. Three practices keep it reliable.
+        - paragraph [ref=e429]: AI isn't a magic wand here - it's a disciplined force-multiplier under tight human direction. Three practices keep it reliable.
         - generic [ref=e430]:
           - generic [ref=e431]: 13 repos · ~73k nodes · ~260k relationships
           - generic [ref=e432]: indexed into memory
@@ -356,23 +356,23 @@
         - generic [ref=e434]:
           - generic [ref=e435]: "01"
           - heading "Knowledge-graph indexing" [level=3] [ref=e438]
-          - paragraph [ref=e439]: I index every codebase into a memory graph so agents reason over real call chains and service contracts — not guesses. It's how the Banco Provincia migration surface (~4,600 classes) became navigable.
+          - paragraph [ref=e439]: I index every codebase into a memory graph so agents reason over real call chains and service contracts - not guesses. It's how the Banco Provincia migration surface (~4,600 classes) became navigable.
           - paragraph [ref=e440]: 13 repos · ~73k nodes
         - generic [ref=e441]:
           - generic [ref=e442]: "02"
           - heading "Spec- & plan-driven workflow" [level=3] [ref=e445]
-          - paragraph [ref=e446]: Every feature starts as a brainstormed spec, then a written plan, then implementation and verification — each committed to the repo. The migration's contract-testing work shipped exactly this way.
+          - paragraph [ref=e446]: Every feature starts as a brainstormed spec, then a written plan, then implementation and verification - each committed to the repo. The migration's contract-testing work shipped exactly this way.
           - paragraph [ref=e447]: specs & plans in-repo
         - generic [ref=e448]:
           - generic [ref=e449]: "03"
           - heading "Custom skills & slash commands" [level=3] [ref=e452]
-          - paragraph [ref=e453]: Purpose-built skills encode the hard, repeatable workflows — SOAP→REST conversion, Spring Boot optimization, legacy-Java debugging — so they stay consistent and reviewable.
+          - paragraph [ref=e453]: Purpose-built skills encode the hard, repeatable workflows - SOAP→REST conversion, Spring Boot optimization, legacy-Java debugging - so they stay consistent and reviewable.
           - paragraph [ref=e454]: soap-to-rest-converter · java-springboot-optimizer
     - generic [ref=e456]:
       - generic [ref=e457]:
-        - generic [ref=e458]: § 04 — Archive
+        - generic [ref=e458]: § 04 - Archive
         - heading "Older works" [level=2] [ref=e461]
-        - paragraph [ref=e462]: Relics of my developing journey — still dear to me, but no longer the main event.
+        - paragraph [ref=e462]: Relics of my developing journey - still dear to me, but no longer the main event.
       - generic [ref=e463]:
         - generic [ref=e465] [cursor=pointer]:
           - generic [ref=e466]:
@@ -399,9 +399,8 @@
             - paragraph [ref=e493]: A Progressive Web App (PWA) specializing in digital scorekeeping for Truco, the most popular traditional card game in Uruguay and Argentina. Designed to work completely offline, it allows players to keep accurate and efficient score tracking without relying on an internet connection. The app leverages modern PWA capabilities to deliver a native cross-platform experience, installable directly from the browser on mobile devices, tablets, and desktops. Its offline-first architecture guarantees full availability through Service Workers and local storage, ensuring that games are never interrupted by connectivity issues.
             - generic [ref=e494]: View
     - generic [ref=e498]:
-      - generic [ref=e499]: § 05 — Get in touch
-      - paragraph [ref=e503]: you made it this far—
-      - heading "C o m e s a y h i ." [level=2] [ref=e504]:
+      - generic [ref=e499]: § 05 - Get in touch
+      - paragraph [ref=e503]: you made it this far - - heading "C o m e s a y h i ." [level=2] [ref=e504]:
         - generic [ref=e505]: C
         - generic [ref=e506]: o
         - generic [ref=e507]: m

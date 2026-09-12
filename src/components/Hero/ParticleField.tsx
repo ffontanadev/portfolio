@@ -108,7 +108,7 @@ const getParticleCount = (w: number): number => {
  */
 const FIRST_LOGO_BUDGET_MS = 2500;
 
-/** Resolve once `src` has decoded, or once the budget runs out — whichever first. */
+/** Resolve once `src` has decoded, or once the budget runs out - whichever first. */
 function loadWithin(src: string, budgetMs: number): Promise<boolean> {
   return Promise.race([
     loadSilhouette(src).then(
@@ -163,7 +163,7 @@ const ParticleField = ({ className = '', shapes }: ParticleFieldProps) => {
   const { selected } = useTechShowcase();
   const systemRef = useRef<ParticleSystem | null>(null);
   const pendingSelectRef = useRef<TechItem | null>(null);
-  /** The logo on screen — drives both the auto cycle and resize re-sampling. */
+  /** The logo on screen - drives both the auto cycle and resize re-sampling. */
   const cycleIdxRef = useRef(0);
 
   useEffect(() => {
@@ -182,7 +182,7 @@ const ParticleField = ({ className = '', shapes }: ParticleFieldProps) => {
 
     // Pre-load any silhouette SVGs and frame-animation images referenced by
     // active shapes (or the intro) in parallel with font loading. Failures
-    // don't block construction — sampleShape will fall back to scatter for
+    // don't block construction - sampleShape will fall back to scatter for
     // that shape until/unless it loads.
     const imageSrcs = new Set<string>();
     for (const s of activeShapes) {
@@ -198,7 +198,7 @@ const ParticleField = ({ className = '', shapes }: ParticleFieldProps) => {
     );
 
     // Warm the whole logo cycle so later cross-morphs sample instantly, but
-    // only gate the intro on the first one — and only briefly.
+    // only gate the intro on the first one - and only briefly.
     const firstLogo = SHOWCASE_LOGOS[0];
     for (const tech of SHOWCASE_LOGOS.slice(1)) {
       if (tech.marqueeUrl) void loadWithin(tech.marqueeUrl, FIRST_LOGO_BUDGET_MS);
@@ -238,7 +238,7 @@ const ParticleField = ({ className = '', shapes }: ParticleFieldProps) => {
         canvas,
         particleCount: count,
         // Below the breakpoint nothing forms at all: no logos, and no ambient
-        // fallback shapes either — they are just as wide and just as centred.
+        // fallback shapes either - they are just as wide and just as centred.
         shapes: wideEnough ? activeShapes : [],
         driftColor: PALETTE.drift,
         shapeColor: PALETTE.shape,

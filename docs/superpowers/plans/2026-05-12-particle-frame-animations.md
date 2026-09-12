@@ -4,18 +4,18 @@
 
 **Goal:** Extend the hero's particle system with a new `frames` shape kind that smooth-morphs between a sequence of image frames, configured declaratively via an `ANIMATIONS` registry and toggled by the existing `VITE_PARTICLE_SHAPES` env value. Ship with a 30-frame `walking` animation.
 
-**Architecture:** A frame animation is a `ShapeSpec` whose target moves over time. When the existing state machine reaches a frames slot, a new `play` state (driven by a new `FrameSequencer` class — parallel to the existing `IntroSequencer`) cross-blends through pre-sampled frame buffers using the already-wired `aTarget` / `aTargetNext` / `uTargetBlend` plumbing. No shader changes. One full loop per visit, then morphOut to drift as today.
+**Architecture:** A frame animation is a `ShapeSpec` whose target moves over time. When the existing state machine reaches a frames slot, a new `play` state (driven by a new `FrameSequencer` class - parallel to the existing `IntroSequencer`) cross-blends through pre-sampled frame buffers using the already-wired `aTarget` / `aTargetNext` / `uTargetBlend` plumbing. No shader changes. One full loop per visit, then morphOut to drift as today.
 
-**Tech Stack:** TypeScript 5.9, React 19, Three.js 0.184, Vite 7. Codebase has **no test framework configured** — verification is `npm run build` (typecheck), `npm run lint` (ESLint), and the manual browser checklist in the spec.
+**Tech Stack:** TypeScript 5.9, React 19, Three.js 0.184, Vite 7. Codebase has **no test framework configured** - verification is `npm run build` (typecheck), `npm run lint` (ESLint), and the manual browser checklist in the spec.
 
 **Spec:** `docs/superpowers/specs/2026-05-12-particle-frame-animations-design.md`
 
 ## File structure
 
-- **Create:** `src/components/Hero/particles/FrameSequencer.ts` — owns the `play`-state state machine: pre-samples all frames once at construction, drives `uTargetBlend` and slot swaps, signals `done` after the final frame transition.
-- **Modify:** `src/components/Hero/particles/shapeSampler.ts` — add `kind: 'frames'` to the `ShapeSpec` union. No behavior change in `sampleShape` (the frames kind is sampled per-frame inside `FrameSequencer` by synthesizing a `silhouette` spec).
-- **Modify:** `src/components/Hero/particles/ParticleSystem.ts` — add `'play'` to the `State` union, add `frame: FrameSequencer | null` field, add a small `applyBufferTo` helper, branch the state machine for frames shapes, route `resize`/`resume` through the sequencer when present.
-- **Modify:** `src/components/Hero/ParticleField.tsx` — declare the `ANIMATIONS` registry (with `walking`), extend `parseShapesFromEnv` to resolve animation names, extend the pre-load set to include every frame URL.
+- **Create:** `src/components/Hero/particles/FrameSequencer.ts` - owns the `play`-state state machine: pre-samples all frames once at construction, drives `uTargetBlend` and slot swaps, signals `done` after the final frame transition.
+- **Modify:** `src/components/Hero/particles/shapeSampler.ts` - add `kind: 'frames'` to the `ShapeSpec` union. No behavior change in `sampleShape` (the frames kind is sampled per-frame inside `FrameSequencer` by synthesizing a `silhouette` spec).
+- **Modify:** `src/components/Hero/particles/ParticleSystem.ts` - add `'play'` to the `State` union, add `frame: FrameSequencer | null` field, add a small `applyBufferTo` helper, branch the state machine for frames shapes, route `resize`/`resume` through the sequencer when present.
+- **Modify:** `src/components/Hero/ParticleField.tsx` - declare the `ANIMATIONS` registry (with `walking`), extend `parseShapesFromEnv` to resolve animation names, extend the pre-load set to include every frame URL.
 
 ---
 
@@ -284,7 +284,7 @@ In the `ParticleSystem` class body, after the existing `private intro` / `privat
   private frameAdapter: FrameAdapter | null = null;
 ```
 
-(The adapter is constructed lazily once `bounds` exists — same timing constraint as `IntroSequencer` — to avoid capturing zero-bounds at constructor time.)
+(The adapter is constructed lazily once `bounds` exists - same timing constraint as `IntroSequencer` - to avoid capturing zero-bounds at constructor time.)
 
 - [ ] **Step 4: Add the private `applyBufferTo` helper**
 
@@ -529,7 +529,7 @@ The existing pre-load block (lines 111-121) only collects URLs from `kind: 'silh
 ```ts
     // Pre-load any silhouette SVGs and frame-animation images referenced by
     // active shapes (or the intro) in parallel with font loading. Failures
-    // don't block construction — sampleShape will fall back to scatter for
+    // don't block construction - sampleShape will fall back to scatter for
     // that shape until/unless it loads.
     const imageSrcs = new Set<string>();
     for (const s of activeShapes) {
@@ -588,7 +588,7 @@ Restart `npm run dev` (Vite inlines env at start). Open the hero.
 Expected:
 - After the existing intro completes ("Hi, I'm Felipe" dissolves), the particles drift briefly (~0.5 s).
 - They morph into frame 0 of the walking silhouette (a standing figure).
-- Over the next 14.5 seconds, the silhouette walks — particles continuously flowing from each frame's positions to the next at 2 FPS (one transition every 500 ms).
+- Over the next 14.5 seconds, the silhouette walks - particles continuously flowing from each frame's positions to the next at 2 FPS (one transition every 500 ms).
 - After the 30th frame, particles morph back to drift.
 - The cycle repeats.
 
@@ -612,14 +612,14 @@ While the walking animation is playing, resize the browser window (drag the corn
 
 Expected:
 - Particles smoothly re-flow to a re-sampled silhouette at the new bounds.
-- Animation continues from approximately the same frame — no rewind to frame 0, no visible "snap to first frame".
+- Animation continues from approximately the same frame - no rewind to frame 0, no visible "snap to first frame".
 
 - [ ] **Step 5: Test pause/resume**
 
 While the walking animation is playing, switch to another browser tab for at least 1 second, then switch back.
 
 Expected:
-- On tab return, the animation resumes from the exact frame and progress it was at — no rewind, no jump.
+- On tab return, the animation resumes from the exact frame and progress it was at - no rewind, no jump.
 
 - [ ] **Step 6: Test missing-frame resilience**
 
@@ -648,13 +648,13 @@ If no tweak needed, skip this commit.
 
 In DevTools, enable `prefers-reduced-motion: reduce` (Rendering tab → Emulate CSS media feature). Reload.
 
-Expected: the entire particle field is suppressed (canvas not rendered). This is existing behavior — confirms the new code didn't break it.
+Expected: the entire particle field is suppressed (canvas not rendered). This is existing behavior - confirms the new code didn't break it.
 
 - [ ] **Step 9: Memory sanity check**
 
 In DevTools Performance Monitor, watch JS heap size for ~2 minutes while the rotation loops.
 
-Expected: heap grows during the first `walking` visit (pre-samples), then stays bounded — no monotonic growth across multiple loop iterations (`this.frame = null` at `morphOut → drift` is releasing the buffers).
+Expected: heap grows during the first `walking` visit (pre-samples), then stays bounded - no monotonic growth across multiple loop iterations (`this.frame = null` at `morphOut → drift` is releasing the buffers).
 
 ---
 
@@ -662,7 +662,7 @@ Expected: heap grows during the first `walking` visit (pre-samples), then stays 
 
 After writing this plan, ran the self-review:
 
-- **Spec coverage:** Each spec section maps to a task — `ShapeSpec` extension → Task 1; `FrameSequencer` class → Task 2; `ParticleSystem` state machine changes (including resize/resume) → Task 3; `ANIMATIONS` registry + parser + pre-load → Task 4; manual testing checklist → Task 5.
+- **Spec coverage:** Each spec section maps to a task - `ShapeSpec` extension → Task 1; `FrameSequencer` class → Task 2; `ParticleSystem` state machine changes (including resize/resume) → Task 3; `ANIMATIONS` registry + parser + pre-load → Task 4; manual testing checklist → Task 5.
 - **Placeholder scan:** No TBDs, no "implement appropriate X". All code blocks are complete.
 - **Type consistency:** `FrameAdapter` interface in Task 2 matches its usage in Task 3 (`applyBufferTo`, `copyNextIntoPrimary`, `bounds`, `uniforms.uTargetBlend`). `FrameSequencer` method names (`start`, `tick`, `applyResize`, `shiftClock`, `done`) are used consistently in Tasks 2 and 3.
 - **One discovered detail:** Task 3 had to additionally construct a `frameAdapter` field on first `resize` (mirroring how `IntroSequencer`'s construction is gated on first resize, since `bounds` is zero at constructor time). Wired into Step 5 of Task 3.

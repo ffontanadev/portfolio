@@ -11,15 +11,14 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 type Filter = 'all' | 'personal' | 'professional';
 
-// Structural data — non-translatable (styling, stacks, dates, code, lead-metric
+// Structural data - non-translatable (styling, stacks, dates, code, lead-metric
 // glyphs). Display text (title/desc/role/description, metric copy) is merged in
 // from the locale inside the component, keyed by `id`.
 type ProjectStructural = Omit<Project, 'title' | 'desc' | 'role' | 'description' | 'metrics' | 'migration'> & {
   id: string;
 };
 
-// The efengine `systems` locale array is authored in dependency order —
-// efecom, renderer, scene, resources, serialization, sandbox — and its length
+// The efengine `systems` locale array is authored in dependency order - // efecom, renderer, scene, resources, serialization, sandbox - and its length
 // is pinned by src/test/localeCard.test.ts. Tiers describe architecture rather
 // than copy, so they live here instead of in the locale files.
 const EFENGINE_SYSTEM_TIERS: ProjectSystemTier[] = [
@@ -36,7 +35,7 @@ const projectData: ProjectStructural[] = [
     id: 'efengine',
     color: "bg-cream-100",
     techStack: ["C++17", "OpenGL 4.5 Core", "PBR + IBL", "Dear ImGui", "Assimp", "GLFW", "GLM", "doctest", "CMake"],
-    date: "'26 — NOW",
+    date: "'26 - NOW",
     codeBlocks: [],
     category: 'personal',
     featured: true,
@@ -52,11 +51,11 @@ const projectData: ProjectStructural[] = [
     id: 'bancoProvincia',
     color: "bg-cream-100",
     techStack: ["Java 17", "Spring Boot 3", "Axis2 (legacy)", "MSSQL", "JNDI → DataSource"],
-    date: "'25 — NOW",
+    date: "'25 - NOW",
     codeBlocks: [],
     category: 'professional',
     company: 'Provincia Casa Financiera',
-    // The Uruguayan branch of Banco de la Provincia de Buenos Aires — hence the
+    // The Uruguayan branch of Banco de la Provincia de Buenos Aires - hence the
     // parent bank's wordmark on a card titled with the local entity's name.
     logo: 'banco-provincia',
     leadMetric: { kind: 'migration', from: 'Axis 2', to: 'Boot' },
@@ -76,7 +75,7 @@ const projectData: ProjectStructural[] = [
     id: 'mobileBanking',
     color: "bg-cream-100",
     techStack: ["React Native", "Expo", "WebAuthn", "Backend for Frontend", "Local Persistence"],
-    date: "'23 — '24",
+    date: "'23 - '24",
     codeBlocks: [],
     category: 'professional',
     company: 'Winterbotham',
@@ -401,7 +400,7 @@ const FeaturedWorks = () => {
           </p>
         </motion.div>
 
-        {/* Filter tabs — editorial type, coral hairline marks the active category */}
+        {/* Filter tabs - editorial type, coral hairline marks the active category */}
         <LayoutGroup id="featured-works-filter">
           <div
             role="tablist"
@@ -548,7 +547,7 @@ const FeaturedWorks = () => {
                   </span>
                 </div>
 
-                {/* Card visual — typographic composition for every project */}
+                {/* Card visual - typographic composition for every project */}
                 <div className="relative w-full aspect-[4/3] bg-cream-100 border border-dark-900/[0.08] rounded-2xl overflow-hidden soft-lift">
                   <EnterpriseHero project={project} size="card" />
 

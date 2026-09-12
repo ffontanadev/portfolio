@@ -26,17 +26,17 @@ The work happens on the existing branch `feature/efengine-webhook`. Commit after
 ## File structure
 
 **New files:**
-- `src/types/github.ts` — `LatestCommit` type (the shape the UI consumes).
-- `src/services/github.ts` — fetch + localStorage cache; maps GitHub's response to `LatestCommit`.
-- `src/hooks/useLatestCommit.ts` — React Query wrapper, mirrors `useBlog.ts`.
-- `src/utils/relativeTime.ts` — maps the active i18n locale to a date-fns locale and formats relative time.
-- `src/components/LatestCommit.tsx` — one component, `variant: 'badge' | 'detail'`.
+- `src/types/github.ts` - `LatestCommit` type (the shape the UI consumes).
+- `src/services/github.ts` - fetch + localStorage cache; maps GitHub's response to `LatestCommit`.
+- `src/hooks/useLatestCommit.ts` - React Query wrapper, mirrors `useBlog.ts`.
+- `src/utils/relativeTime.ts` - maps the active i18n locale to a date-fns locale and formats relative time.
+- `src/components/LatestCommit.tsx` - one component, `variant: 'badge' | 'detail'`.
 
 **Modified files:**
-- `src/components/projectTypes.ts` — add optional `repo?: string` to `Project`.
-- `src/components/FeaturedWorks.tsx` — set `repo` on efengine; render the badge in the flagship band.
-- `src/components/ProjectPreviewModal.tsx` — render the detail block beside the roadmap.
-- `src/i18n/locales/{en,es,pt,zh}.json` — add `work.featured.latestCommit` keys.
+- `src/components/projectTypes.ts` - add optional `repo?: string` to `Project`.
+- `src/components/FeaturedWorks.tsx` - set `repo` on efengine; render the badge in the flagship band.
+- `src/components/ProjectPreviewModal.tsx` - render the detail block beside the roadmap.
+- `src/i18n/locales/{en,es,pt,zh}.json` - add `work.featured.latestCommit` keys.
 
 ---
 
@@ -101,7 +101,7 @@ function readCache(repo: string): CacheEntry | null {
     if (!parsed?.data || typeof parsed.fetchedAt !== 'number') return null;
     return parsed;
   } catch {
-    return null; // Corrupt/unavailable storage — treat as a miss.
+    return null; // Corrupt/unavailable storage - treat as a miss.
   }
 }
 
@@ -109,7 +109,7 @@ function writeCache(repo: string, data: LatestCommit): void {
   try {
     localStorage.setItem(cacheKey(repo), JSON.stringify({ data, fetchedAt: Date.now() }));
   } catch {
-    // Quota exceeded or storage disabled — caching is best-effort.
+    // Quota exceeded or storage disabled - caching is best-effort.
   }
 }
 
@@ -342,7 +342,7 @@ Expected: no errors.
 - [ ] **Step 3: Lint**
 
 Run: `npm run lint`
-Expected: no errors. (If the config flags the `repo!` non-null assertion, replace it with `repo as string` — the `enabled` guard ensures the query only runs with a defined repo.)
+Expected: no errors. (If the config flags the `repo!` non-null assertion, replace it with `repo as string` - the `enabled` guard ensures the query only runs with a defined repo.)
 
 - [ ] **Step 4: Commit**
 
@@ -653,7 +653,7 @@ Open DevTools → Network, filter for `api.github.com`. Reload the page within 5
 
 - [ ] **Step 6: Verify graceful failure**
 
-In DevTools, clear the `github:latest-commit:elFonTii/efengine` localStorage entry, set Network to "Offline", and reload. Confirm the badge and modal block simply **do not render** — no error UI, no layout break. Restore Network when done.
+In DevTools, clear the `github:latest-commit:elFonTii/efengine` localStorage entry, set Network to "Offline", and reload. Confirm the badge and modal block simply **do not render** - no error UI, no layout break. Restore Network when done.
 
 - [ ] **Step 7: Verify localization**
 
@@ -668,6 +668,6 @@ All checks pass → the feature is complete. No commit needed (verification-only
 ## Notes for the implementer
 
 - **Path alias:** `@/` resolves to `src/` (used throughout, e.g. `@/i18n`, `@/components/projectTypes`).
-- **Do not** stage or commit the untracked `src/content/` directory — it is unrelated to this feature.
+- **Do not** stage or commit the untracked `src/content/` directory - it is unrelated to this feature.
 - **No new dependencies** are introduced: `@tanstack/react-query` and `date-fns` are already in `package.json`.
-- The `repo` field is generic — any future project can set `repo: 'owner/name'` to get the same badge/detail treatment for free.
+- The `repo` field is generic - any future project can set `repo: 'owner/name'` to get the same badge/detail treatment for free.

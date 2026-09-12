@@ -4,7 +4,7 @@ import { ArrowUpRight } from 'lucide-react';
 import ProjectPreviewModal, { type Project } from './ProjectPreviewModal';
 import { useTranslation } from '@/i18n';
 
-// Structural data — non-translatable (visual styling, stacks, code). Display
+// Structural data - non-translatable (visual styling, stacks, code). Display
 // text (title/desc/role/description) is merged in from the locale, keyed by `id`.
 const projectData = [
     {

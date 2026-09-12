@@ -15,7 +15,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { XIcon } from '@/components/ui/x';
 import { CopyIcon } from '@/components/ui/copy';
 import { CheckIcon } from '@/components/ui/check';
-// `Prism` bundles refractor's entire grammar set — 594KB raw / 214KB gzipped,
+// `Prism` bundles refractor's entire grammar set - 594KB raw / 214KB gzipped,
 // every language it supports. `PrismLight` cut that to the three grammars the
 // code blocks in projectData actually declare, but even those were still
 // reaching the entry chunk: this module is imported statically by FeaturedWorks
@@ -110,7 +110,7 @@ const CodeBlockComponent = ({ block }: { block: CodeBlock }) => {
  * breakpoint").
  *
  * The h1 steps 36 / 56 / 72px at the 768 and 1024 breakpoints, so the binding
- * width is 767px — the last pixel before it jumps to 56. A `clamp(min, Nvw,
+ * width is 767px - the last pixel before it jumps to 56. A `clamp(min, Nvw,
  * max)` stays under the h1 everywhere as long as N ≤ 4.5vw (767 × 0.045 = 34.5)
  * and the max is under 4.5rem. Both the floor and the ceiling matter: the old
  * floors alone (48px) already out-sized the h1 on every phone.
@@ -291,7 +291,7 @@ export const TypographicHero = ({ project, size = 'modal' }: { project: Project;
     );
 };
 
-// Backwards-compatible alias — existing imports keep working.
+// Backwards-compatible alias - existing imports keep working.
 export const EnterpriseHero = TypographicHero;
 
 const MetricBrief = ({ project }: { project: Project }) => {
@@ -428,8 +428,8 @@ const MigrationDossierView = ({ dossier }: { dossier: MigrationDossier }) => (
 );
 
 /**
- * The demo URL as the reader would say it out loud — no scheme, no trailing
- * slash — so a GitHub Page keeps the path that identifies it
+ * The demo URL as the reader would say it out loud - no scheme, no trailing
+ * slash - so a GitHub Page keeps the path that identifies it
  * (`elfontii.github.io/efengine`, not the bare host).
  */
 const demoLabel = (url: string) => url.replace(/^https?:\/\//, '').replace(/\/+$/, '');
@@ -472,7 +472,7 @@ type SystemStyle = {
 
 /**
  * One hue and one glyph per module. Keyed by the bare module name, which is a
- * repo identifier and therefore identical in every locale — `efecom · RHI`
+ * repo identifier and therefore identical in every locale - `efecom · RHI`
  * resolves on `efecom`.
  */
 const SYSTEM_STYLES: Record<string, SystemStyle> = {
@@ -529,7 +529,7 @@ const TierLink = ({ caption }: { caption?: string }) => (
     </div>
 );
 
-// Draws how the engine is stacked — the editor drives the runtime, the runtime
+// Draws how the engine is stacked - the editor drives the runtime, the runtime
 // goes through the RHI, and only the RHI reaches the GPU.
 const EngineSystems = ({ project }: { project: Project }) => {
     const { t } = useTranslation();
@@ -695,7 +695,7 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
 
                             {/* Scrollable Content */}
                             <div className="overflow-y-auto max-h-[90vh] custom-scrollbar">
-                                {/* Hero Section — typographic for every project */}
+                                {/* Hero Section - typographic for every project */}
                                 <TypographicHero project={project} size="modal" />
 
                                 {/* Content Section */}
@@ -751,7 +751,7 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
                                         </div>
                                     </div>
 
-                                    {/* Right Column — Migration Brief, Metric Brief, Latest Commit, or Code Blocks */}
+                                    {/* Right Column - Migration Brief, Metric Brief, Latest Commit, or Code Blocks */}
                                     {project.migration ? (
                                         <MigrationDossierView dossier={project.migration} />
                                     ) : project.category === 'professional' && project.metrics?.length ? (
@@ -769,7 +769,7 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
                                         </div>
                                     )}
 
-                                    {/* Architecture diagram — spans both columns, its own sheet. */}
+                                    {/* Architecture diagram - spans both columns, its own sheet. */}
                                     {project.systems?.length ? (
                                         <div className="lg:col-span-2">
                                             <EngineSystems project={project} />

@@ -22,7 +22,7 @@ export interface FrameSequencerOptions {
   /**
    * 'instant' (default): primes aTarget=frame[0], aTargetNext=frame[1], uTargetBlend=0.
    *   Used when entering the play state from drift (initial entry path).
-   * 'directMorph': primes aTargetNext=frame[0] only — leaves aTarget (the previous
+   * 'directMorph': primes aTargetNext=frame[0] only - leaves aTarget (the previous
    *   shape) and uTargetBlend alone so the caller can cross-fade aTarget → frame[0]
    *   via uTargetBlend. Caller must invoke armForPlay() after the cross-fade completes.
    */

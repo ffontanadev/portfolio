@@ -54,7 +54,7 @@ const ActivityCard = ({
       onMouseLeave={() => setPaused(false)}
       className="relative lg:min-w-sm max-w-md glass-card rounded-2xl p-6 pt-5 pb-4 overflow-hidden"
     >
-      {/* Header — A side · cassette spools · status */}
+      {/* Header - A side · cassette spools · status */}
       <header className="flex items-center justify-between mb-5">
         <div className="flex items-center gap-2.5">
           <Spool spinning={playing} />
@@ -136,10 +136,10 @@ const ActivityCard = ({
         })}
       </ul>
 
-      {/* Footer — progress + counter */}
+      {/* Footer - progress + counter */}
       <footer className="mt-5 pt-4 border-t border-dark-900/8">
         <div className="flex items-center gap-3">
-          {/* Progress bar — keyed to activeIdx so it resets each cycle */}
+          {/* Progress bar - keyed to activeIdx so it resets each cycle */}
           <div className="relative h-[2px] flex-1 bg-dark-900/10 overflow-hidden rounded-full">
             <motion.span
               key={`${activeIdx}-${paused}`}

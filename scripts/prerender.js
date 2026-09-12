@@ -1,6 +1,6 @@
-// scripts/prerender.js  —  pnpm prerender  (runs automatically as part of pnpm build)
+// scripts/prerender.js - pnpm prerender  (runs automatically as part of pnpm build)
 //
-// Spec §8: all four locales must be pre-rendered — client-only translation is
+// Spec §8: all four locales must be pre-rendered - client-only translation is
 // invisible to crawlers and to link unfurlers, which never run JavaScript.
 //
 // Serves the production build with `vite preview`, visits each locale route in
@@ -9,7 +9,7 @@
 //
 // This is a *snapshot*, not server-side rendering: main.tsx mounts with
 // createRoot, so the client clears #root and renders again rather than
-// hydrating. That is fine — the point is that the localized prose, <title> and
+// hydrating. That is fine - the point is that the localized prose, <title> and
 // <html lang> are in the bytes a crawler receives without running any script.
 //
 // Requires playwright, already a devDependency (added for pnpm og), *and* its
@@ -38,7 +38,7 @@ try {
   browser = await chromium.launch();
 } catch (cause) {
   await server.close();
-  // Two distinct failures, two distinct fixes — say which one this is.
+  // Two distinct failures, two distinct fixes - say which one this is.
   const missingLibrary = /shared libraries: (\S+?):/.exec(String(cause?.message ?? ''));
   const remedy = missingLibrary
     ? `the build image is missing ${missingLibrary[1]}. Chromium is installed but cannot run: ` +
@@ -47,8 +47,8 @@ try {
       "--only-shell'. On Vercel, the build must run through the 'vercel-build' script, which " +
       'installs it with PLAYWRIGHT_BROWSERS_PATH=0.';
   // The build must fail here rather than ship a deploy whose four locales are
-  // invisible to crawlers again — that is the whole point of §8.
-  throw new Error(`prerender: could not launch Chromium — ${remedy}`, { cause });
+  // invisible to crawlers again - that is the whole point of §8.
+  throw new Error(`prerender: could not launch Chromium - ${remedy}`, { cause });
 }
 const page = await browser.newPage();
 
@@ -83,13 +83,13 @@ try {
       { timeout: 20_000 },
     );
 
-    // Elements further down the page stay at opacity: 0 by design — they are
+    // Elements further down the page stay at opacity: 0 by design - they are
     // `whileInView` and animate on scroll. Their text is still in the markup,
     // which is what a crawler reads.
 
     const html = await page.content();
     if (!html.includes('<h1')) {
-      throw new Error(`prerender: ${url} produced no h1 — the app did not render`);
+      throw new Error(`prerender: ${url} produced no h1 - the app did not render`);
     }
     if (!html.includes(`lang="${locale}"`)) {
       throw new Error(`prerender: ${url} did not carry lang="${locale}"`);

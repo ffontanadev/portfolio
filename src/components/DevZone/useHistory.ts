@@ -16,7 +16,7 @@ export interface HistoryApi {
 }
 
 /**
- * A signature that captures every change worth a history entry — widget
+ * A signature that captures every change worth a history entry - widget
  * identity, position, pin state and editable content, plus the set of strokes.
  * Stacking-order (`z`) changes are deliberately excluded so merely clicking a
  * widget to focus it does not create an undo step.
@@ -64,14 +64,14 @@ export function useHistory(
     const current: Snapshot = { widgets, strokes };
 
     if (isRestoringRef.current) {
-      // This change is the restore we just triggered — adopt it silently.
+      // This change is the restore we just triggered - adopt it silently.
       isRestoringRef.current = false;
       presentRef.current = current;
       return;
     }
 
     if (signature(current) === signature(presentRef.current)) {
-      // Noise (e.g. a z-order/focus change) — keep the latest reference but
+      // Noise (e.g. a z-order/focus change) - keep the latest reference but
       // don't add a history step.
       presentRef.current = current;
       return;

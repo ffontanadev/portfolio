@@ -5,7 +5,7 @@ import { messages, SUPPORTED_LOCALES } from '@/i18n/config';
 /**
  * Spec §5.2: the strip advertises only technologies a project on this page or
  * the résumé demonstrates, ordered by what the owner wants to be hired for.
- * These tests pin the list itself, not just its length — the order is the
+ * These tests pin the list itself, not just its length - the order is the
  * argument.
  */
 const EXPECTED = [

@@ -51,7 +51,7 @@ const build = (h: ReturnType<typeof harness>, shapes: IntroShapes) =>
 const withLogo: IntroShapes = { rocket: ROCKET, handoff: LOGO };
 const withoutLogo: IntroShapes = { rocket: ROCKET, handoff: null };
 
-describe('IntroSequencer — the rocket flight is untouched', () => {
+describe('IntroSequencer - the rocket flight is untouched', () => {
   it('starts the rocket far left, shrunk, and fully drifted', () => {
     const h = harness();
     build(h, withLogo);
@@ -78,7 +78,7 @@ describe('IntroSequencer — the rocket flight is untouched', () => {
     expect(u.uMorph.value).toBeCloseTo(1);
   });
 
-  it('is still flying — not done — before rocketFly elapses', () => {
+  it('is still flying - not done - before rocketFly elapses', () => {
     const h = harness();
     const seq = build(h, withLogo);
     seq.tick(3900);
@@ -86,7 +86,7 @@ describe('IntroSequencer — the rocket flight is untouched', () => {
   });
 });
 
-describe('IntroSequencer — handing the rocket to the first logo', () => {
+describe('IntroSequencer - handing the rocket to the first logo', () => {
   it('preloads the logo with its brand colours into the secondary slot', () => {
     const h = harness();
     build(h, withLogo);
@@ -108,7 +108,7 @@ describe('IntroSequencer — handing the rocket to the first logo', () => {
     expect(u.uBrandColorMix.value).toBeCloseTo(u.uTargetBlend.value);
   });
 
-  it('finishes as soon as the logo has formed — there is no text to hold', () => {
+  it('finishes as soon as the logo has formed - there is no text to hold', () => {
     const h = harness();
     const seq = build(h, withLogo);
     seq.tick(4000);
@@ -147,7 +147,7 @@ describe('IntroSequencer — handing the rocket to the first logo', () => {
   });
 });
 
-describe('IntroSequencer — when the logo has not loaded', () => {
+describe('IntroSequencer - when the logo has not loaded', () => {
   it('ends after the rocket flight rather than morphing into nothing', () => {
     const h = harness();
     const seq = build(h, withoutLogo);
@@ -169,7 +169,7 @@ describe('IntroSequencer — when the logo has not loaded', () => {
   });
 });
 
-describe('IntroSequencer — resize', () => {
+describe('IntroSequencer - resize', () => {
   it('re-samples the rocket and the pending logo without rewinding', () => {
     const h = harness();
     const seq = build(h, withLogo);

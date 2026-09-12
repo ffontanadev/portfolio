@@ -5,7 +5,7 @@ import { GraphMotif, ContractMotif, HarnessMotif } from './agentMotifs';
 const ease = [0.22, 1, 0.36, 1] as const;
 
 // Motif per pillar, matched by order (01 → graph, 02 → contract, 03 → harness).
-// Structural, non-translatable — same split as FeaturedWorks' projectData.
+// Structural, non-translatable - same split as FeaturedWorks' projectData.
 const MOTIFS = [GraphMotif, ContractMotif, HarnessMotif] as const;
 
 const HowIWorkWithAgents = () => {
@@ -35,7 +35,7 @@ const HowIWorkWithAgents = () => {
         </p>
       </div>
 
-      {/* Pillars — instrument-panel cards */}
+      {/* Pillars - instrument-panel cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-7">
         {pillars.map((pillar, index) => {
           const Motif = MOTIFS[index] ?? GraphMotif;

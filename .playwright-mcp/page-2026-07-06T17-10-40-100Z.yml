@@ -68,8 +68,7 @@
               - img [ref=e138]
               - text: Checking…
             - generic [ref=e140]:
-              - generic [ref=e141]: Updated —
-              - generic [ref=e142]:
+              - generic [ref=e141]: Updated - - generic [ref=e142]:
                 - button "Refresh now" [ref=e143]:
                   - img [ref=e144]
                 - link "Open status page" [ref=e149] [cursor=pointer]:
