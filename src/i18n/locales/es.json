@@ -367,31 +367,6 @@
         }
       }
     },
-    "additional": {
-      "heading": "Más cosas divertidas",
-      "projects": {
-        "birla": {
-          "title": "Birla Capital",
-          "desc": "Rediseñando herramientas financieras"
-        },
-        "icamps": {
-          "title": "ICAMPS",
-          "desc": "Llevando la seguridad al móvil"
-        },
-        "haqdarshak": {
-          "title": "Haqdarshak",
-          "desc": "Explorando programas gubernamentales"
-        },
-        "spotify": {
-          "title": "Spotify",
-          "desc": "Fragmentos y experimentos"
-        },
-        "landing": {
-          "title": "Landing Page",
-          "desc": "¡Sorpresa! Es esta misma"
-        }
-      }
-    },
     "categories": {
       "personal": "Personal",
       "professional": "Empresa"

@@ -367,31 +367,6 @@
         }
       }
     },
-    "additional": {
-      "heading": "更多有趣的东西",
-      "projects": {
-        "birla": {
-          "title": "Birla Capital",
-          "desc": "重新设计金融工具"
-        },
-        "icamps": {
-          "title": "ICAMPS",
-          "desc": "为移动端带来安全"
-        },
-        "haqdarshak": {
-          "title": "Haqdarshak",
-          "desc": "探索政府项目"
-        },
-        "spotify": {
-          "title": "Spotify",
-          "desc": "片段与实验"
-        },
-        "landing": {
-          "title": "落地页",
-          "desc": "惊喜！就是这一个"
-        }
-      }
-    },
     "categories": {
       "personal": "个人",
       "professional": "企业"

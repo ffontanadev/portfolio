@@ -96,7 +96,7 @@ export interface Project {
     /**
      * Brand hex that tints the card's hero, e.g. '#001391'. Deliberately
      * separate from `color`: that one is a Tailwind class consumed by
-     * OlderWorks/AdditionalProjects, while this is a raw hex fed to inline
+     * the archive rows, while this is a raw hex fed to inline
      * styles - Tailwind v4 cannot generate utilities from dynamic values.
      */
     brandColor?: string;
