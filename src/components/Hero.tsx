@@ -118,7 +118,7 @@ const Hero = () => {
             showingBrief ? 'max-md:-top-[15vh]' : 'top-0'
           }`}
         >
-          <span className="text-eyebrow text-dark-900/60">{t('hero.eyebrow')}</span>
+          <span className="text-eyebrow text-ink-muted">{t('hero.eyebrow')}</span>
           <span className="flex-1 max-w-[120px] hairline text-dark-900" />
         </motion.div>
 
@@ -134,7 +134,7 @@ const Hero = () => {
               className="font-display font-display-xl font-bold leading-[1.05] tracking-[-0.02em] text-[2.25rem] md:text-[3.5rem] lg:text-[4.5rem] text-dark-900"
             >
               {t('hero.headline.lead')}{' '}
-              <span className="font-display-italic text-coral-500" style={{ fontStyle: 'italic' }}>
+              <span className="font-display-italic text-coral-700" style={{ fontStyle: 'italic' }}>
                 {t('hero.headline.emphasis')}
               </span>
             </motion.h1>
@@ -143,7 +143,7 @@ const Hero = () => {
               initial={entryInitial({ opacity: 0, y: 16 })}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: introOffset + 0.15, duration: 0.8, ease }}
-              className="font-mono text-[11px] md:text-xs leading-relaxed tracking-wide text-dark-900/60"
+              className="font-mono text-[11px] md:text-xs leading-relaxed tracking-wide text-ink-muted"
             >
               {t('hero.availability')}
             </motion.p>
@@ -164,7 +164,7 @@ const Hero = () => {
               </a>
               <a
                 href="mailto:contacto@ffontana.dev"
-                className="rounded-full border border-dark-900/15 px-7 py-3.5 text-sm font-medium text-dark-900 transition-colors duration-300 hover:border-coral-500 hover:text-coral-500"
+                className="rounded-full border border-dark-900/15 px-7 py-3.5 text-sm font-medium text-dark-900 transition-colors duration-300 hover:border-coral-500 hover:text-coral-700"
               >
                 {t('hero.ctas.contact')}
               </a>
@@ -172,7 +172,7 @@ const Hero = () => {
                 href="https://github.com/ffontanadev"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="reveal-underline text-sm font-medium text-dark-900/70 transition-colors duration-300 hover:text-coral-500"
+                className="reveal-underline text-sm font-medium text-dark-900/70 transition-colors duration-300 hover:text-coral-700"
               >
                 {t('hero.ctas.github')}
               </a>
@@ -205,12 +205,12 @@ const Hero = () => {
                 transition={{ duration: 0.4, ease }}
               >
                 <span className="font-medium text-dark-900">{selected.name}</span>
-                <span className="text-dark-900/40">{' - '}</span>
+                <span className="text-ink-quiet">{' - '}</span>
                 {t('techShowcase.brief.' + selected.id)}{' '}
                 <button
                   type="button"
                   onClick={clear}
-                  className="group/back inline-flex items-center gap-1 align-baseline font-medium text-coral-500 hover:opacity-70 transition-opacity cursor-pointer"
+                  className="group/back inline-flex items-center gap-1 align-baseline font-medium text-coral-700 hover:opacity-70 transition-opacity cursor-pointer"
                 >
                   <span aria-hidden="true" className="transition-transform group-hover/back:-translate-x-0.5">←</span>
                   {t('techShowcase.back')}

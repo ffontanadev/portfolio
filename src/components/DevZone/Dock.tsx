@@ -79,7 +79,7 @@ export default function Dock({
                 transition={{ duration: 0.16, ease: [0.22, 1, 0.36, 1] }}
                 className="glass-card absolute bottom-[calc(100%+10px)] left-1/2 max-h-72 w-60 -translate-x-1/2 overflow-y-auto rounded-2xl p-1.5 custom-scrollbar"
               >
-                <p className="px-2.5 py-1.5 font-mono text-[10px] tracking-widest text-dark-900/40 uppercase">
+                <p className="px-2.5 py-1.5 font-mono text-[10px] tracking-widest text-ink-quiet uppercase">
                   {t('devZone.dock.statusHint')}
                 </p>
                 {STATUS_SERVICES.map((service) => {
@@ -96,7 +96,7 @@ export default function Dock({
                       className={cn(
                         'flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-left text-sm transition-colors',
                         active
-                          ? 'cursor-default text-dark-900/35'
+                          ? 'cursor-default text-ink-quiet'
                           : 'text-dark-900 hover:bg-dark-900/5',
                       )}
                     >
@@ -106,7 +106,7 @@ export default function Dock({
                       />
                       <span className="flex-1 truncate">{service.name}</span>
                       {active && (
-                        <span className="font-mono text-[10px] text-dark-900/35">
+                        <span className="font-mono text-[10px] text-ink-quiet">
                           {t('devZone.dock.added')}
                         </span>
                       )}
@@ -144,7 +144,7 @@ function DockButton({ icon, label, onClick, active, disabled, trailing }: DockBu
       className={cn(
         'flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-medium transition-colors',
         disabled
-          ? 'cursor-default text-dark-900/30'
+          ? 'cursor-default text-ink-quiet'
           : active
             ? 'bg-dark-900 text-cream-50'
             : 'text-dark-900 hover:bg-dark-900/5',

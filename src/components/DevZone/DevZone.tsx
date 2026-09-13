@@ -415,7 +415,7 @@ export default function DevZone() {
 
       {/* Empty-board hint. */}
       {widgets.length === 0 && strokes.length === 0 && !draft && (
-        <div className="pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center gap-2 text-dark-900/35">
+        <div className="pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center gap-2 text-ink-quiet">
           <MousePointer2 size={28} />
           <p className="font-mono text-xs tracking-wide">{t('devZone.empty')}</p>
         </div>
@@ -425,7 +425,7 @@ export default function DevZone() {
       <div className="pointer-events-none fixed top-5 left-5 z-40 flex flex-col gap-1">
         <Link
           to={buildLocalePath(locale)}
-          className="reveal-underline pointer-events-auto inline-flex w-fit items-center gap-1.5 font-mono text-xs text-dark-900/50 transition-colors hover:text-coral-500"
+          className="reveal-underline pointer-events-auto inline-flex w-fit items-center gap-1.5 font-mono text-xs text-ink-quiet transition-colors hover:text-coral-700"
         >
           <ArrowLeft size={14} />
           {t('devZone.back')}

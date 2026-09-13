@@ -19,7 +19,7 @@ const BrandMarquee = () => {
         <section className="py-20 overflow-hidden bg-transparent relative">
             <div className="max-w-[1440px] mx-auto px-6 md:px-20 mb-8">
                 <div className="flex items-center gap-4">
-                    <span className="text-eyebrow text-dark-900/45">{t('brandMarquee.eyebrow')}</span>
+                    <span className="text-eyebrow text-ink-quiet">{t('brandMarquee.eyebrow')}</span>
                     <span className="h-px flex-1 max-w-[120px] bg-dark-900/12" />
                 </div>
             </div>
@@ -45,7 +45,7 @@ const BrandMarquee = () => {
                             ) : (
                                 <span
                                     aria-hidden="true"
-                                    className="flex h-12 items-center font-mono text-lg tracking-tight text-dark-900/45 opacity-70 group-hover:text-dark-900/85 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                                    className="flex h-12 items-center font-mono text-lg tracking-tight text-ink-quiet opacity-70 group-hover:text-dark-900/85 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                                 >
                                     {brand.name}
                                 </span>

@@ -33,7 +33,7 @@ export default function StatusListenerWidget(props: StatusWidgetProps) {
   if (!service) {
     return (
       <Widget {...props} title={t('devZone.status.title')} icon={<Activity size={14} />}>
-        <p className="text-sm text-dark-900/50">{t('devZone.status.unavailable')}</p>
+        <p className="text-sm text-ink-quiet">{t('devZone.status.unavailable')}</p>
       </Widget>
     );
   }
@@ -83,7 +83,7 @@ function StatusBody({
         </span>
         <div className="min-w-0 flex-1">
           {isPending ? (
-            <span className="inline-flex items-center gap-1.5 text-sm text-dark-900/50">
+            <span className="inline-flex items-center gap-1.5 text-sm text-ink-quiet">
               <Loader2 size={13} className="animate-spin" />
               {t('devZone.status.checking')}
             </span>
@@ -93,7 +93,7 @@ function StatusBody({
         </div>
       </div>
 
-      <div className="mt-3 flex items-center justify-between border-t border-dark-900/10 pt-2 font-mono text-[10px] text-dark-900/40">
+      <div className="mt-3 flex items-center justify-between border-t border-dark-900/10 pt-2 font-mono text-[10px] text-ink-quiet">
         <span>
           {t('devZone.status.updated')} {updatedLabel}
         </span>

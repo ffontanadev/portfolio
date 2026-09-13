@@ -39,11 +39,11 @@ const Contact = () => {
                     className="flex items-center justify-center gap-4 mb-10"
                 >
                     <span className="h-px w-12 bg-dark-900/20" />
-                    <span className="text-eyebrow text-dark-900/55">{t('contact.eyebrow')}</span>
+                    <span className="text-eyebrow text-ink-muted">{t('contact.eyebrow')}</span>
                     <span className="h-px w-12 bg-dark-900/20" />
                 </motion.div>
 
-                <p className="font-display italic text-dark-900/45 mb-6 font-light">
+                <p className="font-display italic text-ink-quiet mb-6 font-light">
                     {t('contact.intro')}
                 </p>
 
@@ -62,7 +62,7 @@ const Contact = () => {
                             whileInView={{ y: 0, opacity: 1 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.08 * i, duration: 0.7, ease }}
-                            className={`wobble-letter ${char === '.' ? 'text-coral-500' : ''}`}
+                            className={`wobble-letter ${char === '.' ? 'text-coral-700' : ''}`}
                         >
                             {char === ' ' ? ' ' : char}
                         </motion.span>
@@ -85,10 +85,10 @@ const Contact = () => {
                             >
                                 <span className="block h-[3px] w-[3px] rounded-full bg-dark-900/55" />
                             </span>
-                            <span className="text-eyebrow text-coral-500">{t('contact.availableFor')}</span>
+                            <span className="text-eyebrow text-coral-700">{t('contact.availableFor')}</span>
                         </div>
                         <div className="flex items-center gap-2.5">
-                            <span className="font-mono text-[9px] tracking-widest text-dark-900/40 uppercase">
+                            <span className="font-mono text-[9px] tracking-widest text-ink-quiet uppercase">
                                 {t('contact.side')}
                             </span>
                             <span
@@ -110,13 +110,13 @@ const Contact = () => {
                                 transition={{ duration: 0.6, delay: 0.55 + i * 0.08, ease }}
                                 className="group grid grid-cols-[auto_1fr_auto] items-baseline gap-4 py-4 cursor-default"
                             >
-                                <span className="font-mono text-[10px] tracking-widest text-dark-900/40 group-hover:text-coral-500 transition-colors duration-500 tabular-nums">
+                                <span className="font-mono text-[10px] tracking-widest text-ink-quiet group-hover:text-coral-700 transition-colors duration-500 tabular-nums">
                                     {String(i + 1).padStart(2, '0')}
                                 </span>
 
                                 <span className="flex flex-col gap-1.5">
                                     <span className="flex items-baseline flex-wrap gap-x-3 gap-y-1">
-                                        <span className="font-mono text-[9px] tracking-[0.22em] uppercase text-dark-900/40 border border-dark-900/15 rounded-full px-2 py-0.5 group-hover:text-coral-500 group-hover:border-coral-500/40 transition-all duration-500">
+                                        <span className="font-mono text-[9px] tracking-[0.22em] uppercase text-ink-quiet border border-dark-900/15 rounded-full px-2 py-0.5 group-hover:text-coral-700 group-hover:border-coral-500/40 transition-all duration-500">
                                             {service.tag}
                                         </span>
                                         <span className="font-display text-base md:text-lg text-dark-900/85 font-medium tracking-tight group-hover:text-dark-900 transition-colors duration-500">
@@ -125,7 +125,7 @@ const Contact = () => {
                                     </span>
                                     <span className="overflow-hidden grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]">
                                         <span className="min-h-0">
-                                            <span className="block pt-1 text-sm text-dark-900/55 font-display italic font-light">
+                                            <span className="block pt-1 text-sm text-ink-muted font-display italic font-light">
                                                 {service.note}
                                             </span>
                                         </span>
@@ -142,14 +142,14 @@ const Contact = () => {
 
                     {/* Availability - spec §5.8. Literal, not editorial. */}
                     <div className="mt-6 pt-5 border-t border-dark-900/8">
-                        <span className="text-eyebrow text-dark-900/45">
+                        <span className="text-eyebrow text-ink-quiet">
                             {t('contact.availabilityHeading')}
                         </span>
                         <ul className="mt-3 flex flex-col gap-1.5">
                             {messages.contact.availability.map((line) => (
                                 <li
                                     key={line}
-                                    className="font-mono text-[11px] leading-relaxed tracking-wide text-dark-900/60"
+                                    className="font-mono text-[11px] leading-relaxed tracking-wide text-ink-muted"
                                 >
                                     {line}
                                 </li>
@@ -171,7 +171,7 @@ const Contact = () => {
                                 );
                             })}
                         </div>
-                        <span className="font-mono text-[9px] tracking-widest text-dark-900/55 uppercase whitespace-nowrap">
+                        <span className="font-mono text-[9px] tracking-widest text-ink-muted uppercase whitespace-nowrap">
                             {t('contact.replyTime')}
                         </span>
                     </footer>
@@ -182,7 +182,7 @@ const Contact = () => {
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.9, delay: 0.7 }}
-                    className="text-dark-900/55 font-display italic font-light max-w-lg mx-auto mb-12 leading-relaxed"
+                    className="text-ink-muted font-display italic font-light max-w-lg mx-auto mb-12 leading-relaxed"
                 >
                     {t('contact.closing')}
                 </motion.p>
@@ -212,7 +212,7 @@ const Contact = () => {
                         href={SCHEDULING_URL}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group inline-flex items-center gap-2.5 rounded-full border border-dark-900/15 px-7 py-3.5 text-sm font-medium text-dark-900 transition-colors duration-300 hover:border-coral-500 hover:text-coral-500"
+                        className="group inline-flex items-center gap-2.5 rounded-full border border-dark-900/15 px-7 py-3.5 text-sm font-medium text-dark-900 transition-colors duration-300 hover:border-coral-500 hover:text-coral-700"
                     >
                         <CalendarIcon size={17} />
                         {t('contact.scheduling')}
@@ -239,7 +239,7 @@ const Contact = () => {
                             aria-label={t('contact.linkedin')}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-3.5 bg-cream-50/80 backdrop-blur-sm rounded-full border border-dark-900/8 text-dark-900/70 hover:text-coral-500 hover:border-coral-500/30 hover:-translate-y-1 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                            className="p-3.5 bg-cream-50/80 backdrop-blur-sm rounded-full border border-dark-900/8 text-dark-900/70 hover:text-coral-700 hover:border-coral-500/30 hover:-translate-y-1 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                         >
                             <LinkedinIcon size={20} />
                         </a>
@@ -249,7 +249,7 @@ const Contact = () => {
                             title={t('contact.githubPrimary')}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-3.5 bg-cream-50/80 backdrop-blur-sm rounded-full border border-dark-900/8 text-dark-900/70 hover:text-coral-500 hover:border-coral-500/30 hover:-translate-y-1 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                            className="p-3.5 bg-cream-50/80 backdrop-blur-sm rounded-full border border-dark-900/8 text-dark-900/70 hover:text-coral-700 hover:border-coral-500/30 hover:-translate-y-1 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                         >
                             <Github size={20} />
                         </a>
@@ -259,7 +259,7 @@ const Contact = () => {
                             title={t('contact.githubEngine')}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center px-4 bg-cream-50/80 backdrop-blur-sm rounded-full border border-dark-900/8 font-mono text-xs text-dark-900/70 hover:text-coral-500 hover:border-coral-500/30 hover:-translate-y-1 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                            className="flex items-center px-4 bg-cream-50/80 backdrop-blur-sm rounded-full border border-dark-900/8 font-mono text-xs text-dark-900/70 hover:text-coral-700 hover:border-coral-500/30 hover:-translate-y-1 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                         >
                             elFonTii
                         </a>

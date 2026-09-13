@@ -85,7 +85,7 @@ export default function Widget({
       >
         <GripVertical
           size={14}
-          className={cn('shrink-0 text-dark-900/30', instance.pinned && 'opacity-30')}
+          className={cn('shrink-0 text-ink-quiet', instance.pinned && 'opacity-30')}
           aria-hidden="true"
         />
         <span
@@ -101,7 +101,7 @@ export default function Widget({
           type="button"
           onPointerDown={(event) => event.stopPropagation()}
           onClick={() => onTogglePin(instance.id)}
-          className="rounded-md p-1 text-dark-900/40 transition-colors hover:bg-dark-900/5 hover:text-coral-500"
+          className="rounded-md p-1 text-ink-quiet transition-colors hover:bg-dark-900/5 hover:text-coral-700"
           aria-pressed={instance.pinned}
           aria-label={instance.pinned ? t('devZone.widget.unpin') : t('devZone.widget.pin')}
           title={instance.pinned ? t('devZone.widget.unpin') : t('devZone.widget.pin')}
@@ -112,7 +112,7 @@ export default function Widget({
           type="button"
           onPointerDown={(event) => event.stopPropagation()}
           onClick={() => onRemove(instance.id)}
-          className="rounded-md p-1 text-dark-900/40 transition-colors hover:bg-dark-900/5 hover:text-coral-500"
+          className="rounded-md p-1 text-ink-quiet transition-colors hover:bg-dark-900/5 hover:text-coral-700"
           aria-label={t('devZone.widget.remove')}
           title={t('devZone.widget.remove')}
         >

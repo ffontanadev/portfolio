@@ -426,17 +426,17 @@ const FeaturedWorks = () => {
         {/* Section header */}
         <motion.div style={{ y: headingY }} className="mb-14">
           <div className="flex items-center gap-4 mb-8">
-            <span className="text-eyebrow text-coral-500">{t('work.featured.eyebrow')}</span>
+            <span className="text-eyebrow text-coral-700">{t('work.featured.eyebrow')}</span>
             <span className="h-px flex-1 max-w-[140px] bg-dark-900/15" />
           </div>
           <h2 className="font-display font-display-md font-bold tracking-[-0.02em] text-[1.75rem] md:text-[2.25rem] lg:text-[2.75rem] leading-[1.05] max-w-3xl text-dark-900">
             {t('work.featured.headingBefore')}{' '}
-            <span className="font-display-italic text-coral-500" style={{ fontStyle: 'italic' }}>
+            <span className="font-display-italic text-coral-700" style={{ fontStyle: 'italic' }}>
               {t('work.featured.headingEmphasis')}
             </span>{' '}
             {t('work.featured.headingAfter')}
           </h2>
-          <p className="mt-6 max-w-xl text-lg text-dark-900/55 font-light leading-relaxed">
+          <p className="mt-6 max-w-xl text-lg text-ink-muted font-light leading-relaxed">
             {t('work.featured.description')}
           </p>
         </motion.div>
@@ -463,7 +463,7 @@ const FeaturedWorks = () => {
                     className={`font-display text-xl md:text-2xl tracking-[-0.01em] transition-colors duration-300 ${
                       isActive
                         ? 'text-dark-900 font-display-italic'
-                        : 'text-dark-900/40 group-hover:text-dark-900/70'
+                        : 'text-ink-quiet group-hover:text-dark-900/70'
                     }`}
                     style={{ fontStyle: isActive ? 'italic' : 'normal' }}
                   >
@@ -471,7 +471,7 @@ const FeaturedWorks = () => {
                   </span>
                   <span
                     className={`ml-2 align-top font-mono text-[10px] tracking-widest transition-colors duration-300 ${
-                      isActive ? 'text-coral-500' : 'text-dark-900/35 group-hover:text-dark-900/55'
+                      isActive ? 'text-coral-700' : 'text-ink-quiet group-hover:text-ink-muted'
                     }`}
                   >
                     {String(counts[tab]).padStart(2, '0')}
@@ -505,7 +505,7 @@ const FeaturedWorks = () => {
                 {t('work.featured.flagshipTag')}
               </span>
               <span className="h-px flex-1 bg-dark-900/10" />
-              <span className="font-mono text-[10px] text-dark-900/40 tracking-widest uppercase">
+              <span className="font-mono text-[10px] text-ink-quiet tracking-widest uppercase">
                 {featuredProject.date}
               </span>
             </div>
@@ -535,14 +535,14 @@ const FeaturedWorks = () => {
               <h3 className="font-display font-bold text-3xl md:text-4xl tracking-[-0.01em] leading-tight text-dark-900 group-hover:text-teal-700 transition-colors duration-500">
                 {featuredProject.title}
               </h3>
-              <p className="mt-3 text-base md:text-lg text-dark-900/60 font-light leading-relaxed">
+              <p className="mt-3 text-base md:text-lg text-ink-muted font-light leading-relaxed">
                 {featuredProject.desc}
               </p>
               <div className="mt-5 flex flex-wrap gap-2">
                 {featuredProject.techStack.map((tech) => (
                   <span
                     key={tech}
-                    className="font-mono text-[10px] tracking-widest uppercase text-dark-900/55 border border-dark-900/15 rounded-full px-3 py-1"
+                    className="font-mono text-[10px] tracking-widest uppercase text-ink-muted border border-dark-900/15 rounded-full px-3 py-1"
                   >
                     {tech}
                   </span>
@@ -581,14 +581,14 @@ const FeaturedWorks = () => {
               >
                 {/* Project number / date rail */}
                 <div className="flex items-baseline gap-3 mb-5">
-                  <span className="font-mono text-xs text-dark-900/40 tracking-widest">
-                    {num} <span className="text-dark-900/25">/ {total}</span>
+                  <span className="font-mono text-xs text-ink-quiet tracking-widest">
+                    {num} <span className="text-ink-quiet">/ {total}</span>
                   </span>
                   <span className={`font-mono text-[9px] tracking-[0.25em] uppercase ${accent.text}`}>
                     {t(categoryLabelKey(project.category))}
                   </span>
                   <span className="h-px flex-1 bg-dark-900/10" />
-                  <span className="font-mono text-[10px] text-dark-900/40 tracking-widest uppercase">
+                  <span className="font-mono text-[10px] text-ink-quiet tracking-widest uppercase">
                     {project.date}
                   </span>
                 </div>
@@ -615,7 +615,7 @@ const FeaturedWorks = () => {
                   <h3 className={`font-display font-bold text-2xl md:text-3xl tracking-[-0.01em] leading-tight text-dark-900 transition-colors duration-500 ${accent.hoverText}`}>
                     {project.title}
                   </h3>
-                  <p className="mt-3 text-base md:text-lg text-dark-900/60 font-light leading-relaxed max-w-md">
+                  <p className="mt-3 text-base md:text-lg text-ink-muted font-light leading-relaxed max-w-md">
                     {project.desc}
                   </p>
 
@@ -624,13 +624,13 @@ const FeaturedWorks = () => {
                     {project.techStack.slice(0, 3).map((tech) => (
                       <span
                         key={tech}
-                        className="font-mono text-[10px] tracking-widest uppercase text-dark-900/55 border border-dark-900/15 rounded-full px-3 py-1"
+                        className="font-mono text-[10px] tracking-widest uppercase text-ink-muted border border-dark-900/15 rounded-full px-3 py-1"
                       >
                         {tech}
                       </span>
                     ))}
                     {project.techStack.length > 3 && (
-                      <span className="font-mono text-[10px] tracking-widest text-dark-900/40 px-1 py-1">
+                      <span className="font-mono text-[10px] tracking-widest text-ink-quiet px-1 py-1">
                         +{project.techStack.length - 3}
                       </span>
                     )}

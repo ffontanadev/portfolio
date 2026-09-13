@@ -177,7 +177,7 @@ export const LeadMetricDisplay = ({
         isBlock ? 'text-current' : 'text-dark-900'
     }`;
     const secondary = `font-display font-display-italic font-light tracking-tight ${
-        isBlock ? 'text-current' : 'text-dark-900/55'
+        isBlock ? 'text-current' : 'text-ink-muted'
     }`;
     const stack = `flex flex-col ${isBlock ? 'items-start' : 'items-center'}`;
 
@@ -190,7 +190,7 @@ export const LeadMetricDisplay = ({
             >
                 <span>{metric.from}</span>
                 <span
-                    className={`font-display-italic font-light ${isBlock ? 'text-current' : 'text-coral-500'}`}
+                    className={`font-display-italic font-light ${isBlock ? 'text-current' : 'text-coral-700'}`}
                     style={{ fontStyle: 'italic' }}
                     aria-hidden="true"
                 >
@@ -271,7 +271,7 @@ export const HeroOverlayContent = ({
             ) : (
                 project.company && (
                     <span
-                        className={`font-display font-display-italic text-dark-900/60 tracking-tight mb-3 ${
+                        className={`font-display font-display-italic text-ink-muted tracking-tight mb-3 ${
                             isModal ? 'text-2xl' : 'text-lg'
                         }`}
                         style={{ fontStyle: 'italic' }}
@@ -282,7 +282,7 @@ export const HeroOverlayContent = ({
             )}
             {project.leadMetric && <LeadMetricDisplay metric={project.leadMetric} size={size} />}
             <div className={`${isModal ? 'mt-8' : 'mt-5'} h-px w-12 ${accent.hairlineSoft}`} aria-hidden="true" />
-            <p className={`mt-3 font-mono tracking-[0.22em] uppercase text-dark-900/50 text-center ${isModal ? 'text-[11px]' : 'text-[9px]'}`}>
+            <p className={`mt-3 font-mono tracking-[0.22em] uppercase text-ink-quiet text-center ${isModal ? 'text-[11px]' : 'text-[9px]'}`}>
                 {project.techStack.slice(0, isModal ? 5 : 3).join(' · ')}
             </p>
         </div>
@@ -409,19 +409,19 @@ const MetricBrief = ({ project }: { project: Project }) => {
     if (!project.metrics?.length) return null;
     return (
         <div>
-            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-4">
+            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted mb-4">
                 {t('work.modal.projectBrief')}
             </h3>
             <div className="rounded-2xl border border-dark-900/10 divide-y divide-dark-900/[0.07] overflow-hidden bg-cream-50/40">
                 {project.metrics.map((m, i) => (
                     <div key={i} className="flex items-baseline justify-between gap-4 px-5 py-4">
-                        <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-dark-900/55 shrink-0">
+                        <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-ink-muted shrink-0">
                             {m.label}
                         </span>
                         <span
                             className={`font-display text-lg md:text-xl tracking-tight text-right ${
                                 m.accent
-                                    ? 'text-coral-500 font-semibold'
+                                    ? 'text-coral-700 font-semibold'
                                     : 'text-dark-900 font-medium'
                             }`}
                         >
@@ -441,7 +441,7 @@ const MigrationStatTiles = ({ stats }: { stats: MigrationDossier['scope'] }) => 
                 <div className="font-display font-bold text-2xl md:text-3xl tracking-[-0.03em] text-dark-900 leading-none">
                     {s.value}
                 </div>
-                <div className="mt-1.5 font-mono text-[10px] tracking-[0.18em] uppercase text-dark-900/55">
+                <div className="mt-1.5 font-mono text-[10px] tracking-[0.18em] uppercase text-ink-muted">
                     {s.label}
                 </div>
             </div>
@@ -457,7 +457,7 @@ const MigrationDossierView = ({ dossier }: { dossier: MigrationDossier }) => (
         <div className="grid grid-cols-[1fr_auto_1fr] items-start gap-3">
             {[dossier.before, dossier.after].map((col, idx) => (
                 <div key={idx} className={idx === 0 ? '' : 'col-start-3'}>
-                    <h4 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-3">
+                    <h4 className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted mb-3">
                         {col.heading}
                     </h4>
                     <ul className="space-y-2">
@@ -465,7 +465,7 @@ const MigrationDossierView = ({ dossier }: { dossier: MigrationDossier }) => (
                             <li
                                 key={i}
                                 className={`text-sm leading-snug ${
-                                    idx === 0 ? 'text-dark-900/50 line-through decoration-dark-900/20' : 'text-dark-900 font-medium'
+                                    idx === 0 ? 'text-ink-quiet line-through decoration-dark-900/20' : 'text-dark-900 font-medium'
                                 }`}
                             >
                                 {item}
@@ -475,7 +475,7 @@ const MigrationDossierView = ({ dossier }: { dossier: MigrationDossier }) => (
                 </div>
             ))}
             <span
-                className="col-start-2 row-start-1 self-center font-display-italic text-coral-500 text-3xl font-light pt-6"
+                className="col-start-2 row-start-1 self-center font-display-italic text-coral-700 text-3xl font-light pt-6"
                 style={{ fontStyle: 'italic' }}
                 aria-hidden="true"
             >
@@ -485,7 +485,7 @@ const MigrationDossierView = ({ dossier }: { dossier: MigrationDossier }) => (
 
         {/* Module breakdown */}
         <div>
-            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-4">
+            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted mb-4">
                 {dossier.modulesHeading}
             </h3>
             <div className="rounded-2xl border border-dark-900/10 divide-y divide-dark-900/[0.07] overflow-hidden bg-cream-50/40">
@@ -495,9 +495,9 @@ const MigrationDossierView = ({ dossier }: { dossier: MigrationDossier }) => (
                             <p className="font-display text-base md:text-lg tracking-tight text-dark-900 font-medium">
                                 {m.label}
                             </p>
-                            <p className="mt-0.5 text-sm text-dark-900/55 leading-snug">{m.role}</p>
+                            <p className="mt-0.5 text-sm text-ink-muted leading-snug">{m.role}</p>
                         </div>
-                        <span className="font-mono text-[10px] tracking-[0.18em] uppercase text-dark-900/55 shrink-0">
+                        <span className="font-mono text-[10px] tracking-[0.18em] uppercase text-ink-muted shrink-0">
                             {m.scale}
                         </span>
                     </div>
@@ -507,7 +507,7 @@ const MigrationDossierView = ({ dossier }: { dossier: MigrationDossier }) => (
 
         {/* Phases */}
         <div>
-            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-4">
+            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted mb-4">
                 {dossier.phasesHeading}
             </h3>
             <div className="rounded-2xl border border-dark-900/10 divide-y divide-dark-900/[0.07] overflow-hidden bg-cream-50/40">
@@ -515,7 +515,7 @@ const MigrationDossierView = ({ dossier }: { dossier: MigrationDossier }) => (
                     <div key={i} className="flex items-start gap-4 px-5 py-4">
                         <span
                             className={`font-mono text-[10px] tracking-[0.2em] uppercase shrink-0 mt-1 ${
-                                phase.current ? 'text-coral-500 font-semibold' : 'text-dark-900/45'
+                                phase.current ? 'text-coral-700 font-semibold' : 'text-ink-quiet'
                             }`}
                         >
                             {phase.label}
@@ -523,12 +523,12 @@ const MigrationDossierView = ({ dossier }: { dossier: MigrationDossier }) => (
                         <div className="min-w-0">
                             <p
                                 className={`font-display text-lg tracking-tight ${
-                                    phase.current ? 'text-coral-500 font-semibold' : 'text-dark-900 font-medium'
+                                    phase.current ? 'text-coral-700 font-semibold' : 'text-dark-900 font-medium'
                                 }`}
                             >
                                 {phase.title}
                             </p>
-                            <p className="mt-1 text-sm text-dark-900/55 leading-relaxed">{phase.desc}</p>
+                            <p className="mt-1 text-sm text-ink-muted leading-relaxed">{phase.desc}</p>
                         </div>
                     </div>
                 ))}
@@ -555,7 +555,7 @@ const LiveDemo = ({ url }: { url: string }) => {
                 href={url}
                 target="_blank"
                 rel="noreferrer"
-                className="group/demo inline-flex items-center gap-1.5 text-sm font-medium text-dark-900 hover:text-coral-500 transition-colors"
+                className="group/demo inline-flex items-center gap-1.5 text-sm font-medium text-dark-900 hover:text-coral-700 transition-colors"
             >
                 <span className="font-mono break-all">{demoLabel(url)}</span>
                 <ArrowUpRight
@@ -620,7 +620,7 @@ const SystemCard = ({ system, emphasis }: { system: ProjectSystem; emphasis?: bo
                 <p className={`font-mono text-[11px] tracking-[0.12em] font-semibold ${text}`}>
                     {system.label}
                 </p>
-                <p className="mt-1.5 text-[13px] leading-relaxed text-dark-900/55">{system.role}</p>
+                <p className="mt-1.5 text-[13px] leading-relaxed text-ink-muted">{system.role}</p>
             </div>
         </div>
     );
@@ -631,7 +631,7 @@ const TierLink = ({ caption }: { caption?: string }) => (
     <div className="flex flex-col items-center gap-1 py-1.5" aria-hidden="true">
         <span className="h-4 w-px bg-dark-900/15" />
         {caption && (
-            <span className="font-mono text-[9px] tracking-[0.18em] uppercase text-dark-900/35">
+            <span className="font-mono text-[9px] tracking-[0.18em] uppercase text-ink-quiet">
                 {caption}
             </span>
         )}
@@ -657,7 +657,7 @@ const EngineSystems = ({ project }: { project: Project }) => {
 
     return (
         <div>
-            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-4">
+            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted mb-4">
                 {t('work.modal.engineSystems')}
             </h3>
             <div className="rounded-2xl border border-dark-900/10 bg-cream-50/40 px-4 py-5 sm:px-5">
@@ -669,7 +669,7 @@ const EngineSystems = ({ project }: { project: Project }) => {
 
                 {runtime.length > 0 && (
                     <div className="relative rounded-xl border border-dashed border-dark-900/15 px-3 pt-6 pb-3">
-                        <span className="absolute -top-2 left-4 bg-cream-50 px-1.5 font-mono text-[9px] tracking-[0.18em] uppercase text-dark-900/40">
+                        <span className="absolute -top-2 left-4 bg-cream-50 px-1.5 font-mono text-[9px] tracking-[0.18em] uppercase text-ink-quiet">
                             efengine
                         </span>
                         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -693,7 +693,7 @@ const EngineSystems = ({ project }: { project: Project }) => {
                             <span className="text-[9px] leading-none text-teal-700/50">▼</span>
                         </div>
                         <div className="flex justify-center pt-1.5">
-                            <span className="inline-flex items-center gap-2 rounded-full border border-dashed border-dark-900/20 px-3.5 py-1.5 font-mono text-[10px] tracking-[0.16em] uppercase text-dark-900/45">
+                            <span className="inline-flex items-center gap-2 rounded-full border border-dashed border-dark-900/20 px-3.5 py-1.5 font-mono text-[10px] tracking-[0.16em] uppercase text-ink-quiet">
                                 <CircuitBoard className="h-3 w-3" strokeWidth={1.75} aria-hidden="true" />
                                 GPU · OpenGL 4.5
                             </span>

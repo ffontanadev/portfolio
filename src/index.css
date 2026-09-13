@@ -207,7 +207,9 @@ body::before {
 }
 .wobble-letter:hover {
   transform: translateY(-6px) rotate(-3deg);
-  color: var(--color-coral-500);
+  /* Type, not decoration: the heading recolours itself here, so it takes the
+     text-safe coral rather than the decorative one. */
+  color: var(--color-coral-700);
 }
 
 /* Reduced motion -------------------------------------------------- */

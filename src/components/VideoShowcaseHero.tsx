@@ -117,7 +117,7 @@ const VideoShowcaseHero = ({ project, videos, size = 'modal' }: VideoShowcaseHer
 
             {/* § corner mark, matching the static hero. */}
             <div
-                className="absolute inset-x-5 top-5 flex items-center justify-between text-dark-900/45"
+                className="absolute inset-x-5 top-5 flex items-center justify-between text-ink-quiet"
                 aria-hidden="true"
             >
                 <span className="font-display italic text-sm" style={{ fontStyle: 'italic' }}>

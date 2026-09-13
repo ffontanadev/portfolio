@@ -138,7 +138,7 @@ function ToolButton({ icon, label, onClick, active, disabled, iconOnly }: ToolBu
       className={cn(
         'flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-medium transition-colors',
         disabled
-          ? 'cursor-default text-dark-900/25'
+          ? 'cursor-default text-ink-quiet'
           : active
             ? 'bg-dark-900 text-cream-50'
             : 'text-dark-900 hover:bg-dark-900/5',

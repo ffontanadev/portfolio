@@ -222,8 +222,8 @@ export const accentForCategory = (category?: ProjectCategory) => {
     const isPersonal = (category ?? 'personal') === 'personal';
     return {
         isPersonal,
-        text: isPersonal ? 'text-teal-700' : 'text-coral-500',
+        text: isPersonal ? 'text-teal-700' : 'text-coral-700',
         hairlineSoft: isPersonal ? 'bg-teal-700/40' : 'bg-coral-500/40',
-        hoverText: isPersonal ? 'group-hover:text-teal-700' : 'group-hover:text-coral-500',
+        hoverText: isPersonal ? 'group-hover:text-teal-700' : 'group-hover:text-coral-700',
     };
 };

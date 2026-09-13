@@ -32,7 +32,7 @@ const ProofStrip = () => {
                 <span className="font-mono text-2xl md:text-3xl tracking-tight text-dark-900 tabular-nums">
                   {figure.value}
                 </span>
-                <span className="font-mono text-[11px] md:text-xs tracking-[0.18em] uppercase text-dark-900/50">
+                <span className="font-mono text-[11px] md:text-xs tracking-[0.18em] uppercase text-ink-quiet">
                   {figure.label}
                 </span>
               </dd>

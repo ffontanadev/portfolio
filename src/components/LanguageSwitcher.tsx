@@ -61,7 +61,7 @@ const LanguageSwitcher = ({ variant = 'compact' }: LanguageSwitcherProps) => {
       >
         <ActiveFlag size={variant === 'full' ? 22 : 18} />
         <span
-          className={`font-mono uppercase tracking-widest text-dark-900/70 group-hover:text-coral-500 transition-colors ${
+          className={`font-mono uppercase tracking-widest text-dark-900/70 group-hover:text-coral-700 transition-colors ${
             variant === 'full' ? 'text-sm' : 'text-[10px]'
           }`}
         >
@@ -92,7 +92,7 @@ const LanguageSwitcher = ({ variant = 'compact' }: LanguageSwitcherProps) => {
                     onClick={() => setOpen(false)}
                     className={`flex w-full items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors cursor-pointer ${
                       isActive
-                        ? 'bg-coral-500/10 text-coral-500'
+                        ? 'bg-coral-500/10 text-coral-700'
                         : 'text-dark-900/75 hover:bg-dark-900/[0.04] hover:text-dark-900'
                     }`}
                   >

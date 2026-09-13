@@ -226,7 +226,7 @@ export default function MobileControls(props: MobileControlsProps) {
                         }}
                         className={cn(
                           'flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-left text-sm transition-colors',
-                          active ? 'cursor-default text-dark-900/35' : 'text-dark-900 active:bg-dark-900/5',
+                          active ? 'cursor-default text-ink-quiet' : 'text-dark-900 active:bg-dark-900/5',
                         )}
                       >
                         <span
@@ -235,7 +235,7 @@ export default function MobileControls(props: MobileControlsProps) {
                         />
                         <span className="flex-1 truncate">{service.name}</span>
                         {active && (
-                          <span className="font-mono text-[10px] text-dark-900/35">
+                          <span className="font-mono text-[10px] text-ink-quiet">
                             {t('devZone.dock.added')}
                           </span>
                         )}
@@ -266,7 +266,7 @@ export default function MobileControls(props: MobileControlsProps) {
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <p className="px-1 pb-1.5 font-mono text-[10px] tracking-widest text-dark-900/40 uppercase">
+      <p className="px-1 pb-1.5 font-mono text-[10px] tracking-widest text-ink-quiet uppercase">
         {label}
       </p>
       <div className="flex flex-wrap items-center gap-0.5">{children}</div>
@@ -294,7 +294,7 @@ function IconButton({ icon, label, onClick, active, disabled }: IconButtonProps)
       className={cn(
         'flex size-10 items-center justify-center rounded-xl transition-colors',
         disabled
-          ? 'cursor-default text-dark-900/25'
+          ? 'cursor-default text-ink-quiet'
           : active
             ? 'bg-dark-900 text-cream-50'
             : 'text-dark-900 active:bg-dark-900/5',

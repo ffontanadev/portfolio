@@ -48,30 +48,30 @@ const Navigation = () => {
                         whileHover={{ scale: 1.02 }}
                         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                     >
-                        <span className="text-2xl font-display font-bold tracking-tighter group-hover:text-coral-500 transition-colors duration-500">
+                        <span className="text-2xl font-display font-bold tracking-tighter group-hover:text-coral-700 transition-colors duration-500">
                             FF
                         </span>
-                        <span className="text-2xl font-display italic font-light text-coral-500/80">.</span>
+                        <span className="text-2xl font-display italic font-light text-coral-700/80">.</span>
                     </motion.a>
 
                     {/* Desktop Navigation */}
                     <div className="hidden md:flex items-center gap-10">
                         {navLinks.map((link, idx) => (
                             <div key={link.name} className="flex items-baseline gap-2">
-                                <span className="font-mono text-[10px] tracking-widest text-dark-900/35">
+                                <span className="font-mono text-[10px] tracking-widest text-ink-quiet">
                                     0{idx + 1}
                                 </span>
                                 {link.route ? (
                                     <Link
                                         to={link.route}
-                                        className="reveal-underline text-sm font-medium text-dark-900 hover:text-coral-500 transition-colors duration-500"
+                                        className="reveal-underline text-sm font-medium text-dark-900 hover:text-coral-700 transition-colors duration-500"
                                     >
                                         {link.name}
                                     </Link>
                                 ) : (
                                     <a
                                         href={link.href}
-                                        className="reveal-underline text-sm font-medium text-dark-900 hover:text-coral-500 transition-colors duration-500"
+                                        className="reveal-underline text-sm font-medium text-dark-900 hover:text-coral-700 transition-colors duration-500"
                                     >
                                         {link.name}
                                     </a>
@@ -91,7 +91,7 @@ const Navigation = () => {
                                 rel="noopener noreferrer"
                                 aria-label={t('nav.githubPrimary')}
                                 title={t('nav.githubPrimary')}
-                                className="text-dark-900/70 transition-colors duration-300 hover:text-coral-500"
+                                className="text-dark-900/70 transition-colors duration-300 hover:text-coral-700"
                             >
                                 <Github size={18} />
                             </a>
@@ -101,7 +101,7 @@ const Navigation = () => {
                                 rel="noopener noreferrer"
                                 aria-label={t('nav.githubEngine')}
                                 title={t('nav.githubEngine')}
-                                className="font-mono text-[11px] tracking-tight text-dark-900/55 transition-colors duration-300 hover:text-coral-500"
+                                className="font-mono text-[11px] tracking-tight text-ink-muted transition-colors duration-300 hover:text-coral-700"
                             >
                                 elFonTii
                             </a>
@@ -151,12 +151,12 @@ const Navigation = () => {
                                     transition={{ delay: 0.06 * idx, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                                     className="flex items-baseline gap-3"
                                 >
-                                    <span className="font-mono text-xs text-dark-900/30">0{idx + 1}</span>
+                                    <span className="font-mono text-xs text-ink-quiet">0{idx + 1}</span>
                                     {link.route ? (
                                         <Link
                                             to={link.route}
                                             onClick={() => setIsMobileMenuOpen(false)}
-                                            className="text-3xl font-display font-bold text-dark-900 hover:text-coral-500 transition-colors"
+                                            className="text-3xl font-display font-bold text-dark-900 hover:text-coral-700 transition-colors"
                                         >
                                             {link.name}
                                         </Link>
@@ -164,7 +164,7 @@ const Navigation = () => {
                                         <a
                                             href={link.href}
                                             onClick={() => setIsMobileMenuOpen(false)}
-                                            className="text-3xl font-display font-bold text-dark-900 hover:text-coral-500 transition-colors"
+                                            className="text-3xl font-display font-bold text-dark-900 hover:text-coral-700 transition-colors"
                                         >
                                             {link.name}
                                         </a>
