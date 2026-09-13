@@ -19,6 +19,8 @@
     "resume": "Currículo",
     "viewResume": "Ver currículo",
     "toggleMenu": "Abrir menu",
+    "skipToContent": "Ir para o conteúdo",
+    "primaryLabel": "Principal",
     "devZone": "Dev Zone",
     "githubPrimary": "GitHub - ffontanadev",
     "githubEngine": "GitHub - elFonTii, onde a efengine vive"
@@ -437,6 +439,7 @@
   },
   "footer": {
     "tagline": "Construindo software tranquilo e deliberado.",
+    "navLabel": "Rodapé",
     "links": {
       "home": "Início",
       "work": "Trabalho",

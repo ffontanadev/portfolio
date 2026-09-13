@@ -22,16 +22,17 @@ const Footer = () => {
                 {/* Top row */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 mb-16">
                     <div>
-                        <div className="flex items-baseline gap-1 mb-4">
-                            <span className="text-3xl md:text-5xl font-display font-bold tracking-tighter">FF</span>
-                            <span className="text-3xl md:text-5xl font-display italic font-light text-coral-700">.</span>
+                        <div className="flex mb-4">
+                            <span className="logo-mark text-3xl md:text-5xl">
+                                FF<span className="logo-dot text-coral-700">.</span>
+                            </span>
                         </div>
                         <p className="font-display italic text-ink-muted max-w-xs leading-relaxed">
                             {t('footer.tagline')}
                         </p>
                     </div>
 
-                    <nav className="flex flex-wrap gap-x-8 gap-y-3 md:justify-end">
+                    <nav aria-label={t('footer.navLabel')} className="flex flex-wrap gap-x-8 gap-y-3 md:justify-end">
                         {links.map((link, idx) => (
                             <a
                                 key={link.name}

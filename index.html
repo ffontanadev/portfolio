@@ -73,6 +73,55 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <title>Felipe Fontana - Software Engineer | Java, Spring Boot, Legacy Modernization</title>
+
+    <!-- Structured data. `ProfilePage` + `Person` is the pair Google documents
+         for a personal profile; it is what gives the site an entity to attach
+         to rather than leaving the facts as prose only.
+
+         Locale-invariant on purpose, so it needs no patching in LocaleHead:
+         every value here is either a proper noun, a URL, or a technology name,
+         and none of them translate. Keep it that way - the moment a field needs
+         a locale it belongs in LocaleHead with the title and description.
+
+         Every value is sourced from something already on the page. Do not add a
+         field the site cannot back up: no dates, no ratings, no headcounts. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfilePage",
+        "mainEntity": {
+          "@type": "Person",
+          "name": "Felipe Fontana",
+          "url": "https://ffontana.dev/en",
+          "email": "contacto@ffontana.dev",
+          "jobTitle": "Software Engineer",
+          "image": "https://ffontana.dev/og-image.jpg",
+          "worksFor": { "@type": "Organization", "name": "Magenta Innova" },
+          "address": { "@type": "PostalAddress", "addressCountry": "UY" },
+          "knowsAbout": [
+            "Java",
+            "Spring Boot",
+            "Legacy system modernization",
+            "Apache Axis2",
+            "JUnit",
+            "OpenAPI",
+            "PostgreSQL",
+            "Microsoft SQL Server",
+            "Docker",
+            "Jenkins",
+            "TypeScript",
+            "React",
+            "React Native",
+            "C++"
+          ],
+          "sameAs": [
+            "https://github.com/ffontanadev",
+            "https://github.com/elFonTii",
+            "https://www.linkedin.com/in/felipefontana"
+          ]
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

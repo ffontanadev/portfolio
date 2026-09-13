@@ -1,0 +1,8 @@
+# ffontana.dev
+# Every locale is pre-rendered to static HTML by scripts/prerender.js, so there
+# is nothing here that needs JavaScript to be read. Nothing is disallowed.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://ffontana.dev/sitemap.xml

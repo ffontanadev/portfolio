@@ -38,6 +38,13 @@ const BrandMarquee = () => {
                                 <img
                                     src={brand.marqueeUrl}
                                     alt={brand.name}
+                                    /* Intrinsic viewBox dimensions, not the rendered size - CSS
+                                       below still pins the height to 3rem and lets the width
+                                       follow. They are here so the browser knows the aspect
+                                       ratio before the SVG lands and reserves the right width;
+                                       without them every logo resizes its neighbours on load. */
+                                    width={brand.marqueeSize?.width}
+                                    height={brand.marqueeSize?.height}
                                     crossOrigin="anonymous"
                                     className="h-12 w-auto object-contain grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                                     loading="lazy"

@@ -1,6 +1,6 @@
 {
-  "name": "MyWebSite",
-  "short_name": "MySite",
+  "name": "ffontana.dev",
+  "short_name": "ffontana",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",

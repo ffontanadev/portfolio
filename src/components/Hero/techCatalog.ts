@@ -22,6 +22,20 @@ export interface TechItem {
    */
   marqueeUrl?: string;
   /**
+   * The mark's intrinsic `viewBox` dimensions, read straight off the vendored
+   * SVG. Emitted as `width`/`height` on the `<img>` so the browser can derive
+   * an aspect ratio and reserve the right box *before* the file arrives - the
+   * marquee renders these at a fixed `h-12` with `w-auto`, so without this the
+   * width is unknown until load and every logo shoves its neighbours sideways.
+   *
+   * Intrinsic, not the rendered 48px: CSS still does the sizing, so changing
+   * the marquee's height does not invalidate these numbers.
+   *
+   * Required wherever `marqueeUrl` is set; absent for the wordmark entries,
+   * which render no image at all.
+   */
+  marqueeSize?: { width: number; height: number };
+  /**
    * Optional per-logo size multiplier on the showcase base size ratio.
    * <1 shrinks an oversized mark, >1 grows a small one. Defaults to 1.
    */
@@ -34,17 +48,17 @@ export interface TechItem {
  * this page or the résumé demonstrates it.
  */
 export const techCatalog: TechItem[] = [
-  { id: 'java',         name: 'Java 17',       marqueeUrl: `${SVGL}/java.svg` },
-  { id: 'springboot',   name: 'Spring Boot 3', marqueeUrl: `${SVGL}/spring.svg` },
+  { id: 'java',         name: 'Java 17',       marqueeUrl: `${SVGL}/java.svg`, marqueeSize: { width: 256, height: 346 } },
+  { id: 'springboot',   name: 'Spring Boot 3', marqueeUrl: `${SVGL}/spring.svg`, marqueeSize: { width: 64, height: 64 } },
   { id: 'junit',        name: 'JUnit 5' },
   { id: 'openapi',      name: 'OpenAPI' },
   { id: 'schemathesis', name: 'Schemathesis' },
-  { id: 'postgresql',   name: 'PostgreSQL',    marqueeUrl: `${SVGL}/postgresql.svg` },
-  { id: 'mssql',        name: 'MSSQL',         marqueeUrl: `${SVGL}/sql-server.svg` },
-  { id: 'docker',       name: 'Docker',        marqueeUrl: `${SVGL}/docker.svg` },
+  { id: 'postgresql',   name: 'PostgreSQL',    marqueeUrl: `${SVGL}/postgresql.svg`, marqueeSize: { width: 432, height: 445 } },
+  { id: 'mssql',        name: 'MSSQL',         marqueeUrl: `${SVGL}/sql-server.svg`, marqueeSize: { width: 48, height: 48 } },
+  { id: 'docker',       name: 'Docker',        marqueeUrl: `${SVGL}/docker.svg`, marqueeSize: { width: 24, height: 24 } },
   { id: 'jenkins',      name: 'Jenkins' },
-  { id: 'typescript',   name: 'TypeScript',    marqueeUrl: `${SVGL}/typescript.svg` },
-  { id: 'react',        name: 'React',         marqueeUrl: `${SVGL}/react_light.svg` },
+  { id: 'typescript',   name: 'TypeScript',    marqueeUrl: `${SVGL}/typescript.svg`, marqueeSize: { width: 256, height: 256 } },
+  { id: 'react',        name: 'React',         marqueeUrl: `${SVGL}/react_light.svg`, marqueeSize: { width: 569, height: 512 } },
   { id: 'reactnative',  name: 'React Native' },
   { id: 'cpp',          name: 'C++17' },
 ];

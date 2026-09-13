@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Routes, Route, useLocation, useNavigate } from
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useCallback, lazy, Suspense } from 'react';
 import Navigation from './components/Navigation';
+import SkipLink from './components/SkipLink';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -31,6 +32,13 @@ const queryClient = new QueryClient({
  * `/dev-zone` URL. Both keep whatever followed the locale slot, so an old
  * bookmark to `/dev-zone` still opens the Dev Zone - in the visitor's
  * language rather than in Spanish.
+ *
+ * In production `/` no longer reaches this: `vercel.json` answers it with a
+ * 301 to `/en`, because a client-side redirect left the bare domain serving an
+ * empty shell to crawlers and stranded every external link to it on a page
+ * with no content. `/dev-zone` still comes through here, and so does `/` under
+ * `vite dev`, which has no redirect layer - so the negotiation below stays
+ * live either way.
  */
 function LocaleRedirect() {
   const { pathname } = useLocation();
@@ -84,6 +92,11 @@ function AppShell() {
       <LocaleHead />
       <AppContextProvider>
         <div className="bg-cream-50 min-h-screen text-dark-900 font-sans selection:bg-coral-500 selection:text-white">
+          {/* Must stay the first focusable node in the tree - that is the whole
+              point of it. Rendered on the Dev Zone too, which hides the nav but
+              still has a <main> worth jumping to. */}
+          <SkipLink />
+
           {!isDevZone && <Navigation />}
 
           <Suspense fallback={null}>

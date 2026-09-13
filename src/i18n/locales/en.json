@@ -19,6 +19,8 @@
     "resume": "Resume",
     "viewResume": "View Resume",
     "toggleMenu": "Toggle menu",
+    "skipToContent": "Skip to content",
+    "primaryLabel": "Primary",
     "devZone": "Dev Zone",
     "githubPrimary": "GitHub - ffontanadev",
     "githubEngine": "GitHub - elFonTii, where efengine lives"
@@ -437,6 +439,7 @@
   },
   "footer": {
     "tagline": "Building quiet, deliberate software.",
+    "navLabel": "Footer",
     "links": {
       "home": "Home",
       "work": "Work",
