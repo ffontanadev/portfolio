@@ -274,15 +274,15 @@
           }
         },
         "bbvaApp": {
-          "title": "BBVA - App Bancaria Multiplataforma",
-          "desc": "La app de banca para personas que BBVA entrega en iOS, Android y web, construida sobre el framework de frontend propio del banco, orientado a eventos: componentes aislados que nunca se referencian entre sí y solo publican y se suscriben.",
-          "role": "Frontend, sobre la capa de componentes compartida por las tres plataformas",
-          "description": "Trabajo en el equipo de desarrollo de la aplicación bancaria de BBVA para personas - la que los clientes tienen en la mano - entregada en iOS, Android y web desde un frontend compartido. Ese frontend corre sobre un framework interno del banco, que puedo describir pero no nombrar: los componentes son unidades aisladas que no guardan referencias entre sí y se comunican únicamente publicando eventos en un bus compartido y suscribiéndose a los que les importan. Una pantalla es una composición de esos componentes más el cableado entre sus eventos.\n\nLa restricción que lo vuelve interesante es que el mismo componente tiene que comportarse igual dentro de un contenedor nativo en iOS, uno nativo en Android y una pestaña del navegador. El desacople por eventos es lo que lo permite: un componente sabe qué emite y qué escucha, y nada sobre dónde se está ejecutando ni qué hay a su lado.",
+          "title": "BBVA - APP Personas",
+          "desc": "La app de banca para personas de BBVA, ya entregada en iOS, Android y web. Estoy en el equipo que la mantiene viva y en movimiento: trabajo evolutivo sobre el frontend, e incidentes de producción rastreados con el Elastic Stack hasta dar con la causa.",
+          "role": "Frontend en el equipo de mantenimiento evolutivo - desarrollo de funcionalidades y rastreo de errores de producción hasta el componente que los provocó",
+          "description": "Trabajo en el equipo de la aplicación bancaria de BBVA para personas - la que los clientes tienen en la mano. No la construimos nosotros; estaba en producción mucho antes de que yo llegara, y el trabajo es sostenerla ahí mientras sigue cambiando. En la práctica son dos cosas: el trabajo evolutivo que el producto pide, y todo bug que aparece, que revisamos y solucionamos.\n\nEncontrar la causa es la mayor parte del trabajo. Un reporte llega como un síntoma en una pantalla, y lo que hago con él es rastrearlo con el Elastic Stack - logs de las tres plataformas, hasta el componente que efectivamente emitió lo que no debía. El frontend corre sobre un framework interno del banco, que puedo describir pero no nombrar: los componentes son unidades aisladas que no guardan referencias entre sí y se comunican únicamente publicando eventos en un bus compartido y suscribiéndose a los que les importan. Ese desacople es lo que permite que el mismo componente se comporte igual dentro de un contenedor nativo en iOS, uno en Android y una pestaña del navegador - y es también lo que convierte el rastreo de un bug en seguir eventos y no en leer un stack de llamadas.",
           "metrics": [
+            { "label": "Alcance", "value": "Mantenimiento evolutivo" },
+            { "label": "Diagnóstico", "value": "Errores de producción · Elastic Stack" },
             { "label": "Plataformas", "value": "iOS · Android · Web" },
-            { "label": "Arquitectura", "value": "Publicación / suscripción de eventos" },
-            { "label": "Componentes", "value": "Aislados, sin referencias directas" },
-            { "label": "Frontend", "value": "Una capa compartida, tres plataformas" }
+            { "label": "Arquitectura", "value": "Publicación / suscripción de eventos" }
           ]
         },
         "bbva": {

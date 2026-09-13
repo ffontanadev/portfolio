@@ -54,6 +54,32 @@ const projectData: ProjectStructural[] = [
       '/videos/efengine/video_03.webm'
     ],
   },
+  // Current engagement - it leads the professional run, ahead of Banco Provincia.
+  {
+    id: 'bbvaApp',
+    color: "bg-cream-100",
+    brandColor: '#001391',
+    // TODO[DECIDE]: this card and the `bbva` card below share one hex, and the
+    // brand block has no halo to offset - the off-centre `brandHaloAt: '20% 24%'`
+    // that used to separate them is gone with the cream field. Right now only the
+    // index digit and the lead metric tell the two engagements apart. A second
+    // BBVA tone would fix it, but that is a brand decision; do not invent one.
+    // Now that this card leads, the two blue blocks sit closer together than
+    // before, so the collision reads louder rather than quieter.
+    // The frontend runs on a framework internal to the bank; the copy describes
+    // its event model but never names it. Keep the stack list to open
+    // technologies and to the architecture, never to the product name.
+    techStack: ["JavaScript", "Event-driven architecture", "Internal component framework", "Elastic Stack", "iOS", "Android", "Web"],
+    date: "'26 - NOW",
+    codeBlocks: [],
+    category: 'professional',
+    company: 'BBVA',
+    logo: 'bbva',
+    // The app shipped long before this engagement; the banner names the work,
+    // not the product. "Multiplatform" described the latter and read as a claim
+    // on a build that was never ours.
+    leadMetric: { kind: 'wordmark', value: 'Sustaining Team', sub: "a banking app already in customers' hands" },
+  },
   {
     id: 'bancoProvincia',
     color: "bg-cream-100",
@@ -67,28 +93,6 @@ const projectData: ProjectStructural[] = [
     // parent bank's wordmark on a card titled with the local entity's name.
     logo: 'banco-provincia',
     leadMetric: { kind: 'migration', from: 'Axis 2', to: 'Boot' },
-  },
-  {
-    id: 'bbvaApp',
-    color: "bg-cream-100",
-    brandColor: '#001391',
-    // TODO[DECIDE]: this card and the `bbva` card below share one hex, and the
-    // brand block has no halo to offset - the off-centre `brandHaloAt: '20% 24%'`
-    // that used to separate them is gone with the cream field. Right now only the
-    // index digit and the lead metric tell the two engagements apart. A second
-    // BBVA tone would fix it, but that is a brand decision; do not invent one.
-    // The frontend runs on a framework internal to the bank; the copy describes
-    // its event model but never names it. Keep the stack list to open
-    // technologies and to the architecture, never to the product name.
-    techStack: ["JavaScript", "Event-driven architecture", "Internal component framework", "iOS", "Android", "Web"],
-    // TODO[SUPPLY]: start date of the engagement, e.g. "'26 - NOW". Owner has
-    // not supplied it; do not guess one.
-    date: "TODO",
-    codeBlocks: [],
-    category: 'professional',
-    company: 'BBVA',
-    logo: 'bbva',
-    leadMetric: { kind: 'wordmark', value: 'Multiplatform', sub: 'iOS · Android · Web' },
   },
   {
     id: 'bbva',
@@ -338,6 +342,14 @@ const FeaturedWorks = () => {
         })),
       },
       {
+        ...byId.bbvaApp,
+        title: fp.bbvaApp.title,
+        desc: fp.bbvaApp.desc,
+        role: fp.bbvaApp.role,
+        description: fp.bbvaApp.description,
+        metrics: fp.bbvaApp.metrics.map((m, i) => ({ ...m, accent: i === 0 })),
+      },
+      {
         ...byId.bancoProvincia,
         title: fp.bancoProvincia.title,
         desc: fp.bancoProvincia.desc,
@@ -350,14 +362,6 @@ const FeaturedWorks = () => {
             current: i === arr.length - 1,
           })),
         },
-      },
-      {
-        ...byId.bbvaApp,
-        title: fp.bbvaApp.title,
-        desc: fp.bbvaApp.desc,
-        role: fp.bbvaApp.role,
-        description: fp.bbvaApp.description,
-        metrics: fp.bbvaApp.metrics.map((m, i) => ({ ...m, accent: i === 0 })),
       },
       {
         ...byId.bbva,

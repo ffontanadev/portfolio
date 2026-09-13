@@ -274,15 +274,15 @@
           }
         },
         "bbvaApp": {
-          "title": "BBVA - Multiplatform Banking App",
-          "desc": "The retail banking app BBVA ships to iOS, Android and web, built on the bank's own event-driven frontend framework: isolated components that never reference each other and communicate only by publishing and subscribing.",
-          "role": "Frontend, on the shared component layer behind all three platforms",
-          "description": "I work on the development team behind BBVA's banking application for individuals - the one customers hold in their hands - delivered to iOS, Android and web from a shared frontend. That frontend runs on a framework internal to the bank, which I can describe but not name: components are isolated units that hold no references to one another and communicate only by publishing events onto a shared bus and subscribing to the ones they care about. A screen is a composition of those components plus the wiring between their events.\n\nThe constraint that makes it interesting is that the same component has to behave identically inside a native shell on iOS, a native shell on Android and a browser tab. Decoupling by events is what buys that: a component knows what it emits and what it listens for, and nothing about where it is running or what sits beside it.",
+          "title": "BBVA - APP Personas",
+          "desc": "BBVA's retail banking app, already shipped to iOS, Android and web. I'm on the team that keeps it running and moving: evolutionary work on the frontend, and production incidents traced through the Elastic Stack until they have a cause.",
+          "role": "Frontend on the sustaining team - feature work, plus tracing production errors back to the component that caused them",
+          "description": "I work on the team behind BBVA's banking application for individuals - the one customers hold in their hands. We did not build it; it was in production long before I got there, and the job is to keep it that way while it keeps changing. That means two things in practice: the evolutionary work the product asks for, and every bug that surfaces, which we look at and fix.\n\nFinding the cause is most of the work. A report arrives as a symptom on a screen, and what I do with it is trace it through the Elastic Stack - logs from three platforms, back to the component that actually emitted the wrong thing. The frontend runs on a framework internal to the bank, which I can describe but not name: components are isolated units that hold no references to one another and communicate only by publishing events onto a shared bus and subscribing to the ones they care about. That decoupling is what lets the same component behave identically inside a native shell on iOS, one on Android and a browser tab - and it is also what makes tracing a bug a matter of following events rather than reading a call stack.",
           "metrics": [
+            { "label": "Scope", "value": "Evolutionary maintenance" },
+            { "label": "Triage", "value": "Production errors · Elastic Stack" },
             { "label": "Platforms", "value": "iOS · Android · Web" },
-            { "label": "Architecture", "value": "Publish / subscribe events" },
-            { "label": "Components", "value": "Isolated, no direct references" },
-            { "label": "Frontend", "value": "One shared layer, three platforms" }
+            { "label": "Architecture", "value": "Publish / subscribe events" }
           ]
         },
         "bbva": {
