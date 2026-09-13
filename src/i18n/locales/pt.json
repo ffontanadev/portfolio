@@ -14,15 +14,14 @@
     "links": {
       "home": "Início",
       "work": "Trabalho",
-      "about": "Sobre",
       "connect": "Contato"
     },
     "resume": "Currículo",
     "viewResume": "Ver currículo",
     "toggleMenu": "Abrir menu",
     "devZone": "Dev Zone",
-    "githubPrimary": "GitHub — ffontanadev",
-    "githubEngine": "GitHub — elFonTii, onde a efengine vive"
+    "githubPrimary": "GitHub - ffontanadev",
+    "githubEngine": "GitHub - elFonTii, onde a efengine vive"
   },
   "devZone": {
     "back": "Voltar ao portfólio",
@@ -111,7 +110,7 @@
     }
   },
   "hero": {
-    "eyebrow": "01 — Introdução",
+    "eyebrow": "01 - Introdução",
     "headline": {
       "lead": "Engenheiro backend para sistemas",
       "emphasis": "que não podem cair"
@@ -166,25 +165,25 @@
     "back": "Voltar",
     "eyebrow": "Stack · foco",
     "brief": {
-      "java": "A linguagem em que o core bancário roda — Java 17 LTS, migrado a partir do Java 8.",
+      "java": "A linguagem em que o core bancário roda - Java 17 LTS, migrado a partir do Java 8.",
       "springboot": "Framework Java para criar serviços prontos para produção com configuração mínima.",
-      "junit": "O framework de testes por trás do trabalho de cobertura — suítes unitárias e de integração sobre APIs bancárias.",
+      "junit": "O framework de testes por trás do trabalho de cobertura - suítes unitárias e de integração sobre APIs bancárias.",
       "openapi": "Contratos de API legíveis por máquina. Todo endpoint migrado ganha um antes do cutover.",
       "schemathesis": "Gera testes de propriedade e fuzzing a partir de um schema OpenAPI, para que desvios apareçam no CI.",
       "postgresql": "Poderoso banco de dados relacional open-source, conhecido pela confiabilidade e recursos.",
-      "mssql": "Microsoft SQL Server — o armazenamento por trás da plataforma bancária core.",
+      "mssql": "Microsoft SQL Server - o armazenamento por trás da plataforma bancária core.",
       "docker": "Contêineres para builds reproduzíveis e paridade local com o ambiente de deploy.",
       "jenkins": "O pipeline que controla cada deploy através de build, testes e checagens de qualidade.",
       "typescript": "JavaScript tipado. É nisso que este site, o tooling e o trabalho de front-end são escritos.",
       "react": "A biblioteca de UI por trás deste portfólio e do lado front-end do trabalho.",
       "reactnative": "Mobile multiplataforma, publicado no iOS e no Android em um app bancário em produção.",
-      "cpp": "C++ moderno — a linguagem em que a efengine é escrita, do renderizador ao pipeline de assets."
+      "cpp": "C++ moderno - a linguagem em que a efengine é escrita, do renderizador ao pipeline de assets."
     }
   },
   "work": {
     "liveDemo": "Demo ao vivo",
     "featured": {
-      "eyebrow": "§ 02 — Trabalho selecionado",
+      "eyebrow": "§ 02 - Trabalho selecionado",
       "headingBefore": "No que tenho",
       "headingEmphasis": "colocado minha alma",
       "headingAfter": ".",
@@ -203,10 +202,10 @@
       },
       "projects": {
         "efengine": {
-          "title": "EFENGINE — Motor de Jogos em C++",
-          "desc": "Motor 3D feito do zero em C++17 sobre OpenGL 4.5 Core — PBR com IBL split-sum, shadow mapping, cadeia de pós-processamento HDR, formato binário próprio de cenas e um editor ImGui dockado, tudo sob regras RAII e sem exceções.",
+          "title": "EFENGINE - Motor de Jogos em C++",
+          "desc": "Motor 3D feito do zero em C++17 sobre OpenGL 4.5 Core - PBR com IBL split-sum, shadow mapping, cadeia de pós-processamento HDR, formato binário próprio de cenas e um editor ImGui dockado, tudo sob regras RAII e sem exceções.",
           "role": "Autor do Motor",
-          "description": "EFENGINE é meu projeto mais ambicioso: um motor 3D escrito do zero em C++17 sobre OpenGL 4.5 Core. Ele renderiza materiais PBR iluminados por luzes pontuais e direcional com iluminação baseada em imagem completa —irradiância difusa mais especular por split-sum, ambas pré-computadas por compute shaders— sobre shadow mapping, um skybox e uma cadeia de pós-processamento HDR de bloom, tonemap e FXAA. As cenas vivem em um grafo de nós endereçado por handles com geração e são persistidas em .efe, um formato binário próprio, em chunks e versionado, com um reader hostil a entradas corrompidas. Por cima roda um editor ImGui dockado: hierarquia, inspetor, edição de materiais ao vivo e salvar/carregar cenas.\n\nO que sustenta tudo é um conjunto de regras inegociáveis. Cada chamada gl* está confinada ao efecom, a camada RHI — o renderer nunca vê OpenGL. Sem new/delete crus e sem exceções: a propriedade é um valor ou um unique_ptr, erros de programação disparam um assert, falhas recuperáveis voltam como valor de retorno, e todo subsistema é RAII — construí-lo o levanta, destruí-lo o desliga.",
+          "description": "EFENGINE é meu projeto mais ambicioso: um motor 3D escrito do zero em C++17 sobre OpenGL 4.5 Core. Ele renderiza materiais PBR iluminados por luzes pontuais e direcional com iluminação baseada em imagem completa - irradiância difusa mais especular por split-sum, ambas pré-computadas por compute shaders - sobre shadow mapping, um skybox e uma cadeia de pós-processamento HDR de bloom, tonemap e FXAA. As cenas vivem em um grafo de nós endereçado por handles com geração e são persistidas em .efe, um formato binário próprio, em chunks e versionado, com um reader hostil a entradas corrompidas. Por cima roda um editor ImGui dockado: hierarquia, inspetor, edição de materiais ao vivo e salvar/carregar cenas.\n\nO que sustenta tudo é um conjunto de regras inegociáveis. Cada chamada gl* está confinada ao efecom, a camada RHI - o renderer nunca vê OpenGL. Sem new/delete crus e sem exceções: a propriedade é um valor ou um unique_ptr, erros de programação disparam um assert, falhas recuperáveis voltam como valor de retorno, e todo subsistema é RAII - construí-lo o levanta, destruí-lo o desliga.",
           "leadSub": "C++17 · OpenGL 4.5 Core",
           "systems": [
             {
@@ -236,10 +235,10 @@
           ]
         },
         "bancoProvincia": {
-          "title": "Provincia Casa Financiera — Migração de Serviços Core",
-          "desc": "Migração dos serviços web legados Axis2 / Java 8 da filial uruguaia do Banco de la Provincia de Buenos Aires para Spring Boot 3 sobre Java 17 — 7 repositórios, ~4.600 classes — com a conectividade refeita de JNDI para um DataSource MSSQL gerenciado.",
-          "role": "Backend — serviços SOAP/WSDL legados para Spring Boot, equipe de 3",
-          "description": "Modernização de longo prazo dos serviços SOAP Axis2 legados por trás do core bancário da Provincia Casa Financiera, a filial uruguaia do Banco de la Provincia de Buenos Aires. Assumi o backend: levar os serviços SOAP/WSDL legados para Java 17 + Spring Boot 3, substituir recursos ligados a JNDI por um DataSource MSSQL gerenciado, e desemaranhar anos de contratos de serviço fortemente acoplados sem quebrar os consumidores downstream. Em paralelo, um colega separou o frontend Struts e sua camada consumidora em duas aplicações — um novo frontend em Angular e um backend-for-frontend que alcança os serviços migrados por SOAP ou por REST, comutáveis em runtime caso um dos caminhos degrade.",
+          "title": "Provincia Casa Financiera - Migração de Serviços Core",
+          "desc": "Migração dos serviços web legados Axis2 / Java 8 da filial uruguaia do Banco de la Provincia de Buenos Aires para Spring Boot 3 sobre Java 17 - 7 repositórios, ~4.600 classes - com a conectividade refeita de JNDI para um DataSource MSSQL gerenciado.",
+          "role": "Backend - serviços SOAP/WSDL legados para Spring Boot, equipe de 3",
+          "description": "Modernização de longo prazo dos serviços SOAP Axis2 legados por trás do core bancário da Provincia Casa Financiera, a filial uruguaia do Banco de la Provincia de Buenos Aires. Assumi o backend: levar os serviços SOAP/WSDL legados para Java 17 + Spring Boot 3, substituir recursos ligados a JNDI por um DataSource MSSQL gerenciado, e desemaranhar anos de contratos de serviço fortemente acoplados sem quebrar os consumidores downstream. Em paralelo, um colega separou o frontend Struts e sua camada consumidora em duas aplicações - um novo frontend em Angular e um backend-for-frontend que alcança os serviços migrados por SOAP ou por REST, comutáveis em runtime caso um dos caminhos degrade.",
           "migration": {
             "scope": [
               { "value": "7", "label": "repositórios" },
@@ -261,24 +260,36 @@
               { "label": "Service Plugins", "role": "Lógica de negócio por serviço carregada pelo despachante.", "scale": "636 classes" },
               { "label": "Security", "role": "Autenticação, sessões e controle de acesso.", "scale": "617 classes" },
               { "label": "Messaging & Transaction Format", "role": "Contratos de mensagens bancárias e formatação de transações.", "scale": "164 classes" },
-              { "label": "Web Tier — Common", "role": "Contratos e utilitários compartilhados da camada web.", "scale": "209 classes" },
-              { "label": "Web Tier — Core", "role": "A camada de apresentação — a maior superfície da plataforma.", "scale": "1,623 classes" },
-              { "label": "Web Tier — Services", "role": "Camada cliente de serviços entre a camada web e o backend.", "scale": "1,246 classes" }
+              { "label": "Web Tier - Common", "role": "Contratos e utilitários compartilhados da camada web.", "scale": "209 classes" },
+              { "label": "Web Tier - Core", "role": "A camada de apresentação - a maior superfície da plataforma.", "scale": "1,623 classes" },
+              { "label": "Web Tier - Services", "role": "Camada cliente de serviços entre a camada web e o backend.", "scale": "1,246 classes" }
             ],
             "phasesHeading": "Caminho da migração",
             "phases": [
               { "label": "01", "title": "Descoberta e indexação", "desc": "Indexar os sete repositórios em um grafo de conhecimento para mapear a superfície real de serviços e chamadas." },
               { "label": "02", "title": "Migração serviço a serviço", "desc": "Levar os módulos para Spring Boot 3 e Java 17, reescrever JNDI para um MSSQL DataSource gerenciado e preservar os contratos SOAP via XML/JSON duplo." },
               { "label": "03", "title": "Testes de contrato", "desc": "Definições OpenAPI (Swagger) com testes de propriedade e fuzzing Schemathesis para garantir paridade com os serviços legados." },
-              { "label": "04", "title": "Cutover", "desc": "Módulo a módulo — Core Services e Security já rodam em Spring Boot 3; o restante está em andamento." }
+              { "label": "04", "title": "Cutover", "desc": "Módulo a módulo - Core Services e Security já rodam em Spring Boot 3; o restante está em andamento." }
             ]
           }
         },
+        "bbvaApp": {
+          "title": "BBVA - APP Personas",
+          "desc": "O app de banco para pessoas do BBVA, já entregue em iOS, Android e web. Estou na equipe que o mantém vivo e em movimento: trabalho evolutivo no frontend, e incidentes de produção rastreados com o Elastic Stack até chegar à causa.",
+          "role": "Frontend na equipe de manutenção evolutiva - desenvolvimento de funcionalidades e rastreamento de erros de produção até o componente que os causou",
+          "description": "Trabalho na equipe do aplicativo bancário do BBVA para pessoas - aquele que os clientes têm na mão. Não fomos nós que o construímos; ele já estava em produção muito antes de eu chegar, e o trabalho é mantê-lo assim enquanto ele continua mudando. Na prática são duas coisas: o trabalho evolutivo que o produto pede, e todo bug que aparece, que revisamos e corrigimos.\n\nEncontrar a causa é a maior parte do trabalho. Um relato chega como um sintoma em uma tela, e o que faço com ele é rastreá-lo com o Elastic Stack - logs das três plataformas, até o componente que de fato emitiu o que não devia. O frontend roda sobre um framework interno do banco, que posso descrever mas não nomear: os componentes são unidades isoladas que não guardam referências entre si e se comunicam apenas publicando eventos em um barramento compartilhado e assinando os que lhes interessam. Esse desacoplamento é o que permite que o mesmo componente se comporte de forma idêntica dentro de um contêiner nativo no iOS, um no Android e uma aba do navegador - e é também o que transforma o rastreamento de um bug em seguir eventos, e não em ler uma pilha de chamadas.",
+          "metrics": [
+            { "label": "Escopo", "value": "Manutenção evolutiva" },
+            { "label": "Diagnóstico", "value": "Erros de produção · Elastic Stack" },
+            { "label": "Plataformas", "value": "iOS · Android · Web" },
+            { "label": "Arquitetura", "value": "Publicação / assinatura de eventos" }
+          ]
+        },
         "bbva": {
-          "title": "BBVA — Migração de APIs e Cobertura de Testes",
+          "title": "BBVA - Migração de APIs e Cobertura de Testes",
           "desc": "Levei a cobertura de testes dos novos endpoints de 20% para 85%+ em ~48 APIs, dentro de uma equipe de 10 pessoas, com cada deploy controlado por Jenkins, OpenShift e SonarQube.",
           "role": "Engenharia de testes e trabalho pré-migração, equipe de 10",
-          "description": "Atuação na plataforma interna do BBVA migrando serviços de API para Spring Boot e estabelecendo cobertura de testes disciplinada em toda a superfície. Levei a cobertura dos novos endpoints de 20% para 85%+ em ~48 APIs usando JUnit 5 e Mockito, em uma equipe de 10, com os deploys controlados por Jenkins, OpenShift e SonarQube. O ponto não era o número da cobertura — era tornar seguro de mudar um código em que ninguém confiava.",
+          "description": "Atuação na plataforma interna do BBVA migrando serviços de API para Spring Boot e estabelecendo cobertura de testes disciplinada em toda a superfície. Levei a cobertura dos novos endpoints de 20% para 85%+ em ~48 APIs usando JUnit 5 e Mockito, em uma equipe de 10, com os deploys controlados por Jenkins, OpenShift e SonarQube. O ponto não era o número da cobertura - era tornar seguro de mudar um código em que ninguém confiava.",
           "metrics": [
             { "label": "Cobertura", "value": "20% → 85%+" },
             { "label": "Escopo", "value": "~48 APIs · 50+ serviços internos" },
@@ -288,10 +299,10 @@
           ]
         },
         "mobileBanking": {
-          "title": "Winterbotham — App de Banco Móvel",
-          "desc": "Um app de banco móvel multiplataforma em React Native + Expo, publicado no iOS e no Android por uma equipe de quatro — com autenticação WebAuthn e um backend-for-frontend carregando a lógica de integração.",
+          "title": "Winterbotham - App de Banco Móvel",
+          "desc": "Um app de banco móvel multiplataforma em React Native + Expo, publicado no iOS e no Android por uma equipe de quatro - com autenticação WebAuthn e um backend-for-frontend carregando a lógica de integração.",
           "role": "Frontend, mais o backend-for-frontend e a integração do WebAuthn",
-          "description": "Aplicativo de banco móvel para o Winterbotham, desenvolvido em React Native + Expo por uma equipe de quatro ao longo de 18 meses. Minha superfície principal foi o frontend, e ela se estendeu a um backend-for-frontend que carregava a lógica de conexão com o core que outra empresa construía em paralelo. Também integrei o WebAuthn quando ainda era um padrão incipiente e com pouca documentação — a parte em que um erro vira um incidente de segurança, não um bug.",
+          "description": "Aplicativo de banco móvel para o Winterbotham, desenvolvido em React Native + Expo por uma equipe de quatro ao longo de 18 meses. Minha superfície principal foi o frontend, e ela se estendeu a um backend-for-frontend que carregava a lógica de conexão com o core que outra empresa construía em paralelo. Também integrei o WebAuthn quando ainda era um padrão incipiente e com pouca documentação - a parte em que um erro vira um incidente de segurança, não um bug.",
           "metrics": [
             {
               "label": "Plataforma",
@@ -324,10 +335,10 @@
       }
     },
     "older": {
-      "eyebrow": "§ 04 — Arquivo",
+      "eyebrow": "§ 03 - Arquivo",
       "headingBefore": "Trabalhos",
       "headingEmphasis": "antigos",
-      "description": "Relíquias da minha jornada como desenvolvedor — ainda queridas, mas não mais o prato principal.",
+      "description": "Relíquias da minha jornada como desenvolvedor - ainda queridas, mas não mais o prato principal.",
       "view": "Ver",
       "projects": {
         "biome": {
@@ -352,32 +363,7 @@
           "title": "three-voxel-engine",
           "desc": "Um mundo de voxels servido pelo backend: o ruído e os chunks são calculados no servidor e enviados ao navegador em tempo real.",
           "role": "Desenvolvedor",
-          "description": "Um renderizador de mundos de voxels em Three.js e Next.js. O terreno não é gerado no navegador: o ruído Perlin e os dados dos chunks são calculados no backend e transmitidos ao cliente em tempo real, de modo que os chunks chegam conforme a câmera se move e o mundo continua carregando sem fim.\n\nPrincipais recursos:\n\nGeração de ruído e chunks no backend, determinística para uma dada semente\nStreaming em tempo real dos buffers de chunks para o navegador\nCarregamento e descarregamento infinito de chunks conforme a posição da câmera\nControles em primeira pessoa — movimento WASD com mouse look e pointer lock\nRenderização instanciada para a geometria dos blocos\nMundo configurável: tamanho de chunk, parâmetros de terreno e tipos de bloco"
-        }
-      }
-    },
-    "additional": {
-      "heading": "Mais coisas divertidas",
-      "projects": {
-        "birla": {
-          "title": "Birla Capital",
-          "desc": "Redesenhando ferramentas financeiras"
-        },
-        "icamps": {
-          "title": "ICAMPS",
-          "desc": "Levando segurança ao mobile"
-        },
-        "haqdarshak": {
-          "title": "Haqdarshak",
-          "desc": "Explorando programas governamentais"
-        },
-        "spotify": {
-          "title": "Spotify",
-          "desc": "Trechos e experimentos"
-        },
-        "landing": {
-          "title": "Landing Page",
-          "desc": "Surpresa! É esta mesma"
+          "description": "Um renderizador de mundos de voxels em Three.js e Next.js. O terreno não é gerado no navegador: o ruído Perlin e os dados dos chunks são calculados no backend e transmitidos ao cliente em tempo real, de modo que os chunks chegam conforme a câmera se move e o mundo continua carregando sem fim.\n\nPrincipais recursos:\n\nGeração de ruído e chunks no backend, determinística para uma dada semente\nStreaming em tempo real dos buffers de chunks para o navegador\nCarregamento e descarregamento infinito de chunks conforme a posição da câmera\nControles em primeira pessoa - movimento WASD com mouse look e pointer lock\nRenderização instanciada para a geometria dos blocos\nMundo configurável: tamanho de chunk, parâmetros de terreno e tipos de bloco"
         }
       }
     },
@@ -399,45 +385,9 @@
       "keyImplementation": "Implementação Principal"
     }
   },
-  "agents": {
-    "eyebrow": "§ 03 — Método",
-    "headingBefore": "Como eu trabalho",
-    "headingEmphasis": "com agentes",
-    "headingAfter": "",
-    "intro": "Em bases de código grandes demais para caber na cabeça, um agente é tão bom quanto a verdade de base que você dá a ele. Meu método mantém a IA ancorada em estrutura real e contratos demonstráveis — cada resposta traçada por um grafo, cada endpoint conferido contra o seu spec.",
-    "pillars": [
-      {
-        "index": "01",
-        "principle": "Percorra o grafo, não faça grep",
-        "title": "Indexação do projeto",
-        "body": "Indexo cada código em um grafo de conhecimento de funções, rotas, cadeias de chamadas e contratos de serviço. Os agentes percorrem como o código realmente se conecta, em vez de fazer grep ou adivinhar com busca semântica — assim uma superfície de migração enorme responde a uma consulta, não a uma varredura de texto completo."
-      },
-      {
-        "index": "02",
-        "principle": "O spec é a suíte de testes",
-        "title": "Schemathesis + OpenAPI",
-        "body": "O Schemathesis lê o esquema OpenAPI de um serviço e gera testes baseados em propriedades — centenas de casos-limite, malformados e com estado que o contrato implica mas ninguém escreve à mão. Ele expõe o desvio de esquema e os 500 inesperados antes de um cliente vê-los — exatamente o que um endpoint migrado precisa provar."
-      },
-      {
-        "index": "03",
-        "principle": "Um harness, qualquer OpenAPI",
-        "title": "Harness de testes de API",
-        "body": "Envolvi esse fluxo em um app pequeno: aponte-o para qualquer serviço que exponha um esquema OpenAPI e ele roda a suíte completa do Schemathesis, mostra as falhas e reporta a cobertura do contrato. Testar um novo microsserviço vira configuração, não um projeto de testes do zero."
-      }
-    ],
-    "toolkit": {
-      "label": "Ferramentas",
-      "items": [
-        { "name": "Playwright", "note": "E2E de navegador · visual" },
-        { "name": "Superpowers", "note": "skills e comandos" },
-        { "name": "MCP memory", "note": "grafo para agentes" },
-        { "name": "Spec + plan", "note": "brainstorm → plano → verificar" }
-      ]
-    }
-  },
   "contact": {
-    "eyebrow": "§ 05 — Fale comigo",
-    "intro": "você chegou até aqui—",
+    "eyebrow": "§ 04 - Fale comigo",
+    "intro": "você chegou até aqui - ",
     "headline": "Diga oi.",
     "side": "LADO · B",
     "availableFor": "Setlist · Disponível para",
@@ -470,8 +420,8 @@
     "viewResume": "Ver currículo",
     "linkedin": "LinkedIn",
     "scheduling": "Agende uma call de 30 minutos",
-    "githubPrimary": "GitHub — ffontanadev",
-    "githubEngine": "GitHub — elFonTii, onde a efengine vive",
+    "githubPrimary": "GitHub - ffontanadev",
+    "githubEngine": "GitHub - elFonTii, onde a efengine vive",
     "twitter": "Twitter"
   },
   "playlists": {
@@ -490,7 +440,6 @@
     "links": {
       "home": "Início",
       "work": "Trabalho",
-      "about": "Sobre",
       "connect": "Contato",
       "resume": "Currículo",
       "devZone": "Dev Zone"
@@ -518,7 +467,7 @@
   },
   "seo": {
     "siteSuffix": "Portfolio",
-    "title": "Felipe Fontana — Engenheiro de Software | Java, Spring Boot, Modernização Legada",
-    "description": "Engenheiro de Software com 4 anos modernizando sistemas bancários core — de Axis2/Java 8 para Spring Boot 3 em ~4,600 classes, 50+ APIs migradas, cobertura de testes de 20% para 85%. Baseado no Uruguai, UTC−3, sobreposição total com o Leste dos EUA."
+    "title": "Felipe Fontana - Engenheiro de Software | Java, Spring Boot, Modernização Legada",
+    "description": "Engenheiro de Software com 4 anos modernizando sistemas bancários core - de Axis2/Java 8 para Spring Boot 3 em ~4,600 classes, 50+ APIs migradas, cobertura de testes de 20% para 85%. Baseado no Uruguai, UTC−3, sobreposição total com o Leste dos EUA."
   }
 }

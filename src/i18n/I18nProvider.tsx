@@ -13,7 +13,7 @@ interface I18nProviderProps {
 }
 
 /**
- * The locale is a URL segment, not component state — see `src/i18n/routing.ts`.
+ * The locale is a URL segment, not component state - see `src/i18n/routing.ts`.
  * This provider therefore owns no locale state at all: it receives the active
  * locale from the router and forwards change requests back to it.
  *

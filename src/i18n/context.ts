@@ -11,7 +11,7 @@ export interface I18nContextValue {
   locales: Locale[];
   /** Translate a dot-path key, interpolating `{name}` placeholders. */
   t: (path: string, vars?: TranslateVars) => string;
-  /** The full, typed message tree for the active locale — use for structured data (arrays/objects). */
+  /** The full, typed message tree for the active locale - use for structured data (arrays/objects). */
   messages: Messages;
 }
 

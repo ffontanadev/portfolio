@@ -227,7 +227,7 @@ describe('TrailBuffer', () => {
 - [ ] **Step 2: Run test to verify it fails**
 
 Run: `npm run test -- tourMotion`
-Expected: FAIL — cannot resolve `./tourMotion`.
+Expected: FAIL - cannot resolve `./tourMotion`.
 
 - [ ] **Step 3: Write the implementation**
 
@@ -340,7 +340,7 @@ describe('first-visit flag', () => {
 - [ ] **Step 2: Run test to verify it fails**
 
 Run: `npm run test -- useFirstVisit`
-Expected: FAIL — cannot resolve module.
+Expected: FAIL - cannot resolve module.
 
 - [ ] **Step 3: Write the implementation**
 
@@ -444,7 +444,7 @@ describe('resolveStopElement', () => {
 - [ ] **Step 2: Run test to verify it fails**
 
 Run: `npm run test -- tourStops`
-Expected: FAIL — cannot resolve module.
+Expected: FAIL - cannot resolve module.
 
 - [ ] **Step 3: Write the implementation**
 
@@ -563,11 +563,11 @@ describe('tour copy', () => {
 - [ ] **Step 2: Run test to verify it fails**
 
 Run: `npm run test -- tourCopy`
-Expected: FAIL — captions echo their keys (namespace missing).
+Expected: FAIL - captions echo their keys (namespace missing).
 
 - [ ] **Step 3: Add the `tour` namespace to `en.json`**
 
-Add this top-level block to `src/i18n/locales/en.json` (e.g. after the `nav` block; keep valid JSON — mind the trailing comma):
+Add this top-level block to `src/i18n/locales/en.json` (e.g. after the `nav` block; keep valid JSON - mind the trailing comma):
 ```json
   "tour": {
     "skip": "Skip tour",
@@ -575,8 +575,8 @@ Add this top-level block to `src/i18n/locales/en.json` (e.g. after the `nav` blo
     "stops": {
       "techStack": "Click any logo to watch it form in the hero, with a short note on how I use it.",
       "featuredWorks": "Open a project for the full case study and migration dossier.",
-      "agents": "How I actually build with AI agents — end to end.",
-      "devZone": "Step into the Dev Zone — a hidden, draggable desk of my daily tools."
+      "agents": "How I actually build with AI agents - end to end.",
+      "devZone": "Step into the Dev Zone - a hidden, draggable desk of my daily tools."
     }
   },
 ```
@@ -608,7 +608,7 @@ Add to `src/i18n/locales/pt.json`:
       "techStack": "Clique em qualquer logo para vê-lo se formar no hero, com uma nota de como eu o uso.",
       "featuredWorks": "Abra um projeto para ver o estudo de caso completo e o dossiê de migração.",
       "agents": "Como eu realmente construo com agentes de IA, do início ao fim.",
-      "devZone": "Entre na Dev Zone — uma mesa oculta e arrastável com minhas ferramentas do dia a dia."
+      "devZone": "Entre na Dev Zone - uma mesa oculta e arrastável com minhas ferramentas do dia a dia."
     }
   },
 ```
@@ -624,7 +624,7 @@ Add to `src/i18n/locales/zh.json`:
       "techStack": "点击任意徽标，即可看到它在主视觉中生成，并附上我如何使用它的说明。",
       "featuredWorks": "打开项目查看完整案例研究与迁移档案。",
       "agents": "我如何真正地用 AI 智能体从头到尾进行构建。",
-      "devZone": "进入 Dev Zone —— 一张隐藏的、可拖拽的日常工具桌面。"
+      "devZone": "进入 Dev Zone -  - 一张隐藏的、可拖拽的日常工具桌面。"
     }
   },
 ```
@@ -632,7 +632,7 @@ Add to `src/i18n/locales/zh.json`:
 - [ ] **Step 7: Run the test + typecheck**
 
 Run: `npm run test -- tourCopy && npm run build`
-Expected: test PASS; `tsc -b` PASS (proves all four locales mirror `en`'s new shape — if any locale is missing the block, the build fails here).
+Expected: test PASS; `tsc -b` PASS (proves all four locales mirror `en`'s new shape - if any locale is missing the block, the build fails here).
 
 - [ ] **Step 8: Commit**
 
@@ -709,7 +709,7 @@ function fakeCtx() {
 - [ ] **Step 2: Run test to verify it fails**
 
 Run: `npm run test -- cometRenderer`
-Expected: FAIL — cannot resolve module.
+Expected: FAIL - cannot resolve module.
 
 - [ ] **Step 3: Write the implementation**
 
@@ -921,7 +921,7 @@ describe('TourController', () => {
 - [ ] **Step 2: Run test to verify it fails**
 
 Run: `npm run test -- TourController`
-Expected: FAIL — cannot resolve module.
+Expected: FAIL - cannot resolve module.
 
 - [ ] **Step 3: Write the implementation**
 
@@ -1182,7 +1182,7 @@ describe('shouldRunTour', () => {
 - [ ] **Step 2: Run test to verify it fails**
 
 Run: `npm run test -- shouldRunTour`
-Expected: FAIL — cannot resolve `./PageTour`.
+Expected: FAIL - cannot resolve `./PageTour`.
 
 - [ ] **Step 3: Write the component + gating predicate**
 
@@ -1208,7 +1208,7 @@ export interface TourEnv {
   finePointer: boolean;
 }
 
-/** Pure gating predicate — see shouldRunTour.test.ts. */
+/** Pure gating predicate - see shouldRunTour.test.ts. */
 export function shouldRunTour(env: TourEnv): boolean {
   return (
     !env.seen &&
@@ -1462,7 +1462,7 @@ Add `<PageTour />` as the final child inside `<TechShowcaseProvider>` (after `<m
 
 - [ ] **Step 2: Anchor the tech-stack stop**
 
-In `src/components/BrandMarquee.tsx`, add `data-tour-id="tech-stack"` to the scrolling logos row — the `motion.div` with `className="flex gap-16 items-center …"` (around line 26). Add the attribute:
+In `src/components/BrandMarquee.tsx`, add `data-tour-id="tech-stack"` to the scrolling logos row - the `motion.div` with `className="flex gap-16 items-center …"` (around line 26). Add the attribute:
 ```tsx
                 <motion.div
                     data-tour-id="tech-stack"
@@ -1519,7 +1519,7 @@ Render a button in the footer's bottom/meta row (place beside the existing copyr
           {t('tour.replay')}
         </button>
 ```
-If `Footer` does not already destructure `t`, add `const { t } = useTranslation();` (import `useTranslation` from `@/i18n`) — check the file first and reuse the existing translation hook if present.
+If `Footer` does not already destructure `t`, add `const { t } = useTranslation();` (import `useTranslation` from `@/i18n`) - check the file first and reuse the existing translation hook if present.
 
 - [ ] **Step 7: Typecheck, lint, and run all tests**
 
@@ -1559,7 +1559,7 @@ Expected: no tour runs; `localStorage.getItem('ff.tour.v1.seen') === '1'`.
 - [ ] **Step 4: Manual-input abort**
 
 Clear the seen flag and reload; during the tour, scroll with the wheel (or press End).
-Expected: the tour aborts immediately — comet + caption disappear, scroll returns to the user — and the seen flag is set.
+Expected: the tour aborts immediately - comet + caption disappear, scroll returns to the user - and the seen flag is set.
 
 - [ ] **Step 5: Skip button**
 

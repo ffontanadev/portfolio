@@ -79,7 +79,7 @@ const MarkdownRenderer = ({ source, viewState, onViewStateChange, onLoad, onErro
                             a: ({ children, href, ...props }) => (
                                 <a
                                     href={href}
-                                    className="text-coral-500 hover:text-coral-600 underline transition-colors"
+                                    className="text-coral-700 hover:text-coral-600 underline transition-colors"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     {...props}

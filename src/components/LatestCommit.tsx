@@ -41,10 +41,10 @@ const LatestCommit = ({ repo, variant }: LatestCommitProps) => {
         <span className="font-mono text-[10px] tracking-[0.18em] uppercase text-teal-700 shrink-0">
           {t('work.featured.latestCommit.label')}
         </span>
-        <span className="truncate text-sm text-dark-900/60 font-light transition-colors group-hover/commit:text-dark-900">
+        <span className="truncate text-sm text-ink-muted font-light transition-colors group-hover/commit:text-dark-900">
           {commit.message}
         </span>
-        <span className="font-mono text-[10px] text-dark-900/40 tracking-widest shrink-0">
+        <span className="font-mono text-[10px] text-ink-quiet tracking-widest shrink-0">
           {relative}
         </span>
       </a>
@@ -53,7 +53,7 @@ const LatestCommit = ({ repo, variant }: LatestCommitProps) => {
 
   return (
     <div>
-      <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-4">
+      <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted mb-4">
         {t('work.featured.latestCommit.label')}
       </h3>
       <a
@@ -66,13 +66,13 @@ const LatestCommit = ({ repo, variant }: LatestCommitProps) => {
           <PulseDot />
           <span className="font-mono text-[10px] text-teal-700 tracking-widest">{commit.shortSha}</span>
           <span className="h-px flex-1 bg-dark-900/10" />
-          <span className="font-mono text-[10px] text-dark-900/40 tracking-widest">{relative}</span>
+          <span className="font-mono text-[10px] text-ink-quiet tracking-widest">{relative}</span>
         </div>
         <p className="font-display text-base md:text-lg tracking-tight text-dark-900 leading-snug transition-colors group-hover/commit:text-teal-700">
           {commit.message}
         </p>
         <div className="mt-2 flex items-center gap-3">
-          <span className="text-xs text-dark-900/55">
+          <span className="text-xs text-ink-muted">
             {t('work.featured.latestCommit.by', { author: commit.authorName })}
           </span>
           <span className="font-mono text-[10px] tracking-widest uppercase text-teal-700/80">

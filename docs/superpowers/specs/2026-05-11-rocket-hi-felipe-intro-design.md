@@ -1,4 +1,4 @@
-# Rocket → "Hi, I'm Felipe" Intro Sequence — Design
+# Rocket → "Hi, I'm Felipe" Intro Sequence - Design
 
 **Date:** 2026-05-11
 **Status:** Approved (pending user spec review)
@@ -31,8 +31,8 @@ Replace the current "particles drift, morph to shape, hold, drift, next shape" l
 
 Two cooperating state machines inside `ParticleSystem`, gated by an `introActive` flag.
 
-- **IntroSequencer** (new) — owns the four-phase intro state machine. Runs once per `ParticleSystem` construction. Drives shader uniforms each tick. Reports `done` when handoff is complete.
-- **Loop state machine** (existing `drift / morphIn / hold / morphOut`) — suppressed while `introActive === true`. On handoff, the sequencer primes the loop machine into `morphOut` (so the held text dissolves into drift) and clears the flag. From that point on, behavior is identical to today.
+- **IntroSequencer** (new) - owns the four-phase intro state machine. Runs once per `ParticleSystem` construction. Drives shader uniforms each tick. Reports `done` when handoff is complete.
+- **Loop state machine** (existing `drift / morphIn / hold / morphOut`) - suppressed while `introActive === true`. On handoff, the sequencer primes the loop machine into `morphOut` (so the held text dissolves into drift) and clears the flag. From that point on, behavior is identical to today.
 
 The intro shapes (rocket, "Hi, I'm Felipe") are *not* part of the recurring `shapes` array; they're a separate `intro: { rocket, text }` config. The existing `shapes` array continues to drive only the recurring loop.
 
@@ -57,7 +57,7 @@ vec2 pos     = mix(driftPos, target, pMorph);
 
 `uMorphSmear` produces the **exhaust trail** naturally: particles with low `aSeed` latch onto the target first (front of the rocket), particles with high `aSeed` lag behind by up to `uMorphSmear` of the morph progression. No separate trail system, no extra particles, no per-frame trail buffer.
 
-The flying motion is driven entirely by `uTargetOffset.x` — the rocket shape is sampled *once* at center and translated by the offset. `uTargetOffset.y` carries the bob.
+The flying motion is driven entirely by `uTargetOffset.x` - the rocket shape is sampled *once* at center and translated by the offset. `uTargetOffset.y` carries the bob.
 
 ## Components
 
@@ -81,7 +81,7 @@ The flying motion is driven entirely by `uTargetOffset.x` — the rocket shape i
   - Add `aTargetNext` buffer in `initAttributes` (initialized as a copy of `aTarget`).
   - Add three new uniforms in the material constructor (initial values: `uTargetBlend=0`, `uTargetOffset=(0,0)`, `uMorphSmear=0`).
   - Add `private intro: IntroSequencer | null` field, constructed in the constructor when `opts.intro` is provided.
-  - New private helper `applyTargetTo(slot: 'aTarget' | 'aTargetNext', shape: ShapeSpec)` — generalizes the existing `applyShapeTarget`.
+  - New private helper `applyTargetTo(slot: 'aTarget' | 'aTargetNext', shape: ShapeSpec)` - generalizes the existing `applyShapeTarget`.
   - In `tick()`, branch: if `intro && !intro.done`, call `intro.tick(now, bounds)` and skip `stepStateMachine`. When `intro.done` flips, prime `state='morphOut'` and `stateStart=now`.
   - In `resize()`, if intro is active, call `intro.applyResize()` (which re-samples both target slots and continues).
 
@@ -96,8 +96,8 @@ All timings are driven off `performance.now()`, same clock as the existing syste
 |---|---|---|---|
 | `rocket-fly` | 2000 ms | `uTargetOffset.x`: `-width*0.6 → 0`<br>`uTargetOffset.y`: `sin(t*4.5)*8` (live, not eased)<br>`uMorph`: `0 → 1` over the first 600 ms<br>`uMorphSmear`: `0.35` constant | `easeOutCubic` on x; `easeInOutCubic` on morph |
 | `cross-morph` | 1000 ms | `uTargetBlend`: `0 → 1`<br>`uTargetOffset`: `(current → 0,0)`<br>`uMorphSmear`: `0.35 → 0` | `easeInOutCubic` on blend; `easeOutCubic` on offset; linear on smear |
-| `text-hold` | 1500 ms | All held: `uMorph=1`, `uTargetBlend=1`, `uTargetOffset=(0,0)`, `uMorphSmear=0` | — |
-| handoff | 0 ms | `aTarget := aTargetNext` (`Float32Array.set` copy), `uTargetBlend := 0`, `introActive := false`, loop's `state := 'morphOut'`, `stateStart := now`, `shapeIdx := shapes.length - 1` (so the first recurring shape after drift is `shapes[0]`) | — |
+| `text-hold` | 1500 ms | All held: `uMorph=1`, `uTargetBlend=1`, `uTargetOffset=(0,0)`, `uMorphSmear=0` | - |
+| handoff | 0 ms | `aTarget := aTargetNext` (`Float32Array.set` copy), `uTargetBlend := 0`, `introActive := false`, loop's `state := 'morphOut'`, `stateStart := now`, `shapeIdx := shapes.length - 1` (so the first recurring shape after drift is `shapes[0]`) | - |
 
 **Setup at construction:** before `rocket-fly` begins, the sequencer writes the rocket sample into `aTarget` and the text sample into `aTargetNext`. Both samplers center their shapes at `(width/2, height/2)`.
 
@@ -105,12 +105,12 @@ All timings are driven off `performance.now()`, same clock as the existing syste
 
 ## Error handling & edge cases
 
-- **Font not loaded for "Hi, I'm Felipe"** — the existing `document.fonts.ready` gate covers this; `ParticleSystem` isn't constructed until fonts are ready.
-- **Very narrow viewport (mobile)** — `drawText`'s existing auto-fit shrinks the font when measured width exceeds 78% of bounds. The rocket uses `sizeRatio` against `bounds.height` (like `heart`), so it scales down on small screens. No special-case code.
-- **Tab hidden during intro** — `ParticleSystem.pause()` cancels the RAF; `resume()` already shifts the loop's `stateStart` by `now - lastTickAt` to absorb the gap. The sequencer holds its own `phaseStart` field, and `resume()` is extended to apply the same shift to `phaseStart` when the intro is active. This way the next `tick()` sees the same `elapsed` it would have seen if the tab had never hidden.
-- **`ResizeObserver` fires mid-intro** — re-sample both target slots from their current shape specs at the new bounds; don't rewind phase progress.
-- **Reduced motion** — already handled: `ParticleField` returns null before constructing the system. Intro included.
-- **Intro RAF starved indefinitely** — particles hold the last rendered state. Same failure mode as the existing system stalling mid-morph. No crash, no special handling.
+- **Font not loaded for "Hi, I'm Felipe"** - the existing `document.fonts.ready` gate covers this; `ParticleSystem` isn't constructed until fonts are ready.
+- **Very narrow viewport (mobile)** - `drawText`'s existing auto-fit shrinks the font when measured width exceeds 78% of bounds. The rocket uses `sizeRatio` against `bounds.height` (like `heart`), so it scales down on small screens. No special-case code.
+- **Tab hidden during intro** - `ParticleSystem.pause()` cancels the RAF; `resume()` already shifts the loop's `stateStart` by `now - lastTickAt` to absorb the gap. The sequencer holds its own `phaseStart` field, and `resume()` is extended to apply the same shift to `phaseStart` when the intro is active. This way the next `tick()` sees the same `elapsed` it would have seen if the tab had never hidden.
+- **`ResizeObserver` fires mid-intro** - re-sample both target slots from their current shape specs at the new bounds; don't rewind phase progress.
+- **Reduced motion** - already handled: `ParticleField` returns null before constructing the system. Intro included.
+- **Intro RAF starved indefinitely** - particles hold the last rendered state. Same failure mode as the existing system stalling mid-morph. No crash, no special handling.
 
 ## Testing
 
@@ -126,9 +126,9 @@ Optional: a small Vitest file for `IntroSequencer.tick()` treating it as a pure 
 
 ## Risks
 
-- **Shader regression** — adding an attribute and three uniforms is a small but non-zero risk of breaking the existing render. Mitigation: the new uniforms all default to identity values (`uTargetBlend=0`, `uTargetOffset=(0,0)`, `uMorphSmear=0`), so when the sequencer is not running, the math collapses to the current behavior.
-- **Rocket art subjective** — the inline SVG path may need iteration to look good. The `sizeRatio` is exposed as a config knob so it's tweakable without code changes to the sampler.
-- **Mobile performance** — adding one attribute (~96 KB per 12k particles) is negligible. The morphSmear branch is a `clamp`+`mix` — single-digit GPU cycles per vertex. No expected impact.
+- **Shader regression** - adding an attribute and three uniforms is a small but non-zero risk of breaking the existing render. Mitigation: the new uniforms all default to identity values (`uTargetBlend=0`, `uTargetOffset=(0,0)`, `uMorphSmear=0`), so when the sequencer is not running, the math collapses to the current behavior.
+- **Rocket art subjective** - the inline SVG path may need iteration to look good. The `sizeRatio` is exposed as a config knob so it's tweakable without code changes to the sampler.
+- **Mobile performance** - adding one attribute (~96 KB per 12k particles) is negligible. The morphSmear branch is a `clamp`+`mix` - single-digit GPU cycles per vertex. No expected impact.
 
 ## Open questions
 

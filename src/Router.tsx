@@ -29,7 +29,7 @@ const queryClient = new QueryClient({
 /**
  * Anything without a locale segment lands here: bare `/`, and the pre-P1
  * `/dev-zone` URL. Both keep whatever followed the locale slot, so an old
- * bookmark to `/dev-zone` still opens the Dev Zone — in the visitor's
+ * bookmark to `/dev-zone` still opens the Dev Zone - in the visitor's
  * language rather than in Spanish.
  */
 function LocaleRedirect() {
@@ -44,14 +44,14 @@ function LocaleRedirect() {
 /**
  * App shell rendered inside the router. The locale comes from the pathname
  * rather than from a `:locale` route param, because `Navigation` and `Footer`
- * render *outside* `<Routes>` — reading it from `useParams` would leave them
+ * render *outside* `<Routes>` - reading it from `useParams` would leave them
  * without an i18n context and every `t()` call in them would throw.
  *
  * `DEFAULT_LOCALE` covers the single frame during which the redirect and 404
  * routes render, where the path carries no locale at all.
  *
  * `AppContextProvider` nests *inside* `I18nProvider` because it translates the
- * résumé modal's title — it is route-independent but not locale-independent.
+ * résumé modal's title - it is route-independent but not locale-independent.
  * It stays inside `AppShell`, which never remounts on a client navigation, so
  * the modal's open state survives a language switch exactly as it did before.
  *

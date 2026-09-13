@@ -54,14 +54,14 @@ const ActivityCard = ({
       onMouseLeave={() => setPaused(false)}
       className="relative lg:min-w-sm max-w-md glass-card rounded-2xl p-6 pt-5 pb-4 overflow-hidden"
     >
-      {/* Header — A side · cassette spools · status */}
+      {/* Header - A side · cassette spools · status */}
       <header className="flex items-center justify-between mb-5">
         <div className="flex items-center gap-2.5">
           <Spool spinning={playing} />
-          <span className="text-eyebrow text-dark-900/55">{resolvedTitle}</span>
+          <span className="text-eyebrow text-ink-muted">{resolvedTitle}</span>
         </div>
         <div className="flex items-center gap-2.5">
-          <span className="font-mono text-[9px] tracking-widest text-dark-900/40 uppercase">
+          <span className="font-mono text-[9px] tracking-widest text-ink-quiet uppercase">
             {t('hero.activityCard.side')}
           </span>
           <Spool spinning={playing} />
@@ -89,7 +89,7 @@ const ActivityCard = ({
               {/* Track number */}
               <span
                 className={`relative font-mono text-[10px] tracking-widest transition-colors duration-500 ${
-                  isActive ? 'text-coral-500' : 'text-dark-900/35'
+                  isActive ? 'text-coral-700' : 'text-ink-quiet'
                 }`}
               >
                 {String(i + 1).padStart(2, '0')}
@@ -101,7 +101,7 @@ const ActivityCard = ({
                   className={`leading-snug transition-all duration-500 ${
                     isActive
                       ? 'text-dark-900 font-medium'
-                      : 'text-dark-900/55 font-light'
+                      : 'text-ink-muted font-light'
                   }`}
                 >
                   {activity.text}
@@ -114,7 +114,7 @@ const ActivityCard = ({
                       height: isActive ? 'auto' : 0,
                     }}
                     transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                    className="overflow-hidden font-display italic text-sm text-dark-900/55"
+                    className="overflow-hidden font-display italic text-sm text-ink-muted"
                   >
                     {activity.detail}
                   </motion.span>
@@ -127,7 +127,7 @@ const ActivityCard = ({
                 initial={false}
                 animate={{ opacity: isActive ? 1 : 0, x: isActive ? 0 : 6 }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="relative font-mono text-[9px] tracking-[0.22em] text-coral-500 uppercase"
+                className="relative font-mono text-[9px] tracking-[0.22em] text-coral-700 uppercase"
               >
                 {t('hero.activityCard.now')}
               </motion.span>
@@ -136,10 +136,10 @@ const ActivityCard = ({
         })}
       </ul>
 
-      {/* Footer — progress + counter */}
+      {/* Footer - progress + counter */}
       <footer className="mt-5 pt-4 border-t border-dark-900/8">
         <div className="flex items-center gap-3">
-          {/* Progress bar — keyed to activeIdx so it resets each cycle */}
+          {/* Progress bar - keyed to activeIdx so it resets each cycle */}
           <div className="relative h-[2px] flex-1 bg-dark-900/10 overflow-hidden rounded-full">
             <motion.span
               key={`${activeIdx}-${paused}`}
@@ -150,12 +150,12 @@ const ActivityCard = ({
               className="absolute inset-y-0 left-0 w-full bg-coral-500"
             />
           </div>
-          <span className="font-mono text-[9px] tracking-widest text-dark-900/40 uppercase tabular-nums">
+          <span className="font-mono text-[9px] tracking-widest text-ink-quiet uppercase tabular-nums">
             {String(activeIdx + 1).padStart(2, '0')} / {String(resolvedActivities.length).padStart(2, '0')}
           </span>
           <span
             className={`font-mono text-[9px] tracking-widest uppercase ${
-              playing ? 'text-coral-500' : 'text-dark-900/40'
+              playing ? 'text-coral-700' : 'text-ink-quiet'
             }`}
           >
             {playing ? t('hero.activityCard.play') : t('hero.activityCard.hold')}

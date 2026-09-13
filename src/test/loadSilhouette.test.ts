@@ -3,7 +3,7 @@ import { loadSilhouette } from '@/components/Hero/particles/silhouetteSampler';
 
 /**
  * The logo marks come off a CDN, so a failed load is a routine event, not an
- * exceptional one — an offline visitor fails every one of them. These tests
+ * exceptional one - an offline visitor fails every one of them. These tests
  * pin that failing loads stay contained.
  */
 

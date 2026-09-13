@@ -13,11 +13,26 @@
   --color-cream-50: #FFF8F3;
   --color-cream-100: #FFE8D6;
   --color-coral-500: #FF6B6B;
+  /* Text-safe coral. `coral-500` stays the decorative token: it measures
+     2.64:1 on cream-50 and only clears AA over dark-900 (6.27:1), so it is
+     for hairlines, blobs and hover washes - never for type that carries
+     meaning. That type uses this one instead: 5.12:1 on cream-50 and
+     4.55:1 on cream-100. Same hue, lower luminance, so the warmth survives. */
+  --color-coral-700: #B8433A;
   --color-teal-500: #00D9A3;
   --color-teal-700: #0F766E;
   --color-purple-500: #9D4EDD;
   --color-dark-900: #1A1A1A;
   --color-dark-800: #242424;
+
+  /* Muted ink ramp, measured on cream-50 / cream-100:
+       ink-muted  6.24 / 5.91  - secondary body copy
+       ink-quiet  5.28 / 5.06  - small mono meta that still carries meaning
+     Decorative ink (hairlines, aria-hidden index digits, rules) keeps the raw
+     dark-900/NN alphas: the contrast floor does not reach it, and flattening
+     those to AA would erase the hierarchy the alphas exist to draw. */
+  --color-ink-muted: rgba(26, 26, 26, 0.70);
+  --color-ink-quiet: rgba(26, 26, 26, 0.65);
 
   --font-display: "Fraunces", serif;
   --font-body: "Fraunces", serif;
@@ -82,7 +97,7 @@ body {
   position: relative;
 }
 
-/* Paper grain — fixed, body-wide, blend-multiplied to feel like printed warmth, never washing out colors. */
+/* Paper grain - fixed, body-wide, blend-multiplied to feel like printed warmth, never washing out colors. */
 body::before {
   content: "";
   position: fixed;
@@ -192,7 +207,9 @@ body::before {
 }
 .wobble-letter:hover {
   transform: translateY(-6px) rotate(-3deg);
-  color: var(--color-coral-500);
+  /* Type, not decoration: the heading recolours itself here, so it takes the
+     text-safe coral rather than the decorative one. */
+  color: var(--color-coral-700);
 }
 
 /* Reduced motion -------------------------------------------------- */

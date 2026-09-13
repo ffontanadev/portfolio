@@ -27,7 +27,7 @@ const IMAGE_STORE_MAX = 900;
 /** Default on-canvas display size for a pasted image. */
 const IMAGE_DISPLAY_MAX = 280;
 
-/** A stroke still being drawn — it gets its id only once committed. */
+/** A stroke still being drawn - it gets its id only once committed. */
 type DraftStroke = Omit<Stroke, 'id'>;
 
 function isEditableTarget(el: Element | null): boolean {
@@ -108,7 +108,7 @@ export default function DevZone() {
   const activeServiceIds = widgets
     .filter((w) => w.type === 'status' && w.serviceId)
     .map((w) => w.serviceId as string);
-  // Music and pomodoro are singletons — track which are already on the board.
+  // Music and pomodoro are singletons - track which are already on the board.
   const hasMusic = widgets.some((w) => w.type === 'music');
   const hasPomodoro = widgets.some((w) => w.type === 'pomodoro');
 
@@ -127,7 +127,7 @@ export default function DevZone() {
   );
 
   // --- Zooming -----------------------------------------------------------------
-  // Zoom toward (cx, cy) — viewport-relative px — keeping that point fixed.
+  // Zoom toward (cx, cy) - viewport-relative px - keeping that point fixed.
   const applyZoomAt = useCallback(
     (cx: number, cy: number, target: number) => {
       const next = clampZoom(target);
@@ -146,7 +146,7 @@ export default function DevZone() {
     [applyZoomAt],
   );
 
-  // Wheel zoom — registered natively so we can preventDefault (browser zoom/scroll).
+  // Wheel zoom - registered natively so we can preventDefault (browser zoom/scroll).
   useEffect(() => {
     const el = viewportRef.current;
     if (!el) return;
@@ -203,7 +203,7 @@ export default function DevZone() {
           try {
             dataUrl = canvas.toDataURL('image/jpeg', 0.85);
           } catch {
-            /* tainted canvas — fall back to the raw data URL. */
+            /* tainted canvas - fall back to the raw data URL. */
           }
           const displayScale = Math.min(1, IMAGE_DISPLAY_MAX / Math.max(cw, ch));
           const dw = Math.round(cw * displayScale);
@@ -363,7 +363,7 @@ export default function DevZone() {
         backgroundPosition: `${pan.x}px ${pan.y}px`,
       }}
     >
-      {/* World layer — pans & zooms as one; hosts strokes and widgets in canvas space. */}
+      {/* World layer - pans & zooms as one; hosts strokes and widgets in canvas space. */}
       <div
         className="absolute top-0 left-0"
         style={{
@@ -400,7 +400,7 @@ export default function DevZone() {
         </MotionConfig>
       </div>
 
-      {/* Drawing overlay — only intercepts pointers while a draw tool is active. */}
+      {/* Drawing overlay - only intercepts pointers while a draw tool is active. */}
       <div
         onPointerDown={isDrawingTool ? handleDrawPointerDown : undefined}
         onPointerMove={isDrawingTool ? handleDrawPointerMove : undefined}
@@ -415,7 +415,7 @@ export default function DevZone() {
 
       {/* Empty-board hint. */}
       {widgets.length === 0 && strokes.length === 0 && !draft && (
-        <div className="pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center gap-2 text-dark-900/35">
+        <div className="pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center gap-2 text-ink-quiet">
           <MousePointer2 size={28} />
           <p className="font-mono text-xs tracking-wide">{t('devZone.empty')}</p>
         </div>
@@ -425,7 +425,7 @@ export default function DevZone() {
       <div className="pointer-events-none fixed top-5 left-5 z-40 flex flex-col gap-1">
         <Link
           to={buildLocalePath(locale)}
-          className="reveal-underline pointer-events-auto inline-flex w-fit items-center gap-1.5 font-mono text-xs text-dark-900/50 transition-colors hover:text-coral-500"
+          className="reveal-underline pointer-events-auto inline-flex w-fit items-center gap-1.5 font-mono text-xs text-ink-quiet transition-colors hover:text-coral-700"
         >
           <ArrowLeft size={14} />
           {t('devZone.back')}

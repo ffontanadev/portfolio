@@ -15,7 +15,7 @@ export interface WidgetInstance {
   /** Position on the canvas, in px relative to the canvas top-left. */
   x: number;
   y: number;
-  /** Stacking order — higher sits on top. */
+  /** Stacking order - higher sits on top. */
   z: number;
   /** Pinned (anchored) widgets cannot be dragged until unpinned. */
   pinned: boolean;

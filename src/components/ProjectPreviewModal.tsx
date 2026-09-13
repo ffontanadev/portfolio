@@ -15,7 +15,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { XIcon } from '@/components/ui/x';
 import { CopyIcon } from '@/components/ui/copy';
 import { CheckIcon } from '@/components/ui/check';
-// `Prism` bundles refractor's entire grammar set — 594KB raw / 214KB gzipped,
+// `Prism` bundles refractor's entire grammar set - 594KB raw / 214KB gzipped,
 // every language it supports. `PrismLight` cut that to the three grammars the
 // code blocks in projectData actually declare, but even those were still
 // reaching the entry chunk: this module is imported statically by FeaturedWorks
@@ -27,7 +27,7 @@ const CodeHighlighter = lazy(() => import('./CodeHighlighter'));
 
 import BBVALogo from './logos/BBVALogo';
 import BancoProvinciaLogo from './logos/BancoProvinciaLogo';
-import { accentForCategory } from './projectTypes';
+import { accentForCategory, blockTokens, BLOCK_LIFT_BG } from './projectTypes';
 import type {
     Project,
     CodeBlock,
@@ -39,6 +39,7 @@ import type {
 } from './projectTypes';
 import LatestCommit from './LatestCommit';
 import { useTranslation } from '@/i18n';
+import { useScrollLock } from '@/hooks/useScrollLock';
 
 // Re-export the Project type for backwards compatibility with existing importers.
 export type { Project } from './projectTypes';
@@ -110,45 +111,86 @@ const CodeBlockComponent = ({ block }: { block: CodeBlock }) => {
  * breakpoint").
  *
  * The h1 steps 36 / 56 / 72px at the 768 and 1024 breakpoints, so the binding
- * width is 767px — the last pixel before it jumps to 56. A `clamp(min, Nvw,
+ * width is 767px - the last pixel before it jumps to 56. A `clamp(min, Nvw,
  * max)` stays under the h1 everywhere as long as N ≤ 4.5vw (767 × 0.045 = 34.5)
  * and the max is under 4.5rem. Both the floor and the ceiling matter: the old
  * floors alone (48px) already out-sized the h1 on every phone.
  *
  * Raise nothing here without re-checking 767px and 1023px.
  */
+/**
+ * Two ramps, because the two compositions ask different things of the figure.
+ * `ink` is the centred lockup over the video scrim, where the figure shares the
+ * frame with a logo and a stack line. `block` is the brand block, where the
+ * figure carries the composition on its own and roughly doubles.
+ */
 const LEAD_METRIC_SIZE = {
-    modal: {
-        migration: 'text-[clamp(1.5rem,3.5vw,3rem)]',
-        wordmark: 'text-[clamp(1.75rem,4vw,3.5rem)]',
-        scale: 'text-[clamp(2rem,4.5vw,4rem)]',
+    ink: {
+        modal: {
+            migration: 'text-[clamp(1.5rem,3.5vw,3rem)]',
+            wordmark: 'text-[clamp(1.75rem,4vw,3.5rem)]',
+            scale: 'text-[clamp(2rem,4.5vw,4rem)]',
+        },
+        card: {
+            migration: 'text-[clamp(1.25rem,2.5vw,2.25rem)]',
+            wordmark: 'text-[clamp(1.5rem,3vw,2.75rem)]',
+            scale: 'text-[clamp(1.75rem,3.5vw,3.25rem)]',
+        },
     },
-    card: {
-        migration: 'text-[clamp(1.25rem,2.5vw,2.25rem)]',
-        wordmark: 'text-[clamp(1.5rem,3vw,2.75rem)]',
-        scale: 'text-[clamp(1.75rem,3.5vw,3.25rem)]',
+    block: {
+        modal: {
+            migration: 'text-[clamp(2rem,4vw,3.5rem)]',
+            wordmark: 'text-[clamp(2.25rem,4.5vw,4rem)]',
+            scale: 'text-[clamp(3rem,6vw,5.5rem)]',
+        },
+        card: {
+            migration: 'text-[clamp(1.5rem,3vw,2.5rem)]',
+            wordmark: 'text-[clamp(1.75rem,3vw,2.6rem)]',
+            scale: 'text-[clamp(2.75rem,5vw,4.5rem)]',
+        },
     },
 } as const;
 
+/**
+ * `ink` is the historic treatment: dark-900 on a light field, centred, with the
+ * secondary line at 55% and the migration arrow in coral.
+ *
+ * `block` is the brand block: everything inherits `--block-type` and nothing
+ * softens, because on #00703C and #F82790 a faded secondary drops under AA. The
+ * coral arrow goes with it - coral measures 2.24 : 1 on the green, under the
+ * 3 : 1 floor for a graphical mark.
+ */
 export const LeadMetricDisplay = ({
     metric,
     size = 'card',
+    tone = 'ink',
 }: {
     metric: ProjectLeadMetric;
     size?: 'card' | 'modal';
+    tone?: 'ink' | 'block';
 }) => {
     const isModal = size === 'modal';
+    const isBlock = tone === 'block';
+    const ramp = LEAD_METRIC_SIZE[tone][isModal ? 'modal' : 'card'];
+
+    const figure = `font-display font-bold tracking-[-0.04em] leading-none ${
+        isBlock ? 'text-current' : 'text-dark-900'
+    }`;
+    const secondary = `font-display font-display-italic font-light tracking-tight ${
+        isBlock ? 'text-current' : 'text-ink-muted'
+    }`;
+    const stack = `flex flex-col ${isBlock ? 'items-start' : 'items-center'}`;
 
     if (metric.kind === 'migration') {
         return (
             <div
-                className={`flex items-baseline justify-center gap-3 font-display font-bold tracking-[-0.04em] leading-none text-dark-900 ${
-                    LEAD_METRIC_SIZE[isModal ? 'modal' : 'card'].migration
-                }`}
+                className={`flex items-baseline gap-3 ${
+                    isBlock ? '' : 'justify-center'
+                } ${figure} ${ramp.migration}`}
             >
                 <span>{metric.from}</span>
                 <span
-                    className="text-coral-500 font-display-italic font-light"
+                    className={`font-display-italic font-light ${isBlock ? 'text-current' : 'text-coral-700'}`}
                     style={{ fontStyle: 'italic' }}
                     aria-hidden="true"
                 >
@@ -161,19 +203,11 @@ export const LeadMetricDisplay = ({
 
     if (metric.kind === 'wordmark') {
         return (
-            <div className="flex flex-col items-center">
-                <span
-                    className={`font-display font-bold tracking-[-0.04em] leading-none text-dark-900 ${
-                        LEAD_METRIC_SIZE[isModal ? 'modal' : 'card'].wordmark
-                    }`}
-                >
-                    {metric.value}
-                </span>
+            <div className={stack}>
+                <span className={`${figure} ${ramp.wordmark}`}>{metric.value}</span>
                 {metric.sub && (
                     <span
-                        className={`font-display font-display-italic font-light tracking-tight text-dark-900/55 mt-2 ${
-                            isModal ? 'text-2xl' : 'text-lg'
-                        }`}
+                        className={`${secondary} mt-2 ${isModal ? 'text-2xl' : 'text-lg'}`}
                         style={{ fontStyle: 'italic' }}
                     >
                         {metric.sub}
@@ -184,24 +218,16 @@ export const LeadMetricDisplay = ({
     }
 
     return (
-        <div className="flex flex-col items-center">
+        <div className={stack}>
             {metric.superscript && (
                 <span
-                    className={`font-display font-display-italic font-light tracking-tight text-dark-900/55 mb-1 ${
-                        isModal ? 'text-3xl' : 'text-xl'
-                    }`}
+                    className={`${secondary} mb-1 ${isModal ? 'text-3xl' : 'text-xl'}`}
                     style={{ fontStyle: 'italic' }}
                 >
                     {metric.superscript}
                 </span>
             )}
-            <span
-                className={`font-display font-bold tracking-[-0.04em] leading-none text-dark-900 ${
-                    LEAD_METRIC_SIZE[isModal ? 'modal' : 'card'].scale
-                }`}
-            >
-                {metric.value}
-            </span>
+            <span className={`${figure} ${ramp.scale}`}>{metric.value}</span>
         </div>
     );
 };
@@ -245,7 +271,7 @@ export const HeroOverlayContent = ({
             ) : (
                 project.company && (
                     <span
-                        className={`font-display font-display-italic text-dark-900/60 tracking-tight mb-3 ${
+                        className={`font-display font-display-italic text-ink-muted tracking-tight mb-3 ${
                             isModal ? 'text-2xl' : 'text-lg'
                         }`}
                         style={{ fontStyle: 'italic' }}
@@ -256,42 +282,126 @@ export const HeroOverlayContent = ({
             )}
             {project.leadMetric && <LeadMetricDisplay metric={project.leadMetric} size={size} />}
             <div className={`${isModal ? 'mt-8' : 'mt-5'} h-px w-12 ${accent.hairlineSoft}`} aria-hidden="true" />
-            <p className={`mt-3 font-mono tracking-[0.22em] uppercase text-dark-900/50 text-center ${isModal ? 'text-[11px]' : 'text-[9px]'}`}>
+            <p className={`mt-3 font-mono tracking-[0.22em] uppercase text-ink-quiet text-center ${isModal ? 'text-[11px]' : 'text-[9px]'}`}>
                 {project.techStack.slice(0, isModal ? 5 : 3).join(' · ')}
             </p>
         </div>
     );
 };
 
-export const TypographicHero = ({ project, size = 'modal' }: { project: Project; size?: 'card' | 'modal' }) => {
+/**
+ * The identity block as it sits on a brand block: left-aligned rather than
+ * centred, and every colour inherited from `--block-type` so the polarity
+ * decision lives in one place (`blockTokens`). Nothing here fades - see the
+ * note on `blockTokens` for why.
+ */
+const BrandBlockContent = ({ project, size }: { project: Project; size: 'card' | 'modal' }) => {
     const isModal = size === 'modal';
 
     return (
         <div
-            className={`relative w-full overflow-hidden ${
-                isModal ? 'aspect-[21/9] bg-cream-100' : 'h-full bg-cream-100'
-            }`}
+            className={`relative h-full flex flex-col ${isModal ? 'px-12 py-10' : 'px-9 py-8'}`}
+            style={{ color: 'var(--block-type)' }}
         >
-            <div
-                className="absolute inset-0 opacity-60"
-                style={{ background: HERO_RADIAL_BG }}
-                aria-hidden="true"
-            />
-            <div
-                className="absolute inset-x-5 top-5 flex items-center justify-between text-dark-900/45"
-                aria-hidden="true"
-            >
-                <span className="font-display italic text-sm" style={{ fontStyle: 'italic' }}>
-                    §
-                </span>
+            <div className="flex items-start min-h-5">
+                {project.logo ? (
+                    (() => {
+                        const Logo = LOGO_REGISTRY[project.logo];
+                        // Same constraint as the centred lockup: the Banco Provincia
+                        // mark is a wide wordmark, so height is what binds it.
+                        const isWide = project.logo === 'banco-provincia';
+                        const height = isWide ? (isModal ? 'h-4' : 'h-3') : isModal ? 'h-7' : 'h-5';
+                        return <Logo className={`${height} w-auto`} />;
+                    })()
+                ) : (
+                    project.company && (
+                        <span
+                            className={`font-display font-display-italic tracking-tight ${
+                                isModal ? 'text-2xl' : 'text-lg'
+                            }`}
+                            style={{ fontStyle: 'italic' }}
+                            translate="no"
+                        >
+                            {project.company}
+                        </span>
+                    )
+                )}
             </div>
 
-            <HeroOverlayContent project={project} size={size} />
+            <div className="flex-1 flex flex-col justify-center min-w-0">
+                {project.leadMetric && (
+                    <LeadMetricDisplay metric={project.leadMetric} size={size} tone="block" />
+                )}
+            </div>
+
+            <div className="flex flex-col items-start">
+                <div className="h-px w-12 bg-current opacity-[0.35]" aria-hidden="true" />
+                <p
+                    className={`mt-3 font-mono tracking-[0.22em] uppercase ${
+                        isModal ? 'text-[11px]' : 'text-[9px]'
+                    }`}
+                    translate="no"
+                >
+                    {project.techStack.slice(0, isModal ? 5 : 3).join(' · ')}
+                </p>
+            </div>
         </div>
     );
 };
 
-// Backwards-compatible alias — existing imports keep working.
+/**
+ * The brand block: the hex is the field at full strength and the type knocks out
+ * of it. `blockTokens` resolves the polarity from the hex by contrast, so a new
+ * `brandColor` needs no entry anywhere.
+ *
+ * `index` is the project's position in the filtered grid, set oversized and
+ * faint behind the composition. It is aria-hidden and only the grid passes one -
+ * the flagship band and the modal have no position to state.
+ */
+export const TypographicHero = ({
+    project,
+    size = 'modal',
+    index,
+}: {
+    project: Project;
+    size?: 'card' | 'modal';
+    index?: string;
+}) => {
+    const isModal = size === 'modal';
+
+    return (
+        <div
+            className={`relative w-full overflow-hidden ${isModal ? 'aspect-[21/9]' : 'h-full'}`}
+            style={{ ...blockTokens(project.brandColor), backgroundColor: 'var(--block-brand)' }}
+        >
+            <div className="absolute inset-0" style={{ background: BLOCK_LIFT_BG }} aria-hidden="true" />
+
+            {index && (
+                <span
+                    className={`absolute -right-3 -bottom-14 font-display font-bold leading-none tracking-[-0.06em] tabular-nums select-none ${
+                        isModal ? 'text-[210px]' : 'text-[130px] md:text-[210px]'
+                    }`}
+                    style={{ color: 'var(--block-type-faint)' }}
+                    aria-hidden="true"
+                >
+                    {index}
+                </span>
+            )}
+
+            <span
+                className="absolute left-5 top-5 font-display italic text-sm"
+                style={{ fontStyle: 'italic', color: 'var(--block-type-quiet)' }}
+                aria-hidden="true"
+            >
+                §
+            </span>
+
+            <BrandBlockContent project={project} size={size} />
+        </div>
+    );
+};
+
+// Backwards-compatible alias - existing imports keep working.
 export const EnterpriseHero = TypographicHero;
 
 const MetricBrief = ({ project }: { project: Project }) => {
@@ -299,19 +409,19 @@ const MetricBrief = ({ project }: { project: Project }) => {
     if (!project.metrics?.length) return null;
     return (
         <div>
-            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-4">
+            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted mb-4">
                 {t('work.modal.projectBrief')}
             </h3>
             <div className="rounded-2xl border border-dark-900/10 divide-y divide-dark-900/[0.07] overflow-hidden bg-cream-50/40">
                 {project.metrics.map((m, i) => (
                     <div key={i} className="flex items-baseline justify-between gap-4 px-5 py-4">
-                        <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-dark-900/55 shrink-0">
+                        <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-ink-muted shrink-0">
                             {m.label}
                         </span>
                         <span
                             className={`font-display text-lg md:text-xl tracking-tight text-right ${
                                 m.accent
-                                    ? 'text-coral-500 font-semibold'
+                                    ? 'text-coral-700 font-semibold'
                                     : 'text-dark-900 font-medium'
                             }`}
                         >
@@ -331,7 +441,7 @@ const MigrationStatTiles = ({ stats }: { stats: MigrationDossier['scope'] }) => 
                 <div className="font-display font-bold text-2xl md:text-3xl tracking-[-0.03em] text-dark-900 leading-none">
                     {s.value}
                 </div>
-                <div className="mt-1.5 font-mono text-[10px] tracking-[0.18em] uppercase text-dark-900/55">
+                <div className="mt-1.5 font-mono text-[10px] tracking-[0.18em] uppercase text-ink-muted">
                     {s.label}
                 </div>
             </div>
@@ -347,7 +457,7 @@ const MigrationDossierView = ({ dossier }: { dossier: MigrationDossier }) => (
         <div className="grid grid-cols-[1fr_auto_1fr] items-start gap-3">
             {[dossier.before, dossier.after].map((col, idx) => (
                 <div key={idx} className={idx === 0 ? '' : 'col-start-3'}>
-                    <h4 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-3">
+                    <h4 className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted mb-3">
                         {col.heading}
                     </h4>
                     <ul className="space-y-2">
@@ -355,7 +465,7 @@ const MigrationDossierView = ({ dossier }: { dossier: MigrationDossier }) => (
                             <li
                                 key={i}
                                 className={`text-sm leading-snug ${
-                                    idx === 0 ? 'text-dark-900/50 line-through decoration-dark-900/20' : 'text-dark-900 font-medium'
+                                    idx === 0 ? 'text-ink-quiet line-through decoration-dark-900/20' : 'text-dark-900 font-medium'
                                 }`}
                             >
                                 {item}
@@ -365,7 +475,7 @@ const MigrationDossierView = ({ dossier }: { dossier: MigrationDossier }) => (
                 </div>
             ))}
             <span
-                className="col-start-2 row-start-1 self-center font-display-italic text-coral-500 text-3xl font-light pt-6"
+                className="col-start-2 row-start-1 self-center font-display-italic text-coral-700 text-3xl font-light pt-6"
                 style={{ fontStyle: 'italic' }}
                 aria-hidden="true"
             >
@@ -375,7 +485,7 @@ const MigrationDossierView = ({ dossier }: { dossier: MigrationDossier }) => (
 
         {/* Module breakdown */}
         <div>
-            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-4">
+            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted mb-4">
                 {dossier.modulesHeading}
             </h3>
             <div className="rounded-2xl border border-dark-900/10 divide-y divide-dark-900/[0.07] overflow-hidden bg-cream-50/40">
@@ -385,9 +495,9 @@ const MigrationDossierView = ({ dossier }: { dossier: MigrationDossier }) => (
                             <p className="font-display text-base md:text-lg tracking-tight text-dark-900 font-medium">
                                 {m.label}
                             </p>
-                            <p className="mt-0.5 text-sm text-dark-900/55 leading-snug">{m.role}</p>
+                            <p className="mt-0.5 text-sm text-ink-muted leading-snug">{m.role}</p>
                         </div>
-                        <span className="font-mono text-[10px] tracking-[0.18em] uppercase text-dark-900/55 shrink-0">
+                        <span className="font-mono text-[10px] tracking-[0.18em] uppercase text-ink-muted shrink-0">
                             {m.scale}
                         </span>
                     </div>
@@ -397,7 +507,7 @@ const MigrationDossierView = ({ dossier }: { dossier: MigrationDossier }) => (
 
         {/* Phases */}
         <div>
-            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-4">
+            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted mb-4">
                 {dossier.phasesHeading}
             </h3>
             <div className="rounded-2xl border border-dark-900/10 divide-y divide-dark-900/[0.07] overflow-hidden bg-cream-50/40">
@@ -405,7 +515,7 @@ const MigrationDossierView = ({ dossier }: { dossier: MigrationDossier }) => (
                     <div key={i} className="flex items-start gap-4 px-5 py-4">
                         <span
                             className={`font-mono text-[10px] tracking-[0.2em] uppercase shrink-0 mt-1 ${
-                                phase.current ? 'text-coral-500 font-semibold' : 'text-dark-900/45'
+                                phase.current ? 'text-coral-700 font-semibold' : 'text-ink-quiet'
                             }`}
                         >
                             {phase.label}
@@ -413,12 +523,12 @@ const MigrationDossierView = ({ dossier }: { dossier: MigrationDossier }) => (
                         <div className="min-w-0">
                             <p
                                 className={`font-display text-lg tracking-tight ${
-                                    phase.current ? 'text-coral-500 font-semibold' : 'text-dark-900 font-medium'
+                                    phase.current ? 'text-coral-700 font-semibold' : 'text-dark-900 font-medium'
                                 }`}
                             >
                                 {phase.title}
                             </p>
-                            <p className="mt-1 text-sm text-dark-900/55 leading-relaxed">{phase.desc}</p>
+                            <p className="mt-1 text-sm text-ink-muted leading-relaxed">{phase.desc}</p>
                         </div>
                     </div>
                 ))}
@@ -428,8 +538,8 @@ const MigrationDossierView = ({ dossier }: { dossier: MigrationDossier }) => (
 );
 
 /**
- * The demo URL as the reader would say it out loud — no scheme, no trailing
- * slash — so a GitHub Page keeps the path that identifies it
+ * The demo URL as the reader would say it out loud - no scheme, no trailing
+ * slash - so a GitHub Page keeps the path that identifies it
  * (`elfontii.github.io/efengine`, not the bare host).
  */
 const demoLabel = (url: string) => url.replace(/^https?:\/\//, '').replace(/\/+$/, '');
@@ -445,7 +555,7 @@ const LiveDemo = ({ url }: { url: string }) => {
                 href={url}
                 target="_blank"
                 rel="noreferrer"
-                className="group/demo inline-flex items-center gap-1.5 text-sm font-medium text-dark-900 hover:text-coral-500 transition-colors"
+                className="group/demo inline-flex items-center gap-1.5 text-sm font-medium text-dark-900 hover:text-coral-700 transition-colors"
             >
                 <span className="font-mono break-all">{demoLabel(url)}</span>
                 <ArrowUpRight
@@ -472,7 +582,7 @@ type SystemStyle = {
 
 /**
  * One hue and one glyph per module. Keyed by the bare module name, which is a
- * repo identifier and therefore identical in every locale — `efecom · RHI`
+ * repo identifier and therefore identical in every locale - `efecom · RHI`
  * resolves on `efecom`.
  */
 const SYSTEM_STYLES: Record<string, SystemStyle> = {
@@ -510,7 +620,7 @@ const SystemCard = ({ system, emphasis }: { system: ProjectSystem; emphasis?: bo
                 <p className={`font-mono text-[11px] tracking-[0.12em] font-semibold ${text}`}>
                     {system.label}
                 </p>
-                <p className="mt-1.5 text-[13px] leading-relaxed text-dark-900/55">{system.role}</p>
+                <p className="mt-1.5 text-[13px] leading-relaxed text-ink-muted">{system.role}</p>
             </div>
         </div>
     );
@@ -521,7 +631,7 @@ const TierLink = ({ caption }: { caption?: string }) => (
     <div className="flex flex-col items-center gap-1 py-1.5" aria-hidden="true">
         <span className="h-4 w-px bg-dark-900/15" />
         {caption && (
-            <span className="font-mono text-[9px] tracking-[0.18em] uppercase text-dark-900/35">
+            <span className="font-mono text-[9px] tracking-[0.18em] uppercase text-ink-quiet">
                 {caption}
             </span>
         )}
@@ -529,7 +639,7 @@ const TierLink = ({ caption }: { caption?: string }) => (
     </div>
 );
 
-// Draws how the engine is stacked — the editor drives the runtime, the runtime
+// Draws how the engine is stacked - the editor drives the runtime, the runtime
 // goes through the RHI, and only the RHI reaches the GPU.
 const EngineSystems = ({ project }: { project: Project }) => {
     const { t } = useTranslation();
@@ -547,7 +657,7 @@ const EngineSystems = ({ project }: { project: Project }) => {
 
     return (
         <div>
-            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-dark-900/55 mb-4">
+            <h3 className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted mb-4">
                 {t('work.modal.engineSystems')}
             </h3>
             <div className="rounded-2xl border border-dark-900/10 bg-cream-50/40 px-4 py-5 sm:px-5">
@@ -559,7 +669,7 @@ const EngineSystems = ({ project }: { project: Project }) => {
 
                 {runtime.length > 0 && (
                     <div className="relative rounded-xl border border-dashed border-dark-900/15 px-3 pt-6 pb-3">
-                        <span className="absolute -top-2 left-4 bg-cream-50 px-1.5 font-mono text-[9px] tracking-[0.18em] uppercase text-dark-900/40">
+                        <span className="absolute -top-2 left-4 bg-cream-50 px-1.5 font-mono text-[9px] tracking-[0.18em] uppercase text-ink-quiet">
                             efengine
                         </span>
                         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -583,7 +693,7 @@ const EngineSystems = ({ project }: { project: Project }) => {
                             <span className="text-[9px] leading-none text-teal-700/50">▼</span>
                         </div>
                         <div className="flex justify-center pt-1.5">
-                            <span className="inline-flex items-center gap-2 rounded-full border border-dashed border-dark-900/20 px-3.5 py-1.5 font-mono text-[10px] tracking-[0.16em] uppercase text-dark-900/45">
+                            <span className="inline-flex items-center gap-2 rounded-full border border-dashed border-dark-900/20 px-3.5 py-1.5 font-mono text-[10px] tracking-[0.16em] uppercase text-ink-quiet">
                                 <CircuitBoard className="h-3 w-3" strokeWidth={1.75} aria-hidden="true" />
                                 GPU · OpenGL 4.5
                             </span>
@@ -600,17 +710,10 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
     const modalRef = useRef<HTMLDivElement>(null);
     const closeButtonRef = useRef<HTMLButtonElement>(null);
 
-    useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = 'hidden';
-            closeButtonRef.current?.focus();
-        } else {
-            document.body.style.overflow = '';
-        }
+    useScrollLock(isOpen);
 
-        return () => {
-            document.body.style.overflow = '';
-        };
+    useEffect(() => {
+        if (isOpen) closeButtonRef.current?.focus();
     }, [isOpen]);
 
     useEffect(() => {
@@ -694,8 +797,8 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
                             </button>
 
                             {/* Scrollable Content */}
-                            <div className="overflow-y-auto max-h-[90vh] custom-scrollbar">
-                                {/* Hero Section — typographic for every project */}
+                            <div className="overflow-y-auto overscroll-contain max-h-[90vh] custom-scrollbar">
+                                {/* Hero Section - typographic for every project */}
                                 <TypographicHero project={project} size="modal" />
 
                                 {/* Content Section */}
@@ -751,7 +854,7 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
                                         </div>
                                     </div>
 
-                                    {/* Right Column — Migration Brief, Metric Brief, Latest Commit, or Code Blocks */}
+                                    {/* Right Column - Migration Brief, Metric Brief, Latest Commit, or Code Blocks */}
                                     {project.migration ? (
                                         <MigrationDossierView dossier={project.migration} />
                                     ) : project.category === 'professional' && project.metrics?.length ? (
@@ -769,7 +872,7 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
                                         </div>
                                     )}
 
-                                    {/* Architecture diagram — spans both columns, its own sheet. */}
+                                    {/* Architecture diagram - spans both columns, its own sheet. */}
                                     {project.systems?.length ? (
                                         <div className="lg:col-span-2">
                                             <EngineSystems project={project} />

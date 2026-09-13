@@ -15,14 +15,14 @@
 ## File Structure
 
 **New files:**
-- `src/components/Hero/particles/rocketPath.ts` — inline rocket SVG path data + `drawRocket(ctx, spec, bounds)` helper
-- `src/components/Hero/particles/IntroSequencer.ts` — `IntroSequencer` class, owns the four-phase intro state machine
+- `src/components/Hero/particles/rocketPath.ts` - inline rocket SVG path data + `drawRocket(ctx, spec, bounds)` helper
+- `src/components/Hero/particles/IntroSequencer.ts` - `IntroSequencer` class, owns the four-phase intro state machine
 
 **Modified files:**
-- `src/components/Hero/particles/shapeSampler.ts` — extend `ShapeSpec` union with `rocket`, route to `drawRocket`
-- `src/components/Hero/particles/shaders.ts` — add one attribute and three uniforms, update vertex math
-- `src/components/Hero/particles/ParticleSystem.ts` — register new attribute and uniforms, add `applyTargetTo` helper, hold optional `intro: IntroSequencer | null`, branch `tick()` based on `introActive`, integrate intro into `resize` / `pause` / `resume`
-- `src/components/Hero/ParticleField.tsx` — supply `intro: { rocket, text }` config to `ParticleSystem`
+- `src/components/Hero/particles/shapeSampler.ts` - extend `ShapeSpec` union with `rocket`, route to `drawRocket`
+- `src/components/Hero/particles/shaders.ts` - add one attribute and three uniforms, update vertex math
+- `src/components/Hero/particles/ParticleSystem.ts` - register new attribute and uniforms, add `applyTargetTo` helper, hold optional `intro: IntroSequencer | null`, branch `tick()` based on `introActive`, integrate intro into `resize` / `pause` / `resume`
+- `src/components/Hero/ParticleField.tsx` - supply `intro: { rocket, text }` config to `ParticleSystem`
 
 **Boundary discipline:** the rocket art lives in its own file (`rocketPath.ts`). The intro sequencer is fully separated from the loop state machine. The shader uniforms default to identity values, so when the sequencer is not running, the system collapses to current behavior.
 
@@ -51,7 +51,7 @@ export const ROCKET_PATH_HEIGHT_UNITS = 60;
 // Single closed body+fins path. Uses absolute moveto/lineto commands.
 const ROCKET_BODY = 'M70 40 L95 50 L70 60 L28 60 L5 78 L18 55 L18 50 L18 45 L5 22 L28 40 Z';
 
-// Small porthole — separately added so the dark pixel sampler picks it up.
+// Small porthole - separately added so the dark pixel sampler picks it up.
 const ROCKET_PORTHOLE = 'M58 50 a 4 4 0 1 1 -8 0 a 4 4 0 1 1 8 0 Z';
 
 export interface RocketSpec {
@@ -163,7 +163,7 @@ git commit -m "feat(hero/particles): add rocket shape to shape sampler"
 
 ## Task 2: Add new attribute and uniforms to shader + particle system
 
-This task is **plumbing only** — it threads new shader inputs through, but the new uniforms default to identity values (`uTargetBlend=0`, `uTargetOffset=(0,0)`, `uMorphSmear=0`) so visual behavior is unchanged. We verify the visual is unchanged at the end of the task before moving on.
+This task is **plumbing only** - it threads new shader inputs through, but the new uniforms default to identity values (`uTargetBlend=0`, `uTargetOffset=(0,0)`, `uMorphSmear=0`) so visual behavior is unchanged. We verify the visual is unchanged at the end of the task before moving on.
 
 **Files:**
 - Modify: `src/components/Hero/particles/shaders.ts`
@@ -199,7 +199,7 @@ New:
 ```glsl
     // Blend between primary and next target, then translate.
     vec2 target = mix(aTarget, aTargetNext, uTargetBlend) + uTargetOffset;
-    // Per-particle morph stagger — particles with high aSeed lag, producing
+    // Per-particle morph stagger - particles with high aSeed lag, producing
     // a natural trail/exhaust effect during the intro.
     float pMorph = clamp(uMorph - (1.0 - aSeed) * uMorphSmear, 0.0, 1.0);
     vec2 pos = mix(driftPos, target, pMorph);
@@ -217,7 +217,7 @@ with:
     float baseSize = mix(1.15, 2.4, pMorph);
 ```
 
-And update the color/alpha mixes the same way — replace:
+And update the color/alpha mixes the same way - replace:
 
 ```glsl
     vec3 base = mix(uDriftColor, uShapeColor, uMorph);
@@ -241,7 +241,7 @@ with:
 
 Edit `src/components/Hero/particles/ParticleSystem.ts`. In the `ShaderMaterial` constructor inside `ParticleSystem`'s constructor, add three new uniform entries.
 
-Find the `uniforms:` block (around line 83) and add these entries — they can go right after `uMorph`:
+Find the `uniforms:` block (around line 83) and add these entries - they can go right after `uMorph`:
 
 ```ts
         uTargetBlend: { value: 0 },
@@ -304,7 +304,7 @@ Run: `npm run build`
 Expected: clean.
 
 Run: `npm run dev`
-Open the dev URL. Expected: the particle field looks **identical** to before this task — drift, morph to Felipe, hold, drift, morph to FF., etc. No visual regression.
+Open the dev URL. Expected: the particle field looks **identical** to before this task - drift, morph to Felipe, hold, drift, morph to FF., etc. No visual regression.
 
 If there is any visual regression, the most likely cause is a typo in the GLSL `pMorph` line. Re-check that all four `mix(... , uMorph)` callsites in the vertex shader were updated to use `pMorph`.
 

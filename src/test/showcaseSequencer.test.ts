@@ -54,7 +54,7 @@ function formed(onAdvance?: () => void) {
   return { h, seq };
 }
 
-describe('ShowcaseSequencer — entering from drift', () => {
+describe('ShowcaseSequencer - entering from drift', () => {
   it('samples the first logo into the primary slot', () => {
     const h = harness();
     new ShowcaseSequencer({
@@ -113,7 +113,7 @@ describe('ShowcaseSequencer — entering from drift', () => {
   });
 });
 
-describe('ShowcaseSequencer — automatic cycling', () => {
+describe('ShowcaseSequencer - automatic cycling', () => {
   it('asks for the next logo once the hold elapses', () => {
     const onAdvance = vi.fn();
     const { seq } = formed(onAdvance);
@@ -155,7 +155,7 @@ describe('ShowcaseSequencer — automatic cycling', () => {
   });
 });
 
-describe('ShowcaseSequencer — logo to logo', () => {
+describe('ShowcaseSequencer - logo to logo', () => {
   it('loads the incoming logo into the secondary slot', () => {
     const { h, seq } = formed();
     seq.advanceTo(specFor('docker.svg'), 3500);
@@ -219,7 +219,7 @@ describe('ShowcaseSequencer — logo to logo', () => {
   });
 });
 
-describe('ShowcaseSequencer — clock and resize', () => {
+describe('ShowcaseSequencer - clock and resize', () => {
   it('does not burn the hold while the field is paused off-screen', () => {
     const onAdvance = vi.fn();
     const h = harness();

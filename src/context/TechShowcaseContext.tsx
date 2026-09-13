@@ -1,5 +1,4 @@
-// Context files conventionally export both a Provider component and a hook —
-// disable the react-refresh rule that flags non-component exports.
+// Context files conventionally export both a Provider component and a hook - // disable the react-refresh rule that flags non-component exports.
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useCallback, useContext, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
@@ -8,7 +7,7 @@ import type { TechItem } from '@/components/Hero/techCatalog';
 interface TechShowcaseValue {
   /** The technology whose logo is currently shown, or null. */
   selected: TechItem | null;
-  /** Select a technology — triggers the hero particle-logo mode. */
+  /** Select a technology - triggers the hero particle-logo mode. */
   select: (tech: TechItem) => void;
   /** Dismiss the showcase and resume the ambient particle loop. */
   clear: () => void;

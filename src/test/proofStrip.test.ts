@@ -3,8 +3,7 @@ import { messages, SUPPORTED_LOCALES, type Locale } from '@/i18n/config';
 
 /**
  * Spec §5.3: four figures, every one already in the résumé, none of them
- * currently on the page. The numerals are identical in all four locales —
- * only the labels translate — so this suite compares against `en`.
+ * currently on the page. The numerals are identical in all four locales - * only the labels translate - so this suite compares against `en`.
  */
 type Figure = { value: string; label: string };
 

@@ -105,10 +105,9 @@ Un único componente con prop `variant: 'badge' | 'detail'` y `repo?: string`.
 - Usa `useLatestCommit(repo)`.
 - **Mientras carga sin datos previos** o **ante error sin caché** → retorna `null`
   (no renderiza nada; nunca rompe el layout).
-- **`variant="badge"`** (card flagship): fila compacta inline — punto "live"
+- **`variant="badge"`** (card flagship): fila compacta inline - punto "live"
   pulsante + mensaje truncado + tiempo relativo; el conjunto es un link (`<a target="_blank" rel="noreferrer">`) al `htmlUrl`.
-- **`variant="detail"`** (modal): bloque con borde al estilo del `DevelopmentRoadmap`
-  — mensaje, `shortSha` en mono, autor, fecha relativa, y link "Ver en GitHub".
+- **`variant="detail"`** (modal): bloque con borde al estilo del `DevelopmentRoadmap` - mensaje, `shortSha` en mono, autor, fecha relativa, y link "Ver en GitHub".
 - Estilos siguen las clases Tailwind/tipografía ya usadas en la sección
   (`font-mono`, `text-[10px] tracking-[0.22em] uppercase`, `text-teal-700` para el
   acento personal, bordes `border-dark-900/10`, `rounded-2xl`).
@@ -188,7 +187,7 @@ La verificación será:
 2. `npm run lint` sin errores.
 3. Prueba manual en el navegador:
    - caso real (commit visible en card y modal, link correcto),
-   - caso de caché (recarga dentro del TTL no dispara request — verificable en Network),
+   - caso de caché (recarga dentro del TTL no dispara request - verificable en Network),
    - caso de error (simular fallo de red / 403 → no se rompe el layout).
 
 ## Fuera de alcance (YAGNI)

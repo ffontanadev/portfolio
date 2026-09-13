@@ -4,22 +4,27 @@ import { ArrowUpRight } from 'lucide-react';
 import ProjectPreviewModal, { EnterpriseHero } from './ProjectPreviewModal';
 import LatestCommit from './LatestCommit';
 import VideoShowcaseHero from './VideoShowcaseHero';
-import { accentForCategory, categoryLabelKey, type Project, type ProjectSystemTier } from './projectTypes';
+import {
+  accentForCategory,
+  blockTokens,
+  categoryLabelKey,
+  type Project,
+  type ProjectSystemTier,
+} from './projectTypes';
 import { useTranslation } from '@/i18n';
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 type Filter = 'all' | 'personal' | 'professional';
 
-// Structural data — non-translatable (styling, stacks, dates, code, lead-metric
+// Structural data - non-translatable (styling, stacks, dates, code, lead-metric
 // glyphs). Display text (title/desc/role/description, metric copy) is merged in
 // from the locale inside the component, keyed by `id`.
 type ProjectStructural = Omit<Project, 'title' | 'desc' | 'role' | 'description' | 'metrics' | 'migration'> & {
   id: string;
 };
 
-// The efengine `systems` locale array is authored in dependency order —
-// efecom, renderer, scene, resources, serialization, sandbox — and its length
+// The efengine `systems` locale array is authored in dependency order - // efecom, renderer, scene, resources, serialization, sandbox - and its length
 // is pinned by src/test/localeCard.test.ts. Tiers describe architecture rather
 // than copy, so they live here instead of in the locale files.
 const EFENGINE_SYSTEM_TIERS: ProjectSystemTier[] = [
@@ -35,8 +40,9 @@ const projectData: ProjectStructural[] = [
   {
     id: 'efengine',
     color: "bg-cream-100",
+    brandColor: '#f5a623',
     techStack: ["C++17", "OpenGL 4.5 Core", "PBR + IBL", "Dear ImGui", "Assimp", "GLFW", "GLM", "doctest", "CMake"],
-    date: "'26 — NOW",
+    date: "'26 - NOW",
     codeBlocks: [],
     category: 'personal',
     featured: true,
@@ -48,15 +54,42 @@ const projectData: ProjectStructural[] = [
       '/videos/efengine/video_03.webm'
     ],
   },
+  // Current engagement - it leads the professional run, ahead of Banco Provincia.
+  {
+    id: 'bbvaApp',
+    color: "bg-cream-100",
+    brandColor: '#001391',
+    // TODO[DECIDE]: this card and the `bbva` card below share one hex, and the
+    // brand block has no halo to offset - the off-centre `brandHaloAt: '20% 24%'`
+    // that used to separate them is gone with the cream field. Right now only the
+    // index digit and the lead metric tell the two engagements apart. A second
+    // BBVA tone would fix it, but that is a brand decision; do not invent one.
+    // Now that this card leads, the two blue blocks sit closer together than
+    // before, so the collision reads louder rather than quieter.
+    // The frontend runs on a framework internal to the bank; the copy describes
+    // its event model but never names it. Keep the stack list to open
+    // technologies and to the architecture, never to the product name.
+    techStack: ["JavaScript", "Event-driven architecture", "Internal component framework", "Elastic Stack", "iOS", "Android", "Web"],
+    date: "'26 - NOW",
+    codeBlocks: [],
+    category: 'professional',
+    company: 'BBVA',
+    logo: 'bbva',
+    // The app shipped long before this engagement; the banner names the work,
+    // not the product. "Multiplatform" described the latter and read as a claim
+    // on a build that was never ours.
+    leadMetric: { kind: 'wordmark', value: 'Sustaining Team', sub: "a banking app already in customers' hands" },
+  },
   {
     id: 'bancoProvincia',
     color: "bg-cream-100",
+    brandColor: '#00703C',
     techStack: ["Java 17", "Spring Boot 3", "Axis2 (legacy)", "MSSQL", "JNDI → DataSource"],
-    date: "'25 — NOW",
+    date: "'25 - NOW",
     codeBlocks: [],
     category: 'professional',
     company: 'Provincia Casa Financiera',
-    // The Uruguayan branch of Banco de la Provincia de Buenos Aires — hence the
+    // The Uruguayan branch of Banco de la Provincia de Buenos Aires - hence the
     // parent bank's wordmark on a card titled with the local entity's name.
     logo: 'banco-provincia',
     leadMetric: { kind: 'migration', from: 'Axis 2', to: 'Boot' },
@@ -64,6 +97,7 @@ const projectData: ProjectStructural[] = [
   {
     id: 'bbva',
     color: "bg-cream-100",
+    brandColor: '#001391',
     techStack: ["Java 17", "Spring Boot", "JUnit 5", "Mockito", "Jenkins", "OpenShift", "SonarQube"],
     date: "'25",
     codeBlocks: [],
@@ -75,8 +109,9 @@ const projectData: ProjectStructural[] = [
   {
     id: 'mobileBanking',
     color: "bg-cream-100",
+    brandColor: '#1d418f',
     techStack: ["React Native", "Expo", "WebAuthn", "Backend for Frontend", "Local Persistence"],
-    date: "'23 — '24",
+    date: "'23 - '24",
     codeBlocks: [],
     category: 'professional',
     company: 'Winterbotham',
@@ -85,6 +120,7 @@ const projectData: ProjectStructural[] = [
   {
     id: 'mhc',
     color: "bg-blue-50",
+    brandColor: '#F82790',
     category: 'personal',
     leadMetric: { kind: 'wordmark', value: 'MHC', sub: 'cli' },
     techStack: ["Commander.js", "Google Cloud Platform", "SQLite"],
@@ -306,6 +342,14 @@ const FeaturedWorks = () => {
         })),
       },
       {
+        ...byId.bbvaApp,
+        title: fp.bbvaApp.title,
+        desc: fp.bbvaApp.desc,
+        role: fp.bbvaApp.role,
+        description: fp.bbvaApp.description,
+        metrics: fp.bbvaApp.metrics.map((m, i) => ({ ...m, accent: i === 0 })),
+      },
+      {
         ...byId.bancoProvincia,
         title: fp.bancoProvincia.title,
         desc: fp.bancoProvincia.desc,
@@ -386,22 +430,22 @@ const FeaturedWorks = () => {
         {/* Section header */}
         <motion.div style={{ y: headingY }} className="mb-14">
           <div className="flex items-center gap-4 mb-8">
-            <span className="text-eyebrow text-coral-500">{t('work.featured.eyebrow')}</span>
+            <span className="text-eyebrow text-coral-700">{t('work.featured.eyebrow')}</span>
             <span className="h-px flex-1 max-w-[140px] bg-dark-900/15" />
           </div>
           <h2 className="font-display font-display-md font-bold tracking-[-0.02em] text-[1.75rem] md:text-[2.25rem] lg:text-[2.75rem] leading-[1.05] max-w-3xl text-dark-900">
             {t('work.featured.headingBefore')}{' '}
-            <span className="font-display-italic text-coral-500" style={{ fontStyle: 'italic' }}>
+            <span className="font-display-italic text-coral-700" style={{ fontStyle: 'italic' }}>
               {t('work.featured.headingEmphasis')}
             </span>{' '}
             {t('work.featured.headingAfter')}
           </h2>
-          <p className="mt-6 max-w-xl text-lg text-dark-900/55 font-light leading-relaxed">
+          <p className="mt-6 max-w-xl text-lg text-ink-muted font-light leading-relaxed">
             {t('work.featured.description')}
           </p>
         </motion.div>
 
-        {/* Filter tabs — editorial type, coral hairline marks the active category */}
+        {/* Filter tabs - editorial type, coral hairline marks the active category */}
         <LayoutGroup id="featured-works-filter">
           <div
             role="tablist"
@@ -423,7 +467,7 @@ const FeaturedWorks = () => {
                     className={`font-display text-xl md:text-2xl tracking-[-0.01em] transition-colors duration-300 ${
                       isActive
                         ? 'text-dark-900 font-display-italic'
-                        : 'text-dark-900/40 group-hover:text-dark-900/70'
+                        : 'text-ink-quiet group-hover:text-dark-900/70'
                     }`}
                     style={{ fontStyle: isActive ? 'italic' : 'normal' }}
                   >
@@ -431,7 +475,7 @@ const FeaturedWorks = () => {
                   </span>
                   <span
                     className={`ml-2 align-top font-mono text-[10px] tracking-widest transition-colors duration-300 ${
-                      isActive ? 'text-coral-500' : 'text-dark-900/35 group-hover:text-dark-900/55'
+                      isActive ? 'text-coral-700' : 'text-ink-quiet group-hover:text-ink-muted'
                     }`}
                   >
                     {String(counts[tab]).padStart(2, '0')}
@@ -465,12 +509,15 @@ const FeaturedWorks = () => {
                 {t('work.featured.flagshipTag')}
               </span>
               <span className="h-px flex-1 bg-dark-900/10" />
-              <span className="font-mono text-[10px] text-dark-900/40 tracking-widest uppercase">
+              <span className="font-mono text-[10px] text-ink-quiet tracking-widest uppercase">
                 {featuredProject.date}
               </span>
             </div>
 
-            <div className="relative w-full aspect-[21/9] md:aspect-[3/1] bg-cream-100 border border-teal-700/20 rounded-2xl overflow-hidden soft-lift">
+            <div
+              className="relative w-full aspect-[21/9] md:aspect-[3/1] bg-cream-100 border rounded-2xl overflow-hidden soft-lift"
+              style={{ ...blockTokens(featuredProject.brandColor), borderColor: 'var(--block-brand)' }}
+            >
               {featuredProject.showcaseVideos?.length ? (
                 <VideoShowcaseHero
                   project={featuredProject}
@@ -480,8 +527,10 @@ const FeaturedWorks = () => {
               ) : (
                 <EnterpriseHero project={featuredProject} size="modal" />
               )}
-              <div className="absolute inset-0 transition-colors duration-700 mix-blend-multiply bg-teal-700/0 group-hover:bg-teal-700/[0.05]" />
-              <div className="absolute top-5 right-5 bg-cream-50/90 backdrop-blur-sm p-3 rounded-full opacity-0 translate-y-3 -translate-x-3 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
+              {/* Ink multiply rather than a brand tint: the field is already the
+                  brand, so darkening is what reads as hover in both polarities. */}
+              <div className="absolute inset-0 transition-opacity duration-700 mix-blend-multiply opacity-0 group-hover:opacity-100 bg-dark-900/[0.12]" />
+              <div className="absolute top-5 right-5 bg-cream-50/90 backdrop-blur-sm p-3 rounded-full opacity-0 translate-y-3 -translate-x-3 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
                 <ArrowUpRight size={18} className="text-dark-900" />
               </div>
             </div>
@@ -490,14 +539,14 @@ const FeaturedWorks = () => {
               <h3 className="font-display font-bold text-3xl md:text-4xl tracking-[-0.01em] leading-tight text-dark-900 group-hover:text-teal-700 transition-colors duration-500">
                 {featuredProject.title}
               </h3>
-              <p className="mt-3 text-base md:text-lg text-dark-900/60 font-light leading-relaxed">
+              <p className="mt-3 text-base md:text-lg text-ink-muted font-light leading-relaxed">
                 {featuredProject.desc}
               </p>
               <div className="mt-5 flex flex-wrap gap-2">
                 {featuredProject.techStack.map((tech) => (
                   <span
                     key={tech}
-                    className="font-mono text-[10px] tracking-widest uppercase text-dark-900/55 border border-dark-900/15 rounded-full px-3 py-1"
+                    className="font-mono text-[10px] tracking-widest uppercase text-ink-muted border border-dark-900/15 rounded-full px-3 py-1"
                   >
                     {tech}
                   </span>
@@ -536,27 +585,31 @@ const FeaturedWorks = () => {
               >
                 {/* Project number / date rail */}
                 <div className="flex items-baseline gap-3 mb-5">
-                  <span className="font-mono text-xs text-dark-900/40 tracking-widest">
-                    {num} <span className="text-dark-900/25">/ {total}</span>
+                  <span className="font-mono text-xs text-ink-quiet tracking-widest">
+                    {num} <span className="text-ink-quiet">/ {total}</span>
                   </span>
                   <span className={`font-mono text-[9px] tracking-[0.25em] uppercase ${accent.text}`}>
                     {t(categoryLabelKey(project.category))}
                   </span>
                   <span className="h-px flex-1 bg-dark-900/10" />
-                  <span className="font-mono text-[10px] text-dark-900/40 tracking-widest uppercase">
+                  <span className="font-mono text-[10px] text-ink-quiet tracking-widest uppercase">
                     {project.date}
                   </span>
                 </div>
 
-                {/* Card visual — typographic composition for every project */}
-                <div className="relative w-full aspect-[4/3] bg-cream-100 border border-dark-900/[0.08] rounded-2xl overflow-hidden soft-lift">
-                  <EnterpriseHero project={project} size="card" />
+                {/* Card visual - typographic composition for every project */}
+                <div
+                  className="relative w-full aspect-[4/3] bg-cream-100 border rounded-2xl overflow-hidden soft-lift"
+                  style={{ ...blockTokens(project.brandColor), borderColor: 'var(--block-brand)' }}
+                >
+                  <EnterpriseHero project={project} size="card" index={num} />
 
-                  {/* Warm hover wash, tinted by category accent */}
-                  <div className={`absolute inset-0 transition-colors duration-700 mix-blend-multiply ${accent.washIdle} ${accent.washHover}`} />
+                  {/* Ink multiply: the field is the brand, so darkening is what
+                      reads as hover whichever way the type polarity fell. */}
+                  <div className="absolute inset-0 transition-opacity duration-700 mix-blend-multiply opacity-0 group-hover:opacity-100 bg-dark-900/[0.12]" />
 
                   {/* Arrow chip */}
-                  <div className="absolute top-5 right-5 bg-cream-50/90 backdrop-blur-sm p-3 rounded-full opacity-0 translate-y-3 -translate-x-3 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
+                  <div className="absolute top-5 right-5 bg-cream-50/90 backdrop-blur-sm p-3 rounded-full opacity-0 translate-y-3 -translate-x-3 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
                     <ArrowUpRight size={18} className="text-dark-900" />
                   </div>
                 </div>
@@ -566,7 +619,7 @@ const FeaturedWorks = () => {
                   <h3 className={`font-display font-bold text-2xl md:text-3xl tracking-[-0.01em] leading-tight text-dark-900 transition-colors duration-500 ${accent.hoverText}`}>
                     {project.title}
                   </h3>
-                  <p className="mt-3 text-base md:text-lg text-dark-900/60 font-light leading-relaxed max-w-md">
+                  <p className="mt-3 text-base md:text-lg text-ink-muted font-light leading-relaxed max-w-md">
                     {project.desc}
                   </p>
 
@@ -575,13 +628,13 @@ const FeaturedWorks = () => {
                     {project.techStack.slice(0, 3).map((tech) => (
                       <span
                         key={tech}
-                        className="font-mono text-[10px] tracking-widest uppercase text-dark-900/55 border border-dark-900/15 rounded-full px-3 py-1"
+                        className="font-mono text-[10px] tracking-widest uppercase text-ink-muted border border-dark-900/15 rounded-full px-3 py-1"
                       >
                         {tech}
                       </span>
                     ))}
                     {project.techStack.length > 3 && (
-                      <span className="font-mono text-[10px] tracking-widest text-dark-900/40 px-1 py-1">
+                      <span className="font-mono text-[10px] tracking-widest text-ink-quiet px-1 py-1">
                         +{project.techStack.length - 3}
                       </span>
                     )}

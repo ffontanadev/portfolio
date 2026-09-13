@@ -1,4 +1,4 @@
-# Design — EFENGINE Card Refresh
+# Design - EFENGINE Card Refresh
 
 - **Date:** 2026-07-27
 - **Status:** Approved
@@ -31,15 +31,15 @@ Note the README itself trails the repo: it describes IBL as diffuse-only, but th
 **Non-Goals**
 - No redesign of the flagship band, the video showcase, or the Latest Commit badge.
 - No changes to any other project card.
-- No new visual language — the systems block reuses the roadmap's container styling.
+- No new visual language - the systems block reuses the roadmap's container styling.
 
 ## 3. Where the card lives
 
-- `src/components/FeaturedWorks.tsx:21-36` — structural data (`techStack`, `date`, `repo`, `showcaseVideos`)
-- `src/i18n/locales/{en,es,pt,zh}.json` → `work.featured.projects.efengine` — all display copy
-- `src/components/FeaturedWorks.tsx:525-536` — merges the two, keyed by `id`
-- `src/components/ProjectPreviewModal.tsx:379-414` — `DevelopmentRoadmap` renders `phases`
-- `src/content/projects.ts` — a twin copy of every card, **imported by nothing** (verified: the only repo match for `featuredProjects` is its own declaration)
+- `src/components/FeaturedWorks.tsx:21-36` - structural data (`techStack`, `date`, `repo`, `showcaseVideos`)
+- `src/i18n/locales/{en,es,pt,zh}.json` → `work.featured.projects.efengine` - all display copy
+- `src/components/FeaturedWorks.tsx:525-536` - merges the two, keyed by `id`
+- `src/components/ProjectPreviewModal.tsx:379-414` - `DevelopmentRoadmap` renders `phases`
+- `src/content/projects.ts` - a twin copy of every card, **imported by nothing** (verified: the only repo match for `featuredProjects` is its own declaration)
 
 `src/i18n/config.ts:21` declares `satisfies Record<string, Messages>` with `Messages = typeof en`, so `tsc -b` fails the build if any locale drifts from the `en` shape. Key parity is compiler-enforced; array *length* is not, so the 7 phases and 6 systems must be kept aligned by hand across the four files.
 
@@ -49,33 +49,33 @@ The flagship project is excluded from the grid (`FeaturedWorks.tsx:605`), so EFE
 
 ### 4.1 Title
 
-`EFENGINE — C++ Game Engine` (was "C++ Game Framework").
+`EFENGINE - C++ Game Engine` (was "C++ Game Framework").
 
 | Locale | Title |
 |---|---|
-| en | EFENGINE — C++ Game Engine |
-| es | EFENGINE — Motor de Juegos en C++ |
-| pt | EFENGINE — Motor de Jogos em C++ |
-| zh | EFENGINE — C++ 游戏引擎 |
+| en | EFENGINE - C++ Game Engine |
+| es | EFENGINE - Motor de Juegos en C++ |
+| pt | EFENGINE - Motor de Jogos em C++ |
+| zh | EFENGINE - C++ 游戏引擎 |
 
-### 4.2 `desc` — subtitle under the flagship title
+### 4.2 `desc` - subtitle under the flagship title
 
 **en (canonical):**
-> A from-scratch 3D engine in C++17 on OpenGL 4.5 Core — PBR with split-sum IBL, shadow mapping, an HDR post chain, a versioned binary scene format and a docked ImGui editor, all under RAII rules with no exceptions.
+> A from-scratch 3D engine in C++17 on OpenGL 4.5 Core - PBR with split-sum IBL, shadow mapping, an HDR post chain, a versioned binary scene format and a docked ImGui editor, all under RAII rules with no exceptions.
 
 **es:**
-> Motor 3D hecho desde cero en C++17 sobre OpenGL 4.5 Core — PBR con IBL split-sum, shadow mapping, cadena de post-proceso HDR, formato binario propio de escenas y un editor ImGui dockeado, todo bajo reglas RAII y sin excepciones.
+> Motor 3D hecho desde cero en C++17 sobre OpenGL 4.5 Core - PBR con IBL split-sum, shadow mapping, cadena de post-proceso HDR, formato binario propio de escenas y un editor ImGui dockeado, todo bajo reglas RAII y sin excepciones.
 
 `pt` and `zh` follow the same structure.
 
-### 4.3 `description` — modal body
+### 4.3 `description` - modal body
 
-Two paragraphs: **what it does**, then **the rules that govern it**. This is the approved angle — capability backed by engineering discipline, rather than the old "learning low-level systems" framing.
+Two paragraphs: **what it does**, then **the rules that govern it**. This is the approved angle - capability backed by engineering discipline, rather than the old "learning low-level systems" framing.
 
 **en (canonical):**
-> EFENGINE is my most ambitious project: a 3D engine written from scratch in C++17 on OpenGL 4.5 Core. It renders PBR materials lit by point and directional lights with full image-based lighting — diffuse irradiance plus split-sum specular, both precomputed by compute shaders — over shadow mapping, a skybox and an HDR post chain of bloom, tonemap and FXAA. Scenes live in a node graph addressed by generational handles and persist to `.efe`, a chunked, versioned binary format of my own with a reader hostile to corrupt input. On top sits a docked ImGui editor: hierarchy, inspector, live material editing and scene save/load.
+> EFENGINE is my most ambitious project: a 3D engine written from scratch in C++17 on OpenGL 4.5 Core. It renders PBR materials lit by point and directional lights with full image-based lighting - diffuse irradiance plus split-sum specular, both precomputed by compute shaders - over shadow mapping, a skybox and an HDR post chain of bloom, tonemap and FXAA. Scenes live in a node graph addressed by generational handles and persist to `.efe`, a chunked, versioned binary format of my own with a reader hostile to corrupt input. On top sits a docked ImGui editor: hierarchy, inspector, live material editing and scene save/load.
 >
-> What holds it together is a set of non-negotiable rules. Every `gl*` call is confined to `efecom`, the RHI layer — the renderer never sees OpenGL. No raw `new`/`delete` and no exceptions: ownership is a value or a `unique_ptr`, programmer errors trip an assert, recoverable failures come back as return values, and every subsystem is RAII — constructing it brings it up, destroying it tears it down.
+> What holds it together is a set of non-negotiable rules. Every `gl*` call is confined to `efecom`, the RHI layer - the renderer never sees OpenGL. No raw `new`/`delete` and no exceptions: ownership is a value or a `unique_ptr`, programmer errors trip an assert, recoverable failures come back as return values, and every subsystem is RAII - constructing it brings it up, destroying it tears it down.
 
 The two paragraphs are separated by `\n\n` in the locale JSON. See §5.3 for the rendering change this requires.
 
@@ -85,7 +85,7 @@ The two paragraphs are separated by `\n\n` in the locale JSON. See §5.3 for the
 
 The "most ambitious" line already opens the `description`; repeating it under the wordmark wastes the slot on a claim the reader is about to read again.
 
-### 4.5 Roadmap — 7 phases, reconstructed from the gitlog
+### 4.5 Roadmap - 7 phases, reconstructed from the gitlog
 
 The tables in §4.5 and §4.6 give the **`es` copy**, which is the version that was reviewed and approved; `en`, `pt` and `zh` are translations of these exact rows. (§4.2 and §4.3 give `en` as canonical because that is the locale `tsc` type-checks the others against.) The **Commit window** column is provenance for the ordering and is not rendered anywhere.
 
@@ -96,12 +96,12 @@ The tables in §4.5 and §4.6 give the **`es` copy**, which is the version that 
 | Fase 2 | Escena y luces | `Time`, `ResourceManager` con caché por clave, `Renderer` con `BeginScene`/`Submit`, luces puntuales, framebuffer y la primera UI de debug en ImGui. | Jul 14–18 |
 | Fase 3 | HDR y post-proceso | Exposición en la cámara, `TonemapPass` como primer `IPostPass`, y bloom y FXAA encadenados por ping-pong entre dos framebuffers scratch. | Jul 21–22 |
 | Fase 4 | OpenGL 4.5 y el RHI | Salto a 4.5 Core con DSA y shaders a `#version 450`. Nace `efecom`: ninguna llamada `gl*` vive fuera del RHI. Skybox y shadow mapping direccional. | Jul 23–24 |
-| Fase 5 | Grafo, `.efe` y editor | `SceneGraph` por handles con generación, behaviors por nodo, y el formato binario `.efe` — chunkeado, versionado y con reader hostil a archivos corruptos. El sandbox se vuelve editor dockeado. | Jul 24–25 |
+| Fase 5 | Grafo, `.efe` y editor | `SceneGraph` por handles con generación, behaviors por nodo, y el formato binario `.efe` - chunkeado, versionado y con reader hostil a archivos corruptos. El sandbox se vuelve editor dockeado. | Jul 24–25 |
 | **Fase 6** *(current)* | IBL completo | Irradiancia difusa más especular por split-sum: prefiltrado GGX con un dispatch por mip y BRDF LUT, ambos por compute shader. Se suman mapas de emisión y normal strength. | Jul 26 |
 
-Labels follow each locale's existing convention: `Fase N` in `en`, `es` and `pt` (the English locale already uses the Spanish word — that is how the card ships today, and it matches how the phases are named in the engine repo), `阶段 N` in `zh`.
+Labels follow each locale's existing convention: `Fase N` in `en`, `es` and `pt` (the English locale already uses the Spanish word - that is how the card ships today, and it matches how the phases are named in the engine repo), `阶段 N` in `zh`.
 
-### 4.6 Engine systems — 6 rows (new block)
+### 4.6 Engine systems - 6 rows (new block)
 
 | Label | Role |
 |---|---|
@@ -121,11 +121,11 @@ before:  C++17 · OpenGL 3.3 Core · GLFW · GLAD · GLM · Doctest · CMake
 after:   C++17 · OpenGL 4.5 Core · PBR + IBL · Dear ImGui · Assimp · GLFW · GLM · doctest · CMake
 ```
 
-`GLAD` drops out — it is a build-time detail, not a capability. `PBR + IBL`, `Dear ImGui` and `Assimp` come in.
+`GLAD` drops out - it is a build-time detail, not a capability. `PBR + IBL`, `Dear ImGui` and `Assimp` come in.
 
 ## 5. Implementation
 
-### 5.1 New type — `projectTypes.ts`
+### 5.1 New type - `projectTypes.ts`
 
 ```ts
 export interface ProjectSystem {
@@ -139,7 +139,7 @@ and on `Project`: `systems?: ProjectSystem[];`
 
 Optional, like `phases` and `metrics`. No other project declares it and none is affected.
 
-### 5.2 New component — `EngineSystems` in `ProjectPreviewModal.tsx`
+### 5.2 New component - `EngineSystems` in `ProjectPreviewModal.tsx`
 
 A sibling of `DevelopmentRoadmap`: the same `rounded-2xl border divide-y` container, two columns instead of three, no `current` state. `label` renders in mono, `role` in body text. Returns `null` when `project.systems` is empty, so other phase-bearing cards are unaffected.
 
@@ -157,7 +157,7 @@ DevelopmentRoadmap  →  EngineSystems  →  LatestCommit
 
 The `description` `<p>` (`ProjectPreviewModal.tsx:530`) gains `whitespace-pre-line` so the two-paragraph copy renders as two paragraphs. Every existing description is a single paragraph, so nothing else changes visually.
 
-### 5.4 Wiring — `FeaturedWorks.tsx`
+### 5.4 Wiring - `FeaturedWorks.tsx`
 
 | Line | Change |
 |---|---|
@@ -173,7 +173,7 @@ In `work.featured.projects.efengine` across `en/es/pt/zh.json`: rewrite `title`,
 
 ### 5.6 Deletion
 
-Delete `src/content/projects.ts` — zero imports, and its content already contradicts the locales for several cards. Keeping a dead twin in sync is perpetual work for no benefit. `src/components/projectTypes.ts`, which *is* used, stays.
+Delete `src/content/projects.ts` - zero imports, and its content already contradicts the locales for several cards. Keeping a dead twin in sync is perpetual work for no benefit. `src/components/projectTypes.ts`, which *is* used, stays.
 
 ## 6. Verification
 
@@ -183,7 +183,7 @@ pnpm lint
 pnpm test
 ```
 
-Plus a visual pass over the modal in `es` and `en`, confirming that the right column — 7 roadmap rows, 6 system rows, and the Latest Commit detail — scrolls cleanly and does not overflow.
+Plus a visual pass over the modal in `es` and `en`, confirming that the right column - 7 roadmap rows, 6 system rows, and the Latest Commit detail - scrolls cleanly and does not overflow.
 
 ## 7. Risks
 

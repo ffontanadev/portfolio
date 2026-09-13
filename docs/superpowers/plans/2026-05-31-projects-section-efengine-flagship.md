@@ -1,12 +1,12 @@
-# Projects Section Redesign — EFENGINE Flagship Implementation Plan
+# Projects Section Redesign - EFENGINE Flagship Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Make EFENGINE a full-width flagship card above the projects grid, remove images from personal projects, and give personal projects the same typographic treatment as professional ones while keeping the two categories visually distinct (teal = personal, coral = professional).
 
-**Architecture:** Two files change. `ProjectPreviewModal.tsx` owns the `Project` type and shared display components — we extend the type (`wordmark` lead metric, `phases`, `featured`), generalize `EnterpriseHero` into a category-aware `TypographicHero` with a derived accent, add a `DevelopmentRoadmap` component, and update the modal's right-column branching. `FeaturedWorks.tsx` owns the data + section layout — we add EFENGINE data, render the flagship hero above the grid (excluded from the grid), and drive per-category accent/tag on cards. Accent color is derived from `category` everywhere, never duplicated in data.
+**Architecture:** Two files change. `ProjectPreviewModal.tsx` owns the `Project` type and shared display components - we extend the type (`wordmark` lead metric, `phases`, `featured`), generalize `EnterpriseHero` into a category-aware `TypographicHero` with a derived accent, add a `DevelopmentRoadmap` component, and update the modal's right-column branching. `FeaturedWorks.tsx` owns the data + section layout - we add EFENGINE data, render the flagship hero above the grid (excluded from the grid), and drive per-category accent/tag on cards. Accent color is derived from `category` everywhere, never duplicated in data.
 
-**Tech Stack:** React 19, TypeScript ~5.9, Tailwind CSS v4 (tokens in `src/index.css` `@theme`), framer-motion 12, lucide-react. No unit-test runner is configured — verification is `npm run build` (tsc + vite), `npm run lint`, and visual checks via `npm run dev`.
+**Tech Stack:** React 19, TypeScript ~5.9, Tailwind CSS v4 (tokens in `src/index.css` `@theme`), framer-motion 12, lucide-react. No unit-test runner is configured - verification is `npm run build` (tsc + vite), `npm run lint`, and visual checks via `npm run dev`.
 
 **Verification note:** This codebase has no jest/vitest. "Tests" in this plan are type-check + lint + visual confirmation. Run the dev server (`npm run dev`) and inspect the projects section in a browser for the visual steps.
 
@@ -14,16 +14,16 @@
 
 ## File Structure
 
-- **`src/components/ProjectPreviewModal.tsx`** (modify) — type definitions and shared presentational components. Responsibilities after this work:
+- **`src/components/ProjectPreviewModal.tsx`** (modify) - type definitions and shared presentational components. Responsibilities after this work:
   - `Project` type with `featured?`, `phases?`, extended `ProjectLeadMetric` (adds `wordmark`).
   - `ProjectPhase` interface.
   - `accentForCategory(category)` helper → returns the coral/teal class fragments.
-  - `LeadMetricDisplay` — handles `migration | scale | wordmark`.
-  - `TypographicHero` (renamed from `EnterpriseHero`, kept as an alias export) — category-aware tag + accent, logo for professional, lead metric for personal.
+  - `LeadMetricDisplay` - handles `migration | scale | wordmark`.
+  - `TypographicHero` (renamed from `EnterpriseHero`, kept as an alias export) - category-aware tag + accent, logo for professional, lead metric for personal.
   - `MetricBrief` (unchanged).
-  - `DevelopmentRoadmap` (new) — vertical numbered phase timeline.
+  - `DevelopmentRoadmap` (new) - vertical numbered phase timeline.
   - Modal: hero is always `TypographicHero` (no image branch); right column branches metrics → phases → codeBlocks.
-- **`src/components/FeaturedWorks.tsx`** (modify) — data array + section layout. Responsibilities after this work:
+- **`src/components/FeaturedWorks.tsx`** (modify) - data array + section layout. Responsibilities after this work:
   - `projects` data: add EFENGINE (`featured: true`, phases, wordmark lead), add `category` + `leadMetric` to existing personal projects, drop `image`.
   - A `FlagshipCard` block rendered full-width above the grid when filter is `all | personal`.
   - Grid excludes the featured project; cards use `EnterpriseHero` → `TypographicHero` for every project (no image branch); accent/tag derived from `category`.
@@ -64,7 +64,7 @@ Add three fields to the `Project` interface (inside the interface ending at line
     phases?: ProjectPhase[];
 ```
 
-(`image?` stays on the type — it is simply no longer populated by data.)
+(`image?` stays on the type - it is simply no longer populated by data.)
 
 - [ ] **Step 2: Type-check**
 
@@ -139,7 +139,7 @@ git commit -m "feat(projects): render wordmark lead metric"
 After the `ProjectLogo` type export (line 17), add:
 
 ```ts
-// Accent color is derived from category — coral for professional work, teal for personal.
+// Accent color is derived from category - coral for professional work, teal for personal.
 export const accentForCategory = (category?: ProjectCategory) => {
     const isPersonal = (category ?? 'personal') === 'personal';
     return {
@@ -248,7 +248,7 @@ export const TypographicHero = ({ project, size = 'modal' }: { project: Project;
     );
 };
 
-// Backwards-compatible alias — existing imports keep working.
+// Backwards-compatible alias - existing imports keep working.
 export const EnterpriseHero = TypographicHero;
 ```
 
@@ -261,7 +261,7 @@ Expected: PASS. The `EnterpriseHero` alias keeps the existing import in `Feature
 
 - [ ] **Step 3: Visual check**
 
-Run: `npm run dev`, open the projects section. Professional cards (Provincia/BBVA) still show coral `Enterprise` tag + logo. Nothing should regress yet (personal projects still use images at this point — that changes in Task 7).
+Run: `npm run dev`, open the projects section. Professional cards (Provincia/BBVA) still show coral `Enterprise` tag + logo. Nothing should regress yet (personal projects still use images at this point - that changes in Task 7).
 Expected: professional cards unchanged in look; coral accent present.
 
 - [ ] **Step 4: Commit**
@@ -323,7 +323,7 @@ const DevelopmentRoadmap = ({ project }: { project: Project }) => {
 - [ ] **Step 2: Type-check**
 
 Run: `npm run build`
-Expected: PASS. Component is defined but not yet used (next step wires it in) — TS allows unused module-internal consts only if referenced; since it will be referenced in Task 6, if `noUnusedLocals` flags it, proceed directly to Task 6 before building. To keep this step green, combine Step 2 verification with Task 6 if the build complains about the unused component.
+Expected: PASS. Component is defined but not yet used (next step wires it in) - TS allows unused module-internal consts only if referenced; since it will be referenced in Task 6, if `noUnusedLocals` flags it, proceed directly to Task 6 before building. To keep this step green, combine Step 2 verification with Task 6 if the build complains about the unused component.
 
 - [ ] **Step 3: Commit**
 
@@ -344,7 +344,7 @@ git commit -m "feat(projects): add DevelopmentRoadmap phase timeline component"
 Replace the hero block (lines 358-370, the `{project.image ? (...) : (<EnterpriseHero .../>)}` section) with:
 
 ```tsx
-                                {/* Hero Section — typographic for every project */}
+                                {/* Hero Section - typographic for every project */}
                                 <TypographicHero project={project} size="modal" />
 ```
 
@@ -353,7 +353,7 @@ Replace the hero block (lines 358-370, the `{project.image ? (...) : (<Enterpris
 Replace the right-column conditional (lines 423-435, the `{project.category === 'professional' && project.metrics?.length ? (<MetricBrief/>) : (...codeBlocks...)}` block) with:
 
 ```tsx
-                                    {/* Right Column — Migration Brief, Development Roadmap, or Code Blocks */}
+                                    {/* Right Column - Migration Brief, Development Roadmap, or Code Blocks */}
                                     {project.category === 'professional' && project.metrics?.length ? (
                                         <MetricBrief project={project} />
                                     ) : project.phases?.length ? (
@@ -451,13 +451,13 @@ Insert this object as the **first** element of the `projects` array (immediately
 
 ```ts
   {
-    title: "EFENGINE — C++ Game Framework",
-    desc: "A from-scratch 3D game framework in C++17 on OpenGL 3.3 Core — a library you compile your games against, built to master memory management and the game lifecycle.",
+    title: "EFENGINE - C++ Game Framework",
+    desc: "A from-scratch 3D game framework in C++17 on OpenGL 3.3 Core - a library you compile your games against, built to master memory management and the game lifecycle.",
     color: "bg-cream-100",
     techStack: ["C++17", "OpenGL 3.3 Core", "GLFW", "GLAD", "GLM", "Doctest", "CMake"],
-    date: "'26 — NOW",
+    date: "'26 - NOW",
     role: "Engine Author",
-    description: `EFENGINE is my most ambitious project: a personal 3D game framework written in C++17 on OpenGL 3.3 Core for Windows. No editor, no native scripting, no multi-platform builds — it is a library you compile your games against, where each game is a C++ project that links against efengine. The goal is mastery of low-level systems: manual memory management, the game lifecycle, and the render pipeline, built up one phase at a time. Documentation is generated with Doxygen and the build is driven by CMake.`,
+    description: `EFENGINE is my most ambitious project: a personal 3D game framework written in C++17 on OpenGL 3.3 Core for Windows. No editor, no native scripting, no multi-platform builds - it is a library you compile your games against, where each game is a C++ project that links against efengine. The goal is mastery of low-level systems: manual memory management, the game lifecycle, and the render pipeline, built up one phase at a time. Documentation is generated with Doxygen and the build is driven by CMake.`,
     codeBlocks: [],
     category: 'personal',
     featured: true,
@@ -505,7 +505,7 @@ git commit -m "feat(projects): add EFENGINE project with development phases"
 ## Task 9: Render EFENGINE as a full-width flagship above the grid
 
 **Files:**
-- Modify: `src/components/FeaturedWorks.tsx` — imports (line 4), `counts`/`visibleProjects` memos (lines 516-528), and the grid render block (lines 614-720)
+- Modify: `src/components/FeaturedWorks.tsx` - imports (line 4), `counts`/`visibleProjects` memos (lines 516-528), and the grid render block (lines 614-720)
 
 - [ ] **Step 1: Import the helper and split out the featured project**
 
@@ -616,9 +616,9 @@ Replace the category tag (lines 643-647) with an accent-driven tag shown for eve
                   </span>
 ```
 
-Replace the card visual block (lines 654-688) — which currently branches on image vs `EnterpriseHero` — with an always-typographic version:
+Replace the card visual block (lines 654-688) - which currently branches on image vs `EnterpriseHero` - with an always-typographic version:
 ```tsx
-                {/* Card visual — typographic composition for every project */}
+                {/* Card visual - typographic composition for every project */}
                 <div className="relative w-full aspect-[4/3] bg-cream-100 border border-dark-900/[0.08] rounded-2xl overflow-hidden soft-lift">
                   <EnterpriseHero project={project} size="card" />
 
@@ -640,7 +640,7 @@ Replace the title hover color (line 692) so it uses the accent:
 - [ ] **Step 4: Type-check**
 
 Run: `npm run build`
-Expected: PASS. Confirm no unused-import warning for `accentForCategory` and that the image-branch removal didn't leave `project.color`/`project.image` references dangling (the card no longer uses `project.color`; that is fine — it stays on the type and data).
+Expected: PASS. Confirm no unused-import warning for `accentForCategory` and that the image-branch removal didn't leave `project.color`/`project.image` references dangling (the card no longer uses `project.color`; that is fine - it stays on the type and data).
 
 - [ ] **Step 5: Visual check**
 
@@ -698,6 +698,6 @@ git commit -m "chore(projects): final cleanup after projects section redesign"
 - Development phases instead of snippets → Task 1 (type) + Task 5 (component) + Task 6 (branch) + Task 8 (data). ✓
 - Correct EFENGINE stack (GLFW/GLAD/GLM/Doctest/CMake/Doxygen) → Task 8. ✓
 
-**Type consistency:** `accentForCategory` fields (`text`, `hairline`, `hoverText`, `washIdle`, `washHover`, `tagLabel`, `isPersonal`) are referenced identically in Tasks 4 and 9. `TypographicHero` is the canonical name with `EnterpriseHero` as an alias, and Task 9 imports `EnterpriseHero` — consistent. `ProjectPhase` shape (`label`, `title`, `desc`, `current?`) matches between Task 1 (type), Task 5 (render), and Task 8 (data). `wordmark` variant shape (`value`, `sub?`) matches Tasks 1, 2, 7, 8.
+**Type consistency:** `accentForCategory` fields (`text`, `hairline`, `hoverText`, `washIdle`, `washHover`, `tagLabel`, `isPersonal`) are referenced identically in Tasks 4 and 9. `TypographicHero` is the canonical name with `EnterpriseHero` as an alias, and Task 9 imports `EnterpriseHero` - consistent. `ProjectPhase` shape (`label`, `title`, `desc`, `current?`) matches between Task 1 (type), Task 5 (render), and Task 8 (data). `wordmark` variant shape (`value`, `sub?`) matches Tasks 1, 2, 7, 8.
 
 **Placeholder scan:** No TBD/TODO; every code step shows full code; commands have expected output.

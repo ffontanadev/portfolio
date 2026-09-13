@@ -4,15 +4,15 @@
 
 **Goal:** Replace the static background of the efengine flagship banner in FeaturedWorks with an ambient, auto-cycling playlist of local video clips, keeping the "EFENGINE" identity overlay on top and degrading gracefully to the existing static hero.
 
-**Architecture:** A new isolated `VideoShowcaseHero` component owns all `<video>` and playlist logic and is rendered in place of the static hero in the flagship band — but only when the project declares `showcaseVideos`. The centered identity block of the current `TypographicHero` is extracted into a shared `HeroOverlayContent` so the static and video heroes share identical typography. Reduced-motion, no-clips, and load-error all fall back to the static `TypographicHero`.
+**Architecture:** A new isolated `VideoShowcaseHero` component owns all `<video>` and playlist logic and is rendered in place of the static hero in the flagship band - but only when the project declares `showcaseVideos`. The centered identity block of the current `TypographicHero` is extracted into a shared `HeroOverlayContent` so the static and video heroes share identical typography. Reduced-motion, no-clips, and load-error all fall back to the static `TypographicHero`.
 
-**Tech Stack:** React 19, TypeScript, Vite, framer-motion (already a dependency — `useInView`), Tailwind CSS v4, custom i18n (`@/i18n`). Path alias `@/` → `src/`.
+**Tech Stack:** React 19, TypeScript, Vite, framer-motion (already a dependency - `useInView`), Tailwind CSS v4, custom i18n (`@/i18n`). Path alias `@/` → `src/`.
 
 ---
 
 ## Testing note (read first)
 
-This repo has **no test runner** (no vitest/jest in `package.json`), and — consistent with the prior efengine spec — adding one is out of scope. So this plan is **not** TDD. Each task's verification is:
+This repo has **no test runner** (no vitest/jest in `package.json`), and - consistent with the prior efengine spec - adding one is out of scope. So this plan is **not** TDD. Each task's verification is:
 
 - **Type check:** `npx tsc -b` → expected: no errors.
 - **Lint:** `npm run lint` → expected: no errors.
@@ -21,21 +21,21 @@ Functional verification is a single **manual browser pass** in the final task. R
 
 The work happens on the existing branch `feature/efengine-webhook`. Commit after each task.
 
-**Do not** stage or commit the untracked `src/content/` directory or `.claude/settings.local.json` — they are unrelated to this feature.
+**Do not** stage or commit the untracked `src/content/` directory or `.claude/settings.local.json` - they are unrelated to this feature.
 
 ---
 
 ## File structure
 
 **New files:**
-- `src/hooks/usePrefersReducedMotion.ts` — boolean hook tracking the OS "reduce motion" setting.
-- `src/components/VideoShowcaseHero.tsx` — ambient video playlist background; one responsibility.
-- `public/videos/efengine/.gitkeep` — holds the clip directory in git (author supplies real clips).
+- `src/hooks/usePrefersReducedMotion.ts` - boolean hook tracking the OS "reduce motion" setting.
+- `src/components/VideoShowcaseHero.tsx` - ambient video playlist background; one responsibility.
+- `public/videos/efengine/.gitkeep` - holds the clip directory in git (author supplies real clips).
 
 **Modified files:**
-- `src/components/projectTypes.ts` — add optional `showcaseVideos?: string[]` to `Project`.
-- `src/components/ProjectPreviewModal.tsx` — extract `HeroOverlayContent` + `HERO_RADIAL_BG` from `TypographicHero` (pure refactor, no visual change), export both.
-- `src/components/FeaturedWorks.tsx` — import `VideoShowcaseHero`; set `showcaseVideos` on efengine; conditionally render video vs static hero in the flagship band.
+- `src/components/projectTypes.ts` - add optional `showcaseVideos?: string[]` to `Project`.
+- `src/components/ProjectPreviewModal.tsx` - extract `HeroOverlayContent` + `HERO_RADIAL_BG` from `TypographicHero` (pure refactor, no visual change), export both.
+- `src/components/FeaturedWorks.tsx` - import `VideoShowcaseHero`; set `showcaseVideos` on efengine; conditionally render video vs static hero in the flagship band.
 
 ---
 
@@ -93,7 +93,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
 
 ## Task 2: Extract `HeroOverlayContent` from `TypographicHero`
 
-This is a **pure refactor** — `TypographicHero` (and its `EnterpriseHero` alias) must render byte-for-byte the same output. We only pull the centered content into a reusable, exported sub-component and export the shared gradient string, so `VideoShowcaseHero` can reuse both.
+This is a **pure refactor** - `TypographicHero` (and its `EnterpriseHero` alias) must render byte-for-byte the same output. We only pull the centered content into a reusable, exported sub-component and export the shared gradient string, so `VideoShowcaseHero` can reuse both.
 
 **Files:**
 - Modify: `src/components/ProjectPreviewModal.tsx`
@@ -344,7 +344,7 @@ const VideoShowcaseHero = ({ project, videos, size = 'modal' }: VideoShowcaseHer
             ref={containerRef}
             className={`relative w-full overflow-hidden bg-cream-100 ${isModal ? 'aspect-[21/9]' : 'h-full'}`}
         >
-            {/* Cream wash underlay — prevents any flash before the first frame loads. */}
+            {/* Cream wash underlay - prevents any flash before the first frame loads. */}
             <div
                 className="absolute inset-0 opacity-60"
                 style={{ background: HERO_RADIAL_BG }}
@@ -382,7 +382,7 @@ const VideoShowcaseHero = ({ project, videos, size = 'modal' }: VideoShowcaseHer
                 </span>
             </div>
 
-            {/* Shared identity overlay — identical typography to the static hero. */}
+            {/* Shared identity overlay - identical typography to the static hero. */}
             <HeroOverlayContent project={project} size={size} />
         </div>
     );
@@ -401,7 +401,7 @@ Expected: no errors. (`useInView` returns `boolean`; the refs are typed `HTMLDiv
 - [ ] **Step 3: Lint**
 
 Run: `npm run lint`
-Expected: no errors. (The `useEffect` deps are `[inView, index]`; `videoRef`/`videos` accessed inside are stable/closure values — if `eslint-plugin-react-hooks` flags `videos`, it is safe because the component returns the static hero before this effect matters; only add `videos.length` to deps if lint requires it.)
+Expected: no errors. (The `useEffect` deps are `[inView, index]`; `videoRef`/`videos` accessed inside are stable/closure values - if `eslint-plugin-react-hooks` flags `videos`, it is safe because the component returns the static hero before this effect matters; only add `videos.length` to deps if lint requires it.)
 
 - [ ] **Step 4: Commit**
 
@@ -424,7 +424,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
 
 Create an empty file `public/videos/efengine/.gitkeep` (no content). This keeps the directory in git; the author drops real `.mp4` clips here later.
 
-> **Author action (outside this plan):** place web-optimized clips at the paths listed in Step 3 (e.g. `public/videos/efengine/hello-triangle.mp4`). Until real files exist, the banner correctly falls back to the static hero (the `<video>` `onError` path) — nothing breaks.
+> **Author action (outside this plan):** place web-optimized clips at the paths listed in Step 3 (e.g. `public/videos/efengine/hello-triangle.mp4`). Until real files exist, the banner correctly falls back to the static hero (the `<video>` `onError` path) - nothing breaks.
 
 - [ ] **Step 2: Import `VideoShowcaseHero`**
 
@@ -450,7 +450,7 @@ In `src/components/FeaturedWorks.tsx`, in the `projectData` array, the `efengine
     id: 'efengine',
     color: "bg-cream-100",
     techStack: ["C++17", "OpenGL 3.3 Core", "GLFW", "GLAD", "GLM", "Doctest", "CMake"],
-    date: "'26 — NOW",
+    date: "'26 - NOW",
     codeBlocks: [],
     category: 'personal',
     featured: true,
@@ -465,7 +465,7 @@ Change it to add `showcaseVideos`:
     id: 'efengine',
     color: "bg-cream-100",
     techStack: ["C++17", "OpenGL 3.3 Core", "GLFW", "GLAD", "GLM", "Doctest", "CMake"],
-    date: "'26 — NOW",
+    date: "'26 - NOW",
     codeBlocks: [],
     category: 'personal',
     featured: true,
@@ -505,7 +505,7 @@ Replace the single `<EnterpriseHero ... />` line with the conditional (leave the
               <div className="absolute inset-0 transition-colors duration-700 mix-blend-multiply bg-teal-700/0 group-hover:bg-teal-700/[0.05]" />
 ```
 
-> The `EnterpriseHero` import stays — it is still used by the `else` branch (and by every non-flagship card / the modal). Do not remove it.
+> The `EnterpriseHero` import stays - it is still used by the `else` branch (and by every non-flagship card / the modal). Do not remove it.
 
 - [ ] **Step 5: Type check**
 
@@ -532,7 +532,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
 
 **Files:** none (verification only)
 
-> For Steps 3–6 to show **video**, at least one real clip must exist at a path listed in Task 5 Step 3. If no clips are present yet, the banner will (correctly) show the static hero — confirm that, then add a clip and re-check the video paths.
+> For Steps 3–6 to show **video**, at least one real clip must exist at a path listed in Task 5 Step 3. If no clips are present yet, the banner will (correctly) show the static hero - confirm that, then add a clip and re-check the video paths.
 
 - [ ] **Step 1: Full production build**
 
@@ -562,7 +562,7 @@ Enable the OS "reduce motion" setting (Windows: Settings → Accessibility → V
 
 - [ ] **Step 6: Verify graceful failure**
 
-Temporarily change one `showcaseVideos` path to a non-existent file (or set Network → Offline) and reload. Confirm the banner falls back to the static hero — no broken/black box, no console-fatal layout break. Restore the path/Network afterward.
+Temporarily change one `showcaseVideos` path to a non-existent file (or set Network → Offline) and reload. Confirm the banner falls back to the static hero - no broken/black box, no console-fatal layout break. Restore the path/Network afterward.
 
 - [ ] **Step 7: Verify offscreen pause**
 
@@ -578,8 +578,8 @@ All checks pass → the feature is complete. No commit needed (verification-only
 
 - **Path alias:** `@/` resolves to `src/` (e.g. `@/hooks/usePrefersReducedMotion`).
 - **No new dependencies:** `framer-motion` (`useInView`) is already in `package.json`.
-- **Autoplay requires `muted`** — keep the `muted` + `playsInline` attributes or browsers will block autoplay.
+- **Autoplay requires `muted`** - keep the `muted` + `playsInline` attributes or browsers will block autoplay.
 - **The video is decorative** (`aria-hidden`) and has no audio, so no captions/transcript are needed; identity comes from the visible `HeroOverlayContent`.
-- **`showcaseVideos` is generic** — any future project can set it to opt into the same ambient treatment; nothing else assumes it.
+- **`showcaseVideos` is generic** - any future project can set it to opt into the same ambient treatment; nothing else assumes it.
 - **Do not** stage `src/content/` or `.claude/settings.local.json`.
 ```

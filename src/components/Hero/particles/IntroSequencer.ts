@@ -8,7 +8,7 @@ export interface IntroShapes {
   rocket: ShapeSpec;
   /**
    * The first tech logo, which the rocket morphs straight into. Null when its
-   * SVG hasn't loaded in time (the marks come off a CDN) — the intro then ends
+   * SVG hasn't loaded in time (the marks come off a CDN) - the intro then ends
    * with the rocket and the showcase loop forms the logo on its own once it
    * arrives, rather than cross-morphing into an empty sample.
    */
@@ -48,7 +48,7 @@ const DEFAULT_TIMINGS: IntroTimings = {
 const SMEAR_AMOUNT = .020;
 // Seconds for uMorph to ramp 0→1 inside the rocket-fly phase. Must be < timings.rocketFly.
 const ROCKET_FLY_MORPH_RAMP = 0.6;
-// Rocket scales from this fraction of full size up to 1.0 over rocket-fly — sells distance.
+// Rocket scales from this fraction of full size up to 1.0 over rocket-fly - sells distance.
 const ROCKET_START_SCALE = 0.05;
 // Y-bob during rocket-fly. Slow frequency reads as a graceful arc, not a wiggle.
 const BOB_AMPLITUDE_PX = 24;

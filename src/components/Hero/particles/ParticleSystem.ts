@@ -33,8 +33,8 @@ export interface ParticleSystemOptions {
 
 /**
  * Next index in the ambient shape cycle, or null when there is nothing to
- * cycle. An empty `shapes` array is a real configuration — narrow canvases
- * switch every shape off — so this must read as "stay in drift" rather than
+ * cycle. An empty `shapes` array is a real configuration - narrow canvases
+ * switch every shape off - so this must read as "stay in drift" rather than
  * wrap around into a modulo by zero.
  */
 export function nextShapeIndex(current: number, total: number): number | null {
@@ -50,7 +50,7 @@ interface StateTimings {
 }
 
 // 'drift', 'morphIn', 'morphOut' are used only on initial entry (and post-intro);
-// the steady-state loop alternates 'hold'/'play' with 'shapeMorph' — no dissolve.
+// the steady-state loop alternates 'hold'/'play' with 'shapeMorph' - no dissolve.
 type State = 'drift' | 'morphIn' | 'hold' | 'play' | 'morphOut' | 'shapeMorph' | 'showcase';
 
 const DEFAULT_TIMINGS: StateTimings = {
@@ -69,7 +69,7 @@ const DEFAULT_SHOWCASE_TIMINGS: ShowcaseTimings = {
   crossMorph: 0.9,
 };
 
-// Cubic in/out — matches the easing used elsewhere in the redesign.
+// Cubic in/out - matches the easing used elsewhere in the redesign.
 function easeInOutCubic(t: number): number {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
@@ -172,7 +172,7 @@ export class ParticleSystem {
     });
 
     this.points = new THREE.Points(this.geometry, this.material);
-    // Custom shader does its own clip-space math — three's frustum culling would
+    // Custom shader does its own clip-space math - three's frustum culling would
     // use the (zero-only) `position` attribute bounding box and cull everything.
     this.points.frustumCulled = false;
     this.scene.add(this.points);
@@ -180,7 +180,7 @@ export class ParticleSystem {
 
   resize(width: number, height: number, dpr: number) {
     // In-place mutation so any captured `bounds` references (e.g. IntroSequencer's adapter)
-    // observe the update — replacing the object would leave them with stale dimensions.
+    // observe the update - replacing the object would leave them with stale dimensions.
     this.bounds.width = width;
     this.bounds.height = height;
     this.renderer.setPixelRatio(dpr);
@@ -280,7 +280,7 @@ export class ParticleSystem {
     const N = this.particleCount;
     // Dummy `position` attribute exists purely so three.js can derive a vertex
     // count (it iterates `attributes.position.count` to pick the drawArrays N).
-    // The shader doesn't read it — clip-space math is computed from `aHome`.
+    // The shader doesn't read it - clip-space math is computed from `aHome`.
     const position = new Float32Array(N * 3);
     const homes = new Float32Array(N * 2);
     const targets = new Float32Array(N * 2);
@@ -407,7 +407,7 @@ export class ParticleSystem {
   /**
    * Show a technology's logo. The first call takes the field over from the
    * ambient loop for good; later calls cross-morph logo → logo. `auto` decides
-   * whether the loop keeps cycling on its own afterwards — a click parks it on
+   * whether the loop keeps cycling on its own afterwards - a click parks it on
    * one logo, the back button lets it run again.
    */
   showShape(spec: ShapeSpec, auto: boolean): void {
@@ -446,7 +446,7 @@ export class ParticleSystem {
   }
 
   /**
-   * Swap the ambient fallback cycle. An empty array means "drift only" — the
+   * Swap the ambient fallback cycle. An empty array means "drift only" - the
    * resting state on canvases too narrow for any shape. A shape already on
    * screen finishes and dissolves rather than cutting.
    */
@@ -483,7 +483,7 @@ export class ParticleSystem {
       auto,
       onAdvance: () => this.onShowcaseAdvance?.(),
     });
-    // The ambient loop is done for this session — release its frame buffers.
+    // The ambient loop is done for this session - release its frame buffers.
     this.frame = null;
     this.prevFrame = null;
     this.state = 'showcase';
@@ -591,7 +591,7 @@ export class ParticleSystem {
   /**
    * Enter the direct shape-to-shape morph: previous shape stays in aTarget,
    * next shape is pre-loaded into aTargetNext, and uTargetBlend will animate 0→1.
-   * uMorph stays at 1 throughout — no dissolve back to drift.
+   * uMorph stays at 1 throughout - no dissolve back to drift.
    */
   private beginShapeMorph(now: number): void {
     // Retain the prev frame sequencer (if any) so a resize mid-morph can
@@ -643,7 +643,7 @@ export class ParticleSystem {
         this.pendingShowcase = null;
 
         if (formed && this.introHandoff) {
-          // The rocket already morphed into the first logo — pick it up in
+          // The rocket already morphed into the first logo - pick it up in
           // place so the loop continues the motion instead of restarting it.
           this.startShowcase(this.introHandoff, pending?.auto ?? true, now, true);
           // A tech clicked mid-intro takes precedence over the first logo.

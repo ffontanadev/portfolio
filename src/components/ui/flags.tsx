@@ -5,7 +5,7 @@ export interface FlagProps {
   className?: string;
 }
 
-/** Circular flag frame — clips children to a circle via a unique clip-path. */
+/** Circular flag frame - clips children to a circle via a unique clip-path. */
 const FlagBase = ({
   size = 20,
   className,

@@ -1,6 +1,5 @@
 // Shape specs for the hero tech-logo showcase. Kept apart from ParticleField so
-// the sizing/placement rules are plain functions the test suite can exercise —
-// everything downstream of here needs a WebGL context, which jsdom lacks.
+// the sizing/placement rules are plain functions the test suite can exercise - // everything downstream of here needs a WebGL context, which jsdom lacks.
 
 import { techCatalog, type TechItem } from '../techCatalog';
 import type { ShapeSpec, SampleBounds } from './shapeSampler';
@@ -8,7 +7,7 @@ import type { ShapeSpec, SampleBounds } from './shapeSampler';
 /**
  * The logos the hero cycles through. Six catalog entries (JUnit, OpenAPI,
  * Schemathesis, Jenkins, React Native, C++17) have no mark in svgl and render
- * as typographic wordmarks in the marquee — there is nothing to sample into
+ * as typographic wordmarks in the marquee - there is nothing to sample into
  * particles for those, so the loop skips them.
  */
 export const SHOWCASE_LOGOS: TechItem[] = techCatalog.filter((t) => t.marqueeUrl);
@@ -42,8 +41,8 @@ const WIDTH_RATIO = 0.42;
 
 /**
  * Whether the canvas is wide enough to show a logo at all. Below the
- * breakpoint there is nowhere to put one — a centred logo would sit on top of
- * the headline — so the showcase is switched off rather than repositioned.
+ * breakpoint there is nowhere to put one - a centred logo would sit on top of
+ * the headline - so the showcase is switched off rather than repositioned.
  */
 export function showcaseFitsIn(bounds: SampleBounds): boolean {
   return bounds.width >= SHOWCASE_MIN_WIDTH;

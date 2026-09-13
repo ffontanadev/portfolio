@@ -1,7 +1,7 @@
 /**
  * Curated radio stations for the music widget.
  *
- * All streams are served by SomaFM (https://somafm.com) — a listener-supported,
+ * All streams are served by SomaFM (https://somafm.com) - a listener-supported,
  * commercial-free internet radio service whose MP3 streams play directly through
  * a native <audio> element (no API key, no CORS handshake). The selection leans
  * toward ambient / downtempo channels that work well as coding background music.

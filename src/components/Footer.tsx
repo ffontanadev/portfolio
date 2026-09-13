@@ -9,7 +9,6 @@ const Footer = () => {
     const links = [
         { name: t('footer.links.home'), href: '#hero' },
         { name: t('footer.links.work'), href: '#work' },
-        { name: t('footer.links.about'), href: '#about' },
         { name: t('footer.links.connect'), href: '#connect' },
         { name: t('footer.links.resume'), href: '/docs/resume.pdf' },
         // Demoted from the header (§4.1): a recruiter with fifteen seconds
@@ -25,9 +24,9 @@ const Footer = () => {
                     <div>
                         <div className="flex items-baseline gap-1 mb-4">
                             <span className="text-3xl md:text-5xl font-display font-bold tracking-tighter">FF</span>
-                            <span className="text-3xl md:text-5xl font-display italic font-light text-coral-500">.</span>
+                            <span className="text-3xl md:text-5xl font-display italic font-light text-coral-700">.</span>
                         </div>
-                        <p className="font-display italic text-dark-900/55 max-w-xs leading-relaxed">
+                        <p className="font-display italic text-ink-muted max-w-xs leading-relaxed">
                             {t('footer.tagline')}
                         </p>
                     </div>
@@ -37,9 +36,9 @@ const Footer = () => {
                             <a
                                 key={link.name}
                                 href={link.href}
-                                className="reveal-underline text-sm font-medium text-dark-900/80 hover:text-coral-500 transition-colors duration-500 flex items-baseline gap-2"
+                                className="reveal-underline text-sm font-medium text-dark-900/80 hover:text-coral-700 transition-colors duration-500 flex items-baseline gap-2"
                             >
-                                <span className="font-mono text-[10px] text-dark-900/30">0{idx + 1}</span>
+                                <span className="font-mono text-[10px] text-ink-quiet">0{idx + 1}</span>
                                 {link.name}
                             </a>
                         ))}
@@ -51,14 +50,14 @@ const Footer = () => {
 
                 {/* Bottom row */}
                 <div className="flex flex-col md:flex-row items-center justify-between gap-3">
-                    <span className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-widest text-dark-900/45">
+                    <span className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-widest text-ink-quiet">
                         {t('footer.copyright', { year })}
                         <span aria-hidden="true" className="h-3 w-px bg-dark-900/15" />
                         {t('footer.location')}
                     </span>
-                    <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-dark-900/45">
+                    <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-ink-quiet">
                         {t('footer.craftedWith')}
-                        <HeartIcon size={12} className="fill-coral-500 text-coral-500" />
+                        <HeartIcon size={12} className="fill-coral-500 text-coral-700" />
                         {t('footer.andReact')}
                     </span>
                 </div>

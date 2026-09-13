@@ -24,7 +24,7 @@ export default function NotFoundPage() {
           {/* Icon */}
           <div className="flex justify-center mb-8">
             <SearchX
-              className="w-24 h-24 text-coral-500"
+              className="w-24 h-24 text-coral-700"
               strokeWidth={1.5}
               aria-hidden="true"
             />
@@ -77,7 +77,7 @@ export default function NotFoundPage() {
             {t('notFound.needHelpBefore')}{' '}
             <Link
               to={home}
-              className="text-coral-500 hover:text-coral-600 underline focus:outline-none focus:ring-2 focus:ring-coral-500 rounded"
+              className="text-coral-700 hover:text-coral-600 underline focus:outline-none focus:ring-2 focus:ring-coral-500 rounded"
             >
               {t('notFound.needHelpLink')}
             </Link>

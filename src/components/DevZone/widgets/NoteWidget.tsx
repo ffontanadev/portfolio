@@ -13,7 +13,7 @@ interface NoteWidgetProps {
   onUpdate: (id: string, text: string) => void;
 }
 
-/** A pasted text note — an editable sticky living on the whiteboard. */
+/** A pasted text note - an editable sticky living on the whiteboard. */
 export default function NoteWidget({ onUpdate, ...props }: NoteWidgetProps) {
   const { t } = useTranslation();
   const { instance } = props;
@@ -25,7 +25,7 @@ export default function NoteWidget({ onUpdate, ...props }: NoteWidgetProps) {
         onChange={(event) => onUpdate(instance.id, event.target.value)}
         placeholder={t('devZone.note.placeholder')}
         spellCheck={false}
-        className="h-32 w-full resize-none bg-transparent font-mono text-sm leading-relaxed text-dark-900 outline-none placeholder:text-dark-900/30"
+        className="h-32 w-full resize-none bg-transparent font-mono text-sm leading-relaxed text-dark-900 outline-none placeholder:text-ink-quiet"
       />
     </Widget>
   );

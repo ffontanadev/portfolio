@@ -58,7 +58,7 @@ const ArtGallery = () => {
                     href="https://instagram.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block text-coral-500 font-bold hover:underline"
+                    className="inline-block text-coral-700 font-bold hover:underline"
                 >
                     {t('artGallery.reachOut')}
                 </a>

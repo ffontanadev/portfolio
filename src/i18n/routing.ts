@@ -23,7 +23,7 @@ export const buildLocalePath = (locale: Locale, rest = '/'): string =>
   rest === '/' || rest === '' ? `/${locale}` : `/${locale}${rest.startsWith('/') ? rest : `/${rest}`}`;
 
 /**
- * Pick the best supported locale from an ordered candidate list — typically
+ * Pick the best supported locale from an ordered candidate list - typically
  * `navigator.languages`. Matches on the primary subtag, so `pt-BR` resolves to
  * `pt` and `zh-Hans-CN` to `zh`. Defaults to `/en` per §8: the thesis of the
  * site is the US market.

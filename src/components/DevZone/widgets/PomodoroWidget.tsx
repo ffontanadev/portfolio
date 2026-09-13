@@ -91,7 +91,7 @@ export default function PomodoroWidget(props: PomodoroWidgetProps) {
               className={cn(
                 'rounded-full px-2.5 py-1 font-mono text-[10px] tracking-widest uppercase',
                 pomodoro.phase === 'work'
-                  ? 'bg-coral-500/12 text-coral-500'
+                  ? 'bg-coral-500/12 text-coral-700'
                   : 'bg-teal-500/15 text-teal-700',
               )}
             >
@@ -102,7 +102,7 @@ export default function PomodoroWidget(props: PomodoroWidgetProps) {
             <button
               type="button"
               onClick={openSettings}
-              className="rounded-md p-1 text-dark-900/40 transition-colors hover:bg-dark-900/5 hover:text-dark-900"
+              className="rounded-md p-1 text-ink-quiet transition-colors hover:bg-dark-900/5 hover:text-dark-900"
               aria-label={t('devZone.pomodoro.settings')}
             >
               <Settings size={15} />
@@ -135,7 +135,7 @@ export default function PomodoroWidget(props: PomodoroWidgetProps) {
             <button
               type="button"
               onClick={pomodoro.skip}
-              className="rounded-full p-2 text-dark-900/60 transition-colors hover:bg-dark-900/5 hover:text-dark-900"
+              className="rounded-full p-2 text-ink-muted transition-colors hover:bg-dark-900/5 hover:text-dark-900"
               aria-label={t('devZone.pomodoro.skip')}
             >
               <SkipForward size={18} />
@@ -143,7 +143,7 @@ export default function PomodoroWidget(props: PomodoroWidgetProps) {
             <button
               type="button"
               onClick={pomodoro.reset}
-              className="rounded-full p-2 text-dark-900/60 transition-colors hover:bg-dark-900/5 hover:text-dark-900"
+              className="rounded-full p-2 text-ink-muted transition-colors hover:bg-dark-900/5 hover:text-dark-900"
               aria-label={t('devZone.pomodoro.reset')}
             >
               <RotateCcw size={18} />
@@ -151,7 +151,7 @@ export default function PomodoroWidget(props: PomodoroWidgetProps) {
           </div>
 
           <div className="mt-4 border-t border-dark-900/10 pt-3">
-            <div className="mb-1.5 flex items-center justify-between font-mono text-[10px] tracking-widest text-dark-900/40 uppercase">
+            <div className="mb-1.5 flex items-center justify-between font-mono text-[10px] tracking-widest text-ink-quiet uppercase">
               <span>{t('devZone.pomodoro.today')}</span>
               <span className={cn(pomodoro.goalReached && 'text-teal-700')}>
                 {pomodoro.completedToday}/{pomodoro.config.dailyGoal}

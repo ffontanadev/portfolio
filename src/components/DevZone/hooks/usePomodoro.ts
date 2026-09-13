@@ -86,7 +86,7 @@ export interface PomodoroApi {
  */
 export function usePomodoro(): PomodoroApi {
   // Read persisted state once per slice via lazy initializers (readPersisted is
-  // cheap and idempotent — it just parses one localStorage entry).
+  // cheap and idempotent - it just parses one localStorage entry).
   const [config, setConfig] = useState<PomodoroConfig>(() => readPersisted().config);
   const [completedToday, setCompletedToday] = useState(() => readPersisted().completedToday);
   const [date, setDate] = useState(() => readPersisted().date);

@@ -38,7 +38,7 @@ const CurvedText = ({
           letterSpacing="6"
           fontWeight="500"
           fill="currentColor"
-          className="text-dark-900/55"
+          className="text-ink-muted"
           style={{ fontFamily: 'JetBrains Mono, ui-monospace, monospace' }}
         >
           <textPath href="#circlePath" startOffset="0%">

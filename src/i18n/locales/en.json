@@ -14,15 +14,14 @@
     "links": {
       "home": "Home",
       "work": "Work",
-      "about": "About",
       "connect": "Connect"
     },
     "resume": "Resume",
     "viewResume": "View Resume",
     "toggleMenu": "Toggle menu",
     "devZone": "Dev Zone",
-    "githubPrimary": "GitHub — ffontanadev",
-    "githubEngine": "GitHub — elFonTii, where efengine lives"
+    "githubPrimary": "GitHub - ffontanadev",
+    "githubEngine": "GitHub - elFonTii, where efengine lives"
   },
   "devZone": {
     "back": "Back to portfolio",
@@ -111,7 +110,7 @@
     }
   },
   "hero": {
-    "eyebrow": "01 — Introduction",
+    "eyebrow": "01 - Introduction",
     "headline": {
       "lead": "Backend engineer for systems",
       "emphasis": "that can't go down"
@@ -166,25 +165,25 @@
     "back": "Back",
     "eyebrow": "Stack · focus",
     "brief": {
-      "java": "The language the core banking work runs on — Java 17 LTS, migrated up from Java 8.",
+      "java": "The language the core banking work runs on - Java 17 LTS, migrated up from Java 8.",
       "springboot": "Java framework for building production-ready services with minimal configuration.",
-      "junit": "The test framework behind the coverage work — unit and integration suites on banking APIs.",
+      "junit": "The test framework behind the coverage work - unit and integration suites on banking APIs.",
       "openapi": "Machine-readable API contracts. Every migrated endpoint gets one before cutover.",
       "schemathesis": "Generates property and fuzz tests from an OpenAPI schema, so drift surfaces in CI.",
       "postgresql": "Powerful open-source relational database known for reliability and rich features.",
-      "mssql": "Microsoft SQL Server — the datastore behind the core banking platform.",
+      "mssql": "Microsoft SQL Server - the datastore behind the core banking platform.",
       "docker": "Containers for reproducible builds and local parity with the deployment target.",
       "jenkins": "The pipeline that gates every deployment through build, test and quality checks.",
       "typescript": "Typed JavaScript. What this site, the tooling and the front-end work are written in.",
       "react": "The UI library behind this portfolio and the front-end side of the work.",
       "reactnative": "Cross-platform mobile, shipped to iOS and Android on a production banking app.",
-      "cpp": "Modern C++ — the language efengine is written in, renderer to asset pipeline."
+      "cpp": "Modern C++ - the language efengine is written in, renderer to asset pipeline."
     }
   },
   "work": {
     "liveDemo": "Live demo",
     "featured": {
-      "eyebrow": "§ 02 — Selected Work",
+      "eyebrow": "§ 02 - Selected Work",
       "headingBefore": "What I've been",
       "headingEmphasis": "pouring my soul",
       "headingAfter": "into.",
@@ -203,10 +202,10 @@
       },
       "projects": {
         "efengine": {
-          "title": "EFENGINE — C++ Game Engine",
-          "desc": "A from-scratch 3D engine in C++17 on OpenGL 4.5 Core — PBR with split-sum IBL, shadow mapping, an HDR post chain, a versioned binary scene format and a docked ImGui editor, all under RAII rules with no exceptions.",
+          "title": "EFENGINE - C++ Game Engine",
+          "desc": "A from-scratch 3D engine in C++17 on OpenGL 4.5 Core - PBR with split-sum IBL, shadow mapping, an HDR post chain, a versioned binary scene format and a docked ImGui editor, all under RAII rules with no exceptions.",
           "role": "Engine Author",
-          "description": "EFENGINE is my most ambitious project: a 3D engine written from scratch in C++17 on OpenGL 4.5 Core. It renders PBR materials lit by point and directional lights with full image-based lighting — diffuse irradiance plus split-sum specular, both precomputed by compute shaders — over shadow mapping, a skybox and an HDR post chain of bloom, tonemap and FXAA. Scenes live in a node graph addressed by generational handles and persist to .efe, a chunked, versioned binary format of my own with a reader hostile to corrupt input. On top sits a docked ImGui editor: hierarchy, inspector, live material editing and scene save/load.\n\nWhat holds it together is a set of non-negotiable rules. Every gl* call is confined to efecom, the RHI layer — the renderer never sees OpenGL. No raw new/delete and no exceptions: ownership is a value or a unique_ptr, programmer errors trip an assert, recoverable failures come back as return values, and every subsystem is RAII — constructing it brings it up, destroying it tears it down.",
+          "description": "EFENGINE is my most ambitious project: a 3D engine written from scratch in C++17 on OpenGL 4.5 Core. It renders PBR materials lit by point and directional lights with full image-based lighting - diffuse irradiance plus split-sum specular, both precomputed by compute shaders - over shadow mapping, a skybox and an HDR post chain of bloom, tonemap and FXAA. Scenes live in a node graph addressed by generational handles and persist to .efe, a chunked, versioned binary format of my own with a reader hostile to corrupt input. On top sits a docked ImGui editor: hierarchy, inspector, live material editing and scene save/load.\n\nWhat holds it together is a set of non-negotiable rules. Every gl* call is confined to efecom, the RHI layer - the renderer never sees OpenGL. No raw new/delete and no exceptions: ownership is a value or a unique_ptr, programmer errors trip an assert, recoverable failures come back as return values, and every subsystem is RAII - constructing it brings it up, destroying it tears it down.",
           "leadSub": "C++17 · OpenGL 4.5 Core",
           "systems": [
             {
@@ -236,10 +235,10 @@
           ]
         },
         "bancoProvincia": {
-          "title": "Provincia Casa Financiera — Core Services Migration",
-          "desc": "Lifting the legacy Axis2 / Java 8 web services of Banco de la Provincia de Buenos Aires' Uruguayan branch onto Spring Boot 3 and Java 17 — 7 repositories, ~4,600 classes — with connectivity rewired from JNDI to a managed MSSQL DataSource.",
-          "role": "Backend — legacy SOAP/WSDL services onto Spring Boot, team of 3",
-          "description": "Long-running modernization of the legacy Axis2 SOAP services behind core banking at Provincia Casa Financiera, the Uruguayan branch of Banco de la Provincia de Buenos Aires. I own the backend: taking the legacy SOAP/WSDL services onto Java 17 + Spring Boot 3, replacing JNDI-bound resources with a managed MSSQL DataSource, and untangling years of tightly-coupled service contracts without breaking downstream consumers. In parallel a colleague split the Struts frontend and its consumer layer into two applications — a new Angular frontend and a backend-for-frontend that reaches the migrated services over either SOAP or REST, switchable at runtime if one path degrades.",
+          "title": "Provincia Casa Financiera - Core Services Migration",
+          "desc": "Lifting the legacy Axis2 / Java 8 web services of Banco de la Provincia de Buenos Aires' Uruguayan branch onto Spring Boot 3 and Java 17 - 7 repositories, ~4,600 classes - with connectivity rewired from JNDI to a managed MSSQL DataSource.",
+          "role": "Backend - legacy SOAP/WSDL services onto Spring Boot, team of 3",
+          "description": "Long-running modernization of the legacy Axis2 SOAP services behind core banking at Provincia Casa Financiera, the Uruguayan branch of Banco de la Provincia de Buenos Aires. I own the backend: taking the legacy SOAP/WSDL services onto Java 17 + Spring Boot 3, replacing JNDI-bound resources with a managed MSSQL DataSource, and untangling years of tightly-coupled service contracts without breaking downstream consumers. In parallel a colleague split the Struts frontend and its consumer layer into two applications - a new Angular frontend and a backend-for-frontend that reaches the migrated services over either SOAP or REST, switchable at runtime if one path degrades.",
           "migration": {
             "scope": [
               { "value": "7", "label": "repositories" },
@@ -261,24 +260,36 @@
               { "label": "Service Plugins", "role": "Per-service business logic loaded by the dispatcher.", "scale": "636 classes" },
               { "label": "Security", "role": "Authentication, sessions and access control.", "scale": "617 classes" },
               { "label": "Messaging & Transaction Format", "role": "Banking message contracts and transaction formatting.", "scale": "164 classes" },
-              { "label": "Web Tier — Common", "role": "Shared web-tier contracts and utilities.", "scale": "209 classes" },
-              { "label": "Web Tier — Core", "role": "The presentation tier — the platform's largest surface.", "scale": "1,623 classes" },
-              { "label": "Web Tier — Services", "role": "Service-client layer between the web tier and backend.", "scale": "1,246 classes" }
+              { "label": "Web Tier - Common", "role": "Shared web-tier contracts and utilities.", "scale": "209 classes" },
+              { "label": "Web Tier - Core", "role": "The presentation tier - the platform's largest surface.", "scale": "1,623 classes" },
+              { "label": "Web Tier - Services", "role": "Service-client layer between the web tier and backend.", "scale": "1,246 classes" }
             ],
             "phasesHeading": "Migration path",
             "phases": [
               { "label": "01", "title": "Discovery & indexing", "desc": "Index all seven repositories into a knowledge graph to map the real service and call surface." },
               { "label": "02", "title": "Service-by-service migration", "desc": "Lift modules onto Spring Boot 3 and Java 17, rewire JNDI to a managed MSSQL DataSource, and preserve SOAP contracts via dual XML/JSON." },
               { "label": "03", "title": "Contract testing", "desc": "OpenAPI (Swagger) definitions with Schemathesis property and fuzz testing to guarantee parity with the legacy services." },
-              { "label": "04", "title": "Cutover", "desc": "Module by module — Core Services and Security are live on Spring Boot 3; the rest are in flight." }
+              { "label": "04", "title": "Cutover", "desc": "Module by module - Core Services and Security are live on Spring Boot 3; the rest are in flight." }
             ]
           }
         },
+        "bbvaApp": {
+          "title": "BBVA - APP Personas",
+          "desc": "BBVA's retail banking app, already shipped to iOS, Android and web. I'm on the team that keeps it running and moving: evolutionary work on the frontend, and production incidents traced through the Elastic Stack until they have a cause.",
+          "role": "Frontend on the sustaining team - feature work, plus tracing production errors back to the component that caused them",
+          "description": "I work on the team behind BBVA's banking application for individuals - the one customers hold in their hands. We did not build it; it was in production long before I got there, and the job is to keep it that way while it keeps changing. That means two things in practice: the evolutionary work the product asks for, and every bug that surfaces, which we look at and fix.\n\nFinding the cause is most of the work. A report arrives as a symptom on a screen, and what I do with it is trace it through the Elastic Stack - logs from three platforms, back to the component that actually emitted the wrong thing. The frontend runs on a framework internal to the bank, which I can describe but not name: components are isolated units that hold no references to one another and communicate only by publishing events onto a shared bus and subscribing to the ones they care about. That decoupling is what lets the same component behave identically inside a native shell on iOS, one on Android and a browser tab - and it is also what makes tracing a bug a matter of following events rather than reading a call stack.",
+          "metrics": [
+            { "label": "Scope", "value": "Evolutionary maintenance" },
+            { "label": "Triage", "value": "Production errors · Elastic Stack" },
+            { "label": "Platforms", "value": "iOS · Android · Web" },
+            { "label": "Architecture", "value": "Publish / subscribe events" }
+          ]
+        },
         "bbva": {
-          "title": "BBVA — API Migration & Test Coverage",
+          "title": "BBVA - API Migration & Test Coverage",
           "desc": "Took test coverage on new endpoints from 20% to 85%+ across ~48 APIs, inside a 10-engineer team, with every deployment gated through Jenkins, OpenShift and SonarQube.",
           "role": "Test engineering and pre-migration work, team of 10",
-          "description": "Engaged on BBVA's internal platform to migrate API services to Spring Boot and stand up disciplined test coverage across the surface. I took coverage on new endpoints from 20% to 85%+ across ~48 APIs using JUnit 5 and Mockito, in a team of 10, with deployments gated through Jenkins, OpenShift and SonarQube. The point wasn't the coverage number — it was making a codebase nobody trusted safe to change.",
+          "description": "Engaged on BBVA's internal platform to migrate API services to Spring Boot and stand up disciplined test coverage across the surface. I took coverage on new endpoints from 20% to 85%+ across ~48 APIs using JUnit 5 and Mockito, in a team of 10, with deployments gated through Jenkins, OpenShift and SonarQube. The point wasn't the coverage number - it was making a codebase nobody trusted safe to change.",
           "metrics": [
             { "label": "Coverage", "value": "20% → 85%+" },
             { "label": "Scope", "value": "~48 APIs · 50+ internal services" },
@@ -288,10 +299,10 @@
           ]
         },
         "mobileBanking": {
-          "title": "Winterbotham — Mobile Banking App",
-          "desc": "A cross-platform mobile banking app in React Native + Expo, shipped to iOS and Android by a team of four — with WebAuthn authentication and a backend-for-frontend carrying the integration logic.",
+          "title": "Winterbotham - Mobile Banking App",
+          "desc": "A cross-platform mobile banking app in React Native + Expo, shipped to iOS and Android by a team of four - with WebAuthn authentication and a backend-for-frontend carrying the integration logic.",
           "role": "Frontend, plus the backend-for-frontend and WebAuthn integration",
-          "description": "A mobile banking application for Winterbotham, built in React Native + Expo by a team of four over 18 months. My main surface was the frontend, and it extended into a backend-for-frontend carrying the connection logic to the core backend another firm was building in parallel. I also integrated WebAuthn while it was still an emerging standard with thin documentation — the part where a mistake becomes a security incident rather than a bug.",
+          "description": "A mobile banking application for Winterbotham, built in React Native + Expo by a team of four over 18 months. My main surface was the frontend, and it extended into a backend-for-frontend carrying the connection logic to the core backend another firm was building in parallel. I also integrated WebAuthn while it was still an emerging standard with thin documentation - the part where a mistake becomes a security incident rather than a bug.",
           "metrics": [
             {
               "label": "Platform",
@@ -324,10 +335,10 @@
       }
     },
     "older": {
-      "eyebrow": "§ 04 — Archive",
+      "eyebrow": "§ 03 - Archive",
       "headingBefore": "Older",
       "headingEmphasis": "works",
-      "description": "Relics of my developing journey — still dear to me, but no longer the main event.",
+      "description": "Relics of my developing journey - still dear to me, but no longer the main event.",
       "view": "View",
       "projects": {
         "biome": {
@@ -350,34 +361,9 @@
         },
         "threeVoxelEngine": {
           "title": "three-voxel-engine",
-          "desc": "A voxel world streamed from the backend — noise and chunks are computed server-side and pushed to the browser in real time.",
+          "desc": "A voxel world streamed from the backend - noise and chunks are computed server-side and pushed to the browser in real time.",
           "role": "Developer",
-          "description": "A voxel world renderer in Three.js and Next.js. The terrain is not generated in the browser: the Perlin noise and the chunk data are computed on the backend and streamed to the client in real time, so chunks arrive as the camera moves and the world keeps loading without end.\n\nKey features:\n\nBackend noise and chunk generation, deterministic for a given seed\nReal-time streaming of chunk buffers to the browser\nInfinite chunk loading and unloading driven by camera position\nFirst-person controls — WASD movement with mouse look and pointer lock\nInstanced rendering for block geometry\nConfigurable world: chunk size, terrain parameters and block types"
-        }
-      }
-    },
-    "additional": {
-      "heading": "More fun stuff",
-      "projects": {
-        "birla": {
-          "title": "Birla Capital",
-          "desc": "Redesigning financial tools"
-        },
-        "icamps": {
-          "title": "ICAMPS",
-          "desc": "Bringing safety to mobile"
-        },
-        "haqdarshak": {
-          "title": "Haqdarshak",
-          "desc": "Exploring government schemes"
-        },
-        "spotify": {
-          "title": "Spotify",
-          "desc": "Snippets and experiments"
-        },
-        "landing": {
-          "title": "Landing Page",
-          "desc": "Surprise! It's this one"
+          "description": "A voxel world renderer in Three.js and Next.js. The terrain is not generated in the browser: the Perlin noise and the chunk data are computed on the backend and streamed to the client in real time, so chunks arrive as the camera moves and the world keeps loading without end.\n\nKey features:\n\nBackend noise and chunk generation, deterministic for a given seed\nReal-time streaming of chunk buffers to the browser\nInfinite chunk loading and unloading driven by camera position\nFirst-person controls - WASD movement with mouse look and pointer lock\nInstanced rendering for block geometry\nConfigurable world: chunk size, terrain parameters and block types"
         }
       }
     },
@@ -399,45 +385,9 @@
       "keyImplementation": "Key Implementation"
     }
   },
-  "agents": {
-    "eyebrow": "§ 03 — Method",
-    "headingBefore": "How I work",
-    "headingEmphasis": "with agents",
-    "headingAfter": "",
-    "intro": "On codebases too large to hold in one head, an agent is only as sharp as the ground truth you give it. My method keeps AI anchored to real structure and provable contracts — every answer traced through a graph, every endpoint checked against its spec.",
-    "pillars": [
-      {
-        "index": "01",
-        "principle": "Traverse the graph — don't grep it",
-        "title": "Project indexing",
-        "body": "I index each codebase into a knowledge graph of functions, routes, call chains and service contracts. Agents traverse how the code actually connects instead of grepping or guessing through semantic search — so a sprawling migration surface answers to a query, not a full-text scan."
-      },
-      {
-        "index": "02",
-        "principle": "The spec is the test suite",
-        "title": "Schemathesis + OpenAPI",
-        "body": "Schemathesis reads a service's OpenAPI schema and generates property-based tests — hundreds of boundary, malformed and stateful cases the contract implies but nobody writes by hand. It surfaces schema drift and unexpected 500s before a client ever sees them — exactly what a migrated endpoint has to prove."
-      },
-      {
-        "index": "03",
-        "principle": "One harness, any OpenAPI",
-        "title": "API test harness",
-        "body": "I wrapped that flow into a small app: point it at any service exposing an OpenAPI schema and it runs the full Schemathesis suite, surfaces failures and reports contract coverage. Testing a new microservice becomes configuration, not a fresh test project."
-      }
-    ],
-    "toolkit": {
-      "label": "Toolkit",
-      "items": [
-        { "name": "Playwright", "note": "browser E2E & visual checks" },
-        { "name": "Superpowers", "note": "skills & slash-commands" },
-        { "name": "MCP memory", "note": "graph tools for agents" },
-        { "name": "Spec + plan", "note": "brainstorm → plan → verify" }
-      ]
-    }
-  },
   "contact": {
-    "eyebrow": "§ 05 — Get in touch",
-    "intro": "you made it this far—",
+    "eyebrow": "§ 04 - Get in touch",
+    "intro": "you made it this far - ",
     "headline": "Come say hi.",
     "side": "B · SIDE",
     "availableFor": "Set list · Available for",
@@ -470,8 +420,8 @@
     "viewResume": "View Resume",
     "linkedin": "LinkedIn",
     "scheduling": "Book a 30-minute call",
-    "githubPrimary": "GitHub — ffontanadev",
-    "githubEngine": "GitHub — elFonTii, where efengine lives",
+    "githubPrimary": "GitHub - ffontanadev",
+    "githubEngine": "GitHub - elFonTii, where efengine lives",
     "twitter": "Twitter"
   },
   "playlists": {
@@ -490,7 +440,6 @@
     "links": {
       "home": "Home",
       "work": "Work",
-      "about": "About",
       "connect": "Connect",
       "resume": "Resume",
       "devZone": "Dev Zone"
@@ -518,7 +467,7 @@
   },
   "seo": {
     "siteSuffix": "Portfolio",
-    "title": "Felipe Fontana — Software Engineer | Java, Spring Boot, Legacy Modernization",
-    "description": "Software Engineer with 4 years modernizing core banking systems — Axis2/Java 8 to Spring Boot 3 across ~4,600 classes, 50+ APIs migrated, test coverage from 20% to 85%. Based in Uruguay, UTC−3, full US Eastern overlap."
+    "title": "Felipe Fontana - Software Engineer | Java, Spring Boot, Legacy Modernization",
+    "description": "Software Engineer with 4 years modernizing core banking systems - Axis2/Java 8 to Spring Boot 3 across ~4,600 classes, 50+ APIs migrated, test coverage from 20% to 85%. Based in Uruguay, UTC−3, full US Eastern overlap."
   }
 }

@@ -4,7 +4,7 @@ import { messages, SUPPORTED_LOCALES, type Locale } from '@/i18n/config';
 /**
  * Spec §11 bans a set of phrases outright. tsc enforces the *shape* of the
  * message tree; nothing enforces what goes in it. These tests are scoped to
- * the subtrees P0 rewrites — widen them as later phases land (§5.8 still
+ * the subtrees P0 rewrites - widen them as later phases land (§5.8 still
  * ships "Digital solutions" in the contact block).
  */
 const BANNED = [
@@ -76,7 +76,7 @@ describe('Winterbotham card', () => {
   /**
    * The résumé says "a team of 4 over 1.5 years" (src/constants/index.ts); the
    * site shipped "three" until the owner confirmed four on 2026-08-16. Launch
-   * QA §14 requires the two to agree — pin the team size so they cannot drift
+   * QA §14 requires the two to agree - pin the team size so they cannot drift
    * apart again.
    */
   it.each(SUPPORTED_LOCALES)('%s states a team of four', (locale) => {
@@ -86,7 +86,7 @@ describe('Winterbotham card', () => {
   });
 
   /**
-   * Spec §12 item 5 — the owner supplied the surfaces on 2026-08-16: frontend
+   * Spec §12 item 5 - the owner supplied the surfaces on 2026-08-16: frontend
    * first, extending into a backend-for-frontend, plus the WebAuthn
    * integration. WebAuthn replaces the earlier "Android Biometric API"
    * framing, which named the platform API rather than the standard.
@@ -109,7 +109,7 @@ describe('Provincia Casa Financiera card', () => {
    * Spec §12 item 1 flagged that "Banco Provincia" reads to anyone who googles
    * it as the Argentine provincial bank. The owner resolved it on 2026-08-16:
    * the client is Provincia Casa Financiera, the Uruguayan branch of Banco de
-   * la Provincia de Buenos Aires — so the connection is real and stating it is
+   * la Provincia de Buenos Aires - so the connection is real and stating it is
    * the fix. What must not happen is the card naming the parent bank *as the
    * client*, which is the ambiguity the spec objected to.
    */
@@ -121,7 +121,7 @@ describe('Provincia Casa Financiera card', () => {
     expect(haystack).not.toMatch(/Banco Provincia(?! Casa)/);
   });
 
-  /** Spec §12 item 4 — the owner supplied role and team size on 2026-08-16. */
+  /** Spec §12 item 4 - the owner supplied role and team size on 2026-08-16. */
   it.each(SUPPORTED_LOCALES)('%s states the role and the team size', (locale) => {
     const role = (provinciaOf(locale) as { role: string }).role;
     expect(role).not.toMatch(/^Backend Engineer$/);
@@ -160,8 +160,7 @@ describe('BBVA card', () => {
  *
  * The list is English; es/pt/zh shipped *translations* of the banned phrase
  * ("Soluciones digitales", "Soluções digitais", "数字化解决方案") which this
- * scan cannot catch. They were removed by hand alongside the English one —
- * the suite below pins the replacement copy so they cannot come back.
+ * scan cannot catch. They were removed by hand alongside the English one - * the suite below pins the replacement copy so they cannot come back.
  */
 describe('the whole message tree', () => {
   it.each(SUPPORTED_LOCALES)('%s carries no banned phrase anywhere', (locale) => {
@@ -198,7 +197,7 @@ describe('availability block', () => {
 
 /**
  * Spec §5.4: "Sitting beside a 4,600-class migration and a PBR renderer, it
- * doesn't add range — it subtracts seniority." The Twitter Clone went first;
+ * doesn't add range - it subtracts seniority." The Twitter Clone went first;
  * three-voxel-engine followed it out of the featured grid on 2026-08-16, down
  * into the archive, where its live demo carries it. Five projects.
  */
@@ -217,8 +216,33 @@ describe('project inventory', () => {
     expect(projectsOf(locale)).not.toHaveProperty('twitterClone');
   });
 
-  it.each(SUPPORTED_LOCALES)('%s ships exactly five featured projects', (locale) => {
-    expect(Object.keys(projectsOf(locale))).toHaveLength(5);
+  it.each(SUPPORTED_LOCALES)('%s ships exactly six featured projects', (locale) => {
+    expect(Object.keys(projectsOf(locale))).toHaveLength(6);
+  });
+
+  /**
+   * The BBVA engagement is two distinct pieces of work and ships as two cards:
+   * `bbva` is the finished API migration and coverage work ('25); `bbvaApp` is
+   * the current frontend position on the multiplatform banking app. Neither
+   * subsumes the other - the migration card carries the 20% -> 85% figures the
+   * hero is anchored to, and the app card carries the current role.
+   */
+  it.each(SUPPORTED_LOCALES)('%s keeps both BBVA cards distinct', (locale) => {
+    const projects = projectsOf(locale);
+    expect(projects).toHaveProperty('bbva');
+    expect(projects).toHaveProperty('bbvaApp');
+  });
+
+  /**
+   * The frontend framework behind the app is internal to the bank. The copy
+   * describes its event model; naming the product is out of bounds. Pin that
+   * so a later copy pass cannot reintroduce the name.
+   */
+  it.each(SUPPORTED_LOCALES)('%s describes the internal framework without naming it', (locale) => {
+    const card = (projectsOf(locale) as { bbvaApp: Record<string, unknown> }).bbvaApp;
+    const haystack = strings(card).join(' ');
+    expect(haystack).not.toMatch(/\bcells?\b/i);
+    expect(haystack.toLowerCase()).toMatch(/event|evento|事件/);
   });
 
   it.each(SUPPORTED_LOCALES)('%s files the voxel engine under its real name in the archive', (locale) => {

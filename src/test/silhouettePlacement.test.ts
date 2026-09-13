@@ -7,7 +7,7 @@ import {
 const BOUNDS = { width: 1600, height: 900 };
 // A square mark at the default showcase size: 900 * 0.36 = 324px tall.
 const SQUARE = { naturalWidth: 100, naturalHeight: 100 };
-// A wordmark five times wider than tall — Spring and PostgreSQL are this shape.
+// A wordmark five times wider than tall - Spring and PostgreSQL are this shape.
 const WORDMARK = { naturalWidth: 500, naturalHeight: 100 };
 
 const spec = (over: Record<string, unknown> = {}) => ({

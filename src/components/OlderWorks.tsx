@@ -1,598 +1,314 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useCallback, useMemo, useState, useSyncExternalStore } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
-import ProjectPreviewModal, { type Project } from './ProjectPreviewModal';
+import { useSearchParams } from 'react-router-dom';
+import ProjectPreviewModal from './ProjectPreviewModal';
+import type { Project } from './projectTypes';
+import { archiveProjects, type ArchiveEntry } from './archiveProjects';
 import { useTranslation } from '@/i18n';
 
-// Structural data — non-translatable (visual styling, stacks, code). Display
-// text (title/desc/role/description) is merged in from the locale, keyed by `id`.
-const projectData = [
-    {
-        id: "biome",
-        color: "bg-gradient-to-br from-amber-50 to-stone-100",
-        image: "/images/biome-terrain-engine.webp",
-        techStack: ["Unity", "C Sharp", "Perlin Noise"],
-        date: "2021",
-        codeBlocks: [
-            {
-                language: "csharp",
-                label: "Perform Biome Generation",
-                code: `if UNITY_EDITOR
-    public void RegenerateWorld()
-    {
-        //Cache the map resolution
-        int mapResolution = targetTerrain.terrainData.heightmapResolution;
+/**
+ * Section 03 is an index, not a second portfolio.
+ *
+ * It used to be the same composition as section 02 - a grid of image cards -
+ * which made the older work read as more of the featured work rather than as
+ * the archive behind it. The hierarchy now comes from form: a dated, ordered
+ * list, with the thumbnail demoted to a preview that only appears on pointer
+ * or keyboard focus, and only on screens wide enough to have room for it.
+ */
 
-        Perform_BiomeGeneration(mapResolution);
-    }
+/** Query param that deep-links one entry's preview modal, e.g. `?archive=truqui`. */
+const ARCHIVE_PARAM = 'archive';
 
-    void Perform_BiomeGeneration(int mapResolution)
-    {
-        //Allocate the biome map and strengths
-        BiomeMap = new byte[mapResolution, mapResolution];
-        BiomeStrengths = new float[mapResolution, mapResolution];
+const EASE = [0.22, 1, 0.36, 1] as const;
 
-        //Setup the space for the seed points
-        int seedPoints = Mathf.RoundToInt(mapResolution * mapResolution * Config.BiomeSeedPointDensity);
-        List<byte> BiomesToGenerate = new List<byte>(seedPoints);
+/** Width at which the preview panel earns its place. Matches Tailwind's `lg`. */
+const PANEL_QUERY = '(min-width: 1024px)';
 
-        //Populate the biomes to spawn based on weightings
-        float totalBiomeWeighting = Config.TotalWeighting;
-        for (int biomeIndex = 0; biomeIndex < Config.NumBiomes; biomeIndex++)
-        {
-            int entries = Mathf.RoundToInt(seedPoints * Config.Biomes[biomeIndex].Weighting / totalBiomeWeighting);
-            Debug.Log("Will spawn" + entries + " entries for biome " + Config.Biomes[biomeIndex].Biome.Name);
+/**
+ * One row: structural data plus the display text merged in from the active
+ * locale. Typed as the exact set of copy fields `Project` needs, so a row can
+ * be handed straight to the preview modal without a cast.
+ */
+type ArchiveRowData = ArchiveEntry & Pick<Project, 'title' | 'desc' | 'role' | 'description'>;
 
-            for (int entryIndex = 0; entryIndex < entries; entryIndex++)
-            {
-                BiomesToGenerate.Add((byte)biomeIndex);
-            }
-        }
+/**
+ * Whether the viewport currently matches `query`.
+ *
+ * The preview panel is mounted through this rather than hidden with
+ * `lg:block`, because `display: none` is not a promise that the browser skips
+ * the download - on a phone the four thumbnails would still be fetched for a
+ * panel that can never be seen. Reading `matchMedia` is not a layout read, so
+ * it costs no reflow. There is no SSR pass in this app, so the initial value
+ * can be read straight from `window`.
+ */
+function useMediaQuery(query: string): boolean {
+    const mql = useMemo(() => window.matchMedia(query), [query]);
+    const subscribe = useCallback(
+        (onChange: () => void) => {
+            mql.addEventListener('change', onChange);
+            return () => mql.removeEventListener('change', onChange);
+        },
+        [mql],
+    );
+    // useSyncExternalStore rather than state plus an effect: matchMedia is an
+    // external store, and reading it this way means there is no first render
+    // at the wrong breakpoint for an effect to correct.
+    return useSyncExternalStore(subscribe, () => mql.matches, () => false);
+}
 
-        //Spawn the individual biomes
-        while (BiomesToGenerate.Count > 0)
-        {
-            //Pick a random seed point
-            int seedPointIndex = Random.Range(0, BiomesToGenerate.Count);
+/** Year as a number for sorting. Falls back to 0 so a malformed date sinks. */
+const yearOf = (date: string) => Number.parseInt(date, 10) || 0;
 
-            //Extract the biome index
-            byte biomeIndex = BiomesToGenerate[seedPointIndex];
+interface ArchiveRowProps {
+    entry: ArchiveRowData;
+    index: number;
+    viewLabel: string;
+    demoLabel: string;
+    onOpen: (id: string) => void;
+    onActivate: (id: string) => void;
+}
 
-            //Remove the seed point from the list
-            BiomesToGenerate.RemoveAt(seedPointIndex);
+const ArchiveRow = ({ entry, index, viewLabel, demoLabel, onOpen, onActivate }: ArchiveRowProps) => {
+    const reduceMotion = useReducedMotion();
 
-            Perform_BiomeGeneration(biomeIndex, mapResolution);
-        }
+    const reveal = reduceMotion
+        ? {}
+        : {
+              initial: { opacity: 0, y: 16 },
+              whileInView: { opacity: 1, y: 0 },
+              viewport: { once: true, margin: '-80px' },
+              transition: { delay: index * 0.06, duration: 0.6, ease: EASE },
+          };
 
-        Texture2D biomeMapTexture = new Texture2D(mapResolution, mapResolution, TextureFormat.RGB24, false);
-        for(int y  = 0; y < mapResolution; y++)
-        {
-            for(int x = 0; x < mapResolution; x++)
-            {
-                float hue = ((float)BiomeMap[x, y] / (float)Config.NumBiomes);
+    return (
+        <motion.li {...reveal} className="border-b border-dark-900/10 last:border-b-0">
+            {/*
+              The row carries two interactive elements, and they are siblings
+              rather than nested: the title button stretches over the whole row
+              with an absolutely positioned ::after, and the demo link sits
+              above it on the z axis. That is what lets the entire row be
+              clickable without an anchor inside a button, and without the
+              stopPropagation patch the card version needed.
+            */}
+            <article
+                onMouseEnter={() => onActivate(entry.id)}
+                onFocusCapture={() => onActivate(entry.id)}
+                className="group relative grid grid-cols-1 items-start gap-x-8 gap-y-3 rounded-xl px-4 py-8 transition-colors duration-300 hover:bg-dark-900/[0.02] has-[:focus-visible]:bg-dark-900/[0.03] md:-mx-4 md:grid-cols-[4.5rem_minmax(0,1fr)_auto]"
+            >
+                <time
+                    dateTime={entry.date}
+                    className="font-mono text-xs uppercase tracking-[0.18em] text-ink-quiet tabular-nums md:pt-2"
+                >
+                    {entry.date}
+                </time>
 
-                biomeMapTexture.SetPixel(x, y, Color.HSVToRGB(hue, 0.75f, 0.75f));
-            }
-        }
-        biomeMapTexture.Apply();
-        System.IO.File.WriteAllBytes("Assets/ProceduralWorld/BiomeMap.png", biomeMapTexture.EncodeToPNG());
-    }
+                <div className="min-w-0">
+                    <h3 className="font-display text-xl font-semibold tracking-[-0.01em] text-dark-900 transition-colors duration-300 text-pretty group-hover:text-coral-700 md:text-2xl">
+                        <button
+                            type="button"
+                            onClick={() => onOpen(entry.id)}
+                            className="touch-manipulation rounded-sm text-left outline-none after:absolute after:inset-0 after:content-[''] focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral-700"
+                        >
+                            {entry.title}
+                            {/* Gives the button an accessible name that says what it does,
+                                without printing "View" beside every title. */}
+                            <span className="sr-only">{`, ${viewLabel}`}</span>
+                        </button>
+                    </h3>
 
-    Vector2Int[] NeighbourOffsets = new Vector2Int[]
-    {
-        new Vector2Int(0, 1),
-        new Vector2Int(0, -1),
-        new Vector2Int(1, 0),
-        new Vector2Int(-1, 0),
-        new Vector2Int(1, 1),
-        new Vector2Int(-1, -1),
-        new Vector2Int(1, -1),
-        new Vector2Int(-1, 1),
-    };
+                    <p className="mt-2 max-w-prose text-sm font-light leading-relaxed text-ink-muted text-pretty md:text-base">
+                        {entry.desc}
+                    </p>
 
-    void Perform_BiomeGeneration(byte biomeIndex, int mapResolution)
-    {
-        //Cache biome configuration
-        BiomeConfigSO biomeConfig = Config.Biomes[biomeIndex].Biome;
+                    <ul className="mt-4 flex flex-wrap gap-2">
+                        {entry.techStack.map((tech) => (
+                            <li
+                                key={tech}
+                                translate="no"
+                                className="rounded-full border border-dark-900/15 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-ink-quiet"
+                            >
+                                {tech}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
 
-        //Set the spawn location
-        Vector2Int spawnLocation = new Vector2Int(Random.Range(0, mapResolution), Random.Range(0, mapResolution));
-
-        //Get the starting intensity
-        float startingIntensity = Random.Range(biomeConfig.minIntensity, biomeConfig.maxIntensity);
-
-        //Setup working list
-        Queue<Vector2Int> workingList = new Queue<Vector2Int>();
-        workingList.Enqueue(spawnLocation);
-
-        //Setup the visited map and target intensity map
-        bool[,] visitedMap = new bool[mapResolution, mapResolution];
-        float[,] targetIntensityMap = new float[mapResolution, mapResolution];
-
-        //Set the starting intensity
-        targetIntensityMap[spawnLocation.x, spawnLocation.y] = startingIntensity;
-
-        //Oozing begins
-        while(workingList.Count > 0 ){
-            Vector2Int workingLocation = workingList.Dequeue();
-            
-            //Set the biome
-            BiomeMap[workingLocation.x, workingLocation.y] = biomeIndex;
-            visitedMap[workingLocation.x, workingLocation.y] = true;
-            BiomeStrengths[workingLocation.x, workingLocation.y] = targetIntensityMap[workingLocation.x, workingLocation.y];
-
-            //Traverse the neighbours
-            for(int neighbourIndex = 0; neighbourIndex < NeighbourOffsets.Length; neighbourIndex++){
-                Vector2Int neighbourLocation = workingLocation + NeighbourOffsets[neighbourIndex];
-
-                //skip if invalid
-                if(neighbourLocation.x < 0 || neighbourLocation.y < 0 || neighbourLocation.x >= mapResolution || neighbourLocation.y >= mapResolution){
-                    continue;
-                }
-
-                //skip if already visited
-                if(visitedMap[neighbourLocation.x, neighbourLocation.y]){
-                    continue;
-                }
-            
-                //flag as visited
-                visitedMap[neighbourLocation.x, neighbourLocation.y] = true;
-
-                //Work out and store neighbour strength
-                float neighbourStrength = targetIntensityMap[workingLocation.x, workingLocation.y] - Random.Range(biomeConfig.minDecayRate, biomeConfig.maxDecayRate);
-                targetIntensityMap[neighbourLocation.x, neighbourLocation.y] = neighbourStrength;
-
-                //If the strenght is too low, stop.
-                if(neighbourStrength < 0){
-                    continue;
-                }
-                workingList.Enqueue(neighbourLocation);
-            }
-        }
-    }
-#endif`,
-            },
-        ],
-    },
-    {
-        id: "hackflix",
-        color: "bg-gradient-to-br from-stone-50 to-neutral-100",
-        image: "/images/hackflix.webp",
-        techStack: ["React", "TMDb", "Pure CSS", "Responsive Design", "Vercel"],
-        date: "2022",
-        demoUrl: "https://hackflix-app.vercel.app",
-        codeBlocks: [
-            {
-                language: "javascript",
-                label: "UPI Payment Handler",
-                code: `// Process UPI payment request
-async function processUPIPayment(paymentDetails) {
-    try {
-        const { amount, recipientUPI, note } = paymentDetails;
-
-        // Validate UPI ID format
-        if (!validateUPIId(recipientUPI)) {
-            throw new Error('Invalid UPI ID');
-        }
-
-        // Create payment transaction
-        const transaction = await Transaction.create({
-            sender: req.user.upiId,
-            recipient: recipientUPI,
-            amount: parseFloat(amount),
-            note: note || '',
-            status: 'pending',
-            timestamp: new Date(),
-        });
-
-        // Process through UPI gateway
-        const result = await upiGateway.initiatePayment({
-            transactionId: transaction._id,
-            amount,
-            recipientUPI,
-        });
-
-        return {
-            success: true,
-            transactionId: transaction._id,
-            status: result.status,
-        };
-    } catch (error) {
-        logger.error('Payment failed:', error);
-        throw error;
-    }
-}`,
-            },
-        ],
-    },
-    {
-        id: "truqui",
-        color: "bg-gradient-to-br from-warmGray-50 to-stone-100",
-        image: "/images/truqui.webp",
-        techStack: ["React", "Redux", "PWA", "Tailwind v3", "Vercel"],
-        date: "2022",
-        demoUrl: "https://truqui-app.vercel.app",
-        codeBlocks: [
-            {
-                language: "javascript",
-                label: "Main Game Hook",
-                code: `import { useSelector, useDispatch } from "react-redux";
-import { addPoint, removePoint, setColor, setDuration, startGame, endGame } from "../redux/slices/gameSlice";
-
-export default function useGameHook() {
-    const game = useSelector(state => state.game);
-    const dispatch = useDispatch();
-
-    const handleAddPoints = team => {
-        dispatch(addPoint({ team }));
-    }
-
-    const handleRemovePoints = team => {
-        dispatch(removePoint({ team }));
-    }
-
-    const handleSetColor = (team, color) => {
-        dispatch(setColor({ team, color }));
-    }
-
-    const handleSetDuration = duration => {
-        dispatch(setDuration({ duration }));
-    }
-
-    const handleStartGame = () => {
-        dispatch(startGame());
-    }
-
-    const handleEndGame = () => {
-        dispatch(endGame());
-    }
-
-    return { game, handleAddPoints, handleRemovePoints, handleSetColor, handleSetDuration, handleStartGame, handleEndGame };
-
-}}`,
-            },
-            {
-                language: "javascript",
-                label: "Game State Management",
-                code: `// Redux slice of the game
-import { createSlice } from "@reduxjs/toolkit";
-
-const initialState = {
-    started: false,
-    
-    duration: 15,
-    team_one: {
-        tag: "Nosotros",
-        color: "#7BDCB5",
-        score: 0,
-        isInGood: false,
-        bgcolor: "#fff",
-    },
-    team_two: {
-        tag: "Ellos",
-        color: "#EB144C",
-        score: 0,
-        isInGood: false,
-        bgcolor: "#fff",
-    },
-    winner: null,
+                <div className="md:justify-self-end md:pt-2">
+                    {entry.demoUrl && (
+                        <a
+                            href={entry.demoUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="relative z-10 inline-flex touch-manipulation items-center gap-1.5 rounded-sm font-mono text-[10px] uppercase tracking-widest text-ink-quiet outline-none transition-colors duration-300 hover:text-coral-700 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral-700"
+                        >
+                            {demoLabel}
+                            <ArrowUpRight size={12} aria-hidden="true" />
+                        </a>
+                    )}
+                </div>
+            </article>
+        </motion.li>
+    );
 };
-
-const gameSlice = createSlice({
-    name: "game",
-    initialState,
-    reducers: {
-        addPoint: (state, action) => {
-            const team = state[action.payload.team];
-            if (team.score >= 0 && team.score <= state.duration) {
-                team.score++;
-                if (team.score === state.duration && !team.isInGood) {
-                    team.isInGood = true;
-                    team.bgcolor = "#DDFFD4";
-                    team.score = 0;
-                }
-
-                if(team.score === state.duration && team.isInGood){
-                    state.winner = action.payload.team;
-                }
-
-            }
-        },
-        removePoint: (state, action) => {
-            const team = state[action.payload.team];
-            if (team.score > 0 && team.score <= state.duration) {
-                team.score--;
-                if (team.score === state.duration && !team.isInGood) {
-                    team.isInGood = true;
-                    team.bgcolor = "#DDFFD4";
-                    team.score = 0;
-                }
-
-                if(team.score === state.duration && team.isInGood){
-                    state.winner = action.payload.team;
-                }
-
-            }
-        },
-        setColor: (state, action) => {
-            const { team, color } = action.payload;
-            state[team].color = color;
-        },
-        setDuration: (state, action) => {
-            const { duration } = action.payload;
-            state.duration = duration;
-        },
-        startGame: (state) => {
-            state.started = true;
-        },
-        endGame: (state) => {
-            state.started = false;
-            state.duration = initialState.duration;
-            state.team_one.score = 0;
-            state.team_two.score = 0;
-            state.team_one.color = initialState.team_one.color;
-            state.team_two.color = initialState.team_two.color;
-            state.team_one.isInGood = false;
-            state.team_two.isInGood = false;
-            state.team_one.bgcolor = initialState.team_one.bgcolor;
-            state.team_two.bgcolor = initialState.team_two.bgcolor;
-            state.winner = null;
-        }
-    },
-});
-
-export const { addPoint, removePoint, setColor, setDuration, startGame, endGame } = gameSlice.actions;
-
-export default gameSlice.reducer;`,
-            },
-        ],
-    },
-    {
-        id: "threeVoxelEngine",
-        color: "bg-gradient-to-br from-slate-50 to-stone-100",
-        image: "/images/voxel-world-engine.webp",
-        techStack: ["Next.js", "Three.js", "Perlin Noise", "Server-side Chunk Generation", "Real-time Streaming"],
-        date: "2025",
-        demoUrl: "https://three-voxel-engine.vercel.app",
-        codeBlocks: [
-            {
-                language: "typescript",
-                label: "Perlin Noise Generation",
-                code: ` 
-
-/**
- * Función de ruido que acepta coordenadas 2D o 3D y retorna un valor [0, 1]
- */
-type NoiseFunction = (x: number, y: number, z?: number) => number;
-
-/**
- *
- * Algoritmo de Perlin:
- * 1. Generar tabla de permutaciones (p) basada en la semilla
- * 2. Para cada punto (x,y,z), encontrar el cubo unitario que lo contiene
- * 3. Calcular gradientes en las 8 esquinas del cubo
- * 4. Interpolar trilinealmente entre los gradientes usando curvas fade
- *
- * @param seed Semilla para generación determinista (default: Math.random())
- * @returns Función de ruido (x, y, z?) => [0, 1]
- */
-export function makeNoise(seed = Math.random()): NoiseFunction {
-    // Tabla de permutaciones de 512 entradas (duplicada para evitar overflow)
-    const p = new Uint8Array(512);
-
-    // Inicializar tabla con valores 0-255
-    for (let i = 0; i < 256; i++) p[i] = i;
-
-    // Mezclar aleatoriamente usando la semilla (Fisher-Yates shuffle)
-    for (let i = 255; i > 0; i--) {
-      const j = Math.floor(seed * (i + 1));
-      [p[i], p[j]] = [p[j], p[i]]; // Swap
-    }
-
-    // Duplicar la primera mitad para evitar checks de overflow
-    for (let i = 0; i < 256; i++) p[i + 256] = p[i];
-
-    /**
-     * Curva de interpolación suave (fade function).
-     * Usa el polinomio 6t⁵ - 15t⁴ + 10t³ para transiciones C2-continuas.
-     * Esto elimina artefactos visuales y produce ruido más orgánico.
-     */
-    function fade(t: number) {
-      return t * t * t * (t * (t * 6 - 15) + 10);
-    }
-
-    /**
-     * Interpolación lineal entre a y b según factor t
-     */
-    function lerp(a: number, b: number, t: number) {
-      return a + t * (b - a);
-    }
-
-    /**
-     * Función de gradiente: convierte un hash en un vector de gradiente
-     * y calcula el producto punto con el vector de distancia (x, y, z).
-     *
-     * Los primeros 4 bits del hash determinan la dirección del gradiente,
-     * creando 16 vectores posibles distribuidos uniformemente.
-     */
-    function grad(hash: number, x: number, y: number, z: number) {
-      const h = hash & 15; // Usar solo los primeros 4 bits
-      const u = h < 8 ? x : y;
-      const v = h < 4 ? y : h === 12 || h === 14 ? x : z;
-      return ((h & 1) === 0 ? u : -u) + ((h & 2) === 0 ? v : -v);
-    }
-
-    /**
-     * Función de ruido principal - evalúa el ruido de Perlin en (x, y, z).
-     * Si z no se proporciona, se usa 0 (modo 2D).
-     *
-     * Proceso:
-     * 1. Encontrar coordenadas del cubo unitario
-     * 2. Calcular posición relativa dentro del cubo
-     * 3. Aplicar curva fade a las coordenadas relativas
-     * 4. Hashear las 8 esquinas del cubo
-     * 5. Interpolar trilinealmente los gradientes
-     * 6. Normalizar salida a [0, 1]
-     */
-    return function noise(x: number, y: number, z: number = 0) {
-      // Encontrar coordenadas del cubo unitario que contiene el punto
-      const X = Math.floor(x) & 255;
-      const Y = Math.floor(y) & 255;
-      const Z = Math.floor(z) & 255;
-
-      // Calcular posición relativa del punto dentro del cubo [0, 1)
-      x -= Math.floor(x);
-      y -= Math.floor(y);
-      z -= Math.floor(z);
-
-      // Aplicar curva fade para interpolación suave
-      const u = fade(x);
-      const v = fade(y);
-      const w = fade(z);
-
-      // Hashear coordenadas de las 8 esquinas del cubo
-      const A = p[X] + Y, AA = p[A] + Z, AB = p[A + 1] + Z;
-      const B = p[X + 1] + Y, BA = p[B] + Z, BB = p[B + 1] + Z;
-
-      // Interpolación trilineal de los 8 gradientes de las esquinas
-      return lerp(
-        // Interpolar en Z para el plano inferior (z=0)
-        lerp(
-          lerp(grad(p[AA], x, y, z), grad(p[BA], x - 1, y, z), u),
-          lerp(grad(p[AB], x, y - 1, z), grad(p[BB], x - 1, y - 1, z), u),
-          v
-        ),
-        // Interpolar en Z para el plano superior (z=1)
-        lerp(
-          lerp(grad(p[AA + 1], x, y, z - 1), grad(p[BA + 1], x - 1, y, z - 1), u),
-          lerp(grad(p[AB + 1], x, y - 1, z - 1), grad(p[BB + 1], x - 1, y - 1, z - 1), u),
-          v
-        ),
-        w
-      ) * 0.5 + 0.5; // Normalizar de [-1, 1] a [0, 1]
-    };
-  }`,
-            },
-        ],
-    },
-];
 
 const OlderWorks = () => {
     const { t, messages } = useTranslation();
-    const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const showPanel = useMediaQuery(PANEL_QUERY);
+    const reduceMotion = useReducedMotion();
 
-    const projects: Project[] = projectData.map((p) => ({
-        ...p,
-        ...messages.work.older.projects[p.id as keyof typeof messages.work.older.projects],
-    }));
+    // Newest first. An archive read oldest-first buries the most recent thing
+    // in it; authoring order in `archiveProjects` is deliberately ignored.
+    const entries = useMemo<ArchiveRowData[]>(() => {
+        const copy = messages.work.older.projects;
+        return archiveProjects
+            .map((entry) => ({
+                ...entry,
+                ...copy[entry.id as keyof typeof copy],
+            }))
+            .sort((a, b) => yearOf(b.date) - yearOf(a.date));
+    }, [messages]);
 
-    const handleProjectClick = (project: Project) => {
-        setSelectedProject(project);
-        setIsModalOpen(true);
-    };
+    const [activeId, setActiveId] = useState<string | null>(null);
+    const active = entries.find((entry) => entry.id === activeId) ?? entries[0];
 
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-        setTimeout(() => setSelectedProject(null), 200);
-    };
+    // The open entry lives in the URL, so a preview is shareable and the back
+    // button closes it.
+    const openId = searchParams.get(ARCHIVE_PARAM);
+    const selected = useMemo(
+        () => entries.find((entry) => entry.id === openId) ?? null,
+        [entries, openId],
+    );
 
-    const ease = [0.22, 1, 0.36, 1] as const;
+    const openEntry = useCallback(
+        (id: string) => {
+            setSearchParams(
+                (prev) => {
+                    const next = new URLSearchParams(prev);
+                    next.set(ARCHIVE_PARAM, id);
+                    return next;
+                },
+                { preventScrollReset: true },
+            );
+        },
+        [setSearchParams],
+    );
+
+    const closeEntry = useCallback(() => {
+        setSearchParams(
+            (prev) => {
+                const next = new URLSearchParams(prev);
+                next.delete(ARCHIVE_PARAM);
+                return next;
+            },
+            // Replace, so opening and closing a few previews does not fill the
+            // history with entries that all render the same page.
+            { replace: true, preventScrollReset: true },
+        );
+    }, [setSearchParams]);
+
+    // `selected` drops to null the instant the URL changes, but the modal still
+    // has an exit animation to play. Holding the last one keeps it rendering
+    // real content on the way out instead of blanking mid-fade. Adjusted during
+    // render rather than in an effect, so the modal never paints a frame
+    // without it.
+    const [lingering, setLingering] = useState<Project | null>(null);
+    if (selected && selected !== lingering) setLingering(selected);
+
+    if (entries.length === 0) return null;
 
     return (
         <>
-            <section className="py-24 md:py-32 bg-cream-50 px-6 md:px-20 relative overflow-hidden">
-                {/* Subtle ambient blob */}
+            <section
+                id="archive"
+                aria-labelledby="archive-heading"
+                className="relative scroll-mt-24 overflow-hidden bg-cream-50 px-6 py-24 md:px-20 md:py-32"
+            >
                 <div
                     aria-hidden="true"
-                    className="absolute top-1/2 left-1/4 w-[40rem] h-[40rem] -translate-y-1/2 rounded-full bg-purple-500/4 blur-3xl pointer-events-none"
+                    className="pointer-events-none absolute left-1/4 top-1/2 h-[40rem] w-[40rem] -translate-y-1/2 rounded-full bg-purple-500/4 blur-3xl"
                 />
 
-                <div className="max-w-[1440px] mx-auto relative">
-                    <div className="mb-16 max-w-2xl">
-                        <div className="flex items-center gap-4 mb-6">
-                            <span className="text-eyebrow text-dark-900/55">{t('work.older.eyebrow')}</span>
-                            <span className="h-px flex-1 max-w-[120px] bg-dark-900/15" />
+                <div className="relative mx-auto max-w-[1440px]">
+                    <header className="mb-14 max-w-2xl">
+                        <div className="mb-6 flex items-center gap-4">
+                            <span className="text-eyebrow text-ink-quiet">{t('work.older.eyebrow')}</span>
+                            <span aria-hidden="true" className="h-px max-w-[120px] flex-1 bg-dark-900/15" />
                         </div>
-                        <h2 className="font-display font-bold text-[1.75rem] md:text-[2.25rem] lg:text-[2.75rem] tracking-[-0.02em] text-dark-900 leading-tight">
+                        <h2
+                            id="archive-heading"
+                            className="font-display text-[1.75rem] font-bold leading-tight tracking-[-0.02em] text-dark-900 text-balance md:text-[2.25rem] lg:text-[2.75rem]"
+                        >
                             {t('work.older.headingBefore')}{' '}
-                            <span className="font-display-italic text-dark-900/55" style={{ fontStyle: 'italic' }}>
+                            <span className="font-display-italic text-coral-700" style={{ fontStyle: 'italic' }}>
                                 {t('work.older.headingEmphasis')}
                             </span>
                         </h2>
-                        <p className="mt-4 text-dark-900/55 font-light leading-relaxed">
+                        <p className="mt-4 font-light leading-relaxed text-ink-muted text-pretty">
                             {t('work.older.description')}
                         </p>
-                    </div>
+                    </header>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-                        {projects.map((project, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: '-60px' }}
-                                transition={{ delay: index * 0.08, duration: 0.8, ease }}
-                                onClick={() => handleProjectClick(project)}
-                                className="group cursor-pointer"
-                            >
-                                <div className="bg-cream-50 rounded-2xl overflow-hidden border border-dark-900/10 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:border-coral-500/40 group-hover:-translate-y-1.5 group-hover:shadow-[0_30px_60px_-30px_rgba(26,26,26,0.25)]">
-                                    <div className={`w-full aspect-[4/3] ${project.color} overflow-hidden relative`}>
-                                        {project.image && (
-                                            <img
-                                                src={project.image}
-                                                alt={project.title}
-                                                className="w-full h-full object-cover grayscale-[55%] sepia-[15%] contrast-[0.92] opacity-90 group-hover:grayscale-0 group-hover:sepia-0 group-hover:contrast-100 group-hover:opacity-100 transition-all duration-700"
-                                                loading="lazy"
-                                            />
+                    <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-16">
+                        <ol className="border-t border-dark-900/10">
+                            {entries.map((entry, index) => (
+                                <ArchiveRow
+                                    key={entry.id}
+                                    entry={entry}
+                                    index={index}
+                                    viewLabel={t('work.older.view')}
+                                    demoLabel={t('work.liveDemo')}
+                                    onOpen={openEntry}
+                                    onActivate={setActiveId}
+                                />
+                            ))}
+                        </ol>
+
+                        {/*
+                          Redundant by design: every word in here is already in
+                          the list beside it, so the panel is hidden from
+                          assistive tech and its images are decorative. All four
+                          are stacked and cross-faded rather than swapped on one
+                          <img>, which would flash a blank frame on every change.
+                        */}
+                        {showPanel && (
+                            <aside aria-hidden="true" className="hidden lg:block">
+                                <div className="sticky top-32">
+                                    <div className="relative aspect-[3/2] w-full overflow-hidden rounded-2xl border border-dark-900/10 bg-cream-100">
+                                        {entries.map((entry) =>
+                                            entry.image ? (
+                                                <img
+                                                    key={entry.id}
+                                                    src={entry.image}
+                                                    width={entry.imageWidth}
+                                                    height={entry.imageHeight}
+                                                    alt=""
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                    className={[
+                                                        'absolute inset-0 h-full w-full object-cover',
+                                                        reduceMotion ? '' : 'transition-opacity duration-500 ease-out',
+                                                        entry.id === active.id ? 'opacity-100' : 'opacity-0',
+                                                    ].join(' ')}
+                                                />
+                                            ) : null,
                                         )}
-                                        {/* Date as mono pill */}
-                                        <div className="absolute top-3 right-3 backdrop-blur-md bg-cream-50/85 text-dark-900/75 px-3 py-1 rounded-full">
-                                            <span className="font-mono text-[10px] tracking-widest">
-                                                {project.date}
-                                            </span>
-                                        </div>
                                     </div>
-
-                                    <div className="p-5 border-t border-dark-900/8">
-                                        <h3 className="text-lg font-display font-semibold text-dark-900 mb-1 group-hover:text-coral-500 transition-colors duration-500">
-                                            {project.title}
-                                        </h3>
-                                        <p className="text-sm text-dark-900/55 font-light leading-relaxed">
-                                            {project.desc}
-                                        </p>
-                                        <div className="mt-3 flex items-center justify-between gap-3">
-                                            <span className="flex items-center gap-2 text-dark-900/35 group-hover:text-coral-500 transition-colors duration-500">
-                                                <span className="font-mono text-[10px] tracking-widest uppercase">
-                                                    {t('work.older.view')}
-                                                </span>
-                                                <span className="h-px w-6 bg-current transition-all duration-500 group-hover:w-10" />
-                                            </span>
-                                            {project.demoUrl && (
-                                                <a
-                                                    href={project.demoUrl}
-                                                    target="_blank"
-                                                    rel="noreferrer"
-                                                    onClick={(e) => e.stopPropagation()}
-                                                    className="inline-flex items-center gap-1 font-mono text-[10px] tracking-widest uppercase text-dark-900/45 hover:text-coral-500 transition-colors duration-300"
-                                                >
-                                                    {t('work.liveDemo')}
-                                                    <ArrowUpRight size={12} aria-hidden="true" />
-                                                </a>
-                                            )}
-                                        </div>
-                                    </div>
+                                    <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.22em] text-ink-quiet">
+                                        {active.title}
+                                    </p>
                                 </div>
-                            </motion.div>
-                        ))}
+                            </aside>
+                        )}
                     </div>
                 </div>
             </section>
 
             <ProjectPreviewModal
-                project={selectedProject}
-                isOpen={isModalOpen}
-                onClose={handleCloseModal}
+                project={selected ?? lingering}
+                isOpen={Boolean(selected)}
+                onClose={closeEntry}
             />
         </>
     );
