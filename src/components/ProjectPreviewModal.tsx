@@ -39,6 +39,7 @@ import type {
 } from './projectTypes';
 import LatestCommit from './LatestCommit';
 import { useTranslation } from '@/i18n';
+import { useScrollLock } from '@/hooks/useScrollLock';
 
 // Re-export the Project type for backwards compatibility with existing importers.
 export type { Project } from './projectTypes';
@@ -709,17 +710,10 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
     const modalRef = useRef<HTMLDivElement>(null);
     const closeButtonRef = useRef<HTMLButtonElement>(null);
 
-    useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = 'hidden';
-            closeButtonRef.current?.focus();
-        } else {
-            document.body.style.overflow = '';
-        }
+    useScrollLock(isOpen);
 
-        return () => {
-            document.body.style.overflow = '';
-        };
+    useEffect(() => {
+        if (isOpen) closeButtonRef.current?.focus();
     }, [isOpen]);
 
     useEffect(() => {
@@ -803,7 +797,7 @@ const ProjectPreviewModal = ({ project, isOpen, onClose }: ProjectPreviewModalPr
                             </button>
 
                             {/* Scrollable Content */}
-                            <div className="overflow-y-auto max-h-[90vh] custom-scrollbar">
+                            <div className="overflow-y-auto overscroll-contain max-h-[90vh] custom-scrollbar">
                                 {/* Hero Section - typographic for every project */}
                                 <TypographicHero project={project} size="modal" />
 

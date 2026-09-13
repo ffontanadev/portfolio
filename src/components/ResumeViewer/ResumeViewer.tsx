@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useScrollLock } from '@/hooks/useScrollLock';
 import ResumeViewerToolbar from './ResumeViewerToolbar';
 import ResumeViewerControls from './ResumeViewerControls';
 import type { ResumeViewerProps, ResumeFormat, ViewState, ZoomPreset, ResumeSource } from './types';
@@ -105,20 +106,11 @@ const ResumeViewer = ({ isOpen, onClose, sources, defaultFormat, title = 'Resume
     }, []);
 
     /**
-     * Handle body scroll lock and focus management
+     * Body scroll lock. Shared with the project preview modal through a
+     * reference count - this component is always mounted, so owning the
+     * property outright meant clearing a lock another overlay had taken.
      */
-    useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = 'hidden';
-            // Focus trap will be handled by keyboard listeners
-        } else {
-            document.body.style.overflow = '';
-        }
-
-        return () => {
-            document.body.style.overflow = '';
-        };
-    }, [isOpen]);
+    useScrollLock(isOpen);
 
     /**
      * Handle keyboard shortcuts
