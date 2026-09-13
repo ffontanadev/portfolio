@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  The four locale roots. /en is the canonical and the x-default: the thesis is
+  the US market (spec §8), and every <url> below repeats the full alternate set
+  because Google requires the annotation to be reciprocal on every URL.
+
+  /dev-zone is deliberately absent: it is a client-only whiteboard route that
+  scripts/prerender.js does not snapshot, so it would resolve to an empty shell
+  for any crawler that followed it.
+
+  No <lastmod>: a guessed date is worse than none, and Google ignores the field
+  when it cannot be trusted.
+-->
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+>
+  <url>
+    <loc>https://ffontana.dev/en</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ffontana.dev/en" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://ffontana.dev/es" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://ffontana.dev/pt" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://ffontana.dev/zh" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ffontana.dev/en" />
+  </url>
+  <url>
+    <loc>https://ffontana.dev/es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ffontana.dev/en" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://ffontana.dev/es" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://ffontana.dev/pt" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://ffontana.dev/zh" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ffontana.dev/en" />
+  </url>
+  <url>
+    <loc>https://ffontana.dev/pt</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ffontana.dev/en" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://ffontana.dev/es" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://ffontana.dev/pt" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://ffontana.dev/zh" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ffontana.dev/en" />
+  </url>
+  <url>
+    <loc>https://ffontana.dev/zh</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ffontana.dev/en" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://ffontana.dev/es" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://ffontana.dev/pt" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://ffontana.dev/zh" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ffontana.dev/en" />
+  </url>
+</urlset>
