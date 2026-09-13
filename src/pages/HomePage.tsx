@@ -9,7 +9,7 @@ import Contact from '../components/Contact';
 export default function HomePage() {
   return (
     <TechShowcaseProvider>
-      <main>
+      <main id="main" tabIndex={-1}>
         <Hero />
         <ProofStrip />
         <BrandMarquee />

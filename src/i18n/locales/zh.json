@@ -19,6 +19,8 @@
     "resume": "简历",
     "viewResume": "查看简历",
     "toggleMenu": "打开菜单",
+    "skipToContent": "跳到主要内容",
+    "primaryLabel": "主",
     "devZone": "开发专区",
     "githubPrimary": "GitHub -  - ffontanadev",
     "githubEngine": "GitHub -  - elFonTii，efengine 所在账号"
@@ -437,6 +439,7 @@
   },
   "footer": {
     "tagline": "打造沉静而审慎的软件。",
+    "navLabel": "页脚",
     "links": {
       "home": "首页",
       "work": "作品",
@@ -468,6 +471,6 @@
   "seo": {
     "siteSuffix": "Portfolio",
     "title": "Felipe Fontana - 软件工程师 | Java、Spring Boot、遗留系统现代化",
-    "description": "软件工程师，4 年核心银行系统现代化经验 -  - 将 ~4,600 个类从 Axis2/Java 8 迁移至 Spring Boot 3，迁移 50+ 个 API，测试覆盖率从 20% 提升至 85%。常驻乌拉圭，UTC−3，与美国东部时间完全重叠。"
+    "description": "软件工程师，4 年核心银行系统现代化经验：将 ~4,600 个类从 Axis2/Java 8 迁移至 Spring Boot 3，迁移 50+ 个 API，测试覆盖率从 20% 提升至 85%。常驻乌拉圭，UTC−3，与美国东部时间完全重叠。"
   }
 }

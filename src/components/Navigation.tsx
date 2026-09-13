@@ -37,6 +37,7 @@ const Navigation = () => {
             <motion.div className="scroll-progress" style={{ scaleX: progress }} aria-hidden="true" />
 
             <nav
+                aria-label={t('nav.primaryLabel')}
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'glass-nav py-3' : 'bg-transparent py-6'
                     }`}
             >
@@ -44,14 +45,13 @@ const Navigation = () => {
                     {/* Logo */}
                     <motion.a
                         href={home}
-                        className="group flex items-baseline gap-1 select-none"
+                        className="group flex select-none"
                         whileHover={{ scale: 1.02 }}
                         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                     >
-                        <span className="text-2xl font-display font-bold tracking-tighter group-hover:text-coral-700 transition-colors duration-500">
-                            FF
+                        <span className="logo-mark text-2xl group-hover:text-coral-700 transition-colors duration-500">
+                            FF<span className="logo-dot text-coral-700/80">.</span>
                         </span>
-                        <span className="text-2xl font-display italic font-light text-coral-700/80">.</span>
                     </motion.a>
 
                     {/* Desktop Navigation */}
@@ -109,7 +109,7 @@ const Navigation = () => {
                         <LanguageSwitcher />
                         <button
                             onClick={openResume}
-                            className="group relative overflow-hidden px-6 py-2.5 rounded-full font-medium text-sm bg-dark-900 text-cream-50 cursor-pointer"
+                            className="group relative overflow-hidden px-6 py-2.5 rounded-full font-display font-medium text-sm bg-dark-900 text-cream-50 cursor-pointer"
                         >
                             <span className="relative z-10 transition-colors duration-500 group-hover:text-cream-50">
                                 {t('nav.resume')}
@@ -208,7 +208,7 @@ const Navigation = () => {
                                     openResume();
                                     setIsMobileMenuOpen(false);
                                 }}
-                                className="mt-2 px-8 py-3 bg-dark-900 text-cream-50 rounded-full text-lg font-medium cursor-pointer"
+                                className="mt-2 px-8 py-3 bg-dark-900 text-cream-50 rounded-full font-display text-lg font-medium cursor-pointer"
                             >
                                 {t('nav.viewResume')}
                             </motion.button>

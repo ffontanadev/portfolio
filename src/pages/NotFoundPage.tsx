@@ -19,7 +19,7 @@ export default function NotFoundPage() {
         <meta name="robots" content="noindex, nofollow" />
       </>
 
-      <main className="min-h-screen flex items-center justify-center px-6 py-16">
+      <main id="main" tabIndex={-1} className="min-h-screen flex items-center justify-center px-6 py-16">
         <div className="max-w-2xl w-full text-center">
           {/* Icon */}
           <div className="flex justify-center mb-8">

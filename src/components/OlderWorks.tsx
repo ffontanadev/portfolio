@@ -108,12 +108,18 @@ const ArchiveRow = ({ entry, index, viewLabel, demoLabel, onOpen, onActivate }: 
                         <button
                             type="button"
                             onClick={() => onOpen(entry.id)}
+                            /* Gives the button an accessible name that says what it does,
+                               without printing "View" beside every title.
+
+                               An `aria-label` rather than the sr-only span this used to be:
+                               sr-only text is still real text in the DOM, so the <h3> read
+                               "three-voxel-engine, View" to anything walking the heading
+                               outline - a crawler, or a reader jumping by headings. The
+                               button's announced name is identical either way. */
+                            aria-label={`${entry.title}, ${viewLabel}`}
                             className="touch-manipulation rounded-sm text-left outline-none after:absolute after:inset-0 after:content-[''] focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral-700"
                         >
                             {entry.title}
-                            {/* Gives the button an accessible name that says what it does,
-                                without printing "View" beside every title. */}
-                            <span className="sr-only">{`, ${viewLabel}`}</span>
                         </button>
                     </h3>
 

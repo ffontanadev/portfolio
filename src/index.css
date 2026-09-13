@@ -122,6 +122,22 @@ body::before {
 .font-display-md { font-variation-settings: "opsz" 60,  "SOFT" 50; }
 .font-display-italic { font-variation-settings: "opsz" 80, "SOFT" 100; font-style: italic; }
 
+/* Logo mark (2a). Fraunces 800 at display opsz with WONK serifs, tracked to
+   -0.09em so the two F's nest; the period keeps the light italic and carries
+   the only coral in the mark. */
+.logo-mark {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.09em;
+  font-variation-settings: "opsz" 144, "SOFT" 60, "WONK" 1;
+}
+.logo-mark .logo-dot {
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: 0;
+  font-variation-settings: "opsz" 144, "SOFT" 100;
+}
+
 .text-eyebrow {
   font-family: var(--font-mono);
   font-size: 0.7rem;
