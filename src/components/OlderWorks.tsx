@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, useSyncExternalStore } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
@@ -43,19 +43,18 @@ type ArchiveRowData = ArchiveEntry & Pick<Project, 'title' | 'desc' | 'role' | '
  * can be read straight from `window`.
  */
 function useMediaQuery(query: string): boolean {
-    const [matches, setMatches] = useState(
-        () => typeof window !== 'undefined' && window.matchMedia(query).matches,
+    const mql = useMemo(() => window.matchMedia(query), [query]);
+    const subscribe = useCallback(
+        (onChange: () => void) => {
+            mql.addEventListener('change', onChange);
+            return () => mql.removeEventListener('change', onChange);
+        },
+        [mql],
     );
-
-    useEffect(() => {
-        const mql = window.matchMedia(query);
-        const onChange = (event: MediaQueryListEvent) => setMatches(event.matches);
-        setMatches(mql.matches);
-        mql.addEventListener('change', onChange);
-        return () => mql.removeEventListener('change', onChange);
-    }, [query]);
-
-    return matches;
+    // useSyncExternalStore rather than state plus an effect: matchMedia is an
+    // external store, and reading it this way means there is no first render
+    // at the wrong breakpoint for an effect to correct.
+    return useSyncExternalStore(subscribe, () => mql.matches, () => false);
 }
 
 /** Year as a number for sorting. Falls back to 0 so a malformed date sinks. */
@@ -211,11 +210,11 @@ const OlderWorks = () => {
 
     // `selected` drops to null the instant the URL changes, but the modal still
     // has an exit animation to play. Holding the last one keeps it rendering
-    // real content on the way out instead of blanking mid-fade.
+    // real content on the way out instead of blanking mid-fade. Adjusted during
+    // render rather than in an effect, so the modal never paints a frame
+    // without it.
     const [lingering, setLingering] = useState<Project | null>(null);
-    useEffect(() => {
-        if (selected) setLingering(selected);
-    }, [selected]);
+    if (selected && selected !== lingering) setLingering(selected);
 
     if (entries.length === 0) return null;
 
