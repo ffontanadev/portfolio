@@ -16,7 +16,9 @@ const java = techCatalog.find((t) => t.id === 'java')!;
 describe('showcase logo list', () => {
   it('carries only the catalog entries that have an SVG mark, in catalog order', () => {
     expect(SHOWCASE_LOGOS.map((t) => t.id)).toEqual([
-      'java', 'springboot', 'postgresql', 'mssql', 'docker', 'typescript', 'react',
+      'java', 'springboot', 'junit', 'openapi', 'schemathesis', 'sonarqube',
+      'postgresql', 'mssql', 'elastic', 'docker', 'openshift', 'jenkins',
+      'githubactions', 'typescript', 'react', 'reactnative', 'cpp',
     ]);
   });
 

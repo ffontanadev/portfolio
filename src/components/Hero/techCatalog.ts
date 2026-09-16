@@ -1,7 +1,9 @@
-// Vendored from github.com/pheralb/svgl (static/library) into public/logos/tech.
-// Hot-linking raw.githubusercontent.com cost a DNS lookup plus a TLS handshake
-// to a third origin before any of the seven marks could start downloading, and
-// left the marquee at the mercy of an uptime and a cache policy we don't
+// Vendored into public/logos/tech from svgl (github.com/pheralb/svgl), from
+// simple-icons (single-path marks, recoloured here with the brand hex their
+// dataset publishes) and, where neither carries the mark, from the project's
+// own site. Hot-linking raw.githubusercontent.com cost a DNS lookup plus a TLS
+// handshake to a third origin before any of the marks could start downloading,
+// and left the marquee at the mercy of an uptime and a cache policy we don't
 // control. Same-origin also means the particle silhouette sampler reads them
 // without relying on someone else's CORS headers.
 const SVGL = '/logos/tech';
@@ -16,9 +18,10 @@ export interface TechItem {
    * the dark/colored variants that read on the cream hero background (svgl's
    * `-dark` variants are light-on-dark and sample to nothing, so avoid them).
    *
-   * Optional: svgl carries no mark for JUnit, OpenAPI, Schemathesis, Jenkins,
-   * React Native or C++17. Those render as typographic wordmarks instead - * see `BrandMarquee`. Standing a Swagger logo in for OpenAPI would be a
-   * brand inaccuracy, so we don't.
+   * Optional: Apache Axis2 publishes no vector mark at all - its site ships a
+   * raster wordmark - so it renders as a typographic wordmark instead, see
+   * `BrandMarquee`. Standing the Apache feather in for it would be a brand
+   * inaccuracy, the same reason a Swagger logo doesn't stand in for OpenAPI.
    */
   marqueeUrl?: string;
   /**
@@ -45,20 +48,27 @@ export interface TechItem {
 /**
  * Spec §5.2. Ordered by what the owner wants to be hired for, not
  * alphabetically or by recency. A technology appears only if a project on
- * this page or the résumé demonstrates it.
+ * this page or the résumé demonstrates it. New entries slot in beside the
+ * neighbour they belong with rather than at the end, so the existing relative
+ * order - which is the argument the strip makes - stays intact.
  */
 export const techCatalog: TechItem[] = [
-  { id: 'java',         name: 'Java 17',       marqueeUrl: `${SVGL}/java.svg`, marqueeSize: { width: 256, height: 346 } },
-  { id: 'springboot',   name: 'Spring Boot 3', marqueeUrl: `${SVGL}/spring.svg`, marqueeSize: { width: 64, height: 64 } },
-  { id: 'junit',        name: 'JUnit 5' },
-  { id: 'openapi',      name: 'OpenAPI' },
-  { id: 'schemathesis', name: 'Schemathesis' },
-  { id: 'postgresql',   name: 'PostgreSQL',    marqueeUrl: `${SVGL}/postgresql.svg`, marqueeSize: { width: 432, height: 445 } },
-  { id: 'mssql',        name: 'MSSQL',         marqueeUrl: `${SVGL}/sql-server.svg`, marqueeSize: { width: 48, height: 48 } },
-  { id: 'docker',       name: 'Docker',        marqueeUrl: `${SVGL}/docker.svg`, marqueeSize: { width: 24, height: 24 } },
-  { id: 'jenkins',      name: 'Jenkins' },
-  { id: 'typescript',   name: 'TypeScript',    marqueeUrl: `${SVGL}/typescript.svg`, marqueeSize: { width: 256, height: 256 } },
-  { id: 'react',        name: 'React',         marqueeUrl: `${SVGL}/react_light.svg`, marqueeSize: { width: 569, height: 512 } },
-  { id: 'reactnative',  name: 'React Native' },
-  { id: 'cpp',          name: 'C++17' },
+  { id: 'java',         name: 'Java 17',        marqueeUrl: `${SVGL}/java.svg`, marqueeSize: { width: 256, height: 346 } },
+  { id: 'springboot',   name: 'Spring Boot 3',  marqueeUrl: `${SVGL}/spring.svg`, marqueeSize: { width: 64, height: 64 } },
+  { id: 'axis2',        name: 'Axis2' },
+  { id: 'junit',        name: 'JUnit 5',        marqueeUrl: `${SVGL}/junit.svg`, marqueeSize: { width: 24, height: 24 } },
+  { id: 'openapi',      name: 'OpenAPI',        marqueeUrl: `${SVGL}/openapi.svg`, marqueeSize: { width: 24, height: 24 } },
+  { id: 'schemathesis', name: 'Schemathesis',   marqueeUrl: `${SVGL}/schemathesis.svg`, marqueeSize: { width: 35, height: 29 } },
+  { id: 'sonarqube',    name: 'SonarQube',      marqueeUrl: `${SVGL}/sonarqube.svg`, marqueeSize: { width: 24, height: 24 } },
+  { id: 'postgresql',   name: 'PostgreSQL',     marqueeUrl: `${SVGL}/postgresql.svg`, marqueeSize: { width: 432, height: 445 } },
+  { id: 'mssql',        name: 'MSSQL',          marqueeUrl: `${SVGL}/sql-server.svg`, marqueeSize: { width: 48, height: 48 } },
+  { id: 'elastic',      name: 'Elastic',        marqueeUrl: `${SVGL}/elastic.svg`, marqueeSize: { width: 24, height: 24 } },
+  { id: 'docker',       name: 'Docker',         marqueeUrl: `${SVGL}/docker.svg`, marqueeSize: { width: 24, height: 24 } },
+  { id: 'openshift',    name: 'OpenShift',      marqueeUrl: `${SVGL}/openshift.svg`, marqueeSize: { width: 24, height: 24 } },
+  { id: 'jenkins',      name: 'Jenkins',        marqueeUrl: `${SVGL}/jenkins.svg`, marqueeSize: { width: 24, height: 24 } },
+  { id: 'githubactions', name: 'GitHub Actions', marqueeUrl: `${SVGL}/github-actions.svg`, marqueeSize: { width: 24, height: 24 } },
+  { id: 'typescript',   name: 'TypeScript',     marqueeUrl: `${SVGL}/typescript.svg`, marqueeSize: { width: 256, height: 256 } },
+  { id: 'react',        name: 'React',          marqueeUrl: `${SVGL}/react_light.svg`, marqueeSize: { width: 569, height: 512 } },
+  { id: 'reactnative',  name: 'React Native',   marqueeUrl: `${SVGL}/react-native.svg`, marqueeSize: { width: 112, height: 102 } },
+  { id: 'cpp',          name: 'C++17',          marqueeUrl: `${SVGL}/c-plusplus.svg`, marqueeSize: { width: 256, height: 288 } },
 ];

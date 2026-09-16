@@ -11,13 +11,18 @@ import { messages, SUPPORTED_LOCALES } from '@/i18n/config';
 const EXPECTED = [
   ['java', 'Java 17'],
   ['springboot', 'Spring Boot 3'],
+  ['axis2', 'Axis2'],
   ['junit', 'JUnit 5'],
   ['openapi', 'OpenAPI'],
   ['schemathesis', 'Schemathesis'],
+  ['sonarqube', 'SonarQube'],
   ['postgresql', 'PostgreSQL'],
   ['mssql', 'MSSQL'],
+  ['elastic', 'Elastic'],
   ['docker', 'Docker'],
+  ['openshift', 'OpenShift'],
   ['jenkins', 'Jenkins'],
+  ['githubactions', 'GitHub Actions'],
   ['typescript', 'TypeScript'],
   ['react', 'React'],
   ['reactnative', 'React Native'],
@@ -36,7 +41,7 @@ const briefsOf = (locale: (typeof SUPPORTED_LOCALES)[number]) =>
   }).techShowcase.brief;
 
 describe('stack strip', () => {
-  it('ships exactly the 13 spec technologies, in order', () => {
+  it('ships exactly the 18 spec technologies, in order', () => {
     expect(techCatalog.map((t) => [t.id, t.name])).toEqual(
       EXPECTED.map(([id, name]) => [id, name]),
     );
@@ -49,11 +54,16 @@ describe('stack strip', () => {
     }
   });
 
-  it('gives every logo-bearing entry an svgl url and the rest none', () => {
-    const withLogo = techCatalog.filter((t) => t.marqueeUrl).map((t) => t.id);
-    expect(withLogo).toEqual([
-      'java', 'springboot', 'postgresql', 'mssql', 'docker', 'typescript', 'react',
-    ]);
+  it('gives every entry a vendored mark except the one with no vector logo', () => {
+    const withoutLogo = techCatalog.filter((t) => !t.marqueeUrl).map((t) => t.id);
+    // Apache Axis2 publishes only a raster wordmark, so it stays typographic.
+    expect(withoutLogo).toEqual(['axis2']);
+
+    for (const tech of techCatalog.filter((t) => t.marqueeUrl)) {
+      expect(tech.marqueeUrl).toMatch(/^/logos/tech/.+.svg$/);
+      expect(tech.marqueeSize?.width).toBeGreaterThan(0);
+      expect(tech.marqueeSize?.height).toBeGreaterThan(0);
+    }
   });
 
   it.each(SUPPORTED_LOCALES)('%s has a brief for every entry and no orphans', (locale) => {

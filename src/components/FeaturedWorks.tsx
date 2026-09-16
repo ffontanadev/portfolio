@@ -59,38 +59,23 @@ const projectData: ProjectStructural[] = [
     id: 'bbvaApp',
     color: "bg-cream-100",
     brandColor: '#001391',
-    // TODO[DECIDE]: this card and the `bbva` card below share one hex, and the
-    // brand block has no halo to offset - the off-centre `brandHaloAt: '20% 24%'`
-    // that used to separate them is gone with the cream field. Right now only the
-    // index digit and the lead metric tell the two engagements apart. A second
-    // BBVA tone would fix it, but that is a brand decision; do not invent one.
-    // Now that this card leads, the two blue blocks sit closer together than
-    // before, so the collision reads louder rather than quieter.
-    // The frontend runs on a framework internal to the bank; the copy describes
-    // its event model but never names it. Keep the stack list to open
-    // technologies and to the architecture, never to the product name.
-    techStack: ["JavaScript", "Event-driven architecture", "Internal component framework", "Elastic Stack", "iOS", "Android", "Web"],
+    techStack: ["JavaScript", "Event-driven", "Cells", "Elastic", "iOS", "Android", "Web", "Jenkins", "GH Actions", "SonarQube", "OpenShift"],
     date: "'26 - NOW",
     codeBlocks: [],
     category: 'professional',
     company: 'BBVA',
     logo: 'bbva',
-    // The app shipped long before this engagement; the banner names the work,
-    // not the product. "Multiplatform" described the latter and read as a claim
-    // on a build that was never ours.
-    leadMetric: { kind: 'wordmark', value: 'Sustaining Team', sub: "a banking app already in customers' hands" },
+    leadMetric: { kind: 'wordmark', value: 'Fullstack Engineer', sub: "in BBVA's retail banking app" },
   },
   {
     id: 'bancoProvincia',
     color: "bg-cream-100",
     brandColor: '#00703C',
-    techStack: ["Java 17", "Spring Boot 3", "Axis2 (legacy)", "MSSQL", "JNDI → DataSource"],
-    date: "'25 - NOW",
+    techStack: ["Java 8 → 17", "Spring Boot 3", "Axis2", "SQL Server", "JNDI → DataSource", "WSDL", "Struts"],
+    date: "'25 - 26",
     codeBlocks: [],
     category: 'professional',
     company: 'Provincia Casa Financiera',
-    // The Uruguayan branch of Banco de la Provincia de Buenos Aires - hence the
-    // parent bank's wordmark on a card titled with the local entity's name.
     logo: 'banco-provincia',
     leadMetric: { kind: 'migration', from: 'Axis 2', to: 'Boot' },
   },
@@ -110,7 +95,7 @@ const projectData: ProjectStructural[] = [
     id: 'mobileBanking',
     color: "bg-cream-100",
     brandColor: '#1d418f',
-    techStack: ["React Native", "Expo", "WebAuthn", "Backend for Frontend", "Local Persistence"],
+    techStack: ["React Native", "Expo", "WebAuthn", "BFF", "SecureStorage", "Android Studio", "Supabase"],
     date: "'23 - '24",
     codeBlocks: [],
     category: 'professional',
