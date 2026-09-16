@@ -11,13 +11,13 @@ import { useIsMobile } from '@/hooks/useIsMobile';
 // is never requested, where the old static import shipped three.js regardless.
 const ParticleField = lazy(() => import('./Hero/ParticleField'));
 
-const ease = [0.22, 1, 0.36, 1] as const;
+const ease = [0.22, 1, 0.10, 1] as const;
 
 // Seconds the rocket spends flying in (rocketFly in IntroSequencer's
 // DEFAULT_TIMINGS). Surrounding HTML text is delayed by this so it doesn't
 // compete with the particle animation; it lands as the rocket does, while the
 // rocket cross-morphs into the first tech logo.
-const INTRO_TOTAL_S = 4.0;
+const INTRO_TOTAL_S = 4.8;
 
 const Hero = () => {
   const shouldReduceMotion = useReducedMotion();

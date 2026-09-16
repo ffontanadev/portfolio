@@ -5,10 +5,10 @@ import { techCatalog, type TechItem } from '../techCatalog';
 import type { ShapeSpec, SampleBounds } from './shapeSampler';
 
 /**
- * The logos the hero cycles through. Six catalog entries (JUnit, OpenAPI,
- * Schemathesis, Jenkins, React Native, C++17) have no mark in svgl and render
- * as typographic wordmarks in the marquee - there is nothing to sample into
- * particles for those, so the loop skips them.
+ * The logos the hero cycles through. Axis2 is the lone catalog entry with no
+ * vector mark published anywhere, so it renders as a typographic wordmark in
+ * the marquee - there is nothing to sample into particles for it, and the loop
+ * skips it.
  */
 export const SHOWCASE_LOGOS: TechItem[] = techCatalog.filter((t) => t.marqueeUrl);
 
