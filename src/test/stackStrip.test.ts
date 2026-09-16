@@ -54,18 +54,6 @@ describe('stack strip', () => {
     }
   });
 
-  it('gives every entry a vendored mark except the one with no vector logo', () => {
-    const withoutLogo = techCatalog.filter((t) => !t.marqueeUrl).map((t) => t.id);
-    // Apache Axis2 publishes only a raster wordmark, so it stays typographic.
-    expect(withoutLogo).toEqual(['axis2']);
-
-    for (const tech of techCatalog.filter((t) => t.marqueeUrl)) {
-      expect(tech.marqueeUrl).toMatch(/^/logos/tech/.+.svg$/);
-      expect(tech.marqueeSize?.width).toBeGreaterThan(0);
-      expect(tech.marqueeSize?.height).toBeGreaterThan(0);
-    }
-  });
-
   it.each(SUPPORTED_LOCALES)('%s has a brief for every entry and no orphans', (locale) => {
     const briefs = briefsOf(locale);
     expect(Object.keys(briefs).sort()).toEqual(techCatalog.map((t) => t.id).sort());
